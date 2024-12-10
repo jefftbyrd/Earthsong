@@ -30,3 +30,13 @@ After choosing a point on the globe, Earthsong finds sounds recorded nearby and 
 - [Michael Jeffrey Lee](https://www.michaeljeffreylee.com/) for coming up with the name Earthsong, which is also the title of a song from the forthcoming [Budokan Boys](https://budokanboys.club/) album, THE OOZE.
 - [Sunny Sun](https://decodingnature.nyuadim.com/author/ss14740/), who shared [cloud sim](https://editor.p5js.org/ss14740/sketches/z-cEmTUPD), the p5 sketch that Earthsong’s cloud overlay animation was adapted from.
 - [Freesound.org](https://freesound.org/) and all who contribute to it.
+
+## Planned updates for future versions
+
+- Add a warning message turning away mobile users. The site does not presently work on mobile.
+- Allow logged-in users to delete saved journeys.
+- Display more detailed information about saved journeys (date it was saved, what sounds are included, etc.)
+- More consistent styling for info panels.
+- Add sound indicators for actions on the map screen.
+- Simplify states for pop-up screens so that only one can be open at any time.
+- Improve responsive styling.
