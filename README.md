@@ -2,6 +2,8 @@
 
 ![Earthsong title screen](./public/earthsong-screen.webp)
 
+https://earthsong.world/
+
 After choosing a point on the globe, Earthsong finds sounds recorded nearby and teleports the user to the Earthsong Sound Portal, a spatial sonic playground where they can audition, manipulate and mix sounds to create their own sonic environment.
 
 ## Features
@@ -33,10 +35,11 @@ After choosing a point on the globe, Earthsong finds sounds recorded nearby and 
 
 ## Planned updates for future versions
 
-- Add a warning message turning away mobile users. The site does not presently work on mobile.
 - Allow logged-in users to delete saved journeys.
 - Display more detailed information about saved journeys (date it was saved, what sounds are included, etc.)
 - More consistent styling for info panels.
 - Add sound indicators for actions on the map screen.
 - Simplify states for pop-up screens so that only one can be open at any time.
 - Improve responsive styling.
+
+https://earthsong.world/
