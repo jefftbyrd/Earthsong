@@ -7,13 +7,6 @@
   height: 97vh;
   justify-content: center; /* aligns the items horizontally */
   align-items: center; /* aligns the items vertically */
-  // background: rgb(43, 23, 56);
-  // background: radial-gradient(
-  //   circle,
-  //   rgba(43, 23, 56, 1) 0%,
-  //   rgba(18, 22, 52, 1) 0%,
-  //   rgba(0, 0, 0, 1) 100%
-  // );
 }
 
 .projection {
@@ -110,19 +103,6 @@
   // opacity: 0;
 }
 
-// .neonText {
-//   color: #fff;
-//   text-shadow:
-//     0 0 7px #fff,
-//     0 0 10px #fff,
-//     0 0 21px #fff,
-//     0 0 42px rgb(255, 230, 0),
-//     0 0 82px rgb(255, 230, 0),
-//     0 0 92px rgb(255, 230, 0),
-//     0 0 102px rgb(255, 230, 0),
-//     0 0 151px rgb(255, 230, 0);
-// }
-
 .backToMapIcon,
 .userIcon,
 .helpIcon {
@@ -140,8 +120,10 @@
 .helpIcon {
   position: absolute;
   bottom: 0;
-  right: 8vw;
+  left: 7vw;
   padding: 23px;
+  font-family: var(--font-basteleurB);
+  font-weight: 900;
 }
 
 .backToMapIcon {
@@ -447,7 +429,7 @@
 
 .helpOverlay {
   position: absolute;
-  z-index: 8;
+  z-index: 0;
   word-wrap: break-word;
   padding-top: 10rem;
   width: 100%;
@@ -483,9 +465,6 @@
     }
 
     p {
-      // margin-top: 2rem;
-      // font-size: 1.3rem;
-      // line-height: 2rem;
       display: flex;
       flex-direction: row;
       gap: 5px;
@@ -500,25 +479,20 @@
 
       li {
         list-style: none;
-        // display: flex;
-        // margin-left: 1rem;
-        // margin-bottom: 1rem;
-        // align-items: flex-start;
-        // justify-content: flex-start;
 
         .inner {
           display: flex;
           flex-direction: column;
-          margin: 0;
-          padding: 0;
+          // margin: 0;
+          // padding: 0;
           border-left: 1px solid rgba(255, 255, 255, 0.3);
           // border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-          padding-left: 40px;
+          padding-left: 20px;
           margin-left: 20px;
           // border-radius: 10px;
 
           li {
-            list-style: square;
+            // list-style: square;
             padding: 20px 0px;
             margin: 0;
             border: none;
@@ -526,13 +500,6 @@
         }
       }
     }
-
-    // ul {
-    //   list-style: none;
-    //   display: flex;
-    //   // flex-direction: column;
-    //   gap: 5px;
-    // }
 
     .arrow {
       transform: rotate(45deg);
@@ -647,5 +614,18 @@
 
   p {
     line-height: 1.7rem;
+  }
+}
+
+.soundHelp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .infoSymbol {
+    font-family: 'Noto Sans Linear A', sans-serif !important;
+    font-size: 2rem !important;
+    border: none !important;
+    width: auto !important;
   }
 }

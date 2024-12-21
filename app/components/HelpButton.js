@@ -9,29 +9,38 @@ export default function HelpButton() {
 
   return (
     <>
-      <AnimatePresence>
-        {!helpOpen && (
-          <motion.button
-            className={styles.helpIcon}
-            onClick={() => {
-              setHelpOpen(!helpOpen);
-            }}
-            animate={{
-              opacity: [0, 1],
-              transition: { duration: 1, times: [0, 1] },
-            }}
-            exit={{
-              opacity: 0,
-              transition: { duration: 1 },
-            }}
-            whileHover={{
-              color: 'rgba(255, 0, 89, 1)',
-            }}
-          >
-            <HelpIcon height="5.6vw" width="5.6vw" />
-          </motion.button>
-        )}
-      </AnimatePresence>
+      {!helpOpen && (
+        <motion.button
+          className={styles.helpIcon}
+          onClick={() => {
+            setHelpOpen(!helpOpen);
+          }}
+          // animate={{
+          //   opacity: [0, 1],
+          //   transition: { duration: 1, times: [0, 1] },
+          // }}
+          initial={{ opacity: 0 }}
+          animate={{
+            opacity: [0.4, 0.8, 0.4],
+            scale: [1, 1.3, 1],
+            // rotate: [-10, 10, -10],
+            color: ['rgb(255, 0, 89)', 'rgb(181, 0, 78)', 'rgb(255, 0, 89)'],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 3,
+          }}
+          exit={{
+            opacity: 0,
+            transition: { duration: 1 },
+          }}
+          whileHover={{
+            color: 'rgba(255, 0, 89, 1)',
+          }}
+        >
+          <HelpIcon height="5.6vw" width="5.6vw" />
+        </motion.button>
+      )}
 
       <AnimatePresence>
         {helpOpen && (

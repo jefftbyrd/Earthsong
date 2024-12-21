@@ -94,16 +94,11 @@ export default function Earthsong() {
               opacity: [0.2, 0.6, 0.2],
               scale: [1, 1.08, 1],
               color: ['rgb(255, 0, 89)', 'rgb(181, 0, 78)', 'rgb(255, 0, 89)'],
-              // rotate: [-3, 3, -3],
-              // width: ['13vw', '16vw', '13vw'],
             }}
             transition={{
-              // restSpeed: 0.9,
               repeat: Infinity,
               duration: 3,
-              // type: 'spring',
             }}
-            // whileHover={{ scale: 1.5 }}
           >
             <Logo height="15vw" width="15vw" />
           </motion.div>

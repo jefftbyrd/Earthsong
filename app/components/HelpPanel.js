@@ -21,11 +21,23 @@ export default function HelpPanel({ setHelpOpen, helpOpen }) {
   return (
     <div className={styles.helpOverlay}>
       <div className={styles.content}>
-        <h3>Start / stop ˆ</h3>
-        <p>
-          To start or stop a sound, click its name in the top bar or press{' '}
-          <span>1</span>-<span>5</span> on your keyboard.
-        </p>
+        <div className={styles.soundHelp}>
+          <div>
+            <h3>Start / stop ˆ</h3>
+            <p>
+              To start or stop a sound, click its name in the top bar or press{' '}
+              <span>1</span>-<span>5</span> on your keyboard.
+            </p>
+          </div>
+
+          <div>
+            <h3>Learn more about a sound ˆ</h3>
+            <p>
+              Click the <span className={styles.infoSymbol}>𐛠</span> icon to
+              open the sound info panel.
+            </p>
+          </div>
+        </div>
 
         <h2>While hovering the cursor over a sound circle…</h2>
         <ul>
