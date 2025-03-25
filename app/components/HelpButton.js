@@ -15,15 +15,10 @@ export default function HelpButton() {
           onClick={() => {
             setHelpOpen(!helpOpen);
           }}
-          // animate={{
-          //   opacity: [0, 1],
-          //   transition: { duration: 1, times: [0, 1] },
-          // }}
           initial={{ opacity: 0 }}
           animate={{
             opacity: [0.4, 0.8, 0.4],
             scale: [1, 1.3, 1],
-            // rotate: [-10, 10, -10],
             color: ['rgb(255, 0, 89)', 'rgb(181, 0, 78)', 'rgb(255, 0, 89)'],
           }}
           transition={{

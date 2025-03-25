@@ -1,5 +1,3 @@
-// import { motion } from 'motion/react';
-// import Logo from '../../public/Logo.js';
 import styles from './ui.module.scss';
 
 export default function About({}) {

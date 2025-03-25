@@ -38,14 +38,12 @@ export default function Freesound(props) {
 
             setSounds(json4);
           }
-          // setSounds(json3);
         }
       }
     };
     setIsLoading(false);
 
     fetchData().catch(() => console.log('error'));
-    // fetchData();
   }, [props.pin]);
 
   props.sendDataToParent(sounds);

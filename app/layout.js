@@ -20,16 +20,6 @@ const basteleurBold = localFont({
   weight: '900',
 });
 
-// export const metadata = {
-//   title: 'Earthsong',
-//   description: 'Explore the world through sound.',
-//   // og:image: '/earthsong-screen.webp',
-// };
-
-// type Props = {
-//   children: ReactNode;
-// };
-
 export default async function RootLayout({ children }) {
   const sessionTokenCookie = (await cookies()).get('sessionToken');
 

@@ -67,8 +67,6 @@ export default function Map(props) {
     };
   }, []);
 
-  // portal.props
-
   return (
     <>
       {pin.lat ? null : (
@@ -218,11 +216,7 @@ export default function Map(props) {
 
       <div id="map-container" ref={mapContainerRef} />
       {pin.lat ? (
-        <Freesound
-          pin={pin}
-          // fetch={fetch}
-          sendDataToParent={handleDataFromChild}
-        />
+        <Freesound pin={pin} sendDataToParent={handleDataFromChild} />
       ) : null}
     </>
   );

@@ -86,19 +86,9 @@ export default function HelpPanel({ setHelpOpen, helpOpen }) {
         <div className={styles.navHelp}>
           <div className={styles.backToMapHelp}>
             <h3>‹ Return to map</h3>
-            {/* <div className={styles.triangleDown} /> */}
-            {/* <p>Return to the map and choose a new location.</p> */}
-            {/* <h3>ˇ</h3> */}
           </div>
           <div className={styles.userHelp}>
             <h3>Open user panel ›</h3>
-            {/* <p>
-                  Login, register or, if you're already logged in, access your
-                  saved journeys.
-                </p> */}
-            {/* <h3>ˇ</h3> */}
-
-            {/* <div className={styles.triangleDown} /> */}
           </div>
         </div>
       </div>
