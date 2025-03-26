@@ -6,29 +6,48 @@ import { useEffect, useRef, useState } from 'react';
 import Freesound from './Freesound';
 import styles from './ui.module.scss';
 
-const initialCenter = [4.510020088079064, 44.66199079784276];
+interface Pin {
+  lat: number;
+  lng: number;
+}
+
+interface MapProps {
+  sendDataToParent: (data: any) => void;
+  setEnterPortal: (value: boolean) => void;
+  setStartWind: (value: boolean) => void;
+}
+
+const initialCenter: [number, number] = [4.510020088079064, 44.66199079784276];
 const initialZoom = 2.14;
 
-export default function Map(props) {
+export default function Map(props: MapProps) {
   const [enterPortal, setEnterPortal] = useState(false);
-  const [dataFromChild, setDataFromChild] = useState('');
+  const [dataFromChild, setDataFromChild] = useState<any>(null);
 
-  const mapRef = useRef();
-  const mapContainerRef = useRef();
+  const mapRef = useRef<mapboxgl.Map | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
 
-  const [pin, setPin] = useState({});
+  const [pin, setPin] = useState<Pin | {}>({});
   const [fetch, setFetch] = useState(false);
 
-  const [center, setCenter] = useState(initialCenter);
+  const [center, setCenter] = useState<[number, number]>(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
 
-  function handleDataFromChild(data) {
+  function handleDataFromChild(data: any) {
     setDataFromChild(data);
     props.sendDataToParent(data);
   }
 
   useEffect(() => {
-    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
+    if (!mapContainerRef.current) return;
+
+    const token = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
+    if (!token) {
+      console.error('Mapbox token is not defined');
+      return;
+    }
+
+    mapboxgl.accessToken = token;
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: 'mapbox://styles/jefftbyrd/cm473j0lh011801si8hos63hp',
@@ -36,23 +55,24 @@ export default function Map(props) {
       zoom: zoom,
     });
 
-    let lng;
-    let lat;
+    let lng: number;
+    let lat: number;
 
     const marker = new mapboxgl.Marker({
       color: '#314ccd',
     });
 
-    mapRef.current.on('click', (event) => {
+    mapRef.current.on('click', (event: mapboxgl.MapMouseEvent) => {
       lng = event.lngLat.lng;
       lat = event.lngLat.lat;
-      const coords = { lng: lng, lat: lat };
-      marker.setLngLat(coords).addTo(mapRef.current);
+      const coords = { lng, lat };
+      marker.setLngLat(coords).addTo(mapRef.current!);
       setPin(coords);
       setFetch((prevState) => !prevState);
     });
 
     mapRef.current.on('move', () => {
+      if (!mapRef.current) return;
       // get the current center coordinates and zoom level from the map
       const mapCenter = mapRef.current.getCenter();
       const mapZoom = mapRef.current.getZoom();
@@ -63,13 +83,15 @@ export default function Map(props) {
     });
 
     return () => {
-      mapRef.current.remove();
+      if (mapRef.current) {
+        mapRef.current.remove();
+      }
     };
   }, []);
 
   return (
     <>
-      {pin.lat ? null : (
+      {!('lat' in pin) ? (
         <motion.div
           className={styles.instruction}
           animate={{
@@ -86,10 +108,10 @@ export default function Map(props) {
             <h2>Choose a place to explore.</h2>
           </motion.div>
         </motion.div>
-      )}
+      ) : null}
 
       {/* SEARCHING */}
-      {pin.lat && !enterPortal && !dataFromChild ? (
+      {'lat' in pin && !enterPortal && !dataFromChild ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -126,10 +148,10 @@ export default function Map(props) {
       ) : null}
 
       {/* IF THERE ARE ENOUGH SOUNDS */}
-      {pin.lat &&
+      {'lat' in pin &&
       !enterPortal &&
       dataFromChild &&
-      dataFromChild.results.length > 0 ? (
+      dataFromChild.results?.length > 0 ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -153,7 +175,6 @@ export default function Map(props) {
             <motion.button
               className={styles.projectionStart}
               onClick={() => {
-                // props.openPortal();
                 props.setEnterPortal(true);
                 props.setStartWind(false);
               }}
@@ -175,10 +196,10 @@ export default function Map(props) {
       ) : null}
 
       {/* NOT ENOUGH SOUNDS */}
-      {pin.lat &&
+      {'lat' in pin &&
       !enterPortal &&
       dataFromChild &&
-      dataFromChild.results.length < 1 ? (
+      dataFromChild.results?.length < 1 ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -215,8 +236,8 @@ export default function Map(props) {
       ) : null}
 
       <div id="map-container" ref={mapContainerRef} />
-      {pin.lat ? (
-        <Freesound pin={pin} sendDataToParent={handleDataFromChild} />
+      {'lat' in pin ? (
+        <Freesound pin={pin as Pin} sendDataToParent={handleDataFromChild} />
       ) : null}
     </>
   );

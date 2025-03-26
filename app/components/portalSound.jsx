@@ -1,28 +1,17 @@
 import * as Tone from 'tone';
 
 export const portalSound = (p5) => {
-  let noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
-  let bins = 64;
-
-  // let shapeNumber;
+  const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
+  const bins = 64;
 
   let scl = 10;
-  // let strip;
-  // let strips = [];
 
-  // let fft;
-  // let waveforms = [];
   let waveform;
   let reversed = false;
   let visualizer;
   let ellipse;
   let test;
 
-  // var col = {
-  //   r: 0,
-  //   g: 0,
-  //   b: 0,
-  // };
   let shapes = [],
     sampleDraw,
     playRate;
@@ -30,14 +19,12 @@ export const portalSound = (p5) => {
   let sounds2;
   let sounds3;
   let player;
-  let shapesButton;
-  let analyzer;
-  // let number = 0;
+  // let shapesButton;
+  // let analyzer;
 
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   p5.updateWithProps = (props) => {
-    // console.log('resetPortal on portalSound', props.resetPortal);
     if (props.soundsColor) {
       sounds2 = [...props.soundsColor];
     }
@@ -59,13 +46,8 @@ export const portalSound = (p5) => {
     multiPlayer = new Tone.Players();
     p5.textFont(noto);
 
-    // 32 bins
-    // fft = new Tone.FFT();
     waveform = new Tone.Waveform();
     multiPlayer.connect(waveform);
-
-    // analyzer = new Tone.FFT(512);
-    // multiPlayer.connect(analyzer);
   }; // END SETUP
 
   function generateShapes() {
@@ -85,17 +67,13 @@ export const portalSound = (p5) => {
 
   function generatePlayers() {
     for (let i = 0; i < shapes.length; i++) {
-      // shapes[i].rollover();
-      // shapes[i].move();
       shapes[i].players();
-      // shapes[i].showName();
     }
   }
 
   p5.draw = () => {
     p5.background(0);
 
-    // p5.stroke(102, 219, 255);
     let vanishingStroke = p5.color('lightblue');
     vanishingStroke.setAlpha(200);
     p5.stroke(vanishingStroke);
@@ -104,7 +82,6 @@ export const portalSound = (p5) => {
     let visualizerFill = p5.color(115, 64, 50);
     visualizerFill.setAlpha(255);
     p5.fill(visualizerFill);
-    // p5.noStroke(visualizer);
 
     if (frequencyData[0] > 0 || frequencyData[0] < 0) {
       let visualizer = p5.beginShape();
@@ -114,10 +91,6 @@ export const portalSound = (p5) => {
       }
       p5.endShape();
     }
-
-    // if (frequencyData[0] === 0) {
-    //   p5.line(0, 185, p5.windowWidth, 185);
-    // }
 
     for (let i = 0; i < 48; i++) {
       let step = p5.windowWidth / 48;
@@ -164,12 +137,9 @@ export const portalSound = (p5) => {
   }
 
   async function stopAll() {
-    // console.log('stop triggered');
-    // p5.removeElements();
     await multiPlayer.stopAll();
 
     await multiPlayer.dispose();
-    // multiPlayer = new Tone.Players();
     p5.remove();
   }
 
@@ -196,15 +166,12 @@ export const portalSound = (p5) => {
     }
 
     show() {
-      // p5.noStroke();
       let shapeStroke = p5.color('lightblue');
       shapeStroke.setAlpha(100);
       p5.stroke(shapeStroke);
       if (multiPlayer.player(this.id).loaded) {
         if (multiPlayer.player(this.id).state === 'started') {
-          // p5.fill(this.bg);
           let playingFill = p5.color(this.bg);
-          // playingFill.setAlpha(p5.map(this.y, 0, p5.windowHeight, 200, 256));
           p5.fill(playingFill);
 
           p5.select(`.s${this.id}`).attribute(
@@ -212,7 +179,6 @@ export const portalSound = (p5) => {
             `background-color:${this.bg};`,
           );
         } else {
-          // p5.fill(this.bg.replace('1)', '0.75)'));
           let c = p5.color(this.bg);
           c.setAlpha(90);
           p5.fill(c);
@@ -226,28 +192,16 @@ export const portalSound = (p5) => {
         p5.map(this.y, 0, p5.windowHeight, 50, 600) + this.meterMap;
       this.numberSize =
         p5.map(this.y, 0, p5.windowHeight, 10, 200) + this.meterMap / 2;
-      // test = p5.select(this.ellipse);
-      // this.test.style('align', 'center');
-      ellipse = p5.ellipse(this.x, this.y, this.diameter);
-      // this.zIndex = p5.map(this.y, 0, p5.windowHeight, 0, 4);
 
-      // this.test.attribute('align', 'center');
-      // this.test.style('z-index', -9999);
-      // this.ellipse.elt.style.border = '5px dashed deeppink';
-      // this.ellipse.attribute('align', 'center');
-      // this.ellipse.style('z-index', -9999);
-      // this.shapeObject.style(`z-index: ${this.zIndex}`);
-      // shapeObject.style('color', 'deeppink');
-      // p5.text(sounds2.indexOf(this.id), this.x, this.y);
-      // console.log('sounds2 in show', sounds2);
+      ellipse = p5.ellipse(this.x, this.y, this.diameter);
+
       p5.textSize(this.numberSize);
       p5.noStroke();
 
       let c = p5.color(0, 0, 0);
       c.setAlpha(150);
       p5.fill(c);
-      // p5.strokeWeight(4);
-      // p5.stroke(51);
+
       p5.textAlign(p5.CENTER, p5.CENTER);
 
       p5.push();
@@ -291,9 +245,7 @@ export const portalSound = (p5) => {
     } // END SHOW
 
     players() {
-      multiPlayer.add(this.id, this.url, () => {
-        // console.log(`${this.id} loaded`);
-      });
+      multiPlayer.add(this.id, this.url, () => {});
       multiPlayer.player(this.id).loop = true;
       multiPlayer.player(this.id).fadeIn = 0.1;
       multiPlayer.player(this.id).fadeOut = 0.3;
@@ -351,21 +303,12 @@ export const portalSound = (p5) => {
 
         p5.keyTyped = () => {
           if (p5.key === 'r' && this.d < this.diameter / 2) {
-            // Reverse sound by typing R
-            // this.reversed = (value) => !value;
-            // if (reversed === true) reversed = false;
-            // else reversed = true;
             this.reversed = !this.reversed;
 
             multiPlayer.player(this.id).reverse = this.reversed;
-            // p5.select(`.s${this.id} h3`).attribute(
-            //   'style',
-            //   `color:rgba(181, 0, 78, 1)`,
-            // );
+
             this.switch = p5.select(`.s${this.id} div`);
             this.switch.toggleClass('reversed');
-            // this.switch = p5.select(`.s${this.id} span`);
-            // this.switch.toggleClass('reversed');
           }
         };
 

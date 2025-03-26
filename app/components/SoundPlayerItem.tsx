@@ -3,6 +3,24 @@ import React, { useState } from 'react';
 import styles from './portal.module.scss';
 import SoundInfoPanel from './SoundInfoPanel';
 
+interface ProcessedSound {
+  id: number;
+  url: string;
+  name: string;
+  freesoundUrl?: string;
+  color?: string;
+}
+
+interface SoundPlayerItemProps {
+  sound: ProcessedSound;
+  index: number;
+  setPlayerTarget: (id: number) => void;
+  setPlaying: (playing: boolean) => void;
+  playing: boolean;
+  setDisplayingItem: (id: number) => void;
+  displayingItem: number | undefined;
+}
+
 export default function SoundPlayerItem({
   sound,
   index,
@@ -11,7 +29,7 @@ export default function SoundPlayerItem({
   playing,
   setDisplayingItem,
   displayingItem,
-}) {
+}: SoundPlayerItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
@@ -26,9 +44,7 @@ export default function SoundPlayerItem({
             setPlayerTarget(sound.id);
           }}
         >
-          <div
-            className={styles.soundText}
-          >
+          <div className={styles.soundText}>
             <span className={styles.soundNumber}>{aegean[index]}</span>
             <span className={styles.soundName}>{sound.name}</span>
           </div>

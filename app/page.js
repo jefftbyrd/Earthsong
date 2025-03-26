@@ -5,7 +5,6 @@ import { useContext, useState } from 'react';
 import Logo from '../public/Logo.js';
 import BackToMap from './components/BackToMap';
 import { clouds } from './components/clouds';
-import HelpButton from './components/HelpButton.js';
 import Login from './components/Login';
 import Map from './components/Map';
 import { occult } from './components/occult';
@@ -59,7 +58,7 @@ export default function Earthsong() {
               setStartWind={setStartWind}
               setPortalRecall={setPortalRecall}
             />
-            <HelpButton />
+            {/* <HelpButton /> */}
           </>
         ) : null}
       </AnimatePresence>

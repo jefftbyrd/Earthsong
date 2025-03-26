@@ -1,22 +1,24 @@
-export const clouds = (p5) => {
+import type p5 from 'p5';
+
+export const clouds = (p5: p5) => {
   const tileCount = 100;
   const noiseScale = 0.03;
 
-  let noiseVector;
-  let noiseVelocity;
-  let noiseAcceleration;
-  let button;
-  let startTime;
-  let showStartScreen = false;
+  let noiseVector: p5.Vector;
+  let noiseVelocity: p5.Vector;
+  let noiseAcceleration: p5.Vector;
+  let button: any; // TODO: Add proper button type if needed
+  let startTime: number;
+  const showStartScreen = false;
 
-  let initialSkyColor;
-  let targetSkyColor;
-  let initialCloudColor;
-  let targetCloudColor;
+  let initialSkyColor: p5.Color;
+  let targetSkyColor: p5.Color;
+  let initialCloudColor: p5.Color;
+  let targetCloudColor: p5.Color;
 
   p5.setup = () => {
-    let canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
-    // p5.position.canvas;
+    const canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
+
     canvas.position(0, 0);
 
     // Initialize vectors for moving noise field
@@ -39,7 +41,7 @@ export const clouds = (p5) => {
     // Show screen
     if (showStartScreen) {
       p5.background(252, 230, 252);
-      button.show();
+      button?.show();
 
       // After button is pressed
     } else {
@@ -85,12 +87,10 @@ export const clouds = (p5) => {
 
           // Map noise to opacity to create cloud transparency with a value
           let a = p5.map(noiseValue, 0, 0.5, 0, 210);
-          p5.fill(
-            currentCloudColor.levels[0],
-            currentCloudColor.levels[1],
-            currentCloudColor.levels[2],
-            a,
-          );
+          let r = p5.red(currentCloudColor);
+          let g = p5.green(currentCloudColor);
+          let b = p5.blue(currentCloudColor);
+          p5.fill(r, g, b, a);
 
           // Draw tiles
           p5.noStroke();

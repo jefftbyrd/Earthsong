@@ -2,22 +2,39 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
+import type { FormEvent } from 'react';
 import { useState } from 'react';
 import ErrorMessage from '../ErrorMessage';
 import About from './About';
 import RegisterComponent from './RegisterComponent';
 import styles from './ui.module.scss';
 
-export default function LoginPanel({ setLoginOpen, loginOpen }) {
+interface LoginPanelProps {
+  setLoginOpen: (open: boolean) => void;
+  loginOpen: boolean;
+}
+
+interface Error {
+  message: string;
+}
+
+interface LoginResponse {
+  errors?: Error[];
+}
+
+export default function LoginPanel({
+  setLoginOpen,
+  loginOpen,
+}: LoginPanelProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<Error[]>([]);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
 
   const router = useRouter();
 
-  async function handleLogin(event) {
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const response = await fetch('api/login', {
@@ -28,9 +45,9 @@ export default function LoginPanel({ setLoginOpen, loginOpen }) {
       }),
     });
 
-    const data = await response.json();
+    const data: LoginResponse = await response.json();
 
-    if ('errors' in data) {
+    if (data.errors) {
       setErrors(data.errors);
       return;
     }

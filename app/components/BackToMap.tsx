@@ -1,13 +1,21 @@
 import { motion } from 'motion/react';
+import type { Dispatch, SetStateAction } from 'react';
 import Logo from '../../public/Logo.js';
 import styles from './ui.module.scss';
+
+interface BackToMapProps {
+  setEnterPortal: Dispatch<SetStateAction<boolean>>;
+  setResetPortal: Dispatch<SetStateAction<boolean>>;
+  setStartWind: Dispatch<SetStateAction<boolean>>;
+  setPortalRecall: Dispatch<SetStateAction<boolean>>;
+}
 
 export default function BackToMap({
   setEnterPortal,
   setResetPortal,
   setStartWind,
   setPortalRecall,
-}) {
+}: BackToMapProps) {
   return (
     <motion.button
       className={styles.backToMapIcon}

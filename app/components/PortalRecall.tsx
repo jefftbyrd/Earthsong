@@ -9,88 +9,102 @@ import Save from './Save';
 import SaveButton from './SaveButton';
 import SoundPlayerItem from './SoundPlayerItem';
 
-export default function PortalRecall(props) {
+interface ProcessedSound {
+  id: number;
+  url: string;
+  name: string;
+  freesoundUrl?: string;
+  color?: string;
+}
+
+interface PortalRecallProps {
+  sounds: Promise<ProcessedSound[]>;
+  resetPortal: () => void;
+  user?: any; // Note: This could be improved with a proper user type
+}
+
+export default function PortalRecall({
+  sounds,
+  resetPortal,
+  user,
+}: PortalRecallProps) {
   const [isLoading, setIsLoading] = useState(true);
-  const [soundsColor, setSoundsColor] = useState();
+  const [soundsColor, setSoundsColor] = useState<ProcessedSound[]>([]);
   const [generate, setGenerate] = useState(false);
-  const [playerTarget, setPlayerTarget] = useState();
+  const [playerTarget, setPlayerTarget] = useState<number | undefined>();
   const [playing, setPlaying] = useState(false);
-  const [dataFromChild, setDataFromChild] = useState();
-  const [displayingItem, setDisplayingItem] = useState();
+  const [dataFromChild, setDataFromChild] = useState<any>();
+  const [displayingItem, setDisplayingItem] = useState<number | undefined>();
   const [isOpen, setIsOpen] = useState(false);
   const [saveIsOpen, setSaveIsOpen] = useState(false);
   const [manualClose, setManualClose] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  function handleDataFromChild(data) {
+  function handleDataFromChild(data: any) {
     setDataFromChild(data);
   }
 
   useEffect(() => {
     const recallSnapshot = async () => {
-      const recalledSounds = await props.sounds;
+      const recalledSounds = await sounds;
       setSoundsColor(recalledSounds);
       setIsLoading(false);
-      // console.log('soundsColor on portal recall', soundsColor);
     };
 
     recallSnapshot();
-  }, []);
+  }, [sounds]);
 
   if (isLoading) {
-    // early return
     return 'Loading...';
   }
 
   return (
-    <>
-      {console.log('showSuccessMessage', showSuccessMessage)}
-      {soundsColor.length > 0 ? (
+    <div>
+      {soundsColor.length > 0 && (
         <NextReactP5Wrapper
           sketch={portalSound}
           soundsColor={soundsColor}
           generate={generate}
           playerTarget={playerTarget}
           play={playing}
-          resetPortal={props.resetPortal}
+          resetPortal={resetPortal}
         />
-      ) : null}
+      )}
       <div className={styles.multiController}>
-        {soundsColor.map((sound, index) => {
-          return (
-            <div key={`soundId-${sound.id}`} className={styles.soundItem}>
-              <SoundPlayerItem
-                sound={sound}
-                index={index}
-                setPlayerTarget={setPlayerTarget}
-                setPlaying={setPlaying}
-                setDisplayingItem={setDisplayingItem}
-                playing={playing}
-                displayingItem={displayingItem}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-              />
-            </div>
-          );
-        })}
-        {props.user ? (
+        {soundsColor.map((sound, index) => (
+          <div key={`soundId-${sound.id}`} className={styles.soundItem}>
+            <SoundPlayerItem
+              sound={sound}
+              index={index}
+              setPlayerTarget={setPlayerTarget}
+              setPlaying={setPlaying}
+              setDisplayingItem={setDisplayingItem}
+              playing={playing}
+              displayingItem={displayingItem}
+            />
+          </div>
+        ))}
+        {user ? (
           <SaveButton
             setSaveIsOpen={setSaveIsOpen}
             saveIsOpen={saveIsOpen}
             setShowSuccessMessage={setShowSuccessMessage}
           />
         ) : (
-          <LoginToSaveButton />
+          <LoginToSaveButton
+            setSaveIsOpen={setSaveIsOpen}
+            saveIsOpen={saveIsOpen}
+          />
         )}
-        {saveIsOpen ? (
+        {saveIsOpen && (
           <Save
             sounds={soundsColor}
             setSaveIsOpen={setSaveIsOpen}
             setShowSuccessMessage={setShowSuccessMessage}
             showSuccessMessage={showSuccessMessage}
           />
-        ) : null}
-        {showSuccessMessage ? (
+        )}
+        {showSuccessMessage && (
           <motion.h1
             className="successMessage"
             animate={{
@@ -100,9 +114,8 @@ export default function PortalRecall(props) {
           >
             Your journey was saved!
           </motion.h1>
-        ) : null}
+        )}
       </div>
-      {/* End multiController */}
-    </>
+    </div>
   );
 }

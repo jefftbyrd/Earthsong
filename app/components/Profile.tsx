@@ -1,10 +1,22 @@
 'use client';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
-import LoginForm from '../(auth)/login/LoginForm';
 import Star from '../../public/Star.js';
-import SnapshotForm from '../snapshots/SnapshotForm';
+import SnapshotForm from '../snapshots/SnapshotForm.js';
 import styles from './ui.module.scss';
+
+interface ProfileProps {
+  user?: any; // Note: This could be improved with a proper user type
+  snapshots?: any;
+  setRecallId?: any;
+  setPortalRecall?: any;
+  setEnterPortal?: any;
+  setResetPortal?: any;
+  resetPortal?: any;
+  setStartWind?: any;
+  setIsStarted?: any;
+  portalRecall?: any;
+}
 
 export default function Profile({
   user,
@@ -17,7 +29,7 @@ export default function Profile({
   setStartWind,
   setIsStarted,
   portalRecall,
-}) {
+}: ProfileProps) {
   const [profileOpen, setProfileOpen] = useState(false);
 
   return (
@@ -29,7 +41,6 @@ export default function Profile({
         }}
         whileHover={{
           color: 'rgba(255, 0, 89, 1)',
-          // rotate: 20,
         }}
       >
         <Star height="6vw" width="6vw" />
@@ -40,7 +51,7 @@ export default function Profile({
           user={user}
           snapshots={snapshots}
           setProfileOpen={setProfileOpen}
-          profileOpen={profileOpen}
+          // profileOpen={profileOpen}
           setRecallId={setRecallId}
           setPortalRecall={setPortalRecall}
           setEnterPortal={setEnterPortal}

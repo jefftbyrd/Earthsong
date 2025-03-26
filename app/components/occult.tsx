@@ -1,11 +1,13 @@
-export const occult = (p5) => {
-  let grotesk = p5.loadFont('/Grotesk-03Regular.otf');
+import p5 from 'p5';
+
+export const occult = (p5: p5) => {
+  const grotesk = p5.loadFont('/Grotesk-03Regular.otf');
   let sourceText = 'ⵙⴻⵅⵙⵉ ⵜⵉⵎⴻⵙ ⵜⵓⵔⴰ ⵐⵄⴿ ⴵꙮⵆ ⵡⵡⵜⵚ ⵣⵣⵣⵣ ⵞⵟⵢⵙ ⵒⵓⵓⵇⴺ';
-  let words;
+  let words: string[];
 
-  let halfText;
+  let halfText: string;
 
-  let fade;
+  let fade: number;
   let fadeAmount = 1;
 
   p5.setup = () => {

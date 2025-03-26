@@ -1,7 +1,6 @@
 'use client';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useState } from 'react';
-import LoginForm from '../(auth)/login/LoginForm';
 import StarInverted from '../../public/StarInverted';
 import LoginPanel from './LoginPanel';
 import styles from './ui.module.scss';

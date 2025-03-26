@@ -1,5 +1,11 @@
 import styles from './portal.module.scss';
 
+// interface SaveButtonProps {
+//   setSaveIsOpen?: any;
+//   saveIsOpen?: any;
+//   setShowSuccessMessage?: any;
+// }
+
 export default function SaveButton({
   setSaveIsOpen,
   saveIsOpen,

@@ -2,7 +2,15 @@ import { useState } from 'react';
 import LoginForm from '../(auth)/login/LoginForm';
 import styles from './portal.module.scss';
 
-export default function LoginToSaveButton({ setSaveIsOpen, saveIsOpen }) {
+interface LoginToSaveButtonProps {
+  setSaveIsOpen: (isOpen: boolean) => void;
+  saveIsOpen: boolean;
+}
+
+export default function LoginToSaveButton({
+  setSaveIsOpen,
+  saveIsOpen,
+}: LoginToSaveButtonProps) {
   const [loginOpen, setLoginOpen] = useState(false);
 
   return (

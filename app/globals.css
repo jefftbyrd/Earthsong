@@ -26,8 +26,6 @@ a {
 }
 
 body {
-  /* color: var(--foreground);
-  background: var(--background); */
   font-family: var(--font-basteleurM);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -2,12 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-// import type { RegisterResponseBody } from '../(auth)/api/register/route';
-// import { getSafeReturnToPath } from '../../util/validation';
 import ErrorMessage from '../ErrorMessage';
 import styles from './ui.module.scss';
-
-// type Props = { returnTo?: string | string[] };
 
 export default function RegisterComponent(props) {
   const [username, setUsername] = useState('');
@@ -33,18 +29,6 @@ export default function RegisterComponent(props) {
       setErrors(data.errors);
       return;
     }
-
-    // router.push(`/profile/${data.user.username}`);
-
-    // This is not a secure returnTo
-    // if (props.returnTo) {
-    //   console.log('Checks Return to: ', props.returnTo);
-    //   router.push(props.returnTo || `/profile/${data.user.username}`);
-    // }
-
-    // router.push(
-    //   getSafeReturnToPath(props.returnTo) || `/profile/${data.user.username}`,
-    // );
 
     router.refresh();
   }

@@ -1,23 +1,8 @@
-// 'use client';
-
 import { AnimatePresence, motion } from 'motion/react';
-// import {
-//   Description,
-//   Dialog,
-//   DialogPanel,
-//   DialogTitle,
-// } from '@headlessui/react';
-// import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-// import { useState } from 'react';
 import React, { useState } from 'react';
-// import type { User } from '../../../migrations/00000-createTableUsers';
-// import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
-// import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
 import ErrorMessage from '../ErrorMessage';
 import styles from './ui.module.scss';
-
-// import styles from './SnapshotsForm.module.scss';
 
 // type Props = {
 //   user: User;
@@ -30,11 +15,8 @@ export default function Save({
   setShowSuccessMessage,
   showSuccessMessage,
 }) {
-  // console.log('closeMe', closeMe);
-  // const [sounds, setSounds] = useState(props.sounds);
   const [errorMessage, setErrorMessage] = useState('');
   const [title, setTitle] = useState('');
-  // const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const router = useRouter();
 
@@ -63,7 +45,6 @@ export default function Save({
         <form
           onSubmit={async (event) => {
             event.preventDefault();
-            // setSaveIsOpen(false);
 
             const response = await fetch('/api/snapshots', {
               method: 'POST',
@@ -79,25 +60,15 @@ export default function Save({
               const responseBody = await response.json();
 
               if ('error' in responseBody) {
-                // TODO: Use toast instead of showing
-                // this below creation / update form
                 setErrorMessage(responseBody.error);
                 return;
               }
             }
 
             setTitle('');
-            // setTextContent('');
-            // setSounds();
+
             await setShowSuccessMessage(!showSuccessMessage);
-            // await setShowSuccessMessage(false);
             await setSaveIsOpen(false);
-            // await setShowSuccessMessage(false);
-            // await setShowSuccessMessage(false);
-            // setShowSuccessMessage(false);
-            // setManualClose(!manualClose);
-            // closeMe();
-            // setSaveIsOpen(!saveIsOpen);
 
             router.refresh();
           }}

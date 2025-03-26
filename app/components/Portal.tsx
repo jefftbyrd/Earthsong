@@ -1,6 +1,7 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { motion } from 'motion/react';
+import type { Dispatch, SetStateAction } from 'react';
 import React, { useEffect, useState } from 'react';
 import uniqolor from 'uniqolor';
 import LoginToSaveButton from './LoginToSaveButton';
@@ -10,32 +11,56 @@ import Save from './Save';
 import SaveButton from './SaveButton';
 import SoundPlayerItem from './SoundPlayerItem';
 
-export default function Portal(props) {
+interface Sound {
+  id: number;
+  url: string;
+  name: string;
+  previews: {
+    'preview-lq-mp3': string;
+  };
+  freesoundUrl?: string;
+  color?: string;
+}
+
+interface ProcessedSound {
+  id: number;
+  url: string;
+  name: string;
+  freesoundUrl?: string;
+  color?: string;
+}
+
+interface PortalProps {
+  sounds: Promise<{ results: Sound[] }>;
+  resetPortal: () => void;
+  user?: any; // Replace 'any' with proper user type if available
+}
+
+export default function Portal({ sounds, resetPortal, user }: PortalProps) {
   const [isLoading, setIsLoading] = useState(true);
-  const [soundsColor, setSoundsColor] = useState();
+  const [soundsColor, setSoundsColor] = useState<ProcessedSound[]>([]);
   const [generate, setGenerate] = useState(false);
-  const [playerTarget, setPlayerTarget] = useState();
+  const [playerTarget, setPlayerTarget] = useState<number | undefined>();
   const [playing, setPlaying] = useState(false);
-  const [dataFromChild, setDataFromChild] = useState();
-  const [displayingItem, setDisplayingItem] = useState();
+  const [dataFromChild, setDataFromChild] = useState<any>();
+  const [displayingItem, setDisplayingItem] = useState<number | undefined>();
   const [isOpen, setIsOpen] = useState(false);
   const [saveIsOpen, setSaveIsOpen] = useState(false);
   const [manualClose, setManualClose] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  function handleDataFromChild(data) {
+  function handleDataFromChild(data: any) {
     setDataFromChild(data);
   }
 
   useEffect(() => {
     const addColor = async () => {
-      const response = await props.sounds;
+      const response = await sounds;
       const soundsShuffled = response.results
-        .sort(() => 0.5 - Math.random()) // Shuffle array
-        .slice(0, 5); // Select the first 5 items
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 5);
       const soundsWithColor = soundsShuffled
-        // .slice(0, 5)
-        .map((sound) => ({
+        .map((sound: Sound) => ({
           ...sound,
           freesoundUrl: sound.url,
           color: uniqolor
@@ -56,13 +81,13 @@ export default function Portal(props) {
             .replaceAll('-', ' ')
             .replaceAll('mp3', ''),
         }))
-        .map(({ previews, ...sound }) => sound);
+        .map(({ previews, ...sound }: Sound) => sound as ProcessedSound);
       setSoundsColor(soundsWithColor);
       setIsLoading(false);
     };
 
     addColor();
-  }, []);
+  }, [sounds]);
 
   if (isLoading) {
     // early return
@@ -78,7 +103,7 @@ export default function Portal(props) {
           generate={generate}
           playerTarget={playerTarget}
           play={playing}
-          resetPortal={props.resetPortal}
+          resetPortal={resetPortal}
         />
       ) : null}
       <div className={styles.multiController}>
@@ -90,23 +115,24 @@ export default function Portal(props) {
                 index={index}
                 setPlayerTarget={setPlayerTarget}
                 setPlaying={setPlaying}
-                setDisplayingItem={setDisplayingItem}
                 playing={playing}
+                setDisplayingItem={setDisplayingItem}
                 displayingItem={displayingItem}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
               />
             </div>
           );
         })}
-        {props.user ? (
+        {user ? (
           <SaveButton
             setSaveIsOpen={setSaveIsOpen}
             saveIsOpen={saveIsOpen}
             setShowSuccessMessage={setShowSuccessMessage}
           />
         ) : (
-          <LoginToSaveButton />
+          <LoginToSaveButton
+            setSaveIsOpen={setSaveIsOpen}
+            saveIsOpen={saveIsOpen}
+          />
         )}
         {saveIsOpen ? (
           <Save

@@ -2,9 +2,6 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-// import Link from 'next/link';
-// import { useRouter } from 'next/navigation';
-// import { useState } from 'react';
 import LogoutButton from '../(auth)/logout/LogoutButton';
 import About from '../components/About';
 // import type { User } from '../../migrations/00000-createTableUsers';
@@ -35,12 +32,7 @@ export default function SnapshotsForm({
   setIsStarted,
   portalRecall,
 }) {
-  // const [title, setTitle] = useState('');
-  // const [textContent, setTextContent] = useState('');
-  // const [errorMessage, setErrorMessage] = useState('');
   const [aboutOpen, setAboutOpen] = useState(false);
-
-  // const router = useRouter();
 
   return (
     <AnimatePresence>
