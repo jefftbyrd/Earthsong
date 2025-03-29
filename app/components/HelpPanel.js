@@ -1,11 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'motion/react';
-import Image from 'next/image';
 import { useEffect } from 'react';
-import Logo from '../../public/Logo';
-import playerBar from '../../public/playerBar.webp';
-import Star from '../../public/Star';
 import styles from './ui.module.scss';
 
 export default function HelpPanel({ setHelpOpen, helpOpen }) {
