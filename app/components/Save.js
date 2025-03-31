@@ -87,18 +87,8 @@ export default function Save({
             }
 
             setTitle('');
-            // setTextContent('');
-            // setSounds();
             await setShowSuccessMessage(!showSuccessMessage);
-            // await setShowSuccessMessage(false);
             await setSaveIsOpen(false);
-            // await setShowSuccessMessage(false);
-            // await setShowSuccessMessage(false);
-            // setShowSuccessMessage(false);
-            // setManualClose(!manualClose);
-            // closeMe();
-            // setSaveIsOpen(!saveIsOpen);
-
             router.refresh();
           }}
         >
