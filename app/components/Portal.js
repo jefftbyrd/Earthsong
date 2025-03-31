@@ -75,7 +75,7 @@ export default function Portal(props) {
         <NextReactP5Wrapper
           sketch={portalSound}
           soundsColor={soundsColor}
-          generate={generate}
+          // generate={generate}
           playerTarget={playerTarget}
           play={playing}
           resetPortal={props.resetPortal}
