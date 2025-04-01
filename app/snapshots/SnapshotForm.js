@@ -24,20 +24,7 @@ import { userContext } from '../context/userContext';
 //   snapshots: Snapshot[];
 // };
 
-export default function SnapshotsForm({
-  // setRecallId,
-  // setPortalRecall,
-  // user,
-  // snapshots,
-  setProfileOpen,
-  // profileOpen,
-  // setEnterPortal,
-  // setResetPortal,
-  // resetPortal,
-  setStartWind,
-  // setIsStarted,
-  // portalRecall,
-}) {
+export default function SnapshotsForm({ setProfileOpen, setStartWind }) {
   // const [title, setTitle] = useState('');
   // const [textContent, setTextContent] = useState('');
   // const [errorMessage, setErrorMessage] = useState('');
@@ -83,14 +70,8 @@ export default function SnapshotsForm({
                     <li key={`snapshots-${snapshot?.id}`}>
                       <SnapshotItem
                         snapshot={snapshot}
-                        // setRecallId={setRecallId}
-                        // setPortalRecall={setPortalRecall}
-                        // setProfileOpen={setProfileOpen}
-                        // setEnterPortal={setEnterPortal}
-                        // setResetPortal={setResetPortal}
-                        // resetPortal={resetPortal}
+                        setProfileOpen={setProfileOpen}
                         setStartWind={setStartWind}
-                        // setIsStarted={setIsStarted}
                       />
                     </li>
                   ))}
