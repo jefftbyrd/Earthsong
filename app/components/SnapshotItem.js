@@ -1,4 +1,6 @@
 'use client';
+import { useContext, useState } from 'react';
+import { earthsongContext } from '../context/earthsongContext';
 import styles from './ui.module.scss';
 
 export default function SnapshotItem({
@@ -13,21 +15,28 @@ export default function SnapshotItem({
   setIsStarted,
 }) {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
+  const { setPhase } = useContext(earthsongContext);
+  const { setReset } = useContext(earthsongContext);
 
   return (
     <>
       {/* {snapshot.title} */}
       <button
         onClick={async () => {
-          await setResetPortal(true);
-          await setResetPortal(false);
-          await setEnterPortal(false);
+          // await setResetPortal(true);
+          // await setResetPortal(false);
+          await setReset(true);
+          await setReset(false);
           await setRecallId(snapshot.id);
-          await setPortalRecall(true);
+          await setPhase('portalRecall');
+          // await setResetPortal(true);
+          // await setResetPortal(false);
+          // await setEnterPortal(false);
+          // await setPortalRecall(true);
           setStartWind(false);
           setProfileOpen(false);
-          setEnterPortal(true);
-          setIsStarted(true);
+          // setEnterPortal(true);
+          // setIsStarted(true);
         }}
       >
         {snapshot.title}

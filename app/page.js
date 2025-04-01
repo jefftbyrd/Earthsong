@@ -22,15 +22,15 @@ export default function Earthsong() {
   // const [isStarted, setIsStarted] = useState(false);
   const { isStarted, setIsStarted } = useContext(earthsongContext);
   // const [enterPortal, setEnterPortal] = useState(false);
-  const { enterPortal, setEnterPortal } = useContext(earthsongContext);
+  // const { enterPortal, setEnterPortal } = useContext(earthsongContext);
   const [dataFromChild, setDataFromChild] = useState('');
-  const [resetPortal, setResetPortal] = useState(false);
+  // const [resetPortal, setResetPortal] = useState(false);
   const [portalRecall, setPortalRecall] = useState(false);
   const [recallId, setRecallId] = useState();
   const [startWind, setStartWind] = useState(false);
   // const earthsong = useContext(earthsongContextOld);
-  const earthsong = useContext(earthsongContext);
-  console.log('earthsong', earthsong);
+  // const earthsong = useContext(earthsongContext);
+  // console.log('earthsong', earthsong);
   const { user } = useContext(earthsongContext);
   const { snapshots } = useContext(earthsongContext);
   const { phase, setPhase } = useContext(earthsongContext);
@@ -58,12 +58,12 @@ export default function Earthsong() {
       ) : null}
 
       <AnimatePresence>
-        {phase === 'portal' ? (
+        {phase === 'portal' || phase === 'portalRecall' ? (
           <>
             <BackToMap
-              setEnterPortal={setEnterPortal}
-              setResetPortal={setResetPortal}
-              resetPortal={resetPortal}
+              // setEnterPortal={setEnterPortal}
+              // setResetPortal={setResetPortal}
+              // resetPortal={resetPortal}
               setStartWind={setStartWind}
               setPortalRecall={setPortalRecall}
             />
@@ -76,9 +76,9 @@ export default function Earthsong() {
         <Profile
           setPortalRecall={setPortalRecall}
           setRecallId={setRecallId}
-          setEnterPortal={setEnterPortal}
-          setResetPortal={setResetPortal}
-          resetPortal={resetPortal}
+          // setEnterPortal={setEnterPortal}
+          // setResetPortal={setResetPortal}
+          // resetPortal={resetPortal}
           setStartWind={setStartWind}
           setIsStarted={setIsStarted}
           portalRecall={portalRecall}
@@ -134,7 +134,7 @@ export default function Earthsong() {
             <Map
               // openPortal={() => setEnterPortal(true)}
               sendDataToParent={handleDataFromChild}
-              setEnterPortal={setEnterPortal}
+              // setEnterPortal={setEnterPortal}
               setStartWind={setStartWind}
             />
           </motion.div>
@@ -162,7 +162,7 @@ export default function Earthsong() {
       </AnimatePresence>
 
       {/* Show the occult text */}
-      {phase === 'portal' ? (
+      {phase === 'portal' || phase === 'portalRecall' ? (
         <motion.div
           className={styles.occult}
           animate={{
@@ -200,14 +200,14 @@ export default function Earthsong() {
         >
           <Portal
             sounds={dataFromChild}
-            resetPortal={resetPortal}
+            // resetPortal={resetPortal}
             // user={user}
           />
         </motion.div>
       ) : null}
 
       {/* PortalRecall */}
-      {portalRecall && enterPortal && snapshots ? (
+      {phase === 'portalRecall' && snapshots ? (
         <motion.div
           animate={{
             opacity: [0, 0, 1],
@@ -219,7 +219,7 @@ export default function Earthsong() {
             sounds={
               snapshots.find((snapshot) => snapshot.id === recallId).sounds
             }
-            resetPortal={resetPortal}
+            // resetPortal={resetPortal}
             user={user}
           />
         </motion.div>

@@ -26,6 +26,7 @@ export default function Portal(props) {
 
   const { user } = useContext(earthsongContext);
   // const { snapshots } = useContext(earthsongContext);
+  const { reset } = useContext(earthsongContext);
 
   function handleDataFromChild(data) {
     setDataFromChild(data);
@@ -83,6 +84,7 @@ export default function Portal(props) {
           playerTarget={playerTarget}
           play={playing}
           resetPortal={props.resetPortal}
+          reset={reset}
         />
       ) : null}
       <div className={styles.multiController}>

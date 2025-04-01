@@ -11,7 +11,7 @@ const initialCenter = [4.510020088079064, 44.66199079784276];
 const initialZoom = 2.14;
 
 export default function Map(props) {
-  const [enterPortal, setEnterPortal] = useState(false);
+  // const [enterPortal, setEnterPortal] = useState(false);
   const [dataFromChild, setDataFromChild] = useState('');
 
   const mapRef = useRef();
@@ -92,7 +92,7 @@ export default function Map(props) {
       )}
 
       {/* SEARCHING */}
-      {pin.lat && !enterPortal && !dataFromChild ? (
+      {pin.lat && phase === 'map' && !dataFromChild ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -130,7 +130,7 @@ export default function Map(props) {
 
       {/* IF THERE ARE ENOUGH SOUNDS */}
       {pin.lat &&
-      !enterPortal &&
+      phase === 'map' &&
       dataFromChild &&
       dataFromChild.results.length > 0 ? (
         <div className={styles.projection}>
@@ -180,7 +180,7 @@ export default function Map(props) {
 
       {/* NOT ENOUGH SOUNDS */}
       {pin.lat &&
-      !enterPortal &&
+      phase === 'map' &&
       dataFromChild &&
       dataFromChild.results.length < 1 ? (
         <div className={styles.projection}>
