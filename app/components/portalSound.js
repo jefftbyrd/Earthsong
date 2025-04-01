@@ -1,37 +1,38 @@
 import * as Tone from 'tone';
 
 export const portalSound = (p5) => {
-  let noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
-  let bins = 64;
+  const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
+  // let bins = 64;
 
   // let shapeNumber;
 
-  let scl = 10;
+  const scl = 10;
   // let strip;
   // let strips = [];
 
   // let fft;
   // let waveforms = [];
   let waveform;
-  let reversed = false;
-  let visualizer;
+  // let reversed = false;
+  // let visualizer;
   let ellipse;
-  let test;
+  // let test;
 
   // var col = {
   //   r: 0,
   //   g: 0,
   //   b: 0,
   // };
-  let shapes = [],
-    sampleDraw,
-    playRate;
+  const shapes = [];
+  // let Shape;
+  // sampleDraw,
+  // playRate;
   let multiPlayer;
   let sounds2;
-  let sounds3;
-  let player;
-  let shapesButton;
-  let analyzer;
+  // let sounds3;
+  // let player;
+  // let shapesButton;
+  // let analyzer;
   // let number = 0;
 
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
@@ -73,14 +74,14 @@ export const portalSound = (p5) => {
 
   function generateShapes() {
     sounds2.map((sound, index) => {
-      let x = p5.random(p5.width - 300);
-      let y = p5.random(300, p5.height);
-      let id = sound.id;
-      let name = sound.name;
-      let bg = sound.color;
-      let url = sound.url;
-      let number = index + 1;
-      let b = new Shape(x, y, id, name, bg, url, number);
+      const x = p5.random(p5.width - 300);
+      const y = p5.random(300, p5.height);
+      const id = sound.id;
+      const name = sound.name;
+      const bg = sound.color;
+      const url = sound.url;
+      const number = index + 1;
+      const b = new Shape(x, y, id, name, bg, url, number);
       shapes.push(b);
     });
     generatePlayers();

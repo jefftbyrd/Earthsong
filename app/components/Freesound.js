@@ -1,13 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { soundsContext } from '../context/soundsContext';
 
-// import { SoundsContextProvider } from '../context/soundsContext';
-
 export default function Freesound(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const { sounds, setSounds } = useContext(soundsContext);
-
-  // const [sounds, setSounds] = useState();
+  const { setSounds } = useContext(soundsContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,11 +46,6 @@ export default function Freesound(props) {
 
     fetchData().catch(() => console.log('error'));
   }, [props.pin]);
-
-  // props.sendDataToParent(sounds);
-  console.log('sounds on freesound', sounds);
-
-  // <SoundsContextProvider sounds={sounds} />;
 
   if (isLoading) {
     // early return

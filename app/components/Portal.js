@@ -3,7 +3,6 @@ import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { motion } from 'motion/react';
 import React, { useContext, useEffect, useState } from 'react';
 import uniqolor from 'uniqolor';
-// import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 import { userContext } from '../context/userContext';
 import LoginToSaveButton from './LoginToSaveButton';
@@ -16,30 +15,21 @@ import SoundPlayerItem from './SoundPlayerItem';
 export default function Portal() {
   const [isLoading, setIsLoading] = useState(true);
   const [soundsColor, setSoundsColor] = useState();
-  // const [generate, setGenerate] = useState(false);
   const [playerTarget, setPlayerTarget] = useState();
   const [playing, setPlaying] = useState(false);
-  // const [dataFromChild, setDataFromChild] = useState();
   const [displayingItem, setDisplayingItem] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [saveIsOpen, setSaveIsOpen] = useState(false);
-  // const [manualClose, setManualClose] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const { user } = useContext(userContext);
-  // const { snapshots } = useContext(earthsongContext);
   const { reset } = useContext(userContext);
   const { sounds } = useContext(soundsContext);
-
-  // function handleDataFromChild(data) {
-  //   setDataFromChild(data);
-  // }
 
   useEffect(() => {
     const addColor = async () => {
       // const response = await props.sounds;
       const response = await sounds;
-      // console.log('sounds', sounds);
       const soundsShuffled = response?.results
         .sort(() => 0.5 - Math.random()) // Shuffle array
         .slice(0, 5); // Select the first 5 items
@@ -47,13 +37,13 @@ export default function Portal() {
         // .slice(0, 5)
         .map((sound) => ({
           ...sound,
-          freesoundUrl: sound.url,
+          freesoundUrl: sound?.url,
           color: uniqolor
             .random({ format: 'rgb' })
             .color.replace(')', ', 1)')
             .replace('rgb', 'rgba'),
-          url: sound.previews['preview-lq-mp3'],
-          name: sound.name
+          url: sound?.previews['preview-lq-mp3'],
+          name: sound?.name
             .replaceAll('.wav', '')
             .replaceAll('.mp3', '')
             .replaceAll('.WAV', '')
@@ -72,7 +62,7 @@ export default function Portal() {
     };
 
     addColor();
-  }, []);
+  }, [sounds]);
 
   if (isLoading) {
     // early return
@@ -85,7 +75,6 @@ export default function Portal() {
         <NextReactP5Wrapper
           sketch={portalSound}
           soundsColor={soundsColor}
-          // generate={generate}
           playerTarget={playerTarget}
           play={playing}
           // resetPortal={props.resetPortal}
