@@ -1,11 +1,12 @@
 'use client';
 import { useContext, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
+// import { userContext } from '../context/userContext';
 import styles from './ui.module.scss';
 
 export default function SnapshotItem({
   snapshot,
-  setRecallId,
+  // setRecallId,
   setPortalRecall,
   setProfileOpen,
   setEnterPortal,
@@ -17,6 +18,8 @@ export default function SnapshotItem({
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
   const { setPhase } = useContext(journeyContext);
   const { setReset } = useContext(journeyContext);
+  const { setPastJourney } = useContext(journeyContext);
+  // const { snapshots } = useContext(userContext);
 
   return (
     <>
@@ -27,7 +30,8 @@ export default function SnapshotItem({
           // await setResetPortal(false);
           await setReset(true);
           await setReset(false);
-          await setRecallId(snapshot.id);
+          // await setRecallId(snapshot.id);
+          await setPastJourney(snapshot.id);
           await setPhase('portalRecall');
           // await setResetPortal(true);
           // await setResetPortal(false);
@@ -39,7 +43,7 @@ export default function SnapshotItem({
           // setIsStarted(true);
         }}
       >
-        {snapshot.title}
+        {snapshot?.title}
       </button>
     </>
   );

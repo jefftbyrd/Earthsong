@@ -131,7 +131,7 @@ export default function Map(props) {
       ) : null}
 
       {/* IF THERE ARE ENOUGH SOUNDS */}
-      {pin.lat && phase === 'map' && sounds && sounds.results.length > 0 ? (
+      {pin.lat && phase === 'map' && sounds && sounds?.results?.length > 0 ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -143,7 +143,7 @@ export default function Map(props) {
             You chose {pin.lat.toFixed(4)}, {pin.lng.toFixed(4)}.
             <br />
             {/* Number of sounds found nearby. */}
-            {sounds.count} sounds found nearby.
+            {sounds?.count} sounds found nearby.
           </motion.h2>
 
           <motion.div
@@ -178,7 +178,7 @@ export default function Map(props) {
       ) : null}
 
       {/* NOT ENOUGH SOUNDS */}
-      {pin.lat && phase === 'map' && sounds && sounds.results.length < 1 ? (
+      {pin.lat && phase === 'map' && sounds && sounds?.results?.length < 1 ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{

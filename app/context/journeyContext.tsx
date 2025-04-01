@@ -34,6 +34,7 @@ export const JourneyContextProvider: FC<Props> = ({
   const [enterPortal, setEnterPortal] = useState(false);
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState('initial');
+  const [pastJourney, setPastJourney] = useState();
 
   return (
     <journeyContext.Provider
@@ -50,6 +51,8 @@ export const JourneyContextProvider: FC<Props> = ({
         phase,
         reset,
         setReset,
+        pastJourney,
+        setPastJourney,
       }}
     >
       {children}

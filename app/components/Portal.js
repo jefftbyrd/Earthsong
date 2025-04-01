@@ -13,7 +13,7 @@ import Save from './Save';
 import SaveButton from './SaveButton';
 import SoundPlayerItem from './SoundPlayerItem';
 
-export default function Portal(props) {
+export default function Portal() {
   const [isLoading, setIsLoading] = useState(true);
   const [soundsColor, setSoundsColor] = useState();
   // const [generate, setGenerate] = useState(false);
@@ -39,8 +39,8 @@ export default function Portal(props) {
     const addColor = async () => {
       // const response = await props.sounds;
       const response = await sounds;
-      console.log('sounds', sounds);
-      const soundsShuffled = response.results
+      // console.log('sounds', sounds);
+      const soundsShuffled = response?.results
         .sort(() => 0.5 - Math.random()) // Shuffle array
         .slice(0, 5); // Select the first 5 items
       const soundsWithColor = soundsShuffled
@@ -81,14 +81,14 @@ export default function Portal(props) {
 
   return (
     <>
-      {soundsColor.length > 0 ? (
+      {soundsColor?.length > 0 ? (
         <NextReactP5Wrapper
           sketch={portalSound}
           soundsColor={soundsColor}
           // generate={generate}
           playerTarget={playerTarget}
           play={playing}
-          resetPortal={props.resetPortal}
+          // resetPortal={props.resetPortal}
           reset={reset}
         />
       ) : null}

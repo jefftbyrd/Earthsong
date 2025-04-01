@@ -2,6 +2,7 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { motion } from 'motion/react';
 import React, { useContext, useEffect, useState } from 'react';
+import { journeyContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
 import LoginToSaveButton from './LoginToSaveButton';
 import styles from './portal.module.scss';
@@ -16,7 +17,7 @@ export default function PortalRecall(props) {
   // const [generate, setGenerate] = useState(false);
   const [playerTarget, setPlayerTarget] = useState();
   const [playing, setPlaying] = useState(false);
-  const [dataFromChild, setDataFromChild] = useState();
+  // const [dataFromChild, setDataFromChild] = useState();
   const [displayingItem, setDisplayingItem] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [saveIsOpen, setSaveIsOpen] = useState(false);
@@ -24,10 +25,11 @@ export default function PortalRecall(props) {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { user } = useContext(userContext);
   const { reset } = useContext(userContext);
+  const { pastJourney } = useContext(journeyContext);
 
-  function handleDataFromChild(data) {
-    setDataFromChild(data);
-  }
+  // function handleDataFromChild(data) {
+  //   setDataFromChild(data);
+  // }
 
   useEffect(() => {
     const recallSnapshot = async () => {

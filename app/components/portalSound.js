@@ -56,7 +56,7 @@ export const portalSound = (p5) => {
   };
 
   p5.setup = () => {
-    let soundCanvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
+    const soundCanvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     soundCanvas.style('position', 'absolute');
     soundCanvas.style('z-index', -9999);
     multiPlayer = new Tone.Players();

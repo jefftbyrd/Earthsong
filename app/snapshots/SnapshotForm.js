@@ -12,7 +12,8 @@ import About from '../components/About';
 // import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
 import SnapshotItem from '../components/SnapshotItem';
 import styles from '../components/ui.module.scss';
-import { earthsongContext } from '../context/journeyContext';
+import { journeyContext } from '../context/journeyContext';
+// import { earthsongContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
 
 // import ErrorMessage from '../ErrorMessage';
@@ -24,18 +25,18 @@ import { userContext } from '../context/userContext';
 // };
 
 export default function SnapshotsForm({
-  setRecallId,
-  setPortalRecall,
+  // setRecallId,
+  // setPortalRecall,
   // user,
   // snapshots,
   setProfileOpen,
   // profileOpen,
-  setEnterPortal,
-  setResetPortal,
-  resetPortal,
+  // setEnterPortal,
+  // setResetPortal,
+  // resetPortal,
   setStartWind,
-  setIsStarted,
-  portalRecall,
+  // setIsStarted,
+  // portalRecall,
 }) {
   // const [title, setTitle] = useState('');
   // const [textContent, setTextContent] = useState('');
@@ -43,6 +44,7 @@ export default function SnapshotsForm({
   const [aboutOpen, setAboutOpen] = useState(false);
   const { user } = useContext(userContext);
   const { snapshots } = useContext(userContext);
+  const { phase } = useContext(journeyContext);
 
   // const router = useRouter();
 
@@ -67,28 +69,28 @@ export default function SnapshotsForm({
           𐛠
         </button>
 
-        <h3>Welcome, {user.username}.</h3>
+        <h3>Welcome, {user?.username}.</h3>
 
         <div className={styles.summon}>
           <h2>Summon past journeys</h2>
           {snapshots && (
             <div className={styles.snapshots}>
-              {snapshots.length === 0 ? (
+              {snapshots?.length === 0 ? (
                 'No snapshots yet'
               ) : (
                 <ul>
-                  {snapshots.map((snapshot) => (
-                    <li key={`snapshots-${snapshot.id}`}>
+                  {snapshots?.map((snapshot) => (
+                    <li key={`snapshots-${snapshot?.id}`}>
                       <SnapshotItem
                         snapshot={snapshot}
-                        setRecallId={setRecallId}
-                        setPortalRecall={setPortalRecall}
-                        setProfileOpen={setProfileOpen}
-                        setEnterPortal={setEnterPortal}
-                        setResetPortal={setResetPortal}
-                        resetPortal={resetPortal}
+                        // setRecallId={setRecallId}
+                        // setPortalRecall={setPortalRecall}
+                        // setProfileOpen={setProfileOpen}
+                        // setEnterPortal={setEnterPortal}
+                        // setResetPortal={setResetPortal}
+                        // resetPortal={resetPortal}
                         setStartWind={setStartWind}
-                        setIsStarted={setIsStarted}
+                        // setIsStarted={setIsStarted}
                       />
                     </li>
                   ))}
@@ -109,7 +111,7 @@ export default function SnapshotsForm({
         {aboutOpen && <About />}
 
         <div className={styles.userButtons}>
-          {!portalRecall ? <LogoutButton /> : null}
+          {phase !== 'portalRecall' ? <LogoutButton /> : null}
         </div>
       </motion.div>
     </AnimatePresence>
