@@ -2,7 +2,8 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import { motion } from 'motion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { earthsongContext } from '../context/earthsongContext';
 import Freesound from './Freesound';
 import styles from './ui.module.scss';
 
@@ -21,6 +22,8 @@ export default function Map(props) {
 
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
+
+  const { phase, setPhase } = useContext(earthsongContext);
 
   function handleDataFromChild(data) {
     setDataFromChild(data);
@@ -154,7 +157,8 @@ export default function Map(props) {
               className={styles.projectionStart}
               onClick={() => {
                 // props.openPortal();
-                props.setEnterPortal(true);
+                // props.setEnterPortal(true);
+                setPhase('portal');
                 props.setStartWind(false);
               }}
               animate={{

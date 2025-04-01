@@ -33,6 +33,7 @@ export default function Earthsong() {
   console.log('earthsong', earthsong);
   const { user } = useContext(earthsongContext);
   const { snapshots } = useContext(earthsongContext);
+  const { phase, setPhase } = useContext(earthsongContext);
 
   // const user = earthsong.user;
   // const snapshots = earthsong.snapshots;
@@ -57,7 +58,7 @@ export default function Earthsong() {
       ) : null}
 
       <AnimatePresence>
-        {enterPortal || portalRecall ? (
+        {phase === 'portal' ? (
           <>
             <BackToMap
               setEnterPortal={setEnterPortal}
@@ -73,8 +74,6 @@ export default function Earthsong() {
 
       {user ? (
         <Profile
-          user={user}
-          snapshots={snapshots}
           setPortalRecall={setPortalRecall}
           setRecallId={setRecallId}
           setEnterPortal={setEnterPortal}
@@ -89,12 +88,12 @@ export default function Earthsong() {
       )}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
-      {!isStarted && !portalRecall ? (
+      {phase === 'initial' ? (
         <div className={styles.start}>
           <motion.div
             className={styles.star}
             onClick={() => {
-              setIsStarted(true);
+              setPhase('map');
               setStartWind(true);
             }}
             animate={{
@@ -116,11 +115,11 @@ export default function Earthsong() {
       <NextReactP5Wrapper sketch={wind} startWind={startWind} />
 
       {/* Title h1 waits for start */}
-      {isStarted ? <Title /> : null}
+      {phase === 'map' ? <Title /> : null}
 
       {/* Map waits for start */}
       <AnimatePresence>
-        {isStarted && !enterPortal ? (
+        {phase === 'map' ? (
           <motion.div
             animate={{
               opacity: [0, 0, 1],
@@ -144,7 +143,7 @@ export default function Earthsong() {
 
       {/* Clouds overlay waits to start, ends when portal is entered. */}
       <AnimatePresence>
-        {isStarted && !enterPortal ? (
+        {phase === 'map' ? (
           <motion.div
             className={styles.noClick}
             animate={{
@@ -163,7 +162,7 @@ export default function Earthsong() {
       </AnimatePresence>
 
       {/* Show the occult text */}
-      {enterPortal ? (
+      {phase === 'portal' ? (
         <motion.div
           className={styles.occult}
           animate={{
@@ -176,7 +175,7 @@ export default function Earthsong() {
       ) : null}
 
       {/* Show initiating */}
-      {enterPortal ? (
+      {phase === 'portal' ? (
         <motion.div
           className={styles.initiating}
           animate={{
@@ -191,7 +190,7 @@ export default function Earthsong() {
       ) : null}
 
       {/* Portal waits for enterPortal */}
-      {!portalRecall && enterPortal ? (
+      {phase === 'portal' ? (
         <motion.div
           animate={{
             opacity: [0, 0, 1],
@@ -202,7 +201,7 @@ export default function Earthsong() {
           <Portal
             sounds={dataFromChild}
             resetPortal={resetPortal}
-            user={user}
+            // user={user}
           />
         </motion.div>
       ) : null}

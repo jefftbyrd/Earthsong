@@ -21,7 +21,7 @@ export default async function SnapshotsComponent() {
   const snapshots = await getSnapshots(sessionTokenCookie);
   return (
     <div>
-      <SnapshotsForm user={user} snapshots={snapshots} />
+      <SnapshotsForm />
     </div>
   );
 }

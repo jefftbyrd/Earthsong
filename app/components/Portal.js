@@ -1,8 +1,9 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { motion } from 'motion/react';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import uniqolor from 'uniqolor';
+import { earthsongContext } from '../context/earthsongContext';
 import LoginToSaveButton from './LoginToSaveButton';
 import styles from './portal.module.scss';
 import { portalSound } from './portalSound';
@@ -22,6 +23,9 @@ export default function Portal(props) {
   const [saveIsOpen, setSaveIsOpen] = useState(false);
   // const [manualClose, setManualClose] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  const { user } = useContext(earthsongContext);
+  // const { snapshots } = useContext(earthsongContext);
 
   function handleDataFromChild(data) {
     setDataFromChild(data);
@@ -99,7 +103,7 @@ export default function Portal(props) {
             </div>
           );
         })}
-        {props.user ? (
+        {user ? (
           <SaveButton
             setSaveIsOpen={setSaveIsOpen}
             saveIsOpen={saveIsOpen}

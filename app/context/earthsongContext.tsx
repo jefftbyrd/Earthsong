@@ -32,6 +32,7 @@ export const EarthsongContextProvider: FC<Props> = ({
   const [themeValue, setThemeValue] = useState(initial);
   const [isStarted, setIsStarted] = useState(false);
   const [enterPortal, setEnterPortal] = useState(false);
+  const [phase, setPhase] = useState('initial');
 
   return (
     <earthsongContext.Provider
@@ -44,6 +45,8 @@ export const EarthsongContextProvider: FC<Props> = ({
         setEnterPortal,
         user,
         snapshots,
+        setPhase,
+        phase,
       }}
     >
       {children}
