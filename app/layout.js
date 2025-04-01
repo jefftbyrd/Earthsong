@@ -7,6 +7,7 @@ import { cookies } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
 import AppWrapper from './context';
+import { EarthsongContextProvider } from './context/earthsongContext';
 
 const basteleurMoonlight = localFont({
   src: './fonts/Basteleur-Moonlight.woff2',
@@ -22,9 +23,7 @@ const basteleurBold = localFont({
 
 export default async function RootLayout({ children }) {
   const sessionTokenCookie = (await cookies()).get('sessionToken');
-
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
-
   const snapshots = user && (await getSnapshots(sessionTokenCookie.value));
 
   return (
@@ -56,9 +55,9 @@ export default async function RootLayout({ children }) {
       <body
         className={`${basteleurBold.variable} ${basteleurMoonlight.variable}`}
       >
-        <AppWrapper user={user} snapshots={snapshots}>
-          {children}
-        </AppWrapper>
+        <EarthsongContextProvider user={user} snapshots={snapshots}>
+          <AppWrapper>{children}</AppWrapper>
+        </EarthsongContextProvider>
         <Analytics />
         <SpeedInsights />
       </body>

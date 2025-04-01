@@ -15,20 +15,27 @@ import Profile from './components/Profile';
 import Title from './components/Title';
 import styles from './components/ui.module.scss';
 import { wind } from './components/wind';
-import { earthsongContext } from './context';
+import { earthsongContextOld } from './context';
+import { earthsongContext } from './context/earthsongContext';
 
 export default function Earthsong() {
-  const [isStarted, setIsStarted] = useState(false);
-  const [enterPortal, setEnterPortal] = useState(false);
+  // const [isStarted, setIsStarted] = useState(false);
+  const { isStarted, setIsStarted } = useContext(earthsongContext);
+  // const [enterPortal, setEnterPortal] = useState(false);
+  const { enterPortal, setEnterPortal } = useContext(earthsongContext);
   const [dataFromChild, setDataFromChild] = useState('');
   const [resetPortal, setResetPortal] = useState(false);
   const [portalRecall, setPortalRecall] = useState(false);
   const [recallId, setRecallId] = useState();
   const [startWind, setStartWind] = useState(false);
+  // const earthsong = useContext(earthsongContextOld);
   const earthsong = useContext(earthsongContext);
+  console.log('earthsong', earthsong);
+  const { user } = useContext(earthsongContext);
+  const { snapshots } = useContext(earthsongContext);
 
-  const user = earthsong[0];
-  const snapshots = earthsong[1];
+  // const user = earthsong.user;
+  // const snapshots = earthsong.snapshots;
 
   function handleDataFromChild(data) {
     setDataFromChild(data);

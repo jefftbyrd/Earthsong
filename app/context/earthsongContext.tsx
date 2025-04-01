@@ -26,11 +26,26 @@ interface Props {
 export const EarthsongContextProvider: FC<Props> = ({
   children,
   initial = 'light',
+  user,
+  snapshots,
 }) => {
   const [themeValue, setThemeValue] = useState(initial);
+  const [isStarted, setIsStarted] = useState(false);
+  const [enterPortal, setEnterPortal] = useState(false);
 
   return (
-    <earthsongContext.Provider value={{ themeValue, setThemeValue }}>
+    <earthsongContext.Provider
+      value={{
+        themeValue,
+        setThemeValue,
+        isStarted,
+        setIsStarted,
+        enterPortal,
+        setEnterPortal,
+        user,
+        snapshots,
+      }}
+    >
       {children}
     </earthsongContext.Provider>
   );
