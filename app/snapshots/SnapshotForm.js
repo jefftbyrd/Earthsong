@@ -12,7 +12,8 @@ import About from '../components/About';
 // import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
 import SnapshotItem from '../components/SnapshotItem';
 import styles from '../components/ui.module.scss';
-import { earthsongContext } from '../context/earthsongContext';
+import { earthsongContext } from '../context/journeyContext';
+import { userContext } from '../context/userContext';
 
 // import ErrorMessage from '../ErrorMessage';
 // import styles from './SnapshotsForm.module.scss';
@@ -40,8 +41,8 @@ export default function SnapshotsForm({
   // const [textContent, setTextContent] = useState('');
   // const [errorMessage, setErrorMessage] = useState('');
   const [aboutOpen, setAboutOpen] = useState(false);
-  const { user } = useContext(earthsongContext);
-  const { snapshots } = useContext(earthsongContext);
+  const { user } = useContext(userContext);
+  const { snapshots } = useContext(userContext);
 
   // const router = useRouter();
 

@@ -7,7 +7,9 @@ import { cookies } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
 import AppWrapper from './context';
-import { EarthsongContextProvider } from './context/earthsongContext';
+import { JourneyContextProvider } from './context/journeyContext';
+import { SoundsContextProvider } from './context/soundsContext';
+import { UserContextProvider } from './context/userContext';
 
 const basteleurMoonlight = localFont({
   src: './fonts/Basteleur-Moonlight.woff2',
@@ -55,9 +57,13 @@ export default async function RootLayout({ children }) {
       <body
         className={`${basteleurBold.variable} ${basteleurMoonlight.variable}`}
       >
-        <EarthsongContextProvider user={user} snapshots={snapshots}>
-          <AppWrapper>{children}</AppWrapper>
-        </EarthsongContextProvider>
+        <JourneyContextProvider>
+          <UserContextProvider user={user} snapshots={snapshots}>
+            <SoundsContextProvider>
+              <AppWrapper>{children}</AppWrapper>
+            </SoundsContextProvider>
+          </UserContextProvider>
+        </JourneyContextProvider>
         <Analytics />
         <SpeedInsights />
       </body>

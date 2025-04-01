@@ -1,16 +1,17 @@
 import { motion } from 'motion/react';
 import { useContext } from 'react';
 import Logo from '../../public/Logo.js';
-import { earthsongContext } from '../context/earthsongContext';
+import { journeyContext } from '../context/journeyContext';
 import styles from './ui.module.scss';
 
 export default function BackToMap({
   // setEnterPortal,
-  setResetPortal,
+  // setResetPortal,
   setStartWind,
-  setPortalRecall,
+  // setPortalRecall,
 }) {
-  const { setPhase } = useContext(earthsongContext);
+  const { setPhase } = useContext(journeyContext);
+  const { setReset } = useContext(journeyContext);
   return (
     <motion.button
       className={styles.backToMapIcon}
@@ -20,6 +21,8 @@ export default function BackToMap({
         // setStartWind(true);
         // setEnterPortal(false);
         // setPortalRecall(false);
+        await setReset(true);
+        await setReset(false);
         await setPhase('map');
       }}
       animate={{

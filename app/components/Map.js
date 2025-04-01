@@ -3,7 +3,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import { motion } from 'motion/react';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { earthsongContext } from '../context/earthsongContext';
+import { journeyContext } from '../context/journeyContext';
+import { soundsContext } from '../context/soundsContext';
 import Freesound from './Freesound';
 import styles from './ui.module.scss';
 
@@ -12,7 +13,7 @@ const initialZoom = 2.14;
 
 export default function Map(props) {
   // const [enterPortal, setEnterPortal] = useState(false);
-  const [dataFromChild, setDataFromChild] = useState('');
+  // const [dataFromChild, setDataFromChild] = useState('');
 
   const mapRef = useRef();
   const mapContainerRef = useRef();
@@ -23,12 +24,13 @@ export default function Map(props) {
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
 
-  const { phase, setPhase } = useContext(earthsongContext);
+  const { phase, setPhase } = useContext(journeyContext);
+  const { sounds } = useContext(soundsContext);
 
-  function handleDataFromChild(data) {
-    setDataFromChild(data);
-    props.sendDataToParent(data);
-  }
+  // function handleDataFromChild(data) {
+  //   setDataFromChild(data);
+  //   props.sendDataToParent(data);
+  // }
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
@@ -92,7 +94,7 @@ export default function Map(props) {
       )}
 
       {/* SEARCHING */}
-      {pin.lat && phase === 'map' && !dataFromChild ? (
+      {pin.lat && phase === 'map' && !sounds ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -129,10 +131,7 @@ export default function Map(props) {
       ) : null}
 
       {/* IF THERE ARE ENOUGH SOUNDS */}
-      {pin.lat &&
-      phase === 'map' &&
-      dataFromChild &&
-      dataFromChild.results.length > 0 ? (
+      {pin.lat && phase === 'map' && sounds && sounds.results.length > 0 ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -144,7 +143,7 @@ export default function Map(props) {
             You chose {pin.lat.toFixed(4)}, {pin.lng.toFixed(4)}.
             <br />
             {/* Number of sounds found nearby. */}
-            {dataFromChild.count} sounds found nearby.
+            {sounds.count} sounds found nearby.
           </motion.h2>
 
           <motion.div
@@ -179,10 +178,7 @@ export default function Map(props) {
       ) : null}
 
       {/* NOT ENOUGH SOUNDS */}
-      {pin.lat &&
-      phase === 'map' &&
-      dataFromChild &&
-      dataFromChild.results.length < 1 ? (
+      {pin.lat && phase === 'map' && sounds && sounds.results.length < 1 ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -219,9 +215,7 @@ export default function Map(props) {
       ) : null}
 
       <div id="map-container" ref={mapContainerRef} />
-      {pin.lat ? (
-        <Freesound pin={pin} sendDataToParent={handleDataFromChild} />
-      ) : null}
+      {pin.lat ? <Freesound pin={pin} /> : null}
     </>
   );
 }

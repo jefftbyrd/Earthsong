@@ -8,12 +8,12 @@ import {
   useState,
 } from 'react';
 
-interface EarthsongContextType {
+interface JourneyContextType {
   themeValue: 'light' | 'dark';
   setThemeValue: Dispatch<SetStateAction<'light' | 'dark'>>;
 }
 
-export const earthsongContext = createContext<EarthsongContextType>({
+export const journeyContext = createContext<JourneyContextType>({
   themeValue: 'light',
   setThemeValue: () => {},
 });
@@ -23,29 +23,29 @@ interface Props {
   initial?: 'light' | 'dark';
 }
 
-export const EarthsongContextProvider: FC<Props> = ({
+export const JourneyContextProvider: FC<Props> = ({
   children,
-  initial = 'light',
-  user,
-  snapshots,
+  // initial = 'light',
+  // user,
+  // snapshots,
 }) => {
-  const [themeValue, setThemeValue] = useState(initial);
+  // const [themeValue, setThemeValue] = useState(initial);
   const [isStarted, setIsStarted] = useState(false);
   const [enterPortal, setEnterPortal] = useState(false);
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState('initial');
 
   return (
-    <earthsongContext.Provider
+    <journeyContext.Provider
       value={{
-        themeValue,
-        setThemeValue,
+        // themeValue,
+        // setThemeValue,
         isStarted,
         setIsStarted,
         enterPortal,
         setEnterPortal,
-        user,
-        snapshots,
+        // user,
+        // snapshots,
         setPhase,
         phase,
         reset,
@@ -53,6 +53,6 @@ export const EarthsongContextProvider: FC<Props> = ({
       }}
     >
       {children}
-    </earthsongContext.Provider>
+    </journeyContext.Provider>
   );
 };

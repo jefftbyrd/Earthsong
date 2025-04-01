@@ -3,7 +3,9 @@ import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { motion } from 'motion/react';
 import React, { useContext, useEffect, useState } from 'react';
 import uniqolor from 'uniqolor';
-import { earthsongContext } from '../context/earthsongContext';
+// import { journeyContext } from '../context/journeyContext';
+import { soundsContext } from '../context/soundsContext';
+import { userContext } from '../context/userContext';
 import LoginToSaveButton from './LoginToSaveButton';
 import styles from './portal.module.scss';
 import { portalSound } from './portalSound';
@@ -17,24 +19,27 @@ export default function Portal(props) {
   // const [generate, setGenerate] = useState(false);
   const [playerTarget, setPlayerTarget] = useState();
   const [playing, setPlaying] = useState(false);
-  const [dataFromChild, setDataFromChild] = useState();
+  // const [dataFromChild, setDataFromChild] = useState();
   const [displayingItem, setDisplayingItem] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [saveIsOpen, setSaveIsOpen] = useState(false);
   // const [manualClose, setManualClose] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  const { user } = useContext(earthsongContext);
+  const { user } = useContext(userContext);
   // const { snapshots } = useContext(earthsongContext);
-  const { reset } = useContext(earthsongContext);
+  const { reset } = useContext(userContext);
+  const { sounds } = useContext(soundsContext);
 
-  function handleDataFromChild(data) {
-    setDataFromChild(data);
-  }
+  // function handleDataFromChild(data) {
+  //   setDataFromChild(data);
+  // }
 
   useEffect(() => {
     const addColor = async () => {
-      const response = await props.sounds;
+      // const response = await props.sounds;
+      const response = await sounds;
+      console.log('sounds', sounds);
       const soundsShuffled = response.results
         .sort(() => 0.5 - Math.random()) // Shuffle array
         .slice(0, 5); // Select the first 5 items

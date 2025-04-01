@@ -1,6 +1,6 @@
 'use client';
 import { useContext, useState } from 'react';
-import { earthsongContext } from '../context/earthsongContext';
+import { journeyContext } from '../context/journeyContext';
 import styles from './ui.module.scss';
 
 export default function SnapshotItem({
@@ -15,8 +15,8 @@ export default function SnapshotItem({
   setIsStarted,
 }) {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
-  const { setPhase } = useContext(earthsongContext);
-  const { setReset } = useContext(earthsongContext);
+  const { setPhase } = useContext(journeyContext);
+  const { setReset } = useContext(journeyContext);
 
   return (
     <>

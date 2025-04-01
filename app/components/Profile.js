@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useContext, useState } from 'react';
 import LoginForm from '../(auth)/login/LoginForm';
 import Star from '../../public/Star.js';
-import { earthsongContext } from '../context/earthsongContext';
+import { journeyContext } from '../context/journeyContext';
 import SnapshotForm from '../snapshots/SnapshotForm';
 import styles from './ui.module.scss';
 
@@ -20,7 +20,7 @@ export default function Profile({
   portalRecall,
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
-  const { phase, setPhase } = useContext(earthsongContext);
+  const { phase, setPhase } = useContext(journeyContext);
 
   return (
     <>

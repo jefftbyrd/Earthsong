@@ -2,7 +2,7 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { motion } from 'motion/react';
 import React, { useContext, useEffect, useState } from 'react';
-import { earthsongContext } from '../context/earthsongContext';
+import { userContext } from '../context/userContext';
 import LoginToSaveButton from './LoginToSaveButton';
 import styles from './portal.module.scss';
 import { portalSound } from './portalSound';
@@ -22,8 +22,8 @@ export default function PortalRecall(props) {
   const [saveIsOpen, setSaveIsOpen] = useState(false);
   // const [manualClose, setManualClose] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const { user } = useContext(earthsongContext);
-  const { reset } = useContext(earthsongContext);
+  const { user } = useContext(userContext);
+  const { reset } = useContext(userContext);
 
   function handleDataFromChild(data) {
     setDataFromChild(data);

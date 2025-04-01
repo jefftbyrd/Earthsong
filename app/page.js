@@ -15,12 +15,14 @@ import Profile from './components/Profile';
 import Title from './components/Title';
 import styles from './components/ui.module.scss';
 import { wind } from './components/wind';
-import { earthsongContextOld } from './context';
-import { earthsongContext } from './context/earthsongContext';
+// import { earthsongContextOld } from './context';
+import { journeyContext } from './context/journeyContext';
+// import { soundsContext, SoundsContextProvider } from './context/soundsContext';
+import { userContext } from './context/userContext';
 
 export default function Earthsong() {
   // const [isStarted, setIsStarted] = useState(false);
-  const { isStarted, setIsStarted } = useContext(earthsongContext);
+  const { isStarted, setIsStarted } = useContext(journeyContext);
   // const [enterPortal, setEnterPortal] = useState(false);
   // const { enterPortal, setEnterPortal } = useContext(earthsongContext);
   const [dataFromChild, setDataFromChild] = useState('');
@@ -30,10 +32,10 @@ export default function Earthsong() {
   const [startWind, setStartWind] = useState(false);
   // const earthsong = useContext(earthsongContextOld);
   // const earthsong = useContext(earthsongContext);
-  // console.log('earthsong', earthsong);
-  const { user } = useContext(earthsongContext);
-  const { snapshots } = useContext(earthsongContext);
-  const { phase, setPhase } = useContext(earthsongContext);
+  const { user } = useContext(userContext);
+  const { snapshots } = useContext(userContext);
+  const { phase, setPhase } = useContext(journeyContext);
+  // const { sounds } = useContext(soundsContext);
 
   // const user = earthsong.user;
   // const snapshots = earthsong.snapshots;
@@ -190,6 +192,7 @@ export default function Earthsong() {
       ) : null}
 
       {/* Portal waits for enterPortal */}
+      {/* <SoundsContextProvider> */}
       {phase === 'portal' ? (
         <motion.div
           animate={{
@@ -199,9 +202,10 @@ export default function Earthsong() {
           }}
         >
           <Portal
-            sounds={dataFromChild}
-            // resetPortal={resetPortal}
-            // user={user}
+          // sounds={dataFromChild}
+          // sounds={sounds}
+          // resetPortal={resetPortal}
+          // user={user}
           />
         </motion.div>
       ) : null}
@@ -224,6 +228,7 @@ export default function Earthsong() {
           />
         </motion.div>
       ) : null}
+      {/* </SoundsContextProvider> */}
     </>
   );
 }
