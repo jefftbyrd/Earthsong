@@ -48,7 +48,7 @@ export default function Earthsong() {
         ) : null}
       </AnimatePresence>
 
-      {user ? <Profile /> : <Login />}
+      <Profile />
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
