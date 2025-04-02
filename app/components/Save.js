@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { journeyContext } from '../context/journeyContext';
 // import type { User } from '../../../migrations/00000-createTableUsers';
 // import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
 // import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
@@ -16,12 +17,12 @@ import styles from '../styles/ui.module.scss';
 
 export default function Save({
   sounds,
-  setSaveIsOpen,
   setShowSuccessMessage,
   showSuccessMessage,
 }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [title, setTitle] = useState('');
+  const { togglePanel } = useContext(journeyContext);
   // const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function Save({
         <button
           className="closeButton"
           onClick={() => {
-            setSaveIsOpen(false);
+            togglePanel();
           }}
         >
           𐛠
@@ -76,7 +77,7 @@ export default function Save({
 
             setTitle('');
             await setShowSuccessMessage(!showSuccessMessage);
-            await setSaveIsOpen(false);
+            await togglePanel();
             router.refresh();
           }}
         >

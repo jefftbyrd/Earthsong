@@ -1,22 +1,27 @@
-import { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import LoginForm from '../(auth)/login/LoginForm';
+import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
 
-export default function LoginToSaveButton({ setSaveIsOpen, saveIsOpen }) {
+export default function LoginToSaveButton() {
   const [loginOpen, setLoginOpen] = useState(false);
+  const { togglePanel, setPanelId, panelId, panelOpen } =
+    useContext(journeyContext);
 
   return (
     <>
       <button
         className={styles.saveSnapshotButton}
         onClick={() => {
-          setLoginOpen(!loginOpen);
+          // setLoginOpen(!loginOpen);
+          setPanelId('loginToSave');
+          togglePanel();
         }}
       >
         Save
       </button>
 
-      {loginOpen ? (
+      {panelOpen && panelId === 'loginToSave' ? (
         <LoginForm setLoginOpen={setLoginOpen} loginOpen={loginOpen} />
       ) : null}
     </>

@@ -73,8 +73,8 @@ export default function PortalRecall(props) {
         })}
         {user ? (
           <SaveButton
-            setSaveIsOpen={setSaveIsOpen}
-            saveIsOpen={saveIsOpen}
+            // setSaveIsOpen={setSaveIsOpen}
+            // saveIsOpen={saveIsOpen}
             setShowSuccessMessage={setShowSuccessMessage}
           />
         ) : (
@@ -83,7 +83,7 @@ export default function PortalRecall(props) {
         {saveIsOpen ? (
           <Save
             sounds={soundsColor}
-            setSaveIsOpen={setSaveIsOpen}
+            // setSaveIsOpen={setSaveIsOpen}
             setShowSuccessMessage={setShowSuccessMessage}
             showSuccessMessage={showSuccessMessage}
           />

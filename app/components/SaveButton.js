@@ -1,3 +1,5 @@
+import React, { useContext, useState } from 'react';
+import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
 
 export default function SaveButton({
@@ -5,11 +7,15 @@ export default function SaveButton({
   saveIsOpen,
   setShowSuccessMessage,
 }) {
+  const { togglePanel, setPanelId } = useContext(journeyContext);
+
   return (
     <button
       className={styles.saveSnapshotButton}
       onClick={() => {
-        setSaveIsOpen(!saveIsOpen);
+        // setSaveIsOpen(!saveIsOpen);
+        setPanelId('savePanel');
+        togglePanel();
         setShowSuccessMessage(false);
       }}
     >

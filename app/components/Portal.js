@@ -26,6 +26,8 @@ export default function Portal() {
   const { user } = useContext(userContext);
   const { reset } = useContext(journeyContext);
   const { sounds } = useContext(soundsContext);
+  const { togglePanel, setPanelId, panelId, panelOpen } =
+    useContext(journeyContext);
 
   useEffect(() => {
     const addColor = async () => {
@@ -109,10 +111,10 @@ export default function Portal() {
         ) : (
           <LoginToSaveButton />
         )}
-        {saveIsOpen ? (
+        {panelOpen && panelId === 'savePanel' ? (
           <Save
             sounds={soundsColor}
-            setSaveIsOpen={setSaveIsOpen}
+            // setSaveIsOpen={setSaveIsOpen}
             setShowSuccessMessage={setShowSuccessMessage}
             showSuccessMessage={showSuccessMessage}
           />
