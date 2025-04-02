@@ -1,13 +1,10 @@
 'use client';
+import React, { useContext, useState } from 'react';
+import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
 
-export default function SoundInfoPanel({
-  sound,
-  index,
-  setIsOpen,
-  isOpen,
-  color,
-}) {
+export default function SoundInfoPanel({ sound, index, color }) {
+  const { togglePanel } = useContext(journeyContext);
   const minutes = Math.floor(sound.duration / 60);
   const seconds = Math.floor(sound.duration % 60)
     .toString()
@@ -28,7 +25,7 @@ export default function SoundInfoPanel({
       <button
         className="closeButton"
         onClick={() => {
-          setIsOpen(!isOpen);
+          togglePanel();
         }}
       >
         𐛠

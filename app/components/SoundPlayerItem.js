@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
 import SoundInfoPanel from './SoundInfoPanel';
 
@@ -12,7 +13,9 @@ export default function SoundPlayerItem({
   setDisplayingItem,
   displayingItem,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+  const { setPanelId, panelOpen, togglePanel, panelId } =
+    useContext(journeyContext);
 
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
@@ -34,19 +37,21 @@ export default function SoundPlayerItem({
         <button
           className={styles.infoButton}
           onClick={() => {
-            setDisplayingItem(sound.id);
-            setIsOpen(!isOpen);
+            // setDisplayingItem(sound.id);
+            // setIsOpen(!isOpen);
+            setPanelId(sound.id);
+            togglePanel();
           }}
         >
           𐙁
         </button>
       </div>
-      {isOpen && displayingItem === sound.id && (
+      {panelOpen && panelId === sound.id && (
         <SoundInfoPanel
           sound={sound}
           index={index}
-          setIsOpen={setIsOpen}
-          isOpen={isOpen}
+          // setIsOpen={setIsOpen}
+          // isOpen={isOpen}
           color={sound.color}
         />
       )}

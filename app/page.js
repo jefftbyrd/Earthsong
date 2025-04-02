@@ -22,9 +22,11 @@ export default function Earthsong() {
   const { snapshots } = useContext(userContext);
   const { phase, setPhase } = useContext(journeyContext);
   const { pastJourney } = useContext(journeyContext);
+  const { panelId } = useContext(journeyContext);
 
   return (
     <>
+      {console.log('panelId', panelId)}
       {/* If sound portal is open, display the return to map icon/link */}
       {user ? (
         <motion.h1

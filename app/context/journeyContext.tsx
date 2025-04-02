@@ -5,6 +5,7 @@ import {
   type FC,
   type ReactNode,
   type SetStateAction,
+  useEffect,
   useState,
 } from 'react';
 
@@ -35,6 +36,17 @@ export const JourneyContextProvider: FC<Props> = ({
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
   const [pastJourney, setPastJourney] = useState();
+  const [panelId, setPanelId] = useState('');
+  const [panelOpen, setPanelOpen] = useState(false);
+  function togglePanel() {
+    // setPanelOpen((prev) => (prev === false ? true : false));
+    setPanelOpen(!panelOpen);
+  }
+
+  useEffect(() => {
+    // manually deep compare here before updating state
+    setPanelOpen(true);
+  }, [panelId]);
 
   return (
     <journeyContext.Provider
@@ -53,6 +65,11 @@ export const JourneyContextProvider: FC<Props> = ({
         setReset,
         pastJourney,
         setPastJourney,
+        panelId,
+        setPanelId,
+        panelOpen,
+        setPanelOpen,
+        togglePanel,
       }}
     >
       {children}

@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import { getSnapshots } from '../../database/snapshots';
 import { getUser } from '../../database/users';
 import { getCookie } from '../../util/cookies';
-import SnapshotsForm from './SnapshotForm';
+import SnapshotsForm from '../components/ProfilePanel';
 
 export default async function SnapshotsComponent() {
   // Task: Restrict access to the snapshots page and only display snapshots belonging to the current logged in user

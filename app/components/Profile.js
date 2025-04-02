@@ -6,22 +6,26 @@ import Star from '../../public/Star.js';
 import StarInverted from '../../public/StarInverted';
 import { journeyContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
-import SnapshotForm from '../snapshots/SnapshotForm';
 import styles from '../styles/ui.module.scss';
 import LoginPanel from './LoginPanel';
+import ProfilePanel from './ProfilePanel';
 
 export default function Profile() {
   const [profileOpen, setProfileOpen] = useState(false);
-  const { phase, setPhase } = useContext(journeyContext);
+  // const { phase, setPhase } = useContext(journeyContext);
   const [loginOpen, setLoginOpen] = useState(false);
   const { user } = useContext(userContext);
+  const { setPanelId, panelOpen, togglePanel, panelId } =
+    useContext(journeyContext);
 
   return user ? (
     <>
       <motion.button
         className={styles.userIcon}
         onClick={() => {
-          setProfileOpen(!profileOpen);
+          // setProfileOpen(!profileOpen);
+          setPanelId('profilePanel');
+          togglePanel();
         }}
         whileHover={{
           color: 'rgba(255, 0, 89, 1)',
@@ -30,19 +34,17 @@ export default function Profile() {
         <Star height="6vw" width="6vw" />
       </motion.button>
 
-      {profileOpen ? (
-        <SnapshotForm
-          setProfileOpen={setProfileOpen}
-          profileOpen={profileOpen}
-        />
-      ) : null}
+      {panelOpen && panelId === 'profilePanel' ? <ProfilePanel /> : null}
     </>
   ) : (
     <>
       <motion.button
         className={styles.userIcon}
         onClick={() => {
-          setLoginOpen(!loginOpen);
+          // setLoginOpen(!loginOpen);
+          // setPanelId('profilePanel');
+          setPanelId('profilePanel');
+          togglePanel();
         }}
         whileHover={{
           color: 'rgba(255, 0, 89, 1)',
@@ -52,9 +54,7 @@ export default function Profile() {
         <StarInverted height="6vw" width="6vw" />
       </motion.button>
 
-      {loginOpen ? (
-        <LoginPanel setLoginOpen={setLoginOpen} loginOpen={loginOpen} />
-      ) : null}
+      {panelOpen && panelId === 'profilePanel' ? <LoginPanel /> : null}
     </>
   );
 }

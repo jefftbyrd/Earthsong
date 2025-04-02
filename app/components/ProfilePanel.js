@@ -6,27 +6,27 @@ import { useContext, useState } from 'react';
 // import { useRouter } from 'next/navigation';
 // import { useState } from 'react';
 import LogoutButton from '../(auth)/logout/LogoutButton';
-import About from '../components/About';
-// import type { User } from '../../migrations/00000-createTableUsers';
-// import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
-// import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
-import SnapshotItem from '../components/SnapshotItem';
 import { journeyContext } from '../context/journeyContext';
 // import { earthsongContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/ui.module.scss';
+import About from './About';
+// import type { User } from '../../migrations/00000-createTableUsers';
+// import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
+// import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
+import SnapshotItem from './SnapshotItem';
 
 // import ErrorMessage from '../ErrorMessage';
 // import styles from './SnapshotsForm.module.scss';
 
-
-export default function SnapshotsForm({ setProfileOpen }) {
+export default function ProfilePanel({ setProfileOpen }) {
   // const [title, setTitle] = useState('');
   // const [textContent, setTextContent] = useState('');
   // const [errorMessage, setErrorMessage] = useState('');
   const [aboutOpen, setAboutOpen] = useState(false);
   const { user, snapshots } = useContext(userContext);
   const { phase } = useContext(journeyContext);
+  const { togglePanel } = useContext(journeyContext);
 
   // const router = useRouter();
 
@@ -45,7 +45,7 @@ export default function SnapshotsForm({ setProfileOpen }) {
         <button
           className="closeButtonAlt"
           onClick={() => {
-            setProfileOpen(false);
+            togglePanel();
           }}
         >
           𐛠
