@@ -16,6 +16,7 @@
       display: relative;
 
       .outerButton {
+        touch-action: manipulation;
         padding: 10px;
         display: flex;
         height: 7.4rem;

@@ -65,7 +65,7 @@ export default function ProfilePanel() {
                     <li key={`snapshots-${snapshot?.id}`}>
                       <SnapshotItem
                         snapshot={snapshot}
-                        setProfileOpen={setProfileOpen}
+                        // setProfileOpen={setProfileOpen}
                       />
                     </li>
                   ))}

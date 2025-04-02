@@ -2,12 +2,39 @@ import * as Tone from 'tone';
 
 export const soundPortal = (p5) => {
   const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
+  // let bins = 64;
+
+  // let shapeNumber;
+
   const scl = 10;
+  // let strip;
+  // let strips = [];
+
+  // let fft;
+  // let waveforms = [];
   let waveform;
+  // let reversed = false;
+  // let visualizer;
   let ellipse;
+  // let test;
+
+  // var col = {
+  //   r: 0,
+  //   g: 0,
+  //   b: 0,
+  // };
   const shapes = [];
+  // let Shape;
+  // sampleDraw,
+  // playRate;
   let multiPlayer;
   let sounds2;
+  // let sounds3;
+  // let player;
+  // let shapesButton;
+  // let analyzer;
+  // let number = 0;
+
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   p5.updateWithProps = async (props) => {
@@ -20,7 +47,9 @@ export const soundPortal = (p5) => {
     if (props.playerTarget && multiPlayer.player(props.playerTarget).loaded) {
       playSound(props.playerTarget);
     }
-
+    // if (props.resetPortal) {
+    //   stopAll();
+    // }
     if (props.reset) {
       await stopAll();
     }
@@ -29,12 +58,17 @@ export const soundPortal = (p5) => {
   p5.setup = () => {
     const soundCanvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     soundCanvas.style('position', 'absolute');
-    soundCanvas.style('z-index', -999);
+    soundCanvas.style('z-index', -9999);
     multiPlayer = new Tone.Players();
     p5.textFont(noto);
 
+    // 32 bins
+    // fft = new Tone.FFT();
     waveform = new Tone.Waveform();
     multiPlayer.connect(waveform);
+
+    // analyzer = new Tone.FFT(512);
+    // multiPlayer.connect(analyzer);
   }; // END SETUP
 
   function generateShapes() {
@@ -54,7 +88,10 @@ export const soundPortal = (p5) => {
 
   function generatePlayers() {
     for (let i = 0; i < shapes.length; i++) {
+      // shapes[i].rollover();
+      // shapes[i].move();
       shapes[i].players();
+      // shapes[i].showName();
     }
   }
 
@@ -78,6 +115,10 @@ export const soundPortal = (p5) => {
       }
       p5.endShape();
     }
+
+    // if (frequencyData[0] === 0) {
+    //   p5.line(0, 185, p5.windowWidth, 185);
+    // }
 
     for (let i = 0; i < 48; i++) {
       let step = p5.windowWidth / 48;
@@ -332,32 +373,9 @@ export const soundPortal = (p5) => {
         }
       }
     }
-    console.log('mousePressed', p5.mousePressed);
     // Prevent default functionality.
     return false;
   };
-
-  p5.touchStarted = () => {
-    if (shapes.length > 0) {
-      for (let i = 0; i < shapes.length; i++) {
-        let shape = shapes[i];
-        let distance = p5.dist(p5.mouseX, p5.mouseY, shape.x, shape.y);
-        let diameter = p5.map(p5.mouseY, 0, p5.windowHeight, 50, 600);
-
-        if (distance < diameter / 2) {
-          shape.active = true;
-        } else {
-          shape.active = false;
-        }
-      }
-    }
-    // Prevent default functionality.
-    return false;
-  };
-
-  // p5.touchEnded = () => {
-  //   return false;
-  // };
 
   p5.mouseDragged = () => {
     if (shapes.length > 0) {
