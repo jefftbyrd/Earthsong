@@ -1,4 +1,4 @@
-import styles from './ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
 export default function About() {
   return (

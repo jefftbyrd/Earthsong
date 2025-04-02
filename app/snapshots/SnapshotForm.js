@@ -11,10 +11,10 @@ import About from '../components/About';
 // import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
 // import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
 import SnapshotItem from '../components/SnapshotItem';
-import styles from '../components/ui.module.scss';
 import { journeyContext } from '../context/journeyContext';
 // import { earthsongContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
+import styles from '../styles/ui.module.scss';
 
 // import ErrorMessage from '../ErrorMessage';
 // import styles from './SnapshotsForm.module.scss';

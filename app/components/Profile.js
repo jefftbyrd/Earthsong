@@ -5,7 +5,7 @@ import LoginForm from '../(auth)/login/LoginForm';
 import Star from '../../public/Star.js';
 import { journeyContext } from '../context/journeyContext';
 import SnapshotForm from '../snapshots/SnapshotForm';
-import styles from './ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
 export default function Profile({
   user,

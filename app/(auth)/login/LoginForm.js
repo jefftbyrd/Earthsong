@@ -4,8 +4,8 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import RegisterComponent from '../../components/RegisterComponent';
-import styles from '../../components/ui.module.scss';
 import ErrorMessage from '../../ErrorMessage';
+import styles from '../../styles/ui.module.scss';
 
 export default function LoginForm({ setLoginOpen, loginOpen }) {
   const [username, setUsername] = useState('');

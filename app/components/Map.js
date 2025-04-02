@@ -5,16 +5,13 @@ import { motion } from 'motion/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
+import styles from '../styles/ui.module.scss';
 import Freesound from './Freesound';
-import styles from './ui.module.scss';
 
 const initialCenter = [4.510020088079064, 44.66199079784276];
 const initialZoom = 2.14;
 
 export default function Map(props) {
-  // const [enterPortal, setEnterPortal] = useState(false);
-  // const [dataFromChild, setDataFromChild] = useState('');
-
   const mapRef = useRef();
   const mapContainerRef = useRef();
 
@@ -26,11 +23,6 @@ export default function Map(props) {
 
   const { phase, setPhase } = useContext(journeyContext);
   const { sounds } = useContext(soundsContext);
-
-  // function handleDataFromChild(data) {
-  //   setDataFromChild(data);
-  //   props.sendDataToParent(data);
-  // }
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;

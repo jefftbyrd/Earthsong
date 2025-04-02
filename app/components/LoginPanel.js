@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import ErrorMessage from '../ErrorMessage';
+import styles from '../styles/ui.module.scss';
 import About from './About';
 import RegisterComponent from './RegisterComponent';
-import styles from './ui.module.scss';
 
 export default function LoginPanel({ setLoginOpen, loginOpen }) {
   const [username, setUsername] = useState('');

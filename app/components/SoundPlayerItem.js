@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import styles from './portal.module.scss';
+import styles from '../styles/portal.module.scss';
 import SoundInfoPanel from './SoundInfoPanel';
 
 export default function SoundPlayerItem({
@@ -26,9 +26,7 @@ export default function SoundPlayerItem({
             setPlayerTarget(sound.id);
           }}
         >
-          <div
-            className={styles.soundText}
-          >
+          <div className={styles.soundText}>
             <span className={styles.soundNumber}>{aegean[index]}</span>
             <span className={styles.soundName}>{sound.name}</span>
           </div>

@@ -4,12 +4,12 @@ import { motion } from 'motion/react';
 import React, { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
+import styles from '../styles/portal.module.scss';
 import LoginToSaveButton from './LoginToSaveButton';
-import styles from './portal.module.scss';
-import { portalSound } from './portalSound';
 import Save from './Save';
 import SaveButton from './SaveButton';
 import SoundPlayerItem from './SoundPlayerItem';
+import { soundPortal } from './soundPortal';
 
 export default function PortalRecall(props) {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +52,7 @@ export default function PortalRecall(props) {
       {console.log('showSuccessMessage', showSuccessMessage)}
       {soundsColor.length > 0 ? (
         <NextReactP5Wrapper
-          sketch={portalSound}
+          sketch={soundPortal}
           soundsColor={soundsColor}
           // generate={generate}
           playerTarget={playerTarget}

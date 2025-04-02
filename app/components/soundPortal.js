@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
 
-export const portalSound = (p5) => {
+export const soundPortal = (p5) => {
   const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
   // let bins = 64;
 
@@ -38,7 +38,6 @@ export const portalSound = (p5) => {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   p5.updateWithProps = async (props) => {
-    // console.log('resetPortal on portalSound', props.resetPortal);
     if (props.soundsColor) {
       sounds2 = [...props.soundsColor];
     }

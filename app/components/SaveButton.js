@@ -1,4 +1,4 @@
-import styles from './portal.module.scss';
+import styles from '../styles/portal.module.scss';
 
 export default function SaveButton({
   setSaveIsOpen,

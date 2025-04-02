@@ -2,14 +2,9 @@ import { motion } from 'motion/react';
 import { useContext } from 'react';
 import Logo from '../../public/Logo.js';
 import { journeyContext } from '../context/journeyContext';
-import styles from './ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
-export default function BackToMap({
-  // setEnterPortal,
-  // setResetPortal,
-  setStartWind,
-  // setPortalRecall,
-}) {
+export default function BackToMap({ setStartWind }) {
   const { setPhase } = useContext(journeyContext);
   const { setReset } = useContext(journeyContext);
   return (

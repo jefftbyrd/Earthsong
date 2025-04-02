@@ -2,7 +2,7 @@
 import { useContext, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 // import { userContext } from '../context/userContext';
-import styles from './ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
 export default function SnapshotItem({
   snapshot,

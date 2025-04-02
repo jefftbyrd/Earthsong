@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import styles from './ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
 export default function HelpPanel({ setHelpOpen, helpOpen }) {
   useEffect(() => {

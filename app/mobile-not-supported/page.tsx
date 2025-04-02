@@ -1,6 +1,6 @@
 // app/mobile-not-supported/page.tsx
 import React from 'react';
-import styles from '../components/ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
 const Page = () => {
   return (

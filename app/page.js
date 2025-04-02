@@ -13,10 +13,10 @@ import Portal from './components/Portal';
 import PortalRecall from './components/PortalRecall';
 import Profile from './components/Profile';
 import Title from './components/Title';
-import styles from './components/ui.module.scss';
 import { wind } from './components/wind';
 import { journeyContext } from './context/journeyContext';
 import { userContext } from './context/userContext';
+import styles from './styles/ui.module.scss';
 
 export default function Earthsong() {
   const [startWind, setStartWind] = useState(false);

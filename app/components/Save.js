@@ -15,7 +15,7 @@ import React, { useState } from 'react';
 // import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
 // import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
 import ErrorMessage from '../ErrorMessage';
-import styles from './ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
 // import styles from './SnapshotsForm.module.scss';
 

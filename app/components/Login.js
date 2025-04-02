@@ -3,8 +3,8 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
 // import LoginForm from '../(auth)/login/LoginForm';
 import StarInverted from '../../public/StarInverted';
+import styles from '../styles/ui.module.scss';
 import LoginPanel from './LoginPanel';
-import styles from './ui.module.scss';
 
 export default function Login() {
   const [loginOpen, setLoginOpen] = useState(false);
