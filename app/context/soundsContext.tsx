@@ -30,7 +30,21 @@ interface Props {
 }
 
 export const SoundsContextProvider = ({ children }: Props) => {
-  const [sounds, setSounds] = useState<Sounds>({});
+  // Initialize with an empty sound object that matches the Sound type
+  const [sounds, setSounds] = useState<Sounds>({
+    sound: {
+      color: '',
+      description: '',
+      duration: 0,
+      freesoundUrl: '',
+      geotag: '',
+      id: 0,
+      name: '',
+      tags: [],
+      url: '',
+      username: '',
+    },
+  });
 
   return (
     <soundsContext.Provider value={{ sounds, setSounds }}>
