@@ -19,7 +19,6 @@ import { userContext } from './context/userContext';
 import styles from './styles/ui.module.scss';
 
 export default function Earthsong() {
-  const [startWind, setStartWind] = useState(false);
   const { user } = useContext(userContext);
   const { snapshots } = useContext(userContext);
   const { phase, setPhase } = useContext(journeyContext);
@@ -43,13 +42,13 @@ export default function Earthsong() {
       <AnimatePresence>
         {phase === 'portal' || phase === 'portalRecall' ? (
           <>
-            <BackToMap setStartWind={setStartWind} />
+            <BackToMap />
             {/* <HelpButton /> */}
           </>
         ) : null}
       </AnimatePresence>
 
-      {user ? <Profile setStartWind={setStartWind} /> : <Login />}
+      {user ? <Profile /> : <Login />}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
@@ -58,7 +57,6 @@ export default function Earthsong() {
             className={styles.star}
             onClick={() => {
               setPhase('map');
-              setStartWind(true);
             }}
             animate={{
               opacity: [0.2, 0.6, 0.2],
@@ -76,7 +74,7 @@ export default function Earthsong() {
       ) : null}
 
       {/* Wind generator is ready, but waits for start. */}
-      <NextReactP5Wrapper sketch={wind} startWind={startWind} />
+      <NextReactP5Wrapper sketch={wind} phase={phase} />
 
       {/* Map waits for start */}
       <AnimatePresence>
@@ -95,7 +93,7 @@ export default function Earthsong() {
                 transition: { duration: 2 },
               }}
             >
-              <Map setStartWind={setStartWind} />
+              <Map />
             </motion.div>
             <motion.div
               className={styles.noClick}

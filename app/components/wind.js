@@ -29,11 +29,21 @@ export const wind = (p5) => {
   };
 
   p5.updateWithProps = (props) => {
-    if (props.startWind && noise1 && noise2 && noise1.state === 'stopped') {
+    if (
+      props.phase === 'map' &&
+      noise1 &&
+      noise2 &&
+      noise1.state === 'stopped'
+    ) {
       noise1.start();
       noise2.start();
     }
-    if (!props.startWind && noise1 && noise2 && noise1.state === 'started') {
+    if (
+      props.phase !== 'map' &&
+      noise1 &&
+      noise2 &&
+      noise1.state === 'started'
+    ) {
       noise1.stop();
       noise2.stop();
     }

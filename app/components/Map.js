@@ -150,7 +150,7 @@ export default function Map(props) {
                 // props.openPortal();
                 // props.setEnterPortal(true);
                 setPhase('portal');
-                props.setStartWind(false);
+                // props.setStartWind(false);
               }}
               animate={{
                 color: [

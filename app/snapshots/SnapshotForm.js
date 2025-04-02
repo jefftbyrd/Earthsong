@@ -19,18 +19,13 @@ import styles from '../styles/ui.module.scss';
 // import ErrorMessage from '../ErrorMessage';
 // import styles from './SnapshotsForm.module.scss';
 
-// type Props = {
-//   user: User;
-//   snapshots: Snapshot[];
-// };
 
-export default function SnapshotsForm({ setProfileOpen, setStartWind }) {
+export default function SnapshotsForm({ setProfileOpen }) {
   // const [title, setTitle] = useState('');
   // const [textContent, setTextContent] = useState('');
   // const [errorMessage, setErrorMessage] = useState('');
   const [aboutOpen, setAboutOpen] = useState(false);
-  const { user } = useContext(userContext);
-  const { snapshots } = useContext(userContext);
+  const { user, snapshots } = useContext(userContext);
   const { phase } = useContext(journeyContext);
 
   // const router = useRouter();
@@ -71,7 +66,6 @@ export default function SnapshotsForm({ setProfileOpen, setStartWind }) {
                       <SnapshotItem
                         snapshot={snapshot}
                         setProfileOpen={setProfileOpen}
-                        setStartWind={setStartWind}
                       />
                     </li>
                   ))}

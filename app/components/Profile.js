@@ -39,18 +39,8 @@ export default function Profile({
 
       {profileOpen ? (
         <SnapshotForm
-          user={user}
-          snapshots={snapshots}
           setProfileOpen={setProfileOpen}
           profileOpen={profileOpen}
-          setRecallId={setRecallId}
-          setPortalRecall={setPortalRecall}
-          setEnterPortal={setEnterPortal}
-          setResetPortal={setResetPortal}
-          resetPortal={resetPortal}
-          setStartWind={setStartWind}
-          setIsStarted={setIsStarted}
-          portalRecall={portalRecall}
         />
       ) : null}
     </>

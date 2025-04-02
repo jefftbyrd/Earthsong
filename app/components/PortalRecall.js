@@ -20,8 +20,9 @@ export default function PortalRecall(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [saveIsOpen, setSaveIsOpen] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
   const { user } = useContext(userContext);
-  const { reset } = useContext(userContext);
+  const { reset } = useContext(journeyContext);
   const { pastJourney } = useContext(journeyContext);
 
   useEffect(() => {

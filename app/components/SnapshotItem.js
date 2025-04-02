@@ -7,7 +7,6 @@ import styles from '../styles/ui.module.scss';
 export default function SnapshotItem({
   snapshot,
   setProfileOpen,
-  setStartWind,
 }) {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
   const { setPhase } = useContext(journeyContext);
@@ -31,7 +30,7 @@ export default function SnapshotItem({
           // await setResetPortal(false);
           // await setEnterPortal(false);
           // await setPortalRecall(true);
-          setStartWind(false);
+          // setStartWind(false);
           setProfileOpen(false);
           // setEnterPortal(true);
           // setIsStarted(true);
