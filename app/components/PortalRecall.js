@@ -6,10 +6,10 @@ import { journeyContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import LoginToSaveButton from './LoginToSaveButton';
+import { soundPortal } from './p5soundPortal';
 import Save from './Save';
 import SaveButton from './SaveButton';
 import SoundPlayerItem from './SoundPlayerItem';
-import { soundPortal } from './soundPortal';
 
 export default function PortalRecall(props) {
   const [isLoading, setIsLoading] = useState(true);

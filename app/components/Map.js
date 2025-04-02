@@ -24,6 +24,8 @@ export default function Map(props) {
   const { phase, setPhase } = useContext(journeyContext);
   const { sounds } = useContext(soundsContext);
 
+  console.log('sounds on map', sounds);
+
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
     mapRef.current = new mapboxgl.Map({
@@ -86,7 +88,7 @@ export default function Map(props) {
       )}
 
       {/* SEARCHING */}
-      {pin.lat && phase === 'map' && !sounds ? (
+      {pin.lat && phase === 'map' && sounds?.length < 1 ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{

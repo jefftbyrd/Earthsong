@@ -35,6 +35,12 @@ export const clouds = (p5) => {
     startTime = p5.millis();
   };
 
+  p5.updateWithProps = (props) => {
+    if (props.phase === 'portal' || props.phase === 'portalRecall') {
+      stopAll();
+    }
+  };
+
   p5.draw = () => {
     // Show screen
     if (showStartScreen) {
@@ -103,4 +109,13 @@ export const clouds = (p5) => {
   p5.windowResized = () => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
   };
+
+  function stopAll() {
+    // console.log('stop triggered');
+    // p5.removeElements();
+    // await multiPlayer.stopAll();
+    // await multiPlayer.dispose();
+    // multiPlayer = new Tone.Players();
+    p5.remove();
+  }
 };

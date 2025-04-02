@@ -39,10 +39,10 @@ export const wind = (p5) => {
       noise2.start();
     }
     if (
-      props.phase !== 'map' &&
-      noise1 &&
-      noise2 &&
-      noise1.state === 'started'
+      props.phase !== 'map'
+      // noise1 &&
+      // noise2 &&
+      // noise1.state === 'started'
     ) {
       noise1.stop();
       noise2.stop();

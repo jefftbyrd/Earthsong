@@ -4,29 +4,25 @@ import { AnimatePresence, motion } from 'motion/react';
 import { useContext, useState } from 'react';
 import Logo from '../public/Logo.js';
 import BackToMap from './components/BackToMap';
-import { clouds } from './components/clouds';
 import HelpButton from './components/HelpButton.js';
 import Map from './components/Map';
-import { occult } from './components/occult';
+import { clouds } from './components/p5clouds.js';
+import { occult } from './components/p5occult.js';
+import { wind } from './components/p5wind.js';
 import Portal from './components/Portal';
 import PortalRecall from './components/PortalRecall';
 import Profile from './components/Profile';
 import Title from './components/Title';
-import { wind } from './components/wind';
 import { journeyContext } from './context/journeyContext';
 import { userContext } from './context/userContext';
 import styles from './styles/ui.module.scss';
 
 export default function Earthsong() {
-  const { user } = useContext(userContext);
-  const { snapshots } = useContext(userContext);
-  const { phase, setPhase } = useContext(journeyContext);
-  const { pastJourney } = useContext(journeyContext);
-  const { panelId } = useContext(journeyContext);
+  const { user, snapshots } = useContext(userContext);
+  const { phase, setPhase, pastJourney } = useContext(journeyContext);
 
   return (
     <>
-      {console.log('panelId', panelId)}
       {/* If sound portal is open, display the return to map icon/link */}
       {user ? (
         <motion.h1
@@ -107,7 +103,7 @@ export default function Earthsong() {
                 transition: { duration: 2 },
               }}
             >
-              <NextReactP5Wrapper sketch={clouds} />
+              <NextReactP5Wrapper sketch={clouds} phase={phase} />
             </motion.div>
           </>
         ) : null}
