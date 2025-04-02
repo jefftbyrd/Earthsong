@@ -8,7 +8,7 @@ import { journeyContext } from '../../context/journeyContext';
 import ErrorMessage from '../../ErrorMessage';
 import styles from '../../styles/ui.module.scss';
 
-export default function LoginForm({ setLoginOpen, loginOpen }) {
+export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);

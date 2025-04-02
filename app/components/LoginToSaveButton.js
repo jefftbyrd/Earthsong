@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import LoginForm from '../(auth)/login/LoginForm';
 import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
+import LoginPanel from './LoginPanel';
 
 export default function LoginToSaveButton() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -21,9 +22,7 @@ export default function LoginToSaveButton() {
         Save
       </button>
 
-      {panelOpen && panelId === 'loginToSave' ? (
-        <LoginForm setLoginOpen={setLoginOpen} loginOpen={loginOpen} />
-      ) : null}
+      {panelOpen && panelId === 'loginToSave' ? <LoginPanel /> : null}
     </>
   );
 }
