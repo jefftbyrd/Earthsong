@@ -88,7 +88,7 @@ export default function Map() {
       )}
 
       {/* SEARCHING */}
-      {pin.lat && phase === 'map' && sounds?.length < 1 ? (
+      {pin.lat && phase === 'map' && !sounds ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{

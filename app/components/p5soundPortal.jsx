@@ -332,7 +332,7 @@ export const soundPortal = (p5) => {
         }
       }
     }
-    console.log('mousePressed', p5.mousePressed);
+    // console.log('mousePressed', p5.mousePressed);
     // Prevent default functionality.
     return false;
   };
