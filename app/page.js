@@ -70,7 +70,7 @@ export default function Earthsong() {
       ) : null}
 
       {/* Wind generator is ready, but waits for start. */}
-      <NextReactP5Wrapper sketch={wind} phase={phase} />
+      {/* <NextReactP5Wrapper sketch={wind} phase={phase} /> */}
 
       {/* Map waits for start */}
       <AnimatePresence>
