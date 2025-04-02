@@ -1,8 +1,21 @@
 'use client';
 import { createContext, type Dispatch, type ReactNode, useState } from 'react';
 
+export interface Sound {
+  color: string;
+  description: string;
+  duration: number;
+  freesoundUrl: string;
+  geotag: string;
+  id: number;
+  name: string;
+  tags: string[];
+  url: string;
+  username: string;
+}
+
 interface Sounds {
-  [key: string]: any; // Adjust this type as needed
+  sound: Sound;
 }
 
 interface SoundsContextType {

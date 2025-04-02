@@ -1,8 +1,7 @@
 'use client';
-import { AnimatePresence, motion } from 'motion/react';
-import { useContext, useState } from 'react';
-// import LoginForm from '../(auth)/login/LoginForm';
-import Star from '../../public/Star.js';
+import { motion } from 'motion/react';
+import { useContext } from 'react';
+import Star from '../../public/Star';
 import StarInverted from '../../public/StarInverted';
 import { journeyContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
@@ -11,10 +10,7 @@ import LoginPanel from './LoginPanel';
 import ProfilePanel from './ProfilePanel';
 
 export default function Profile() {
-  const [profileOpen, setProfileOpen] = useState(false);
-  // const { phase, setPhase } = useContext(journeyContext);
-  const [loginOpen, setLoginOpen] = useState(false);
-  const { user } = useContext(userContext);
+  const { user } = useContext(userContext) || {};
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
 
@@ -41,8 +37,6 @@ export default function Profile() {
       <motion.button
         className={styles.userIcon}
         onClick={() => {
-          // setLoginOpen(!loginOpen);
-          // setPanelId('profilePanel');
           setPanelId('profilePanel');
           togglePanel();
         }}

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { useContext } from 'react';
-import Logo from '../../public/Logo.js';
+import Logo from '../../public/Logo';
+// import { JourneyContextType } from '../context/journeyContext';
 import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/ui.module.scss';
 

@@ -8,13 +8,13 @@ import {
   useState,
 } from 'react';
 
-interface JourneyContextType {
+export interface JourneyContextType {
   phase: string;
   setPhase: Dispatch<SetStateAction<string>>;
   reset: boolean;
   setReset: Dispatch<SetStateAction<boolean>>;
-  pastJourney: string;
-  setPastJourney: Dispatch<SetStateAction<string>>;
+  pastJourney: number;
+  setPastJourney: Dispatch<SetStateAction<number>>;
   panelId: string;
   setPanelId: Dispatch<SetStateAction<string>>;
   panelOpen: boolean;
@@ -22,7 +22,19 @@ interface JourneyContextType {
   togglePanel: () => void;
 }
 
-export const journeyContext = createContext<JourneyContextType | null>(null);
+export const journeyContext = createContext<JourneyContextType>({
+  phase: 'initial',
+  setPhase: () => {},
+  reset: false,
+  setReset: () => {},
+  pastJourney: 0,
+  setPastJourney: () => {},
+  panelId: '',
+  setPanelId: () => {},
+  panelOpen: false,
+  setPanelOpen: () => {},
+  togglePanel: () => {},
+});
 
 interface Props {
   children: ReactNode;
@@ -31,14 +43,14 @@ interface Props {
 export const JourneyContextProvider = ({ children }: Props) => {
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
-  const [pastJourney, setPastJourney] = useState('');
+  const [pastJourney, setPastJourney] = useState(0);
   const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
 
   const togglePanel = () => setPanelOpen((prev) => !prev);
 
   useEffect(() => {
-    setPanelOpen(true);
+    if (panelId) setPanelOpen(true);
   }, [panelId]);
 
   return (

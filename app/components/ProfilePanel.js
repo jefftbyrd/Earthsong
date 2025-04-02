@@ -19,7 +19,7 @@ import SnapshotItem from './SnapshotItem';
 // import ErrorMessage from '../ErrorMessage';
 // import styles from './SnapshotsForm.module.scss';
 
-export default function ProfilePanel({ setProfileOpen }) {
+export default function ProfilePanel() {
   // const [title, setTitle] = useState('');
   // const [textContent, setTextContent] = useState('');
   // const [errorMessage, setErrorMessage] = useState('');

@@ -9,14 +9,13 @@ import styles from '../styles/ui.module.scss';
 import About from './About';
 import RegisterComponent from './RegisterComponent';
 
-export default function LoginPanel({ setLoginOpen, loginOpen }) {
+export default function LoginPanel() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const { setPanelId, panelOpen, togglePanel, panelId } =
-    useContext(journeyContext);
+  const { togglePanel } = useContext(journeyContext);
 
   const router = useRouter();
 

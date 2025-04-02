@@ -11,7 +11,7 @@ import Freesound from './Freesound';
 const initialCenter = [4.510020088079064, 44.66199079784276];
 const initialZoom = 2.14;
 
-export default function Map(props) {
+export default function Map() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
 

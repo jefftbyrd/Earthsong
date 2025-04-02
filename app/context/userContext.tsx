@@ -1,5 +1,6 @@
 'use client';
 import { createContext, type ReactNode } from 'react';
+import { type Sound } from './soundsContext';
 
 interface User {
   id: number;
@@ -7,31 +8,20 @@ interface User {
   email: string;
 }
 
-interface Sound {
-  color: string;
-  description: string;
-  duration: number;
-  freesoundUrl: string;
-  geotag: string;
-  id: number;
-  name: string;
-  tags: string[];
-  url: string;
-  username: string;
-}
-
-interface Snapshot {
+export interface Snapshot {
   id: number;
   sounds: Sound[];
   title: string;
 }
 
-interface UserContextType {
+export interface UserContextType {
   user: User | null;
   snapshots: Snapshot[];
 }
 
-export const userContext = createContext<UserContextType | null>(null);
+export const userContext = createContext<UserContextType | undefined>(
+  undefined,
+);
 
 interface Props {
   children: ReactNode;
