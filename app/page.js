@@ -1,10 +1,9 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Logo from '../public/Logo.js';
 import BackToMap from './components/BackToMap';
-import HelpButton from './components/HelpButton';
 import Map from './components/Map';
 import { clouds } from './components/p5clouds';
 import { occult } from './components/p5occult';
@@ -20,8 +19,6 @@ import styles from './styles/ui.module.scss';
 export default function Earthsong() {
   const { user, snapshots } = useContext(userContext);
   const { phase, setPhase, pastJourney } = useContext(journeyContext);
-  console.log('user', user);
-  console.log('snapshots', snapshots);
 
   return (
     <>
