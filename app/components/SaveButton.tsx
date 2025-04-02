@@ -1,8 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
 
-export default function SaveButton({ setShowSuccessMessage }) {
+interface SaveButtonProps {
+  setShowSuccessMessage: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export default function SaveButton({ setShowSuccessMessage }: SaveButtonProps) {
   const { togglePanel, setPanelId } = useContext(journeyContext);
 
   return (
