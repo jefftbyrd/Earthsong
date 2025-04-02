@@ -4,18 +4,13 @@ import Logo from '../../public/Logo.js';
 import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/ui.module.scss';
 
-export default function BackToMap({ setStartWind }) {
+export default function BackToMap() {
   const { setPhase } = useContext(journeyContext);
   const { setReset } = useContext(journeyContext);
   return (
     <motion.button
       className={styles.backToMapIcon}
       onClick={async () => {
-        // await setResetPortal(true);
-        // await setResetPortal(false);
-        // setStartWind(true);
-        // setEnterPortal(false);
-        // setPortalRecall(false);
         await setReset(true);
         await setReset(false);
         await setPhase('map');

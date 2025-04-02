@@ -30,10 +30,10 @@ export const JourneyContextProvider: FC<Props> = ({
   // snapshots,
 }) => {
   // const [themeValue, setThemeValue] = useState(initial);
-  const [isStarted, setIsStarted] = useState(false);
-  const [enterPortal, setEnterPortal] = useState(false);
+  // const [isStarted, setIsStarted] = useState(false);
+  // const [enterPortal, setEnterPortal] = useState(false);
   const [phase, setPhase] = useState('initial');
-  const [reset, setReset] = useState('initial');
+  const [reset, setReset] = useState(false);
   const [pastJourney, setPastJourney] = useState();
 
   return (
@@ -41,10 +41,10 @@ export const JourneyContextProvider: FC<Props> = ({
       value={{
         // themeValue,
         // setThemeValue,
-        isStarted,
-        setIsStarted,
-        enterPortal,
-        setEnterPortal,
+        // isStarted,
+        // setIsStarted,
+        // enterPortal,
+        // setEnterPortal,
         // user,
         // snapshots,
         setPhase,

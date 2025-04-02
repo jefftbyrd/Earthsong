@@ -170,7 +170,6 @@ export const soundPortal = (p5) => {
     // console.log('stop triggered');
     // p5.removeElements();
     await multiPlayer.stopAll();
-
     await multiPlayer.dispose();
     // multiPlayer = new Tone.Players();
     p5.remove();

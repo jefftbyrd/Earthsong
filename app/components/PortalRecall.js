@@ -14,29 +14,21 @@ import { soundPortal } from './soundPortal';
 export default function PortalRecall(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [soundsColor, setSoundsColor] = useState();
-  // const [generate, setGenerate] = useState(false);
   const [playerTarget, setPlayerTarget] = useState();
   const [playing, setPlaying] = useState(false);
-  // const [dataFromChild, setDataFromChild] = useState();
   const [displayingItem, setDisplayingItem] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [saveIsOpen, setSaveIsOpen] = useState(false);
-  // const [manualClose, setManualClose] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const { user } = useContext(userContext);
   const { reset } = useContext(userContext);
   const { pastJourney } = useContext(journeyContext);
-
-  // function handleDataFromChild(data) {
-  //   setDataFromChild(data);
-  // }
 
   useEffect(() => {
     const recallSnapshot = async () => {
       const recalledSounds = await props.sounds;
       setSoundsColor(recalledSounds);
       setIsLoading(false);
-      // console.log('soundsColor on portal recall', soundsColor);
     };
 
     recallSnapshot();
@@ -54,7 +46,6 @@ export default function PortalRecall(props) {
         <NextReactP5Wrapper
           sketch={soundPortal}
           soundsColor={soundsColor}
-          // generate={generate}
           playerTarget={playerTarget}
           play={playing}
           resetPortal={props.resetPortal}

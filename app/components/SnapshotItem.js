@@ -6,14 +6,8 @@ import styles from '../styles/ui.module.scss';
 
 export default function SnapshotItem({
   snapshot,
-  // setRecallId,
-  setPortalRecall,
   setProfileOpen,
-  setEnterPortal,
-  resetPortal,
-  setResetPortal,
   setStartWind,
-  setIsStarted,
 }) {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
   const { setPhase } = useContext(journeyContext);

@@ -3,6 +3,7 @@ import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { motion } from 'motion/react';
 import React, { useContext, useEffect, useState } from 'react';
 import uniqolor from 'uniqolor';
+import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
@@ -23,7 +24,7 @@ export default function Portal() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const { user } = useContext(userContext);
-  const { reset } = useContext(userContext);
+  const { reset } = useContext(journeyContext);
   const { sounds } = useContext(soundsContext);
 
   useEffect(() => {

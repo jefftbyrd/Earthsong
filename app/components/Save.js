@@ -1,15 +1,5 @@
-// 'use client';
-
 import { AnimatePresence, motion } from 'motion/react';
-// import {
-//   Description,
-//   Dialog,
-//   DialogPanel,
-//   DialogTitle,
-// } from '@headlessui/react';
-// import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-// import { useState } from 'react';
 import React, { useState } from 'react';
 // import type { User } from '../../../migrations/00000-createTableUsers';
 // import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
@@ -30,8 +20,6 @@ export default function Save({
   setShowSuccessMessage,
   showSuccessMessage,
 }) {
-  // console.log('closeMe', closeMe);
-  // const [sounds, setSounds] = useState(props.sounds);
   const [errorMessage, setErrorMessage] = useState('');
   const [title, setTitle] = useState('');
   // const [showSuccessMessage, setShowSuccessMessage] = useState(false);
