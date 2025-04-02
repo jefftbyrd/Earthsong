@@ -2,11 +2,7 @@ import React, { useContext, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
 
-export default function SaveButton({
-  setSaveIsOpen,
-  saveIsOpen,
-  setShowSuccessMessage,
-}) {
+export default function SaveButton({ setShowSuccessMessage }) {
   const { togglePanel, setPanelId } = useContext(journeyContext);
 
   return (
