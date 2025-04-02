@@ -352,12 +352,8 @@ export const soundPortal = (p5) => {
       }
     }
     // Prevent default functionality.
-    return false;
+    // return false;
   };
-
-  // p5.touchEnded = () => {
-  //   return false;
-  // };
 
   p5.mouseDragged = () => {
     if (shapes.length > 0) {

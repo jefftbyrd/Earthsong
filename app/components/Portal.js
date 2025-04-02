@@ -26,8 +26,7 @@ export default function Portal() {
   const { user } = useContext(userContext);
   const { reset } = useContext(journeyContext);
   const { sounds } = useContext(soundsContext);
-  const { togglePanel, setPanelId, panelId, panelOpen } =
-    useContext(journeyContext);
+  const { panelId, panelOpen } = useContext(journeyContext);
 
   useEffect(() => {
     const addColor = async () => {
