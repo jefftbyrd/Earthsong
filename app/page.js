@@ -6,7 +6,6 @@ import Logo from '../public/Logo.js';
 import BackToMap from './components/BackToMap';
 import { clouds } from './components/clouds';
 import HelpButton from './components/HelpButton.js';
-import Login from './components/Login';
 import Map from './components/Map';
 import { occult } from './components/occult';
 import Portal from './components/Portal';
