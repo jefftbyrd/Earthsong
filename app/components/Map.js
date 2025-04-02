@@ -24,7 +24,7 @@ export default function Map(props) {
   const { phase, setPhase } = useContext(journeyContext);
   const { sounds } = useContext(soundsContext);
 
-  console.log('sounds on map', sounds);
+  // console.log('sounds on map', sounds);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;

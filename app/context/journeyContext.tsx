@@ -2,7 +2,6 @@
 import {
   createContext,
   type Dispatch,
-  type FC,
   type ReactNode,
   type SetStateAction,
   useEffect,
@@ -10,57 +9,43 @@ import {
 } from 'react';
 
 interface JourneyContextType {
-  themeValue: 'light' | 'dark';
-  setThemeValue: Dispatch<SetStateAction<'light' | 'dark'>>;
+  phase: string;
+  setPhase: Dispatch<SetStateAction<string>>;
+  reset: boolean;
+  setReset: Dispatch<SetStateAction<boolean>>;
+  pastJourney: string;
+  setPastJourney: Dispatch<SetStateAction<string>>;
+  panelId: string;
+  setPanelId: Dispatch<SetStateAction<string>>;
+  panelOpen: boolean;
+  setPanelOpen: Dispatch<SetStateAction<boolean>>;
+  togglePanel: () => void;
 }
 
-export const journeyContext = createContext<JourneyContextType>({
-  themeValue: 'light',
-  setThemeValue: () => {},
-});
+export const journeyContext = createContext<JourneyContextType | null>(null);
 
 interface Props {
   children: ReactNode;
-  initial?: 'light' | 'dark';
 }
 
-export const JourneyContextProvider: FC<Props> = ({
-  children,
-  // initial = 'light',
-  // user,
-  // snapshots,
-}) => {
-  // const [themeValue, setThemeValue] = useState(initial);
-  // const [isStarted, setIsStarted] = useState(false);
-  // const [enterPortal, setEnterPortal] = useState(false);
+export const JourneyContextProvider = ({ children }: Props) => {
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
-  const [pastJourney, setPastJourney] = useState();
+  const [pastJourney, setPastJourney] = useState('');
   const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
-  function togglePanel() {
-    // setPanelOpen((prev) => (prev === false ? true : false));
-    setPanelOpen(!panelOpen);
-  }
+
+  const togglePanel = () => setPanelOpen((prev) => !prev);
 
   useEffect(() => {
-    // manually deep compare here before updating state
     setPanelOpen(true);
   }, [panelId]);
 
   return (
     <journeyContext.Provider
       value={{
-        // themeValue,
-        // setThemeValue,
-        // isStarted,
-        // setIsStarted,
-        // enterPortal,
-        // setEnterPortal,
-        // user,
-        // snapshots,
-        setPhase,
         phase,
+        setPhase,
         reset,
         setReset,
         pastJourney,

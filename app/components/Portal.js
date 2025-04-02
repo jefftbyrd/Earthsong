@@ -80,7 +80,6 @@ export default function Portal() {
           soundsColor={soundsColor}
           playerTarget={playerTarget}
           play={playing}
-          // resetPortal={props.resetPortal}
           reset={reset}
         />
       ) : null}
@@ -114,7 +113,6 @@ export default function Portal() {
         {panelOpen && panelId === 'savePanel' ? (
           <Save
             sounds={soundsColor}
-            // setSaveIsOpen={setSaveIsOpen}
             setShowSuccessMessage={setShowSuccessMessage}
             showSuccessMessage={showSuccessMessage}
           />

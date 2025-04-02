@@ -20,6 +20,8 @@ import styles from './styles/ui.module.scss';
 export default function Earthsong() {
   const { user, snapshots } = useContext(userContext);
   const { phase, setPhase, pastJourney } = useContext(journeyContext);
+  console.log('user', user);
+  console.log('snapshots', snapshots);
 
   return (
     <>

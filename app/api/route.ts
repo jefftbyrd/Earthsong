@@ -23,7 +23,7 @@ export async function POST(
   const requestBody = await request.json();
 
   const result = userSchema.safeParse(requestBody);
-  console.log('zod result', result);
+  // console.log('zod result', result);
 
   if (!result.success) {
     return NextResponse.json(
