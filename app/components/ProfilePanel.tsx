@@ -7,7 +7,6 @@ import { useContext, useState } from 'react';
 // import { useState } from 'react';
 import LogoutButton from '../(auth)/logout/LogoutButton';
 import { journeyContext } from '../context/journeyContext';
-// import { earthsongContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/ui.module.scss';
 import About from './About';
@@ -55,24 +54,20 @@ export default function ProfilePanel() {
 
         <div className={styles.summon}>
           <h2>Summon past journeys</h2>
-          {snapshots && (
-            <div className={styles.snapshots}>
-              {snapshots?.length === 0 ? (
-                'No snapshots yet'
-              ) : (
-                <ul>
-                  {snapshots?.map((snapshot) => (
-                    <li key={`snapshots-${snapshot?.id}`}>
-                      <SnapshotItem
-                        snapshot={snapshot}
-                        // setProfileOpen={setProfileOpen}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
+
+          <div className={styles.snapshots}>
+            {snapshots.length < 1 ? (
+              'No snapshots yet'
+            ) : (
+              <ul>
+                {snapshots.map((snapshot) => (
+                  <li key={`snapshots-${snapshot.id}`}>
+                    <SnapshotItem snapshot={snapshot} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         </div>
 
         <button

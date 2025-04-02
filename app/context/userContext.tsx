@@ -19,9 +19,10 @@ export interface UserContextType {
   snapshots: Snapshot[];
 }
 
-export const userContext = createContext<UserContextType | undefined>(
-  undefined,
-);
+export const userContext = createContext<UserContextType>({
+  user: null,
+  snapshots: [],
+});
 
 interface Props {
   children: ReactNode;

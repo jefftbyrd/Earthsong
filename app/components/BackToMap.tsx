@@ -1,20 +1,29 @@
 import { motion } from 'motion/react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Logo from '../../public/Logo';
-// import { JourneyContextType } from '../context/journeyContext';
 import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/ui.module.scss';
 
 export default function BackToMap() {
   const { setPhase } = useContext(journeyContext);
   const { setReset } = useContext(journeyContext);
+  const [resetDone, setResetDone] = useState(false);
+
+  useEffect(() => {
+    if (resetDone) {
+      setPhase('map');
+    }
+  }, [resetDone, setPhase]);
+
   return (
     <motion.button
       className={styles.backToMapIcon}
-      onClick={async () => {
-        await setReset(true);
-        await setReset(false);
-        await setPhase('map');
+      onClick={() => {
+        setReset(true);
+        setTimeout(() => {
+          setReset(false);
+          setResetDone(true);
+        }, 0);
       }}
       animate={{
         opacity: [0, 0, 1],
