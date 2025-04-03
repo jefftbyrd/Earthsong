@@ -176,8 +176,16 @@ export const soundPortal = (p5) => {
           );
         }
       }
+      // this.diameter =
+      //   p5.map(this.y, 0, p5.windowHeight, 50, 600) + this.meterMap;
       this.diameter =
-        p5.map(this.y, 0, p5.windowHeight, 50, 600) + this.meterMap;
+        p5.map(
+          this.y,
+          0,
+          p5.windowHeight,
+          p5.windowWidth / 48,
+          p5.windowWidth / 4,
+        ) + this.meterMap;
       this.numberSize =
         p5.map(this.y, 0, p5.windowHeight, 10, 200) + this.meterMap / 2;
       ellipse = p5.ellipse(this.x, this.y, this.diameter);
