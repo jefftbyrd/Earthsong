@@ -6,29 +6,43 @@ export default function Freesound(props) {
     useContext(soundsContext);
 
   useEffect(() => {
+    const searchRadiuses = [10, 50, 100, 200];
+
     const fetchData = async () => {
       setFreesoundLoading(true);
       try {
-        const response = await fetch(
-          `/api/freesound?lat=${props.pin.lat}&lng=${props.pin.lng}`,
-        );
+        for (const radius of searchRadiuses) {
+          const filter = encodeURIComponent(
+            `{!geofilt sfield=geotag pt=${props.pin.lat},${props.pin.lng} d=${radius}}`,
+          );
+          const response = await fetch(
+            `https://freesound.org/apiv2/search/text/?filter=${filter}&fields=previews,name,description,username,id,tags,duration,geotag,url&page_size=100&token=${process.env.NEXT_PUBLIC_FREESOUND_API_KEY}`,
+          );
 
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || 'Failed to fetch sounds');
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const json = await response.json();
+          if (json.count >= 5) {
+            setSounds(json);
+            return;
+          }
         }
 
-        const json = await response.json();
-        setSounds(json);
+        // If we get here, we didn't find enough results in any radius
+        throw new Error('No sufficient results found in any search radius');
       } catch (error) {
         console.error('Error fetching Freesound data:', error);
-        // You might want to set some error state here to show to the user
       } finally {
         setFreesoundLoading(false);
       }
     };
 
-    fetchData();
+    fetchData().catch((error) => {
+      console.error('Error in fetchData:', error);
+      setFreesoundLoading(false);
+    });
   }, [props.pin, setSounds, setFreesoundLoading]);
 
   if (freesoundLoading) {
