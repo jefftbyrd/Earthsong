@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { soundsContext } from '../context/soundsContext';
 
 export default function Freesound(props) {
-  const { setSounds, freesoundLoading, setFreesoundLoading } =
+  const { setSounds, freesoundLoading, setFreesoundLoading, setNotEnough } =
     useContext(soundsContext);
 
   useEffect(() => {
@@ -25,12 +25,17 @@ export default function Freesound(props) {
 
           const json = await response.json();
           if (json.count >= 5) {
-            setSounds(json);
+            setSounds({
+              ...json,
+              pin: props.pin,
+            });
+            setNotEnough(false);
             return;
           }
         }
 
         // If we get here, we didn't find enough results in any radius
+        setNotEnough(true);
         throw new Error('No sufficient results found in any search radius');
       } catch (error) {
         console.error('Error fetching Freesound data:', error);

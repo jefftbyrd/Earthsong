@@ -2,7 +2,7 @@
 import { createContext, type Dispatch, type ReactNode, useState } from 'react';
 
 export interface Sound {
-  color: string;
+  // color: string;
   description: string;
   duration: number;
   freesoundUrl: string;
@@ -32,9 +32,15 @@ interface Props {
 export const SoundsContextProvider = ({ children }: Props) => {
   // Initialize with an empty sound object that matches the Sound type
   const [freesoundLoading, setFreesoundLoading] = useState(true);
+  const [notEnough, setNotEnough] = useState(false);
   const [sounds, setSounds] = useState<Sounds>({
-    sound: {
-      color: '',
+    count: 0,
+    pin: {
+      lat: 0,
+      lng: 0,
+    },
+    results: {
+      // color: '',
       description: '',
       duration: 0,
       freesoundUrl: '',
@@ -49,7 +55,14 @@ export const SoundsContextProvider = ({ children }: Props) => {
 
   return (
     <soundsContext.Provider
-      value={{ sounds, setSounds, freesoundLoading, setFreesoundLoading }}
+      value={{
+        sounds,
+        setSounds,
+        freesoundLoading,
+        setFreesoundLoading,
+        notEnough,
+        setNotEnough,
+      }}
     >
       {children}
     </soundsContext.Provider>

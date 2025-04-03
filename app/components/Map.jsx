@@ -21,16 +21,8 @@ export default function Map() {
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
 
-  const { phase, setPhase } = useContext(journeyContext);
-  const { sounds, freesoundLoading } = useContext(soundsContext);
-
-  console.log('pin', pin);
-  console.log('fetch', fetch);
-  console.log('phase', phase);
-  console.log('sounds', sounds);
-  console.log('freesoundLoading', freesoundLoading);
-
-  // console.log('sounds on map', sounds);
+  const { setPhase } = useContext(journeyContext);
+  const { sounds, freesoundLoading, notEnough } = useContext(soundsContext);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
@@ -140,7 +132,10 @@ export default function Map() {
       ) : null}
 
       {/* IF THERE ARE ENOUGH SOUNDS */}
-      {pin.lat && sounds?.results?.length > 0 && freesoundLoading === false ? (
+      {pin.lat &&
+      notEnough === false &&
+      sounds?.results?.length > 0 &&
+      freesoundLoading === false ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -181,18 +176,8 @@ export default function Map() {
       ) : null}
 
       {/* NOT ENOUGH SOUNDS */}
-      {pin.lat && phase === 'map' && sounds && sounds?.results?.length < 1 ? (
+      {pin.lat && notEnough === true ? (
         <div className={styles.projection}>
-          <motion.h2
-            animate={{
-              opacity: [0, 1],
-              transition: { duration: 3, times: [0, 1] },
-            }}
-          >
-            {/* Announce the chosen coordinates */}
-            You chose {pin.lat.toFixed(4)}, {pin.lng.toFixed(4)}
-          </motion.h2>
-
           <motion.div
             animate={{
               opacity: [0, 0, 1],
