@@ -22,7 +22,13 @@ export default function Map() {
   const [zoom, setZoom] = useState(initialZoom);
 
   const { phase, setPhase } = useContext(journeyContext);
-  const { sounds } = useContext(soundsContext);
+  const { sounds, freesoundLoading } = useContext(soundsContext);
+
+  console.log('pin', pin);
+  console.log('fetch', fetch);
+  console.log('phase', phase);
+  console.log('sounds', sounds);
+  console.log('freesoundLoading', freesoundLoading);
 
   // console.log('sounds on map', sounds);
 
@@ -88,7 +94,7 @@ export default function Map() {
       )}
 
       {/* SEARCHING */}
-      {pin.lat && phase === 'map' && !sounds ? (
+      {pin.lat ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -98,8 +104,15 @@ export default function Map() {
           >
             {/* Announce the chosen coordinates */}
             You chose {pin.lat.toFixed(4)}, {pin.lng.toFixed(4)}.
+            <br />
+            <br />
+            <br />
           </motion.h2>
+        </div>
+      ) : null}
 
+      {pin.lat && freesoundLoading === true ? (
+        <div className={styles.projection}>
           <motion.div
             animate={{
               opacity: [0, 0, 1],
@@ -119,13 +132,15 @@ export default function Map() {
             >
               {/* Searching the area. */}
               Searching the area.
+              <br />
+              <br />
             </motion.button>
           </motion.div>
         </div>
       ) : null}
 
       {/* IF THERE ARE ENOUGH SOUNDS */}
-      {pin.lat && phase === 'map' && sounds && sounds?.results?.length > 0 ? (
+      {pin.lat && sounds?.results?.length > 0 && freesoundLoading === false ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -133,9 +148,6 @@ export default function Map() {
               transition: { duration: 3, times: [0, 1] },
             }}
           >
-            {/* Announce the chosen coordinates */}
-            You chose {pin.lat.toFixed(4)}, {pin.lng.toFixed(4)}.
-            <br />
             {/* Number of sounds found nearby. */}
             {sounds?.count} sounds found nearby.
           </motion.h2>
@@ -149,10 +161,7 @@ export default function Map() {
             <motion.button
               className={styles.projectionStart}
               onClick={() => {
-                // props.openPortal();
-                // props.setEnterPortal(true);
                 setPhase('portal');
-                // props.setStartWind(false);
               }}
               animate={{
                 color: [
