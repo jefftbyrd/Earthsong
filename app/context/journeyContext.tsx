@@ -20,6 +20,7 @@ export interface JourneyContextType {
   panelOpen: boolean;
   setPanelOpen: Dispatch<SetStateAction<boolean>>;
   togglePanel: () => void;
+  mobileCheck: boolean;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -34,6 +35,7 @@ export const journeyContext = createContext<JourneyContextType>({
   panelOpen: false,
   setPanelOpen: () => {},
   togglePanel: () => {},
+  mobileCheck: false,
 });
 
 interface Props {
