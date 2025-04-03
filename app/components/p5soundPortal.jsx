@@ -350,7 +350,13 @@ export const soundPortal = (p5) => {
       for (let i = 0; i < shapes.length; i++) {
         let shape = shapes[i];
         let distance = p5.dist(p5.mouseX, p5.mouseY, shape.x, shape.y);
-        let diameter = p5.map(p5.mouseY, 0, p5.windowHeight, 50, 600);
+        let diameter = p5.map(
+          p5.mouseY,
+          0,
+          p5.windowHeight,
+          p5.windowWidth / 48,
+          p5.windowWidth / 4,
+        );
 
         if (distance < diameter / 2) {
           shape.active = true;
