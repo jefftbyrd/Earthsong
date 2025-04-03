@@ -1,8 +1,13 @@
 'use client';
-import { createContext, type Dispatch, type ReactNode, useState } from 'react';
+import {
+  createContext,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useState,
+} from 'react';
 
 export interface Sound {
-  // color: string;
   description: string;
   duration: number;
   freesoundUrl: string;
@@ -14,13 +19,24 @@ export interface Sound {
   username: string;
 }
 
+interface Pin {
+  lat: number;
+  lng: number;
+}
+
 interface Sounds {
-  sound: Sound;
+  count: number;
+  results: Sound;
+  pin: Pin;
 }
 
 interface SoundsContextType {
   sounds: Sounds;
   setSounds: Dispatch<React.SetStateAction<Sounds>>;
+  notEnough: boolean;
+  setNotEnough: Dispatch<SetStateAction<boolean>>;
+  freesoundLoading: boolean;
+  setFreesoundLoading: Dispatch<SetStateAction<boolean>>;
 }
 
 export const soundsContext = createContext<SoundsContextType | null>(null);
@@ -40,7 +56,6 @@ export const SoundsContextProvider = ({ children }: Props) => {
       lng: 0,
     },
     results: {
-      // color: '',
       description: '',
       duration: 0,
       freesoundUrl: '',
