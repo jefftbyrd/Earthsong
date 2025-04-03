@@ -38,14 +38,16 @@ export const journeyContext = createContext<JourneyContextType>({
 
 interface Props {
   children: ReactNode;
+  mobileCheck: boolean;
 }
 
-export const JourneyContextProvider = ({ children }: Props) => {
+export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
   const [pastJourney, setPastJourney] = useState(0);
   const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
 
   const togglePanel = () => setPanelOpen((prev) => !prev);
 
@@ -67,6 +69,7 @@ export const JourneyContextProvider = ({ children }: Props) => {
         panelOpen,
         setPanelOpen,
         togglePanel,
+        mobileCheck,
       }}
     >
       {children}

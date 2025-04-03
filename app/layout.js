@@ -3,9 +3,10 @@ import '@fontsource/noto-sans-linear-a';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import localFont from 'next/font/local';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
+import { isMobile } from '../util/isMobile';
 import { JourneyContextProvider } from './context/journeyContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
@@ -23,9 +24,12 @@ const basteleurBold = localFont({
 });
 
 export default async function RootLayout({ children }) {
+  const userAgent = headers().get('user-agent') || '';
+  const mobileCheck = isMobile(userAgent);
   const sessionTokenCookie = (await cookies()).get('sessionToken');
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
   const snapshots = user && (await getSnapshots(sessionTokenCookie.value));
+  console.log('mobileCheck', mobileCheck);
 
   return (
     <html lang="en">
@@ -56,7 +60,7 @@ export default async function RootLayout({ children }) {
       <body
         className={`${basteleurBold.variable} ${basteleurMoonlight.variable}`}
       >
-        <JourneyContextProvider>
+        <JourneyContextProvider mobileCheck={mobileCheck}>
           <UserContextProvider user={user} snapshots={snapshots}>
             <SoundsContextProvider>{children}</SoundsContextProvider>
           </UserContextProvider>
