@@ -61,17 +61,17 @@ export const soundPortal = (p5) => {
   p5.draw = () => {
     p5.background(0);
 
-    let vanishingStroke = p5.color('lightblue');
+    const vanishingStroke = p5.color('lightblue');
     vanishingStroke.setAlpha(200);
     p5.stroke(vanishingStroke);
 
-    let frequencyData = waveform.getValue();
-    let visualizerFill = p5.color(115, 64, 50);
+    const frequencyData = waveform.getValue();
+    const visualizerFill = p5.color(115, 64, 50);
     visualizerFill.setAlpha(255);
     p5.fill(visualizerFill);
 
     if (frequencyData[0] > 0 || frequencyData[0] < 0) {
-      let visualizer = p5.beginShape();
+      const visualizer = p5.beginShape();
       for (let i = 0; i < frequencyData.length; i++) {
         let y = p5.map(frequencyData[i], -1, 1, p5.height / 2, 0);
         p5.vertex(i * scl, y);
@@ -340,7 +340,6 @@ export const soundPortal = (p5) => {
         }
       }
     }
-    // console.log('mousePressed', p5.mousePressed);
     // Prevent default functionality.
     return false;
   };
