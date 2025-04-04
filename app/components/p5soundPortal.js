@@ -9,6 +9,8 @@ export const soundPortal = (p5) => {
   let multiPlayer;
   let sounds2;
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
+  // Create shared reverb instance
+  let sharedReverb;
 
   p5.updateWithProps = async (props) => {
     if (props.soundsColor) {
@@ -32,6 +34,10 @@ export const soundPortal = (p5) => {
     soundCanvas.style('z-index', -999);
     multiPlayer = new Tone.Players();
     p5.textFont(noto);
+
+    // Create the shared reverb instance
+    sharedReverb = new Tone.Reverb();
+    sharedReverb.toDestination();
 
     waveform = new Tone.Waveform();
     multiPlayer.connect(waveform);
@@ -126,6 +132,8 @@ export const soundPortal = (p5) => {
   async function stopAll() {
     await multiPlayer.stopAll();
     await multiPlayer.dispose();
+    // Make sure to dispose the shared reverb too
+    await sharedReverb.dispose();
 
     p5.remove();
   }
@@ -145,6 +153,9 @@ export const soundPortal = (p5) => {
       this.number = number;
       this.reverseToggle = false;
       this.zIndex = 0;
+      // Add reverbGain to control wet/dry balance
+      this.reverbGain = null;
+      this.dryGain = null;
     }
 
     move() {
@@ -176,8 +187,6 @@ export const soundPortal = (p5) => {
           );
         }
       }
-      // this.diameter =
-      //   p5.map(this.y, 0, p5.windowHeight, 50, 600) + this.meterMap;
       this.diameter =
         p5.map(
           this.y,
@@ -244,15 +253,33 @@ export const soundPortal = (p5) => {
       multiPlayer.player(this.id).fadeOut = 0.3;
       this.meter = new Tone.Meter({ normalRange: true, smoothing: 0.9 });
       this.channel = new Tone.Channel();
-      this.reverb = new Tone.Reverb();
+
+      // Create two gain nodes for controlling wet/dry mix
+      this.reverbGain = new Tone.Gain(0); // Start with no reverb
+      this.dryGain = new Tone.Gain(1); // Start with full dry signal
+
+      // Connect player to meter for visualization
       multiPlayer.player(this.id).connect(this.meter);
+
+      // Connect player to channel for volume/pan control
       multiPlayer.player(this.id).connect(this.channel);
-      this.channel.connect(this.reverb);
-      this.reverb.toDestination();
+
+      // Connect channel to both dry and wet paths
+      this.channel.connect(this.dryGain);
+      this.channel.connect(this.reverbGain);
+
+      // Connect wet path to shared reverb
+      this.reverbGain.connect(sharedReverb);
+
+      // Connect dry path directly to destination
+      this.dryGain.toDestination();
     }
+
     audioControls() {
       this.meterLevel = this.meter.getValue();
       this.meterMap = p5.map(this.meterLevel, 0, 0.3, 0, 200);
+
+      // Map reverb wetness based on Y position
       this.revWet = p5.map(this.y, 0, p5.windowHeight, 1, 0);
       this.panX = p5.map(this.x, 0, p5.windowWidth, -1, 1);
 
@@ -268,8 +295,13 @@ export const soundPortal = (p5) => {
       if (this.revWet < 0) {
         this.revWet = 0;
       }
+
+      // Apply pan
       this.channel.pan.value = this.panX;
-      this.reverb.wet.value = this.revWet;
+
+      // Apply reverb wet/dry balance
+      this.reverbGain.gain.value = this.revWet;
+      this.dryGain.gain.value = 1 - this.revWet;
 
       this.d = p5.dist(p5.mouseX, p5.mouseY, this.x, this.y);
       if (this.d < this.diameter / 2) {
@@ -325,13 +357,18 @@ export const soundPortal = (p5) => {
     }
   } // END SHAPE CLASS
 
-  // Run when the mouse/touch is down.
   p5.mousePressed = () => {
     if (shapes.length > 0) {
       for (let i = 0; i < shapes.length; i++) {
         let shape = shapes[i];
         let distance = p5.dist(p5.mouseX, p5.mouseY, shape.x, shape.y);
-        let diameter = p5.map(p5.mouseY, 0, p5.windowHeight, 50, 600);
+        let diameter = p5.map(
+          p5.mouseY,
+          0,
+          p5.windowHeight,
+          p5.windowWidth / 48,
+          p5.windowWidth / 4,
+        );
 
         if (distance < diameter / 2) {
           shape.active = true;
@@ -340,7 +377,6 @@ export const soundPortal = (p5) => {
         }
       }
     }
-    // Prevent default functionality.
     return false;
   };
 
@@ -364,8 +400,6 @@ export const soundPortal = (p5) => {
         }
       }
     }
-    // Prevent default functionality.
-    // return false;
   };
 
   p5.mouseDragged = () => {
@@ -379,7 +413,6 @@ export const soundPortal = (p5) => {
         }
       }
     }
-    // Prevent default functionality.
     return false;
   };
 
