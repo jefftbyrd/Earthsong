@@ -552,8 +552,27 @@ export const soundPortal = (p5) => {
       for (let i = 0; i < shapes.length; i++) {
         let shape = shapes[i];
         if (shape.active) {
-          shape.x = p5.mouseX;
-          shape.y = p5.mouseY;
+          // Calculate new position
+          let newX = p5.mouseX;
+          let newY = p5.mouseY;
+
+          // Constrain position to keep the shape fully within canvas
+          // Consider the radius (diameter/2) when setting boundaries
+          newX = p5.constrain(
+            newX,
+            shape.diameter / 2,
+            p5.width - shape.diameter / 2,
+          );
+          newY = p5.constrain(
+            newY,
+            shape.diameter / 2,
+            p5.height - shape.diameter / 2,
+          );
+
+          // Update the shape's position
+          shape.x = newX;
+          shape.y = newY;
+
           shapeMoved = true;
           break; // Only move the first active shape (original behavior)
         }
