@@ -1,6 +1,6 @@
 export const clouds = (p5) => {
   // Keep original tile count but slightly reduced
-  const tileCount = 80; // Reduced from 100 but still enough for detail
+  const tileCount = 70; // Reduced from 100 but still enough for detail
   const noiseScale = 0.03; // Original noise scale
 
   let noiseVector;
@@ -120,7 +120,7 @@ export const clouds = (p5) => {
       }
 
       // Apply blur filter to the buffer
-      cloudBuffer.filter(p5.BLUR, 8);
+      cloudBuffer.filter(p5.BLUR, 7);
 
       // Draw the buffer to the main canvas, scaling up
       p5.image(cloudBuffer, 0, 0, p5.width, p5.height);
