@@ -73,14 +73,33 @@ export const soundPortal = (p5) => {
     shapes.length = 0;
 
     sounds2.map((sound, index) => {
-      const x = p5.random(p5.width - 300);
-      const y = p5.random(300, p5.height);
+      // First, select a random y position
+      const y = p5.random(300, p5.height - 100);
+
+      // Calculate initial diameter based on y position
+      // This is based on your existing diameter calculation in the show() method
+      const initialDiameter = p5.map(
+        y,
+        0,
+        p5.windowHeight,
+        p5.windowWidth / 48,
+        p5.windowWidth / 4,
+      );
+
+      // Calculate padding based on the initial diameter
+      const padding = initialDiameter / 2;
+
+      // Generate x position that keeps the shape fully within the canvas
+      const x = p5.random(padding, p5.width - padding);
+
       const id = sound.id;
       const name = sound.name;
       const bg = sound.color;
       const url = sound.url;
       const number = index + 1;
-      const b = new Shape(x, y, id, name, bg, url, number);
+
+      // Pass the initial diameter to the Shape constructor
+      const b = new Shape(x, y, id, name, bg, url, number, initialDiameter);
       shapes.push(b);
     });
     generatePlayers();
@@ -248,8 +267,9 @@ export const soundPortal = (p5) => {
     p5.remove();
   }
 
+  // Modify the Shape constructor to accept initialDiameter
   class Shape {
-    constructor(x, y, id, name, bg, url, number) {
+    constructor(x, y, id, name, bg, url, number, initialDiameter) {
       this.x = x;
       this.y = y;
       this.isClicked = false;
@@ -264,7 +284,7 @@ export const soundPortal = (p5) => {
       this.reverseToggle = false;
       this.zIndex = 0;
       this.meterMap = 0;
-      this.diameter = 0; // Store diameter for consistent hit detection
+      this.diameter = initialDiameter; // Initialize with calculated diameter
       // Add reverbGain to control wet/dry balance
       this.reverbGain = null;
       this.dryGain = null;
@@ -317,6 +337,8 @@ export const soundPortal = (p5) => {
       }
 
       // Calculate and store diameter for consistent hit detection
+      // Update diameter based on y position and meterMap
+      // This keeps the dynamic size behavior in the draw loop
       this.diameter =
         p5.map(
           this.y,
