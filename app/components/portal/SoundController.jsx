@@ -14,7 +14,7 @@ export default function SoundController({
   setIsOpen,
 }) {
   return (
-    <div className={styles.multiController}>
+    <>
       {soundsColor.map((sound, index) => (
         <div key={`soundId-${sound.id}`} className={styles.soundItem}>
           <SoundPlayerItem
@@ -30,6 +30,6 @@ export default function SoundController({
           />
         </div>
       ))}
-    </div>
+    </>
   );
 }
