@@ -1,79 +1,29 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
-import { motion } from 'motion/react';
-import React, { useContext, useEffect, useState } from 'react';
-import uniqolor from 'uniqolor';
+import React, { useContext, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
-import { soundsContext } from '../context/soundsContext';
-import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
-import LoginToSaveButton from './LoginToSaveButton';
 import { soundPortal } from './p5soundPortal';
-import Save from './Save';
-import SaveButton from './SaveButton';
-import SoundPlayerItem from './SoundPlayerItem';
+import SaveControl from './portal/SaveControl';
+import SoundController from './portal/SoundController';
+import { useSoundData } from './portal/useSoundData';
 
 export default function Portal() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [soundsColor, setSoundsColor] = useState();
   const [playerTarget, setPlayerTarget] = useState();
   const [playing, setPlaying] = useState(false);
   const [displayingItem, setDisplayingItem] = useState();
   const [isOpen, setIsOpen] = useState(false);
-  const [saveIsOpen, setSaveIsOpen] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
-  const { user } = useContext(userContext);
   const { reset } = useContext(journeyContext);
-  const { sounds } = useContext(soundsContext);
-  const { panelId, panelOpen } = useContext(journeyContext);
-
-  useEffect(() => {
-    const addColor = async () => {
-      // const response = await props.sounds;
-      const response = await sounds;
-      const soundsShuffled = response?.results
-        .sort(() => 0.5 - Math.random()) // Shuffle array
-        .slice(0, 5); // Select the first 5 items
-      const soundsWithColor = soundsShuffled
-        // .slice(0, 5)
-        .map((sound) => ({
-          ...sound,
-          freesoundUrl: sound?.url,
-          color: uniqolor
-            .random({ format: 'rgb' })
-            .color.replace(')', ', 1)')
-            .replace('rgb', 'rgba'),
-          url: sound?.previews['preview-lq-mp3'],
-          name: sound?.name
-            .replaceAll('.wav', '')
-            .replaceAll('.mp3', '')
-            .replaceAll('.WAV', '')
-            .replaceAll('.MP3', '')
-            .replaceAll('.m4a', '')
-            .replaceAll('.flac', '')
-            .replaceAll('.aif', '')
-            .replaceAll('.ogg', '')
-            .replaceAll('_', ' ')
-            .replaceAll('-', ' ')
-            .replaceAll('mp3', ''),
-        }))
-        .map(({ previews, ...sound }) => sound);
-      setSoundsColor(soundsWithColor);
-      setIsLoading(false);
-    };
-
-    addColor();
-  }, []);
+  const { isLoading, soundsColor } = useSoundData();
 
   if (isLoading) {
-    // early return
-    return 'Loading...';
+    return <div className={styles.loading}>Loading...</div>;
   }
 
   return (
     <>
-      {soundsColor?.length > 0 ? (
+      {soundsColor?.length > 0 && (
         <NextReactP5Wrapper
           sketch={soundPortal}
           soundsColor={soundsColor}
@@ -81,54 +31,22 @@ export default function Portal() {
           play={playing}
           reset={reset}
         />
-      ) : null}
+      )}
+
       <div className={styles.multiController}>
-        {soundsColor.map((sound, index) => {
-          return (
-            <div key={`soundId-${sound.id}`} className={styles.soundItem}>
-              <SoundPlayerItem
-                sound={sound}
-                index={index}
-                setPlayerTarget={setPlayerTarget}
-                setPlaying={setPlaying}
-                setDisplayingItem={setDisplayingItem}
-                playing={playing}
-                displayingItem={displayingItem}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-              />
-            </div>
-          );
-        })}
-        {user ? (
-          <SaveButton
-            setSaveIsOpen={setSaveIsOpen}
-            saveIsOpen={saveIsOpen}
-            setShowSuccessMessage={setShowSuccessMessage}
-          />
-        ) : (
-          <LoginToSaveButton />
-        )}
-        {panelOpen && panelId === 'savePanel' ? (
-          <Save
-            sounds={soundsColor}
-            setShowSuccessMessage={setShowSuccessMessage}
-            showSuccessMessage={showSuccessMessage}
-          />
-        ) : null}
-        {showSuccessMessage ? (
-          <motion.h1
-            className="successMessage"
-            animate={{
-              opacity: [0, 1, 0],
-              transition: { duration: 3, times: [0, 0.5, 1] },
-            }}
-          >
-            Your journey was saved!
-          </motion.h1>
-        ) : null}
+        <SoundController
+          soundsColor={soundsColor}
+          setPlayerTarget={setPlayerTarget}
+          setPlaying={setPlaying}
+          playing={playing}
+          displayingItem={displayingItem}
+          setDisplayingItem={setDisplayingItem}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+        />
+
+        <SaveControl soundsColor={soundsColor} />
       </div>
-      {/* End multiController */}
     </>
   );
 }
