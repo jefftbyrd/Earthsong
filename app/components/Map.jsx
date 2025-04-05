@@ -80,7 +80,7 @@ export default function Map() {
     return () => {
       mapRef.current.remove();
     };
-  }, []);
+  }, []); // Empty dependency array - create map only once
 
   return (
     <>
