@@ -564,7 +564,7 @@ export const soundPortal = (p5) => {
         return false;
       }
     }
-    return false;
+    // return false;
   };
 
   p5.mouseDragged = () => {
