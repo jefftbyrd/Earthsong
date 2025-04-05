@@ -532,7 +532,7 @@ export const soundPortal = (p5) => {
           shapeClicked = true;
 
           // Actually play/stop the sound when touched
-          playSound(shape.id);
+          // playSound(shape.id);
         } else {
           shape.active = false;
         }
