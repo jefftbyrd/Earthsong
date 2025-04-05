@@ -21,7 +21,7 @@ export default function Map() {
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
 
-  const { setPhase } = useContext(journeyContext);
+  const { setPhase, phase } = useContext(journeyContext);
   const { sounds, freesoundLoading, notEnough } = useContext(soundsContext);
 
   useEffect(() => {
@@ -66,7 +66,7 @@ export default function Map() {
 
   return (
     <>
-      {pin.lat ? null : (
+      {phase === 'map' && !pin.lat ? (
         <motion.div
           className={styles.instruction}
           animate={{
@@ -83,10 +83,10 @@ export default function Map() {
             <h2>Choose a place to explore.</h2>
           </motion.div>
         </motion.div>
-      )}
+      ) : null}
 
       {/* SEARCHING */}
-      {pin.lat ? (
+      {pin.lat && phase === 'map' ? (
         <div className={styles.projection}>
           <motion.h2
             animate={{
@@ -103,7 +103,7 @@ export default function Map() {
         </div>
       ) : null}
 
-      {pin.lat && freesoundLoading === true ? (
+      {pin.lat && phase === 'map' && freesoundLoading === true ? (
         <div className={styles.projection}>
           <motion.div
             animate={{
@@ -133,6 +133,7 @@ export default function Map() {
 
       {/* IF THERE ARE ENOUGH SOUNDS */}
       {pin.lat &&
+      phase === 'map' &&
       notEnough === false &&
       sounds?.results?.length > 0 &&
       freesoundLoading === false ? (
@@ -176,7 +177,7 @@ export default function Map() {
       ) : null}
 
       {/* NOT ENOUGH SOUNDS */}
-      {pin.lat && notEnough === true ? (
+      {pin.lat && phase === 'map' && notEnough === true ? (
         <div className={styles.projection}>
           <motion.div
             animate={{
