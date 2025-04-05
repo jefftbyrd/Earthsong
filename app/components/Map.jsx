@@ -128,14 +128,7 @@ export default function Map() {
           >
             <motion.button
               className={styles.projectionStart}
-              animate={{
-                color: [
-                  'rgb(255, 0, 89)',
-                  'rgb(255, 145, 0)',
-                  'rgb(255, 0, 89)',
-                ],
-              }}
-              transition={{ repeat: Infinity, duration: 3 }}
+              animate={textColorAnimation}
             >
               {/* Searching the area. */}
               Searching the area.
@@ -171,19 +164,11 @@ export default function Map() {
           >
             <motion.button
               className={styles.projectionStart}
+              animate={textColorAnimation}
               onClick={() => {
                 setPhase('portal');
                 setPin({});
               }}
-              animate={{
-                color: [
-                  'rgb(255, 0, 89)',
-                  'rgb(255, 145, 0)',
-                  'rgb(255, 0, 89)',
-                ],
-                scale: [1, 1.05, 1],
-              }}
-              transition={{ repeat: Infinity, duration: 3 }}
             >
               {/* Click to initiate sonic projection */}
               Take me there.
@@ -203,14 +188,7 @@ export default function Map() {
           >
             <motion.button
               className={styles.projectionStart}
-              animate={{
-                color: [
-                  'rgb(255, 0, 89)',
-                  'rgb(255, 145, 0)',
-                  'rgb(255, 0, 89)',
-                ],
-              }}
-              transition={{ repeat: Infinity, duration: 3 }}
+              animate={textColorAnimation}
             >
               {/* No sounds found */}
               No sounds found within 200km. Please choose another location.
