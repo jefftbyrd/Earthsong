@@ -1,24 +1,25 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
 import SaveControl from './portal/SaveControl';
 import SoundController from './portal/SoundController';
+import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
 
 export default function Portal() {
-  const [playerTarget, setPlayerTarget] = useState();
-  const [playing, setPlaying] = useState(false);
-  const [displayingItem, setDisplayingItem] = useState();
-  const [isOpen, setIsOpen] = useState(false);
-
   const { reset } = useContext(journeyContext);
-  const { isLoading, soundsColor } = useSoundData();
+  const { isLoading, soundsColor, error } = useSoundData();
+  const [state, actions] = usePortalState();
 
   if (isLoading) {
     return <div className={styles.loading}>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className={styles.error}>Error: {error}</div>;
   }
 
   return (
@@ -27,8 +28,8 @@ export default function Portal() {
         <NextReactP5Wrapper
           sketch={soundPortal}
           soundsColor={soundsColor}
-          playerTarget={playerTarget}
-          play={playing}
+          playerTarget={state.playerTarget}
+          play={state.playing}
           reset={reset}
         />
       )}
@@ -36,16 +37,22 @@ export default function Portal() {
       <div className={styles.multiController}>
         <SoundController
           soundsColor={soundsColor}
-          setPlayerTarget={setPlayerTarget}
-          setPlaying={setPlaying}
-          playing={playing}
-          displayingItem={displayingItem}
-          setDisplayingItem={setDisplayingItem}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          setPlayerTarget={actions.setPlayerTarget}
+          setPlaying={actions.setPlaying}
+          playing={state.playing}
+          displayingItem={state.displayingItem}
+          setDisplayingItem={actions.setDisplayingItem}
+          isOpen={state.isOpen}
+          setIsOpen={actions.toggleOpen}
         />
 
-        <SaveControl soundsColor={soundsColor} />
+        <SaveControl
+          soundsColor={soundsColor}
+          saveIsOpen={state.saveIsOpen}
+          setSaveIsOpen={actions.toggleSaveOpen}
+          showSuccessMessage={state.showSuccessMessage}
+          setShowSuccessMessage={actions.showSuccessMessage}
+        />
       </div>
     </>
   );
