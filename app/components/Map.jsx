@@ -18,11 +18,29 @@ export default function Map() {
   const [pin, setPin] = useState({});
   const [fetch, setFetch] = useState(false);
 
+  console.log('pin', pin);
+
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
 
   const { setPhase, phase } = useContext(journeyContext);
   const { sounds, freesoundLoading, notEnough } = useContext(soundsContext);
+
+  const instructionVariants = {
+    container: {
+      initial: { opacity: 0 },
+      animate: {
+        opacity: 1,
+        transition: { duration: 10, times: [0, 0.6, 0.9, 1] },
+      },
+    },
+    text: {
+      animate: {
+        color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
+        transition: { repeat: Infinity, duration: 3 },
+      },
+    },
+  };
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
@@ -69,19 +87,17 @@ export default function Map() {
       {phase === 'map' && !pin.lat ? (
         <motion.div
           className={styles.instruction}
-          animate={{
-            opacity: [0, 0, 1, 1],
-            transition: { duration: 10, times: [0, 0.6, 0.9, 1] },
-          }}
+          initial="initial"
+          animate="animate"
+          variants={instructionVariants.container}
         >
-          <motion.div
-            animate={{
-              color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
-            }}
-            transition={{ repeat: Infinity, duration: 3 }}
+          <motion.h2
+            variants={instructionVariants.text}
+            // Add this to ensure the text animation runs independently
+            animate="animate"
           >
-            <h2>Choose a place to explore.</h2>
-          </motion.div>
+            Choose a place to explore.
+          </motion.h2>
         </motion.div>
       ) : null}
 
@@ -158,6 +174,7 @@ export default function Map() {
               className={styles.projectionStart}
               onClick={() => {
                 setPhase('portal');
+                setPin({});
               }}
               animate={{
                 color: [
