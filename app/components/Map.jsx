@@ -34,12 +34,12 @@ export default function Map() {
         transition: { duration: 10, times: [0, 0.6, 0.9, 1] },
       },
     },
-    text: {
-      animate: {
-        color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
-        transition: { repeat: Infinity, duration: 3 },
-      },
-    },
+  };
+
+  // Separate animation for text color
+  const textColorAnimation = {
+    color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
+    transition: { repeat: Infinity, duration: 3 },
   };
 
   useEffect(() => {
@@ -92,9 +92,8 @@ export default function Map() {
           variants={instructionVariants.container}
         >
           <motion.h2
-            variants={instructionVariants.text}
-            // Add this to ensure the text animation runs independently
-            animate="animate"
+            // Remove the variants prop and directly apply the animation
+            animate={textColorAnimation}
           >
             Choose a place to explore.
           </motion.h2>
