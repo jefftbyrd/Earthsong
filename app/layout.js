@@ -6,8 +6,9 @@ import localFont from 'next/font/local';
 import { cookies, headers } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
-import { isMobile } from '../util/isMobile';
+// import { isMobile } from '../util/isMobile';
 import FullscreenComponent from './components/FullscreenComponent';
+import MobileFullscreen from './components/MobileFullscreen';
 import { JourneyContextProvider } from './context/journeyContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
@@ -25,12 +26,12 @@ const basteleurBold = localFont({
 });
 
 export default async function RootLayout({ children }) {
-  const userAgent = headers().get('user-agent') || '';
-  const mobileCheck = isMobile(userAgent);
+  // const userAgent = headers().get('user-agent') || '';
+  // const mobileCheck = isMobile(userAgent);
   const sessionTokenCookie = (await cookies()).get('sessionToken');
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
   const snapshots = user && (await getSnapshots(sessionTokenCookie.value));
-  console.log('mobileCheck', mobileCheck);
+  // console.log('mobileCheck', mobileCheck);
 
   return (
     <html lang="en">
@@ -67,10 +68,10 @@ export default async function RootLayout({ children }) {
       <body
         className={`${basteleurBold.variable} ${basteleurMoonlight.variable}`}
       >
-        <JourneyContextProvider mobileCheck={mobileCheck}>
+        <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
             <SoundsContextProvider>
-              <FullscreenComponent>{children}</FullscreenComponent>
+              <MobileFullscreen>{children}</MobileFullscreen>
             </SoundsContextProvider>
           </UserContextProvider>
         </JourneyContextProvider>
