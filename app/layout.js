@@ -78,9 +78,7 @@ export default async function RootLayout({ children }) {
         <MobileViewportHandler />
         <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
-            <SoundsContextProvider>
-              <MobileFullscreen>{children}</MobileFullscreen>
-            </SoundsContextProvider>
+            <SoundsContextProvider>{children}</SoundsContextProvider>
           </UserContextProvider>
         </JourneyContextProvider>
         <Analytics />
