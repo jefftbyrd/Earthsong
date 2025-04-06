@@ -31,7 +31,7 @@ export default function SoundItem({
         >
           {/* <div className={styles.soundText}> */}
           {/* <span className={styles.soundNumber}>{aegean[index]}</span> */}
-          <span className="text-sm line-clamp-1">{sound.name}</span>
+          <span className="text-sm line-clamp-1 text-black">{sound.name}</span>
           {/* </div> */}
         </button>
         <button
