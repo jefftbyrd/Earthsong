@@ -37,7 +37,7 @@ export default function Portal() {
         />
       )}
 
-      <div className={styles.multiController}>
+      <div className="">
         {isMobile ? (
           <SoundControllerMobile
             soundsColor={soundsColor}
