@@ -1,7 +1,7 @@
 'use client';
 import React, { useContext, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-import styles from '../../styles/portal.module.scss';
+// import styles from '../../styles/portal.module.scss';
 import InfoPanel from './InfoPanel';
 
 export default function SoundItem({
@@ -17,24 +17,24 @@ export default function SoundItem({
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
 
-  const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
+  // const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   return (
-    <div className={styles.outerDiv}>
-      <div className={`s${sound.id}`}>
+    <div className="">
+      <div className={`s${sound.id} p-1`}>
         <button
-          className={styles.outerButton}
+          className=""
           onClick={() => {
             setPlaying(!playing);
             setPlayerTarget(sound.id);
           }}
         >
-          <div className={styles.soundText}>
-            {/* <span className={styles.soundNumber}>{aegean[index]}</span> */}
-            <span className="text-sm line-clamp-1">{sound.name}</span>
-          </div>
+          {/* <div className={styles.soundText}> */}
+          {/* <span className={styles.soundNumber}>{aegean[index]}</span> */}
+          <span className="text-sm line-clamp-1">{sound.name}</span>
+          {/* </div> */}
         </button>
-        <button
+        {/* <button
           className={styles.infoButton}
           onClick={() => {
             // setDisplayingItem(sound.id);
@@ -44,7 +44,7 @@ export default function SoundItem({
           }}
         >
           𐙁
-        </button>
+        </button> */}
       </div>
       {panelOpen && panelId === sound.id && (
         <InfoPanel

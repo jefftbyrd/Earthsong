@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../../styles/portal.module.scss';
-import FullscreenMobileView from '../FullscreenMobileView';
 import SoundItem from './SoundItem';
 
 export default function SoundControllerMobile({
@@ -15,10 +14,9 @@ export default function SoundControllerMobile({
 }) {
   return (
     <>
-      <h1>Portal</h1>
-      <FullscreenMobileView />
+      <span className="text-3xl uppercase">Portal</span>
       {soundsColor.map((sound, index) => (
-        <div key={`soundId-${sound.id}`} className={styles.soundItem}>
+        <div key={`soundId-${sound.id}`} className="">
           <SoundItem
             sound={sound}
             index={index}
