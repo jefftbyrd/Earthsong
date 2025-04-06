@@ -14,7 +14,7 @@ export default function SoundControllerMobile({
 }) {
   return (
     <>
-      <span className="text-3xl uppercase text-center">Sound Portal</span>
+      {/* <span className="text-3xl uppercase text-center">Sound Portal</span> */}
       {soundsColor.map((sound, index) => (
         <div key={`soundId-${sound.id}`} className="">
           <SoundItem
