@@ -7,8 +7,9 @@ import { cookies, headers } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
 // import { isMobile } from '../util/isMobile';
-import FullscreenComponent from './components/FullscreenComponent';
+// import FullscreenComponent from './components/FullscreenComponent';
 import MobileFullscreen from './components/MobileFullscreen';
+import MobileViewportHandler from './components/MobileViewportHandler';
 import { JourneyContextProvider } from './context/journeyContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
@@ -37,6 +38,18 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <head>
         <title>Earthsong</title>
+
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="mobile-web-app-capable" content="yes" />
+
         <meta name="author" content="Jeff T Byrd" />
         <meta name="description" content="Listen to the planet." />
         <meta name="og:url" content="https://earthsong.world" />
@@ -57,17 +70,12 @@ export default async function RootLayout({ children }) {
           name="twitter:image"
           content="https://earthsong.world/earthsong-screen.webp"
         />
-
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
       </head>
 
       <body
         className={`${basteleurBold.variable} ${basteleurMoonlight.variable}`}
       >
+        <MobileViewportHandler />
         <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
             <SoundsContextProvider>
