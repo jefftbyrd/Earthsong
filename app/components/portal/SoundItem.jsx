@@ -21,7 +21,7 @@ export default function SoundItem({
 
   return (
     <div className="relative">
-      <div className={`s${sound.id} p-1 grid grid-cols-16`}>
+      <div className={`s${sound.id} p-2 grid grid-cols-16`}>
         <button
           className="p-0 m-0 w-full col-span-15"
           onClick={() => {
