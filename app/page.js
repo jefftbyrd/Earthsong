@@ -1,7 +1,7 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Logo from '../public/Logo.js';
 import BackToMap from './components/BackToMap';
 import Map from './components/Map';
@@ -18,10 +18,7 @@ import styles from './styles/ui.module.scss';
 
 export default function Earthsong() {
   const { user, snapshots } = useContext(userContext);
-  const { phase, setPhase, pastJourney, mobileCheck } =
-    useContext(journeyContext);
-
-  console.log('mobileCheck', mobileCheck);
+  const { phase, setPhase, pastJourney } = useContext(journeyContext);
 
   return (
     <>

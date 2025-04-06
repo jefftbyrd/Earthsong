@@ -7,8 +7,7 @@ import { cookies, headers } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
 import { isMobile } from '../util/isMobile';
-import HideUrlBar from './components/HideUrlBar';
-import MobileHead from './components/MobileHead';
+import FullscreenComponent from './components/FullscreenComponent';
 import { JourneyContextProvider } from './context/journeyContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
@@ -59,15 +58,14 @@ export default async function RootLayout({ children }) {
         />
       </head>
 
-      <MobileHead />
-      <HideUrlBar />
-
       <body
         className={`${basteleurBold.variable} ${basteleurMoonlight.variable}`}
       >
         <JourneyContextProvider mobileCheck={mobileCheck}>
           <UserContextProvider user={user} snapshots={snapshots}>
-            <SoundsContextProvider>{children}</SoundsContextProvider>
+            <SoundsContextProvider>
+              <FullscreenComponent>{children}</FullscreenComponent>
+            </SoundsContextProvider>
           </UserContextProvider>
         </JourneyContextProvider>
         <Analytics />
