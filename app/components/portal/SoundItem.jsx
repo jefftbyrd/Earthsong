@@ -20,10 +20,10 @@ export default function SoundItem({
   // const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   return (
-    <div className="">
-      <div className={`s${sound.id} p-1`}>
+    <div className="relative">
+      <div className={`s${sound.id} p-1 grid grid-cols-16`}>
         <button
-          className=""
+          className="p-0 m-0 w-full col-span-15"
           onClick={() => {
             setPlaying(!playing);
             setPlayerTarget(sound.id);
@@ -34,8 +34,8 @@ export default function SoundItem({
           <span className="text-sm line-clamp-1">{sound.name}</span>
           {/* </div> */}
         </button>
-        {/* <button
-          className={styles.infoButton}
+        <button
+          className="p-1 bg-black absolute rounded-full w-5 h-5 grid place-content-center right-1"
           onClick={() => {
             // setDisplayingItem(sound.id);
             // setIsOpen(!isOpen);
@@ -43,8 +43,8 @@ export default function SoundItem({
             togglePanel();
           }}
         >
-          𐙁
-        </button> */}
+          <span className="text-center font-bold text-xs">i</span>
+        </button>
       </div>
       {panelOpen && panelId === sound.id && (
         <InfoPanel

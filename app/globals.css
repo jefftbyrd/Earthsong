@@ -90,11 +90,11 @@ h3 {
 
 button {
   /* -webkit-appearance: none; */
-  border-radius: 0;
+  /* border-radius: 0; */
   text-align: inherit;
-  background: none;
+  /* background: none; */
   box-shadow: none;
-  padding: 0;
+  /* padding: 0; */
   cursor: pointer;
   border: none;
   color: inherit;
