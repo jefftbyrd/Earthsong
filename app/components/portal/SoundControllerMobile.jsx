@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../../styles/portal.module.scss';
-import SoundPlayerItem from '../SoundPlayerItem';
+import SoundItem from './SoundItem';
 
 export default function SoundControllerMobile({
   soundsColor,
@@ -17,7 +17,7 @@ export default function SoundControllerMobile({
       <h1>Portal</h1>
       {soundsColor.map((sound, index) => (
         <div key={`soundId-${sound.id}`} className={styles.soundItem}>
-          <SoundPlayerItem
+          <SoundItem
             sound={sound}
             index={index}
             setPlayerTarget={setPlayerTarget}
