@@ -8,6 +8,7 @@ import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
 import { isMobile } from '../util/isMobile';
 import HideUrlBar from './components/HideUrlBar';
+import MobileHead from './components/MobileHead';
 import { JourneyContextProvider } from './context/journeyContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
@@ -56,16 +57,9 @@ export default async function RootLayout({ children }) {
           name="twitter:image"
           content="https://earthsong.world/earthsong-screen.webp"
         />
-
-        {/* give it a more app-like experience */}
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
       </head>
 
+      <MobileHead />
       <HideUrlBar />
 
       <body
