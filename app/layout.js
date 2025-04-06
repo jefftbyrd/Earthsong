@@ -56,6 +56,12 @@ export default async function RootLayout({ children }) {
           name="twitter:image"
           content="https://earthsong.world/earthsong-screen.webp"
         />
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
       </head>
 
       <body
