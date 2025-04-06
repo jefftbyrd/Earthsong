@@ -37,7 +37,7 @@ export default function Portal() {
         />
       )}
 
-      <div className="grid gap-0.5">
+      <div className="grid gap-0.5 grid-cols-2">
         {isMobile ? (
           <SoundControllerMobile
             soundsColor={soundsColor}

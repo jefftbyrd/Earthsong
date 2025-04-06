@@ -20,10 +20,10 @@ export default function SoundItem({
   // const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   return (
-    <div className="relative">
+    <div className="">
       <div className={`s${sound.id} p-2 grid grid-cols-16`}>
         <button
-          className="p-0 m-0 w-full col-span-15"
+          className="p-0 m-0 w-full col-span-14"
           onClick={() => {
             setPlaying(!playing);
             setPlayerTarget(sound.id);
@@ -35,7 +35,7 @@ export default function SoundItem({
           {/* </div> */}
         </button>
         <button
-          className="p-1 bg-black absolute rounded-full w-5 h-5 grid place-content-center right-1"
+          className="p-1 bg-black rounded-full w-5 h-5 grid place-content-center"
           onClick={() => {
             // setDisplayingItem(sound.id);
             // setIsOpen(!isOpen);
