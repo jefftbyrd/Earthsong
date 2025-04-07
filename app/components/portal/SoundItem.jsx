@@ -1,32 +1,32 @@
 'use client';
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import { useSoundPlayer } from '../../context/soundPlayerContext'; // Import the context
 import InfoPanel from './InfoPanel';
 import SoundIcon from './SoundIcon';
 
-export default function SoundItem({
-  sound,
-  index,
-  setPlayerTarget,
-  setPlaying,
-  playing,
-  // setDisplayingItem,
-  // displayingItem,
-}) {
+export default function SoundItem({ sound, index }) {
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
+  // Get sound player functions from context
+  const { handlePlaySound, isSoundPlaying } = useSoundPlayer();
+
+  // Check if this specific sound is playing
+  const isPlaying = isSoundPlaying(sound.id);
 
   return (
     <div className="">
       <div className={`s${sound.id} p-2 grid grid-cols-16`}>
         <button
           className="p-0 m-0 w-full grid col-span-14 grid-cols-16"
-          onClick={() => {
-            setPlaying(!playing);
-            setPlayerTarget(sound.id);
-          }}
+          onClick={() => handlePlaySound(sound.id)}
         >
-          <SoundIcon height="6vw" width="6vw" soundNumber={index + 1} />
+          <SoundIcon
+            height="6vw"
+            width="6vw"
+            soundNumber={index + 1}
+            isPlaying={isPlaying}
+          />
 
           <span className="text-sm line-clamp-1 text-black col-span-13">
             {sound.name}

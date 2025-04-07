@@ -11,6 +11,7 @@ import { getUser } from '../database/users';
 // import MobileFullscreen from './components/MobileFullscreen';
 // import MobileViewportHandler from './components/MobileViewportHandler';
 import { JourneyContextProvider } from './context/journeyContext';
+import { SoundPlayerProvider } from './context/soundPlayerContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
 
@@ -77,7 +78,9 @@ export default async function RootLayout({ children }) {
       >
         <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
-            <SoundsContextProvider>{children}</SoundsContextProvider>
+            <SoundsContextProvider>
+              <SoundPlayerProvider>{children}</SoundPlayerProvider>
+            </SoundsContextProvider>
           </UserContextProvider>
         </JourneyContextProvider>
         <Analytics />

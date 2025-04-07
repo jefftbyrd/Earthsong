@@ -2,6 +2,7 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import React, { useContext } from 'react';
 import { journeyContext } from '../context/journeyContext';
+import { useSoundPlayer } from '../context/soundPlayerContext'; // Import the context
 import useIsMobile from '../hooks/useIsMobile';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
@@ -16,6 +17,8 @@ export default function Portal() {
   const { isLoading, soundsColor, error } = useSoundData();
   const [state, actions] = usePortalState();
   const isMobile = useIsMobile();
+  // Get player state from context
+  const { playerTarget, playing } = useSoundPlayer();
 
   if (isLoading) {
     return <div className={styles.loading}>Loading...</div>;
@@ -31,8 +34,8 @@ export default function Portal() {
         <NextReactP5Wrapper
           sketch={soundPortal}
           soundsColor={soundsColor}
-          playerTarget={state.playerTarget}
-          play={state.playing}
+          playerTarget={playerTarget} // Use context value
+          play={playing} // Use context value
           reset={reset}
         />
       )}
@@ -41,24 +44,20 @@ export default function Portal() {
         {isMobile ? (
           <SoundControllerMobile
             soundsColor={soundsColor}
-            setPlayerTarget={actions.setPlayerTarget}
-            setPlaying={actions.setPlaying}
-            playing={state.playing}
             displayingItem={state.displayingItem}
             setDisplayingItem={actions.setDisplayingItem}
             isOpen={state.isOpen}
             setIsOpen={actions.toggleOpen}
+            // No need to pass play state props
           />
         ) : (
           <SoundController
             soundsColor={soundsColor}
-            setPlayerTarget={actions.setPlayerTarget}
-            setPlaying={actions.setPlaying}
-            playing={state.playing}
             displayingItem={state.displayingItem}
             setDisplayingItem={actions.setDisplayingItem}
             isOpen={state.isOpen}
             setIsOpen={actions.toggleOpen}
+            // No need to pass play state props
           />
         )}
 

@@ -1,6 +1,11 @@
 import { motion } from 'motion/react';
 
-export default function SoundIcon({ height, width, soundNumber = 1 }) {
+export default function SoundIcon({
+  height,
+  width,
+  soundNumber = 1,
+  isPlaying = false,
+}) {
   // Define all sound patterns
   const soundPatterns = {
     1: <rect x="11" y="11" width="7" height="7" fill="currentColor" />,
@@ -37,18 +42,25 @@ export default function SoundIcon({ height, width, soundNumber = 1 }) {
     // Add more soundNumbers as needed
   };
 
+  // Only apply animation when isPlaying is true
+  const animationProps = isPlaying
+    ? {
+        animate: {
+          rotate: [0, 360],
+        },
+        transition: {
+          ease: 'linear',
+          duration: 1.5,
+          repeat: Infinity,
+        },
+      }
+    : {};
+
   return (
     <motion.div
       className="origin-center text-center col-span-3"
       style={{ height, width }}
-      animate={{
-        rotate: [0, 360],
-      }}
-      transition={{
-        ease: 'linear',
-        duration: 1.5,
-        repeat: Infinity,
-      }}
+      {...animationProps}
     >
       <svg
         width="100%"
