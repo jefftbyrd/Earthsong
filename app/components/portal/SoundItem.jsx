@@ -1,8 +1,8 @@
 'use client';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-// import styles from '../../styles/portal.module.scss';
 import InfoPanel from './InfoPanel';
+import SoundIcon from './SoundIcon';
 
 export default function SoundItem({
   sound,
@@ -10,35 +10,31 @@ export default function SoundItem({
   setPlayerTarget,
   setPlaying,
   playing,
-  setDisplayingItem,
-  displayingItem,
+  // setDisplayingItem,
+  // displayingItem,
 }) {
-  // const [isOpen, setIsOpen] = useState(false);
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
-
-  // const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   return (
     <div className="">
       <div className={`s${sound.id} p-2 grid grid-cols-16`}>
         <button
-          className="p-0 m-0 w-full col-span-14"
+          className="p-0 m-0 w-full grid col-span-14 grid-cols-16"
           onClick={() => {
             setPlaying(!playing);
             setPlayerTarget(sound.id);
           }}
         >
-          {/* <div className={styles.soundText}> */}
-          {/* <span className={styles.soundNumber}>{aegean[index]}</span> */}
-          <span className="text-sm line-clamp-1 text-black">{sound.name}</span>
-          {/* </div> */}
+          <SoundIcon height="6vw" width="6vw" soundNumber={index + 1} />
+
+          <span className="text-sm line-clamp-1 text-black col-span-13">
+            {sound.name}
+          </span>
         </button>
         <button
-          className="p-1 bg-black rounded-full w-5 h-5 grid place-content-center"
+          className="p-1 bg-black rounded-full w-5 h-5 grid place-content-center col-span-2"
           onClick={() => {
-            // setDisplayingItem(sound.id);
-            // setIsOpen(!isOpen);
             setPanelId(sound.id);
             togglePanel();
           }}
@@ -47,13 +43,7 @@ export default function SoundItem({
         </button>
       </div>
       {panelOpen && panelId === sound.id && (
-        <InfoPanel
-          sound={sound}
-          index={index}
-          // setIsOpen={setIsOpen}
-          // isOpen={isOpen}
-          color={sound.color}
-        />
+        <InfoPanel sound={sound} index={index} color={sound.color} />
       )}
     </div>
   );
