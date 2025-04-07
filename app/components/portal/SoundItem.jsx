@@ -16,24 +16,27 @@ export default function SoundItem({ sound, index }) {
 
   return (
     <div className="">
-      <div className={`s${sound.id} p-2 grid grid-cols-16`}>
+      <div className={`s${sound.id} grid grid-cols-16`}>
         <button
-          className="p-0 m-0 w-full grid col-span-14 grid-cols-16"
+          // className="p-0 m-0 w-full grid col-span-14 grid-cols-16 h-full bg-blue-900"
+          className="block w-full col-span-14 p-2"
           onClick={() => handlePlaySound(sound.id)}
         >
-          <SoundIcon
-            height="6vw"
-            width="6vw"
-            soundNumber={index + 1}
-            isPlaying={isPlaying}
-          />
+          <div className="grid grid-cols-16">
+            <SoundIcon
+              height="6vw"
+              width="6vw"
+              soundNumber={index + 1}
+              isPlaying={isPlaying}
+            />
 
-          <span className="text-sm line-clamp-1 text-black col-span-13">
-            {sound.name}
-          </span>
+            <span className="text-sm line-clamp-1 text-black col-span-13">
+              {sound.name}
+            </span>
+          </div>
         </button>
         <button
-          className="p-1 bg-black rounded-full w-5 h-5 grid place-content-center col-span-2"
+          className="p-1 mt-2 bg-black rounded-full w-5 h-5 grid place-content-center col-span-2"
           onClick={() => {
             setPanelId(sound.id);
             togglePanel();

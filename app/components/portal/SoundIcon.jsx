@@ -39,7 +39,6 @@ export default function SoundIcon({
         <rect x="6" y="21" width="7" height="7" fill="currentColor" />
       </>
     ),
-    // Add more soundNumbers as needed
   };
 
   // Only apply animation when isPlaying is true
