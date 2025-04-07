@@ -16,6 +16,12 @@ export const soundPortal = (p5) => {
   let lastWaveformData = [];
   let isInitialized = false;
 
+  // Variables to track touch behavior
+  let touchStartTime = 0;
+  let touchStartPos = { x: 0, y: 0 };
+  const DRAG_THRESHOLD = 10; // pixels - movement more than this is a drag
+  const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
+
   p5.updateWithProps = async (props) => {
     if (props.soundsColor) {
       sounds2 = [...props.soundsColor];
@@ -513,61 +519,117 @@ export const soundPortal = (p5) => {
     }
   } // END SHAPE CLASS
 
-  p5.mousePressed = () => {
-    if (shapes.length > 0) {
-      let shapeClicked = false;
+  // Find which shape is under the cursor/touch point
+  function getShapeAtPosition(x, y) {
+    for (let i = 0; i < shapes.length; i++) {
+      let shape = shapes[i];
+      let distance = p5.dist(x, y, shape.x, shape.y);
 
-      for (let i = 0; i < shapes.length; i++) {
-        let shape = shapes[i];
-        let distance = p5.dist(p5.mouseX, p5.mouseY, shape.x, shape.y);
-
-        // Use the stored diameter for consistent hit detection
-        if (distance < shape.diameter / 2) {
-          shape.active = true;
-          shapeClicked = true;
-
-          // Actually play/stop the sound when clicked
-          // playSound(shape.id);
-        } else {
-          shape.active = false;
-        }
-      }
-
-      if (shapeClicked) {
-        return false; // Prevent default if we clicked a shape
+      if (distance < shape.diameter / 2) {
+        return shape;
       }
     }
+    return null;
+  }
+
+  // Refactored touch/mouse handling
+  p5.mousePressed = () => {
+    // Record the start time and position for distinguishing between tap and drag
+    touchStartTime = p5.millis();
+    touchStartPos = { x: p5.mouseX, y: p5.mouseY };
+
+    // Find the shape under the cursor
+    const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+
+    // If we found a shape, mark it as potentially active for dragging
+    if (shape) {
+      shape.active = true;
+      return false; // Prevent default browser behavior
+    }
+
     return false; // Maintain original behavior
   };
 
-  // Make touchStarted behavior match mousePressed
-  p5.touchStarted = () => {
-    if (shapes.length > 0) {
-      let shapeClicked = false;
+  p5.mouseReleased = () => {
+    // Calculate touch duration and distance moved
+    const touchDuration = p5.millis() - touchStartTime;
+    const distMoved = p5.dist(
+      touchStartPos.x,
+      touchStartPos.y,
+      p5.mouseX,
+      p5.mouseY,
+    );
 
-      for (let i = 0; i < shapes.length; i++) {
-        let shape = shapes[i];
-        let distance = p5.dist(p5.mouseX, p5.mouseY, shape.x, shape.y);
-
-        if (distance < shape.diameter / 2) {
-          shape.active = true;
-          shapeClicked = true;
-
-          // Actually play/stop the sound when touched
-          // playSound(shape.id);
-        } else {
-          shape.active = false;
-        }
-      }
-
-      if (shapeClicked) {
-        return false;
+    // If this was a short touch without much movement, treat it as a tap to toggle sound
+    if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
+      const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+      if (shape) {
+        // Toggle sound on/off for this shape
+        playSound(shape.id);
       }
     }
-    // return false;
+
+    // Reset active state for all shapes
+    for (let i = 0; i < shapes.length; i++) {
+      shapes[i].active = false;
+    }
+
+    return false; // Prevent default browser behavior
+  };
+
+  // For mobile touch events
+  p5.touchStarted = (event) => {
+    // Use the same logic as mousePressed
+    touchStartTime = p5.millis();
+    touchStartPos = { x: p5.mouseX, y: p5.mouseY };
+
+    const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+    if (shape) {
+      shape.active = true;
+      return false;
+    }
+
+    return false;
+  };
+
+  p5.touchEnded = (event) => {
+    // Use the same logic as mouseReleased
+    const touchDuration = p5.millis() - touchStartTime;
+    const distMoved = p5.dist(
+      touchStartPos.x,
+      touchStartPos.y,
+      p5.mouseX,
+      p5.mouseY,
+    );
+
+    if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
+      const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+      if (shape) {
+        playSound(shape.id);
+      }
+    }
+
+    for (let i = 0; i < shapes.length; i++) {
+      shapes[i].active = false;
+    }
+
+    return false;
   };
 
   p5.mouseDragged = () => {
+    // Only process if we've moved enough to consider it a drag
+    const distMoved = p5.dist(
+      touchStartPos.x,
+      touchStartPos.y,
+      p5.mouseX,
+      p5.mouseY,
+    );
+
+    if (distMoved < DRAG_THRESHOLD) {
+      return false; // Not enough movement to be considered a drag yet
+    }
+
+    // Handle shape dragging
     if (shapes.length > 0) {
       let shapeMoved = false;
 
@@ -605,6 +667,11 @@ export const soundPortal = (p5) => {
       }
     }
     return false;
+  };
+
+  // Make touchMoved behavior match mouseDragged
+  p5.touchMoved = () => {
+    return p5.mouseDragged();
   };
 
   p5.windowResized = () => {
