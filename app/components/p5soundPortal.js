@@ -589,7 +589,8 @@ export const soundPortal = (p5) => {
       return false;
     }
 
-    return false;
+    // Commenting this out allows click on other items, besides canvas
+    // return false;
   };
 
   p5.touchEnded = (event) => {
@@ -613,7 +614,8 @@ export const soundPortal = (p5) => {
       shapes[i].active = false;
     }
 
-    return false;
+    // Commenting this out allows click on other items, besides canvas
+    // return false;
   };
 
   p5.mouseDragged = () => {
