@@ -81,7 +81,7 @@ export default function InfoPanel({ sound, index, color }) {
       </button> */}
       {/* <div> */}
       {/* <div className={styles.infoSoundNumber}>{aegean[index]}</div> */}
-      <h2 id="info-panel-title" className="text-3xl">
+      <h2 id="info-panel-title" className="text-3xl wrap-break-word">
         {sound.name}
       </h2>
       {/* </div> */}
@@ -105,7 +105,7 @@ export default function InfoPanel({ sound, index, color }) {
           </a>
         </div>
       </div>
-      <p className="text-sm leading-6">{cleanDescription}</p>
+      <p className="text-sm leading-6 wrap-break-word">{cleanDescription}</p>
     </div>
   );
 }
