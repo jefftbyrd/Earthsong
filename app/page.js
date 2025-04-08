@@ -35,16 +35,11 @@ export default function Earthsong() {
         </motion.h1>
       ) : null}
 
-      <AnimatePresence>
-        {phase === 'portal' || phase === 'portalRecall' ? (
-          <>
-            <BackToMap />
-            {/* <HelpButton /> */}
-          </>
-        ) : null}
-      </AnimatePresence>
+      {/* <AnimatePresence>
+        {phase === 'portal' || phase === 'portalRecall' ? <BackToMap /> : null}
+      </AnimatePresence> */}
 
-      <Profile />
+      {/* <Profile /> */}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
