@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import styles from '../../styles/portal.module.scss';
+import GuidePanel from '../panels/GuidePanel';
+import PowersPanel from '../panels/PowersPanel';
 import InfoPanel from './InfoPanel';
 import SoundItem from './SoundItem';
 
@@ -59,6 +61,8 @@ export default function SoundControllerMobile({
             )}
           </div>
         ))}
+        {panelOpen && panelId === 'Powers' && <PowersPanel />}
+        {panelOpen && panelId === 'Guide' && <GuidePanel />}
       </div>
     </>
   );

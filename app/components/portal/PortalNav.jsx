@@ -1,9 +1,13 @@
+'use client';
 import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import OpenPanelButton from '../panels/OpenPanelButton';
+import PowersPanel from '../panels/PowersPanel';
 
 export default function PortalNav() {
-  const { setPhase } = useContext(journeyContext);
-  const { setReset } = useContext(journeyContext);
+  const { setPhase, panelOpen, panelId, setReset, setPanelId, togglePanel } =
+    useContext(journeyContext);
+  // const { setReset } = useContext(journeyContext);
   const [resetDone, setResetDone] = useState(false);
 
   useEffect(() => {
@@ -17,6 +21,9 @@ export default function PortalNav() {
       <button
         className="uppercase"
         onClick={() => {
+          if (panelOpen) {
+            togglePanel(); // This will close the panel and clear panelId
+          }
           setReset(true);
           setTimeout(() => {
             setReset(false);
@@ -26,8 +33,26 @@ export default function PortalNav() {
       >
         &lt; Map
       </button>
-      <button className="uppercase">Tools</button>
-      <button className="uppercase">Guide</button>
+      {/* <button
+        className="uppercase"
+        onClick={(e) => {
+          e.stopPropagation();
+
+          // If this exact panel is already open, just toggle it closed
+          if (panelOpen && panelId === 'powersPanel') {
+            togglePanel(); // This will close the panel and clear panelId
+          }
+          // Otherwise, set this panel as active
+          else {
+            setPanelId('powersPanel');
+            // The useEffect will handle opening the panel if needed
+          }
+        }}
+      >
+        Powers
+      </button> */}
+      <OpenPanelButton panel="Powers" />
+      <OpenPanelButton panel="Guide" />
     </footer>
   );
 }
