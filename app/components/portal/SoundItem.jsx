@@ -2,11 +2,11 @@
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext'; // Import the context
-import InfoPanel from './InfoPanel';
+// import InfoPanel from './InfoPanel';
 import SoundIcon from './SoundIcon';
 
 export default function SoundItem({ sound, index }) {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
+  const { setPanelId, panelOpen, togglePanel, panelId, setPanelOpen } =
     useContext(journeyContext);
   // Get sound player functions from context
   const { handlePlaySound, isSoundPlaying } = useSoundPlayer();
@@ -15,7 +15,7 @@ export default function SoundItem({ sound, index }) {
   const isPlaying = isSoundPlaying(sound.id);
 
   return (
-    <div className="">
+    <header className="">
       <div className={`s${sound.id} grid grid-cols-16`}>
         <button
           // className="p-0 m-0 w-full grid col-span-14 grid-cols-16 h-full bg-blue-900"
@@ -37,17 +37,27 @@ export default function SoundItem({ sound, index }) {
         </button>
         <button
           className="p-1 mt-2 bg-black rounded-full w-5 h-5 grid place-content-center col-span-2"
-          onClick={() => {
-            setPanelId(sound.id);
-            togglePanel();
+          data-info-toggle="true"
+          onClick={(e) => {
+            e.stopPropagation();
+
+            // If this exact panel is already open, just toggle it closed
+            if (panelOpen && panelId === sound.id) {
+              togglePanel(); // This will close the panel and clear panelId
+            }
+            // Otherwise, set this panel as active
+            else {
+              setPanelId(sound.id);
+              // The useEffect will handle opening the panel if needed
+            }
           }}
         >
           <span className="text-center font-bold text-xs">i</span>
         </button>
       </div>
-      {panelOpen && panelId === sound.id && (
+      {/* {panelOpen && panelId === sound.id && (
         <InfoPanel sound={sound} index={index} color={sound.color} />
-      )}
-    </div>
+      )} */}
+    </header>
   );
 }

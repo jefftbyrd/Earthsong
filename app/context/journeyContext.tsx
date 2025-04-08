@@ -51,11 +51,27 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [panelOpen, setPanelOpen] = useState(false);
   // const [isMobile, setIsMobile] = useState(false);
 
-  const togglePanel = () => setPanelOpen((prev) => !prev);
+  // const togglePanel = () => setPanelOpen((prev) => !prev);
 
+  // useEffect(() => {
+  //   if (panelId && !panelOpen) setPanelOpen(true);
+  // }, [panelId, panelOpen]);
+
+  const togglePanel = () => {
+    setPanelOpen((prev) => {
+      // If we're closing the panel, also clear the panel ID
+      if (prev === true) {
+        setPanelId('');
+      }
+      return !prev;
+    });
+  };
+
+  // Either remove the useEffect entirely, or modify it:
   useEffect(() => {
-    if (panelId) setPanelOpen(true);
-  }, [panelId]);
+    // Only auto-open if we have a non-empty panelId AND the panel is currently closed
+    if (panelId && !panelOpen) setPanelOpen(true);
+  }, [panelId, panelOpen]);
 
   return (
     <journeyContext.Provider
