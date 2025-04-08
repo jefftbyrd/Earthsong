@@ -43,7 +43,7 @@ export default function Portal() {
         />
       )}
 
-      <div className="grid gap-0.5 grid-cols-2">
+      <div className="relative min-h-full h-[100vh]">
         {isMobile ? (
           <SoundControllerMobile
             soundsColor={soundsColor}
@@ -64,16 +64,15 @@ export default function Portal() {
           />
         )}
 
-        <SaveControl
+        {/* <SaveControl
           soundsColor={soundsColor}
           saveIsOpen={state.saveIsOpen}
           setSaveIsOpen={actions.toggleSaveOpen}
           showSuccessMessage={state.showSuccessMessage}
           setShowSuccessMessage={actions.showSuccessMessage}
-        />
+        /> */}
+        <PortalNav />
       </div>
-
-      <PortalNav />
     </>
   );
 }

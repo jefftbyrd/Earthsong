@@ -13,7 +13,7 @@ export default function PortalNav() {
   }, [resetDone, setPhase]);
 
   return (
-    <footer className="h-10 border-t-1 bg-black fixed bottom-0 w-full grid grid-cols-3 uppercase text-center">
+    <footer className="h-10 border-t-1 bg-black fixed bottom-0 w-full grid grid-cols-3 uppercase text-center col-span-2">
       <button
         className="uppercase"
         onClick={() => {
