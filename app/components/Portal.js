@@ -6,9 +6,11 @@ import { useSoundPlayer } from '../context/soundPlayerContext'; // Import the co
 import useIsMobile from '../hooks/useIsMobile';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
+import PortalNav from './portal/PortalNav';
 import SaveControl from './portal/SaveControl';
 import SoundController from './portal/SoundController';
 import SoundControllerMobile from './portal/SoundControllerMobile';
+import SoundIcon from './portal/SoundIcon';
 import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
 
@@ -37,6 +39,7 @@ export default function Portal() {
           playerTarget={playerTarget} // Use context value
           play={playing} // Use context value
           reset={reset}
+          SoundIcon={SoundIcon}
         />
       )}
 
@@ -69,6 +72,8 @@ export default function Portal() {
           setShowSuccessMessage={actions.showSuccessMessage}
         />
       </div>
+
+      <PortalNav />
     </>
   );
 }
