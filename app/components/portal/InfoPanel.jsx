@@ -57,7 +57,7 @@ export default function InfoPanel({ sound, index, color }) {
 
   return (
     <div
-      className="p-5 text-black box-border overflow-auto min-h-full h-svh mt-0.5"
+      className="p-5 text-black box-border overflow-auto h-[calc(100vh-2.5rem-7.5rem)] mt-0.5"
       style={{ backgroundColor: color }}
       onClick={(e) => e.stopPropagation()}
       onKeyDown={(e) => {
