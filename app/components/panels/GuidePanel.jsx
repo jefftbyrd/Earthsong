@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-import ClosePanelButton from '../panels/ClosePanelButton';
+// import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
 
 export default function GuidePanel() {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
+  const {  panelOpen, togglePanel } =
     useContext(journeyContext);
   useEffect(() => {
     // Create handler function for document-level keyboard events
@@ -24,7 +24,7 @@ export default function GuidePanel() {
   }, [panelOpen, togglePanel]);
 
   return (
-    <PanelWrap panel="Guide" bg="blue">
+    <PanelWrap panel="Guide" bg="#5381C4">
       <p>This is the guide content</p>
       <p>line two</p>
     </PanelWrap>

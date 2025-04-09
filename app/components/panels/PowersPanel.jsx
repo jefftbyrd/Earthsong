@@ -28,7 +28,7 @@ export default function PowersPanel() {
   }, [panelOpen, togglePanel]);
 
   return (
-    <PanelWrap panel="Powers" bg="red">
+    <PanelWrap panel="Powers" bg="#C45353">
       {user ? <PowersLoggedIn /> : <PowersNotLoggedIn />}
       <p>line two</p>
     </PanelWrap>
