@@ -13,6 +13,7 @@ export default function MapMessages() {
     initial: !pin.lat && phase === 'map',
     location: pin.lat && phase === 'map',
     loading: pin.lat && phase === 'map' && freesoundLoading === true,
+    found: !freesoundLoading && sounds,
     hasResults:
       phase === 'map' &&
       notEnough === false &&
@@ -22,11 +23,12 @@ export default function MapMessages() {
       phase === 'map' && notEnough === true && freesoundLoading === false,
   };
 
-  // Separate animation for text color
   const glowAnimation = {
     color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
     transition: { repeat: Infinity, duration: 3 },
   };
+
+  console.log('sounds', sounds);
 
   return (
     <div className="absolute bottom-2 z-10 m-auto left-0 right-0 text-center text-xl">
@@ -51,7 +53,9 @@ export default function MapMessages() {
 
       {mapConditions.hasResults && (
         <>
-          <p>{sounds?.count} sounds found nearby.</p>
+          <p>
+            Found {sounds.soundCount} sounds within {sounds.searchRadius}km
+          </p>
           <motion.button
             animate={glowAnimation}
             onClick={() => {
