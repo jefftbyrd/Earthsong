@@ -72,7 +72,7 @@ export default function Earthsong() {
         {phase === 'map' ? (
           <>
             {/* Title h1 waits for start */}
-            <Title className="absolute top-1/2 left-1/2 -translate-1/2 z-10 pointer-events-none text-3xl " />
+            <Title className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none text-3xl" />
             <motion.div
               animate={{
                 opacity: [0, 0, 1],
