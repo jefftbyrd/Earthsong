@@ -1,12 +1,14 @@
 'use client';
 import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import { soundsContext } from '../../context/soundsContext';
 import OpenPanelButton from '../panels/OpenPanelButton';
 import PowersPanel from '../panels/PowersPanel';
 
 export default function PortalNav() {
-  const { setPhase, panelOpen, panelId, setReset, setPanelId, togglePanel } =
+  const { setPhase, panelOpen, setReset, togglePanel, setPin } =
     useContext(journeyContext);
+  const { setFreesoundLoading } = useContext(soundsContext);
   // const { setReset } = useContext(journeyContext);
   const [resetDone, setResetDone] = useState(false);
 
@@ -29,6 +31,9 @@ export default function PortalNav() {
             setReset(false);
             setResetDone(true);
           }, 0);
+          setPin({});
+          setFreesoundLoading(true);
+          setPhase('map');
         }}
       >
         &lt; Map
