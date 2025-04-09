@@ -1,11 +1,8 @@
 'use client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
-// import { motion } from 'motion/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
-// import { soundsContext } from '../context/soundsContext';
-// import styles from '../styles/ui.module.scss';
 import Freesound from './Freesound';
 import MapMessages from './MapMessages';
 
@@ -15,15 +12,11 @@ const initialZoom = 2.14;
 export default function Map() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
-
-  // const [pin, setPin] = useState({});
   const [fetch, setFetch] = useState(false);
-
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
 
-  const { setPhase, phase, pin, setPin } = useContext(journeyContext);
-  // const { sounds, freesoundLoading, notEnough } = useContext(soundsContext);
+  const { pin, setPin } = useContext(journeyContext);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;

@@ -43,7 +43,7 @@ export const journeyContext = createContext<JourneyContextType>({
   setPanelOpen: () => {},
   togglePanel: () => {},
   mobileCheck: false,
-  pin: {},
+  pin: { lat: 0, lng: 0 },
   setPin: () => {},
 });
 
