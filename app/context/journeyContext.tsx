@@ -8,6 +8,11 @@ import {
   useState,
 } from 'react';
 
+interface Pin {
+  lat: number;
+  lng: number;
+}
+
 export interface JourneyContextType {
   phase: string;
   setPhase: Dispatch<SetStateAction<string>>;
@@ -21,6 +26,8 @@ export interface JourneyContextType {
   setPanelOpen: Dispatch<SetStateAction<boolean>>;
   togglePanel: () => void;
   mobileCheck: boolean;
+  pin: Pin;
+  setPin: Dispatch<SetStateAction<boolean>>;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -36,6 +43,8 @@ export const journeyContext = createContext<JourneyContextType>({
   setPanelOpen: () => {},
   togglePanel: () => {},
   mobileCheck: false,
+  pin: {},
+  setPin: () => {},
 });
 
 interface Props {
@@ -50,6 +59,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
   // const [isMobile, setIsMobile] = useState(false);
+  const [pin, setPin] = useState({});
 
   // const togglePanel = () => setPanelOpen((prev) => !prev);
 
@@ -88,6 +98,8 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         setPanelOpen,
         togglePanel,
         mobileCheck,
+        pin,
+        setPin,
       }}
     >
       {children}
