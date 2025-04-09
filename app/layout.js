@@ -3,7 +3,7 @@ import '@fontsource/noto-sans-linear-a';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import localFont from 'next/font/local';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
 // import { isMobile } from '../util/isMobile';
@@ -28,12 +28,9 @@ const basteleurBold = localFont({
 });
 
 export default async function RootLayout({ children }) {
-  // const userAgent = headers().get('user-agent') || '';
-  // const mobileCheck = isMobile(userAgent);
   const sessionTokenCookie = (await cookies()).get('sessionToken');
   const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
   const snapshots = user && (await getSnapshots(sessionTokenCookie.value));
-  // console.log('mobileCheck', mobileCheck);
 
   return (
     <html lang="en">

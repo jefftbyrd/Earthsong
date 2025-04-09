@@ -3,14 +3,14 @@ import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
 import { useContext, useEffect, useState } from 'react';
 import Logo from '../public/Logo.js';
-import BackToMap from './components/BackToMap';
+// import BackToMap from './components/BackToMap';
 import Map from './components/Map';
 import { clouds } from './components/p5clouds';
 import { occult } from './components/p5occult';
 import { wind } from './components/p5wind';
 import Portal from './components/Portal';
 import PortalRecall from './components/PortalRecall';
-import Profile from './components/Profile';
+// import Profile from './components/Profile';
 import Title from './components/Title';
 import { journeyContext } from './context/journeyContext';
 import { userContext } from './context/userContext';
@@ -43,7 +43,7 @@ export default function Earthsong() {
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
-        <div className={styles.start}>
+        <div className="grid justify-center items-center h-full">
           <motion.div
             className={styles.star}
             onClick={() => {
@@ -59,7 +59,7 @@ export default function Earthsong() {
               duration: 3,
             }}
           >
-            <Logo height="15vw" width="15vw" />
+            <Logo className="w-[40vw] h-[40vw] lg:h-[15vw] lg:w-[15vw]" />
           </motion.div>
         </div>
       ) : null}
@@ -72,7 +72,7 @@ export default function Earthsong() {
         {phase === 'map' ? (
           <>
             {/* Title h1 waits for start */}
-            <Title />
+            <Title className="absolute top-1/2 left-1/2 -translate-1/2 z-10 pointer-events-none text-3xl " />
             <motion.div
               animate={{
                 opacity: [0, 0, 1],
