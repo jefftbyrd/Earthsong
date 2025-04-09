@@ -1,10 +1,9 @@
 import { motion } from 'motion/react';
-import styles from '../styles/ui.module.scss';
 
-export default function Title() {
+export default function Title({ className }) {
   return (
     <motion.h1
-      className={styles.earthsong}
+      className={className}
       animate={{
         opacity: [0, 0, 1, 1, 0],
         transition: { duration: 6, times: [0, 0.6, 0.8, 0.9, 1] },
