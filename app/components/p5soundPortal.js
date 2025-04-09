@@ -192,6 +192,18 @@ export const soundPortal = (p5) => {
       );
     }
 
+    // Sort shapes by y-coordinate to determine drawing order
+    // Shapes with lower y (higher on screen) will be drawn first
+    // Shapes with higher y (lower on screen) will be drawn last (on top)
+    shapes.sort((a, b) => a.y - b.y);
+
+    // Update each shape's zIndex based on its position
+    // This will allow us to reflect the z-ordering in the DOM if needed
+    shapes.forEach((shape, index) => {
+      shape.zIndex = index;
+    });
+
+    // Draw all shapes in the sorted order
     for (let i = 0; i < shapes.length; i++) {
       shapes[i].show();
       shapes[i].audioControls();
@@ -301,7 +313,7 @@ export const soundPortal = (p5) => {
       this.reversed = false;
       this.number = number;
       this.reverseToggle = false;
-      this.zIndex = 0;
+      this.zIndex = 0; // Default z-index, will be updated based on y-position
       this.meterMap = 0;
       this.diameter = initialDiameter; // Initialize with calculated diameter
       // Add reverbGain to control wet/dry balance
@@ -371,7 +383,7 @@ export const soundPortal = (p5) => {
           if (element) {
             element.setAttribute(
               'style',
-              `background-color:${this.bg}; opacity: 0.3;`,
+              `background-color:${this.bg}; opacity: 0.3; z-index: ${this.zIndex};`,
             );
 
             // Add loading text to the DOM element
@@ -408,7 +420,10 @@ export const soundPortal = (p5) => {
           try {
             const element = document.querySelector(`.s${this.id}`);
             if (element) {
-              element.setAttribute('style', `background-color:${this.bg};`);
+              element.setAttribute(
+                'style',
+                `background-color:${this.bg}; z-index: ${this.zIndex};`,
+              );
 
               // Remove loading text if present
               const loadingText = element.querySelector('.loading-text');
@@ -429,7 +444,7 @@ export const soundPortal = (p5) => {
             if (element) {
               element.setAttribute(
                 'style',
-                `background-color:${this.bg}; opacity: 0.5;`,
+                `background-color:${this.bg}; opacity: 0.5; z-index: ${this.zIndex};`,
               );
 
               // Remove loading text if present
@@ -704,8 +719,12 @@ export const soundPortal = (p5) => {
 
   // Find which shape is under the cursor/touch point
   function getShapeAtPosition(x, y) {
-    for (let i = 0; i < shapes.length; i++) {
-      let shape = shapes[i];
+    // Create a copy of shapes sorted by z-index (higher values first)
+    // to ensure we select the topmost shape when they overlap
+    const sortedShapes = [...shapes].sort((a, b) => b.zIndex - a.zIndex);
+
+    for (let i = 0; i < sortedShapes.length; i++) {
+      let shape = sortedShapes[i];
       let distance = p5.dist(x, y, shape.x, shape.y);
 
       if (distance < shape.diameter / 2) {
@@ -727,6 +746,15 @@ export const soundPortal = (p5) => {
     // If we found a shape, mark it as potentially active for dragging
     if (shape) {
       shape.active = true;
+
+      // When a shape is clicked, bring it to the front by moving it to the end
+      // of the shapes array before the next draw cycle sorts by y-position
+      const shapeIndex = shapes.findIndex((s) => s.id === shape.id);
+      if (shapeIndex !== -1) {
+        // Update the shape's zIndex to the highest value
+        shape.zIndex = shapes.length;
+      }
+
       return false; // Prevent default browser behavior
     }
 
@@ -851,6 +879,9 @@ export const soundPortal = (p5) => {
           // Update the shape's position
           shape.x = newX;
           shape.y = newY;
+
+          // When dragging a shape to a new y-position, we'll update its zIndex
+          // in the next draw cycle automatically via the sorting mechanism
 
           shapeMoved = true;
           break; // Only move the first active shape (original behavior)
