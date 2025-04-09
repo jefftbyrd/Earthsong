@@ -37,7 +37,7 @@ export default function BackToMap() {
         color: 'rgba(255, 0, 89, 1)',
       }}
     >
-      <Logo height="6vw" width="6vw" />
+      <Logo className="h-[6vw] w-[6vw]" />
     </motion.button>
   );
 }

@@ -1,6 +1,10 @@
 import { motion } from 'motion/react';
 
-export default function Title({ className }) {
+interface TitleProps {
+  className?: string;
+}
+
+export default function Title({ className }: TitleProps) {
   return (
     <motion.h1
       className={className}
