@@ -1,12 +1,13 @@
 'use client';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
-import { motion } from 'motion/react';
+// import { motion } from 'motion/react';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
-import { soundsContext } from '../context/soundsContext';
-import styles from '../styles/ui.module.scss';
+// import { soundsContext } from '../context/soundsContext';
+// import styles from '../styles/ui.module.scss';
 import Freesound from './Freesound';
+import MapMessages from './MapMessages';
 
 const initialCenter = [4.510020088079064, 44.66199079784276];
 const initialZoom = 2.14;
@@ -15,32 +16,14 @@ export default function Map() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
 
-  const [pin, setPin] = useState({});
+  // const [pin, setPin] = useState({});
   const [fetch, setFetch] = useState(false);
-
-  console.log('pin', pin);
 
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(initialZoom);
 
-  const { setPhase, phase } = useContext(journeyContext);
-  const { sounds, freesoundLoading, notEnough } = useContext(soundsContext);
-
-  const instructionVariants = {
-    container: {
-      initial: { opacity: 0 },
-      animate: {
-        opacity: 1,
-        transition: { duration: 10, times: [0, 0.6, 0.9, 1] },
-      },
-    },
-  };
-
-  // Separate animation for text color
-  const textColorAnimation = {
-    color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
-    transition: { repeat: Infinity, duration: 3 },
-  };
+  const { setPhase, phase, pin, setPin } = useContext(journeyContext);
+  // const { sounds, freesoundLoading, notEnough } = useContext(soundsContext);
 
   useEffect(() => {
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
@@ -84,121 +67,9 @@ export default function Map() {
 
   return (
     <>
-      {phase === 'map' && !pin.lat ? (
-        <motion.div
-          className={styles.instruction}
-          initial="initial"
-          animate="animate"
-          variants={instructionVariants.container}
-        >
-          <motion.h2
-            // Remove the variants prop and directly apply the animation
-            animate={textColorAnimation}
-          >
-            Choose a place to explore.
-          </motion.h2>
-        </motion.div>
-      ) : null}
-
-      {/* SEARCHING */}
-      {pin.lat && phase === 'map' ? (
-        <div className={styles.projection}>
-          <motion.h2
-            animate={{
-              opacity: [0, 1],
-              transition: { duration: 2, times: [0, 1] },
-            }}
-          >
-            {/* Announce the chosen coordinates */}
-            You chose {pin.lat.toFixed(4)}, {pin.lng.toFixed(4)}.
-            <br />
-            <br />
-            <br />
-          </motion.h2>
-        </div>
-      ) : null}
-
-      {pin.lat && phase === 'map' && freesoundLoading === true ? (
-        <div className={styles.projection}>
-          <motion.div
-            animate={{
-              opacity: [0, 0, 1],
-              transition: { duration: 2, times: [0, 0.5, 1] },
-            }}
-          >
-            <motion.button
-              className={styles.projectionStart}
-              animate={textColorAnimation}
-            >
-              {/* Searching the area. */}
-              Searching the area.
-              <br />
-              <br />
-            </motion.button>
-          </motion.div>
-        </div>
-      ) : null}
-
-      {/* IF THERE ARE ENOUGH SOUNDS */}
-      {pin.lat &&
-      phase === 'map' &&
-      notEnough === false &&
-      sounds?.results?.length > 0 &&
-      freesoundLoading === false ? (
-        <div className={styles.projection}>
-          <motion.h2
-            animate={{
-              opacity: [0, 1],
-              transition: { duration: 3, times: [0, 1] },
-            }}
-          >
-            {/* Number of sounds found nearby. */}
-            {sounds?.count} sounds found nearby.
-          </motion.h2>
-
-          <motion.div
-            animate={{
-              opacity: [0, 0, 1],
-              transition: { duration: 2, times: [0, 0.5, 1] },
-            }}
-          >
-            <motion.button
-              className={styles.projectionStart}
-              animate={textColorAnimation}
-              onClick={() => {
-                setPhase('portal');
-                setPin({});
-              }}
-            >
-              {/* Click to initiate sonic projection */}
-              Take me there.
-            </motion.button>
-          </motion.div>
-        </div>
-      ) : null}
-
-      {/* NOT ENOUGH SOUNDS */}
-      {pin.lat && phase === 'map' && notEnough === true ? (
-        <div className={styles.projection}>
-          <motion.div
-            animate={{
-              opacity: [0, 0, 1],
-              transition: { duration: 3, times: [0, 0.5, 1] },
-            }}
-          >
-            <motion.button
-              className={styles.projectionStart}
-              animate={textColorAnimation}
-            >
-              {/* No sounds found */}
-              No sounds found within 200km. Please choose another location.
-            </motion.button>
-          </motion.div>
-        </div>
-      ) : null}
-
+      <MapMessages />
       <div id="map-container" ref={mapContainerRef} />
-      {pin.lat ? <Freesound pin={pin} /> : null}
+      {pin.lat ? <Freesound /> : null}
     </>
   );
 }
