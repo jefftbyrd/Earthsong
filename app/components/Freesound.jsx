@@ -12,8 +12,11 @@ export default function Freesound() {
 
     const fetchData = async () => {
       setFreesoundLoading(true);
+      console.log('Starting sound searches:', searchRadiuses);
+
       try {
-        for (const radius of searchRadiuses) {
+        // Create promises for all radius searches
+        const searchPromises = searchRadiuses.map(async (radius) => {
           const filter = encodeURIComponent(
             `{!geofilt sfield=geotag pt=${pin.lat},${pin.lng} d=${radius}}`,
           );
@@ -21,35 +24,42 @@ export default function Freesound() {
             `https://freesound.org/apiv2/search/text/?filter=${filter}&fields=previews,name,description,username,id,tags,duration,geotag,url&page_size=100&token=${process.env.NEXT_PUBLIC_FREESOUND_API_KEY}`,
           );
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
+          if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
           const json = await response.json();
-          if (json.count >= 5) {
-            setSounds({
-              ...json,
-              pin: pin,
-            });
-            setNotEnough(false);
-            return;
-          }
-        }
+          return { radius, data: json };
+        });
 
-        // If we get here, we didn't find enough results in any radius
-        setNotEnough(true);
-        throw new Error('No sufficient results found in any search radius');
+        // Process results by smallest radius first
+        const results = await Promise.all(searchPromises);
+        const successfulResult = results
+          .sort((a, b) => a.radius - b.radius)
+          .find((result) => result.data.count >= 5);
+
+        if (successfulResult) {
+          const { radius, data } = successfulResult;
+          console.log(
+            `Using results from ${radius}km radius: ${data.count} sounds`,
+          );
+
+          setSounds({
+            ...data,
+            pin,
+            searchRadius: radius,
+            soundCount: data.count,
+          });
+          setNotEnough(false);
+        } else {
+          console.log('Insufficient results in all radiuses');
+          setNotEnough(true);
+        }
       } catch (error) {
-        console.error('Error fetching Freesound data:', error);
+        console.error('Error fetching sounds:', error);
       } finally {
         setFreesoundLoading(false);
       }
     };
 
-    fetchData().catch((error) => {
-      console.error('Error in fetchData:', error);
-      setFreesoundLoading(false);
-    });
+    fetchData();
   }, [pin, setSounds, setFreesoundLoading]);
 
   if (freesoundLoading) {
