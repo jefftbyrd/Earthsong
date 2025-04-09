@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-import ClosePanelButton from '../panels/ClosePanelButton';
+
+// import ClosePanelButton from '../panels/ClosePanelButton';
 
 export default function OpenPanelButton({ panel }) {
   const { setPanelId, panelOpen, togglePanel, panelId } =

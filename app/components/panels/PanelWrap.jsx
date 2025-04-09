@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import ClosePanelButton from '../panels/ClosePanelButton';
 
 export default function PanelWrap({ children, panel, bg }) {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
-    useContext(journeyContext);
+  const { panelOpen, togglePanel } = useContext(journeyContext);
   useEffect(() => {
     // Create handler function for document-level keyboard events
     const handleKeyDown = (e) => {
