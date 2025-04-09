@@ -41,6 +41,14 @@ export const soundPortal = (p5) => {
       multiPlayer.player(props.playerTarget).loaded
     ) {
       playSound(props.playerTarget);
+    } else if (props.playerTarget && isInitialized && multiPlayer) {
+      // Find the shape with this ID and queue the play command
+      const targetShape = shapes.find(
+        (shape) => shape.id === props.playerTarget,
+      );
+      if (targetShape) {
+        targetShape.playWhenLoaded = true;
+      }
     }
 
     if (props.reset) {
@@ -83,7 +91,6 @@ export const soundPortal = (p5) => {
       const y = p5.random(300, p5.height - 100);
 
       // Calculate initial diameter based on y position
-      // This is based on your existing diameter calculation in the show() method
       const initialDiameter = p5.map(
         y,
         0,
@@ -108,12 +115,10 @@ export const soundPortal = (p5) => {
       const b = new Shape(x, y, id, name, bg, url, number, initialDiameter);
       shapes.push(b);
     });
-    generatePlayers();
-  }
 
-  function generatePlayers() {
+    // Start loading process for each shape
     for (let i = 0; i < shapes.length; i++) {
-      shapes[i].players();
+      shapes[i].initLoad();
     }
   }
 
@@ -131,7 +136,10 @@ export const soundPortal = (p5) => {
     let isAnyPlaying = false;
     if (shapes.length > 0) {
       for (let i = 0; i < shapes.length; i++) {
-        if (multiPlayer.player(shapes[i].id).state === 'started') {
+        if (
+          shapes[i].isLoaded &&
+          multiPlayer.player(shapes[i].id).state === 'started'
+        ) {
           isAnyPlaying = true;
           break;
         }
@@ -187,6 +195,8 @@ export const soundPortal = (p5) => {
     for (let i = 0; i < shapes.length; i++) {
       shapes[i].show();
       shapes[i].audioControls();
+      // Check if any pending load operations have completed
+      shapes[i].checkLoadStatus();
     }
   }; // END DRAW
 
@@ -212,7 +222,7 @@ export const soundPortal = (p5) => {
       for (let i = 0; i < shapes.length; i++) {
         const shape = shapes[i];
         const d = p5.dist(p5.mouseX, p5.mouseY, shape.x, shape.y);
-        if (d < shape.diameter / 2) {
+        if (d < shape.diameter / 2 && shape.isLoaded) {
           shape.reversed = !shape.reversed;
           multiPlayer.player(shape.id).reverse = shape.reversed;
 
@@ -235,6 +245,9 @@ export const soundPortal = (p5) => {
   };
 
   function playSound(id) {
+    const shape = shapes.find((s) => s.id === id);
+    if (!shape || !shape.isLoaded) return;
+
     if (
       multiPlayer &&
       multiPlayer.player(id) &&
@@ -294,6 +307,14 @@ export const soundPortal = (p5) => {
       // Add reverbGain to control wet/dry balance
       this.reverbGain = null;
       this.dryGain = null;
+
+      // New properties for loading state
+      this.isLoading = false;
+      this.isLoaded = false;
+      this.loadProgress = 0;
+      this.loadStartTime = 0;
+      this.playWhenLoaded = false;
+      this.loadingAnimation = 0;
     }
 
     move() {
@@ -306,6 +327,75 @@ export const soundPortal = (p5) => {
       shapeStroke.setAlpha(100);
       p5.stroke(shapeStroke);
 
+      // Show different appearance based on loading state
+      if (!this.isLoaded) {
+        // Loading state visualization
+        let loadingColor = p5.color(this.bg);
+        loadingColor.setAlpha(50);
+        p5.fill(loadingColor);
+
+        // Draw the base circle
+        ellipse = p5.ellipse(this.x, this.y, this.diameter);
+
+        // Draw loading indicator
+        this.loadingAnimation = (this.loadingAnimation + 0.05) % (Math.PI * 2);
+
+        p5.push();
+        p5.translate(this.x, this.y);
+
+        // Draw loading arc
+        p5.noFill();
+        p5.stroke(255, 255, 255, 200);
+        p5.strokeWeight(3);
+        p5.arc(
+          0,
+          0,
+          this.diameter * 0.8,
+          this.diameter * 0.8,
+          this.loadingAnimation,
+          this.loadingAnimation + Math.PI,
+        );
+
+        // Draw loading text
+        p5.noStroke();
+        p5.fill(255);
+        p5.textSize(this.diameter * 0.15);
+        p5.textAlign(p5.CENTER, p5.CENTER);
+        p5.text('Loading...', 0, 0);
+
+        p5.pop();
+
+        // Update DOM element if exists
+        try {
+          const element = document.querySelector(`.s${this.id}`);
+          if (element) {
+            element.setAttribute(
+              'style',
+              `background-color:${this.bg}; opacity: 0.3;`,
+            );
+
+            // Add loading text to the DOM element
+            const loadingTextEl = element.querySelector('.loading-text');
+            if (!loadingTextEl) {
+              const loadingText = document.createElement('div');
+              loadingText.className = 'loading-text';
+              loadingText.style.position = 'absolute';
+              loadingText.style.top = '50%';
+              loadingText.style.left = '50%';
+              loadingText.style.transform = 'translate(-50%, -50%)';
+              loadingText.style.color = 'white';
+              loadingText.textContent = 'Loading...';
+              element.appendChild(loadingText);
+            }
+          }
+        } catch (error) {
+          // Silent error - DOM element might not exist
+        }
+
+        return; // Skip the rest of the method while loading
+      }
+
+      // Sound loaded - regular display logic
       if (
         multiPlayer &&
         multiPlayer.player(this.id) &&
@@ -319,6 +409,12 @@ export const soundPortal = (p5) => {
             const element = document.querySelector(`.s${this.id}`);
             if (element) {
               element.setAttribute('style', `background-color:${this.bg};`);
+
+              // Remove loading text if present
+              const loadingText = element.querySelector('.loading-text');
+              if (loadingText) {
+                element.removeChild(loadingText);
+              }
             }
           } catch (error) {
             // Silent error - DOM element might not exist
@@ -335,6 +431,12 @@ export const soundPortal = (p5) => {
                 'style',
                 `background-color:${this.bg}; opacity: 0.5;`,
               );
+
+              // Remove loading text if present
+              const loadingText = element.querySelector('.loading-text');
+              if (loadingText) {
+                element.removeChild(loadingText);
+              }
             }
           } catch (error) {
             // Silent error - DOM element might not exist
@@ -413,17 +515,98 @@ export const soundPortal = (p5) => {
       p5.pop();
     } // END SHOW
 
-    players() {
+    // Initialize loading process for this shape
+    initLoad() {
+      if (this.isLoaded || this.isLoading) return;
+
+      this.isLoading = true;
+      this.loadStartTime = Date.now();
+      this.loadProgress = 0;
+
+      // Start loading the player in the background
       if (!multiPlayer) return;
 
-      multiPlayer.add(this.id, this.url, () => {});
+      // Create a temporary audio element to track loading progress
+      const tempAudio = new Audio();
+      tempAudio.src = this.url;
 
-      const player = multiPlayer.player(this.id);
-      if (player) {
-        player.loop = true;
-        player.fadeIn = 0.1;
-        player.fadeOut = 0.3;
+      // Add event listeners to track loading progress
+      tempAudio.addEventListener('loadeddata', () => {
+        // Pre-load is complete enough to start playing
+        this.loadProgress = 0.5;
+      });
+
+      tempAudio.addEventListener('canplaythrough', () => {
+        // Fully loaded and ready to play without buffering
+        this.loadProgress = 0.9;
+      });
+
+      // Set up error handling
+      tempAudio.addEventListener('error', () => {
+        console.error(`Error loading sound: ${this.url}`);
+        this.loadProgress = 0;
+        this.isLoading = false;
+      });
+
+      // Actually create the Tone.js player
+      multiPlayer.add(this.id, this.url, () => {
+        // This callback executes when Tone.js finishes loading
+        this.isLoaded = true;
+        this.isLoading = false;
+        this.loadProgress = 1;
+
+        // Set up additional audio processing
+        this.setupAudioProcessing();
+
+        // Autoplay if requested while loading
+        if (this.playWhenLoaded) {
+          playSound(this.id);
+          this.playWhenLoaded = false;
+        }
+      });
+    }
+
+    // Check if loading is complete and set up additional components
+    checkLoadStatus() {
+      if (!this.isLoaded && this.isLoading) {
+        // If loading is taking too long, increment progress naturally
+        const elapsedTime = Date.now() - this.loadStartTime;
+        if (elapsedTime > 2000 && this.loadProgress < 0.5) {
+          this.loadProgress = Math.min(0.5, this.loadProgress + 0.01);
+        }
+
+        // Check if player is loaded in Tone.js
+        if (
+          multiPlayer &&
+          multiPlayer.player(this.id) &&
+          multiPlayer.player(this.id).loaded
+        ) {
+          this.isLoaded = true;
+          this.isLoading = false;
+          this.loadProgress = 1;
+
+          // Set up additional audio processing if not done yet
+          if (!this.meter) {
+            this.setupAudioProcessing();
+          }
+
+          // Autoplay if requested while loading
+          if (this.playWhenLoaded) {
+            playSound(this.id);
+            this.playWhenLoaded = false;
+          }
+        }
       }
+    }
+
+    // Set up audio processing components
+    setupAudioProcessing() {
+      const player = multiPlayer.player(this.id);
+      if (!player) return;
+
+      player.loop = true;
+      player.fadeIn = 0.1;
+      player.fadeOut = 0.3;
 
       this.meter = new Tone.Meter({ normalRange: true, smoothing: 0.9 });
       this.channel = new Tone.Channel();
@@ -433,27 +616,27 @@ export const soundPortal = (p5) => {
       this.dryGain = new Tone.Gain(1); // Start with full dry signal
 
       // Connect player to meter for visualization
-      if (player) {
-        player.connect(this.meter);
+      player.connect(this.meter);
 
-        // Connect player to channel for volume/pan control
-        player.connect(this.channel);
+      // Connect player to channel for volume/pan control
+      player.connect(this.channel);
 
-        // Connect channel to both dry and wet paths
-        this.channel.connect(this.dryGain);
-        this.channel.connect(this.reverbGain);
+      // Connect channel to both dry and wet paths
+      this.channel.connect(this.dryGain);
+      this.channel.connect(this.reverbGain);
 
-        // Connect wet path to shared reverb
-        if (sharedReverb) {
-          this.reverbGain.connect(sharedReverb);
-        }
-
-        // Connect dry path directly to destination
-        this.dryGain.toDestination();
+      // Connect wet path to shared reverb
+      if (sharedReverb) {
+        this.reverbGain.connect(sharedReverb);
       }
+
+      // Connect dry path directly to destination
+      this.dryGain.toDestination();
     }
 
     audioControls() {
+      if (!this.isLoaded) return;
+
       if (!this.meter || !this.channel) return;
 
       this.meterLevel = this.meter.getValue();
@@ -564,8 +747,13 @@ export const soundPortal = (p5) => {
     if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
       const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
       if (shape) {
-        // Toggle sound on/off for this shape
-        playSound(shape.id);
+        // Toggle sound on/off for this shape if loaded
+        if (shape.isLoaded) {
+          playSound(shape.id);
+        } else if (shape.isLoading) {
+          // Queue play when loaded
+          shape.playWhenLoaded = true;
+        }
       }
     }
 
@@ -606,7 +794,12 @@ export const soundPortal = (p5) => {
     if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
       const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
       if (shape) {
-        playSound(shape.id);
+        if (shape.isLoaded) {
+          playSound(shape.id);
+        } else if (shape.isLoading) {
+          // Queue play when loaded
+          shape.playWhenLoaded = true;
+        }
       }
     }
 
