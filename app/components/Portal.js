@@ -44,26 +44,14 @@ export default function Portal() {
       )}
 
       <div className="relative min-h-full h-[100vh]">
-        {isMobile ? (
-          <SoundControllerMobile
-            soundsColor={soundsColor}
-            displayingItem={state.displayingItem}
-            setDisplayingItem={actions.setDisplayingItem}
-            isOpen={state.isOpen}
-            setIsOpen={actions.toggleOpen}
-            // No need to pass play state props
-          />
-        ) : (
-          <SoundController
-            soundsColor={soundsColor}
-            displayingItem={state.displayingItem}
-            setDisplayingItem={actions.setDisplayingItem}
-            isOpen={state.isOpen}
-            setIsOpen={actions.toggleOpen}
-            // No need to pass play state props
-          />
-        )}
-
+        <SoundControllerMobile
+          soundsColor={soundsColor}
+          displayingItem={state.displayingItem}
+          setDisplayingItem={actions.setDisplayingItem}
+          isOpen={state.isOpen}
+          setIsOpen={actions.toggleOpen}
+          // No need to pass play state props
+        />
         {/* <SaveControl
           soundsColor={soundsColor}
           saveIsOpen={state.saveIsOpen}
