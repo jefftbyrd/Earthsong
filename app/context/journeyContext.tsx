@@ -27,7 +27,7 @@ export interface JourneyContextType {
   togglePanel: () => void;
   mobileCheck: boolean;
   pin: Pin | null;
-  setPin: Dispatch<SetStateAction<Pin | null>>;
+  setPin: Dispatch<SetStateAction<Pin | object>>;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -43,7 +43,7 @@ export const journeyContext = createContext<JourneyContextType>({
   setPanelOpen: () => {},
   togglePanel: () => {},
   mobileCheck: false,
-  pin: null,
+  pin: {},
   setPin: () => {},
 });
 
@@ -59,7 +59,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
   // const [isMobile, setIsMobile] = useState(false);
-  const [pin, setPin] = useState<Pin | null>(null);
+  const [pin, setPin] = useState<Pin | object>({});
 
   // const togglePanel = () => setPanelOpen((prev) => !prev);
 
