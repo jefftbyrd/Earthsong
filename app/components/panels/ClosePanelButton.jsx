@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 
 export default function ClosePanelButton({ panel }) {

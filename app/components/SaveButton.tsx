@@ -13,7 +13,6 @@ export default function SaveButton({ setShowSuccessMessage }: SaveButtonProps) {
     <button
       className={styles.saveSnapshotButton}
       onClick={() => {
-        // setSaveIsOpen(!saveIsOpen);
         setPanelId('savePanel');
         togglePanel();
         setShowSuccessMessage(false);
