@@ -15,16 +15,32 @@ import { SoundPlayerProvider } from './context/soundPlayerContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
 
-const basteleurMoonlight = localFont({
-  src: './fonts/Basteleur-Moonlight.woff2',
-  variable: '--font-basteleurM',
-  weight: '300',
-});
+// const basteleurMoonlight = localFont({
+//   src: './fonts/Basteleur-Moonlight.woff2',
+//   variable: '--font-basteleurM',
+//   weight: '300',
+// });
 
-const basteleurBold = localFont({
-  src: './fonts/Basteleur-Bold.woff2',
-  variable: '--font-basteleurB',
-  weight: '900',
+// const basteleurBold = localFont({
+//   src: './fonts/Basteleur-Bold.woff2',
+//   variable: '--font-basteleurB',
+//   weight: '900',
+// });
+
+const basteleur = localFont({
+  variable: '--font-basteleur',
+  src: [
+    {
+      path: './fonts/Basteleur-Moonlight.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/Basteleur-Bold.woff2',
+      weight: '800',
+      style: 'bold',
+    },
+  ],
 });
 
 export default async function RootLayout({ children }) {
@@ -70,9 +86,7 @@ export default async function RootLayout({ children }) {
         />
       </head>
 
-      <body
-        className={`${basteleurBold.variable} ${basteleurMoonlight.variable}`}
-      >
+      <body className={basteleur.variable}>
         <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
             <SoundsContextProvider>

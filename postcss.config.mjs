@@ -1,4 +1,11 @@
 const config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        basteleur: ['var(--font-basteleur)'],
+      },
+    },
+  },
   plugins: {
     '@tailwindcss/postcss': {},
   },
