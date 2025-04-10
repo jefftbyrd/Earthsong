@@ -25,7 +25,7 @@ export default function OpenPanelButton({ panel, children }) {
 
   return (
     <button
-      className="uppercase text-center flex items-center justify-center gap-1"
+      className="uppercase text-center flex items-center justify-center text-lg"
       onClick={(e) => {
         e.stopPropagation();
         if (panelOpen && panelId === panel) {
