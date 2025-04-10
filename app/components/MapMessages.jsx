@@ -31,8 +31,8 @@ export default function MapMessages() {
   console.log('sounds', sounds);
 
   return (
-    <div className="absolute bottom-2 z-10 m-auto left-0 right-0 text-center text-xl">
-      <div>
+    <div className="absolute bottom-0 z-10 m-auto left-0 right-0 text-center text-lg p-2 backdrop-blur-[5px] ">
+      <div className="">
         <motion.p animate={glowAnimation}>
           {mapConditions.initial ? 'Choose a place to explore' : null}
         </motion.p>
@@ -75,6 +75,8 @@ export default function MapMessages() {
           <p>Please choose another location.</p>
         </>
       )}
+
+      {/* <div className="backdrop-blur-sm mask-alpha mask-x-from-black mask-x-from-80% mask-x-to-transparent h-full w-full block absolute" /> */}
     </div>
   );
 }

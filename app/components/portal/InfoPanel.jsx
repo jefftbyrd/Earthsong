@@ -2,8 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 
-// import styles from '../../styles/portal.module.scss';
-
 export default function InfoPanel({ sound, index, color }) {
   const minutes = Math.floor(sound.duration / 60);
   const seconds = Math.floor(sound.duration % 60)
