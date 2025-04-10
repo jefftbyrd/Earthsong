@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { soundsContext } from '../../context/soundsContext';
+import EarthsongIcons from '../EarthsongIcons';
 import OpenPanelButton from '../panels/OpenPanelButton';
 import PowersPanel from '../panels/PowersPanel';
 
@@ -19,9 +20,9 @@ export default function PortalNav() {
   }, [resetDone, setPhase]);
 
   return (
-    <footer className="h-10 border-t-1 bg-black fixed bottom-0 w-full grid grid-cols-3 uppercase text-center col-span-2">
+    <footer className="h-10 border-t-1 bg-black fixed bottom-0 w-full grid grid-cols-3 uppercase gap-5">
       <button
-        className="uppercase"
+        className="uppercase text-center flex items-center justify-center gap-1"
         onClick={() => {
           if (panelOpen) {
             togglePanel(); // This will close the panel and clear panelId
@@ -36,28 +37,19 @@ export default function PortalNav() {
           setPhase('map');
         }}
       >
-        &lt; Map
+        <EarthsongIcons className="h-5 w-5" iconNumber={5} />
+        <span>Map</span>
       </button>
-      {/* <button
-        className="uppercase"
-        onClick={(e) => {
-          e.stopPropagation();
 
-          // If this exact panel is already open, just toggle it closed
-          if (panelOpen && panelId === 'powersPanel') {
-            togglePanel(); // This will close the panel and clear panelId
-          }
-          // Otherwise, set this panel as active
-          else {
-            setPanelId('powersPanel');
-            // The useEffect will handle opening the panel if needed
-          }
-        }}
-      >
-        Powers
-      </button> */}
-      <OpenPanelButton panel="Powers" />
-      <OpenPanelButton panel="Guide" />
+      <OpenPanelButton panel="Powers">
+        <EarthsongIcons className="h-5.5 w-5.5" iconNumber={3} />
+        <span>Powers</span>
+      </OpenPanelButton>
+
+      <OpenPanelButton panel="Guide">
+        <EarthsongIcons className="h-5 w-3" iconNumber={2} />
+        <span>Guide</span>
+      </OpenPanelButton>
     </footer>
   );
 }

@@ -25,18 +25,13 @@ export default function OpenPanelButton({ panel, children }) {
 
   return (
     <button
-      className="uppercase"
+      className="uppercase text-center flex items-center justify-center gap-1"
       onClick={(e) => {
         e.stopPropagation();
-
-        // If this exact panel is already open, just toggle it closed
         if (panelOpen && panelId === panel) {
-          togglePanel(); // This will close the panel and clear panelId
-        }
-        // Otherwise, set this panel as active
-        else {
+          togglePanel();
+        } else {
           setPanelId(panel);
-          // The useEffect will handle opening the panel if needed
         }
       }}
     >
