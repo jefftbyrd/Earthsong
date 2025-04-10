@@ -3,7 +3,7 @@ import { journeyContext } from '../../context/journeyContext';
 
 // import ClosePanelButton from '../panels/ClosePanelButton';
 
-export default function OpenPanelButton({ panel }) {
+export default function OpenPanelButton({ panel, children }) {
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function OpenPanelButton({ panel }) {
         }
       }}
     >
-      {panel}
+      {children ? children : panel}
     </button>
   );
 }
