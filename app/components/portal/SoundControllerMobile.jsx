@@ -3,6 +3,7 @@ import { journeyContext } from '../../context/journeyContext';
 import styles from '../../styles/portal.module.scss';
 import GuidePanel from '../panels/GuidePanel';
 import PowersPanel from '../panels/PowersPanel';
+import SummonPanel from '../panels/SummonPanel';
 import InfoPanel from './InfoPanel';
 import SoundItem from './SoundItem';
 
@@ -63,6 +64,7 @@ export default function SoundControllerMobile({
         ))}
         {panelOpen && panelId === 'Powers' && <PowersPanel />}
         {panelOpen && panelId === 'Guide' && <GuidePanel />}
+        {panelOpen && panelId === 'Summon' && <SummonPanel />}
       </div>
     </>
   );
