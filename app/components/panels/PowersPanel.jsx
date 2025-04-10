@@ -30,7 +30,6 @@ export default function PowersPanel() {
   return (
     <PanelWrap panel="Powers" bg="#C45353">
       {user ? <PowersLoggedIn /> : <PowersNotLoggedIn />}
-      <p>line two</p>
     </PanelWrap>
   );
 }

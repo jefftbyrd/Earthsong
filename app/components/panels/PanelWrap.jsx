@@ -50,8 +50,8 @@ export default function PanelWrap({ children, panel, bg }) {
       className="p-1 text-black box-border overflow-auto mt-0.5"
       style={{ backgroundColor: bg }}
     >
-      <ClosePanelButton panel={panel} />
-      {children}
+      {/* <ClosePanelButton panel={panel} /> */}
+      <div className="p-5 grid gap-5">{children}</div>
       <h2 className="absolute bottom-10 left-0 right-0 text-7xl uppercase opacity-30 text-center">
         {panel}
       </h2>
