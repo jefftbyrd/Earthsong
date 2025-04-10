@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 
 export const soundPortal = (p5) => {
-  const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
+  // const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
   const scl = 10;
   let waveform;
   let ellipse;
@@ -61,7 +61,8 @@ export const soundPortal = (p5) => {
     soundCanvas.style('position', 'absolute');
     soundCanvas.style('z-index', -999);
     multiPlayer = new Tone.Players();
-    p5.textFont(noto);
+    // p5.textFont(noto);
+    p5.textFont('Basteleur');
 
     // Create the shared reverb instance
     sharedReverb = new Tone.Reverb();
