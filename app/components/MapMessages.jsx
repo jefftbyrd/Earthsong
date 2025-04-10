@@ -58,6 +58,7 @@ export default function MapMessages() {
           </p>
           <motion.button
             animate={glowAnimation}
+            className="font-bold"
             onClick={() => {
               setPhase('portal');
               setPin({});

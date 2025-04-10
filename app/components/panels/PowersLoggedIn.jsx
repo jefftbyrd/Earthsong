@@ -2,7 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 import LogoutButton from '../../(auth)/logout/LogoutButton';
 import { journeyContext } from '../../context/journeyContext';
 import { userContext } from '../../context/userContext';
+import OpenPanelButton from '../panels/OpenPanelButton';
 import { Button } from '../ui';
+import SnapshotItem from './SnapshotItem';
 
 export default function PowersLoggedIn() {
   const { setPanelId, panelOpen, togglePanel, panelId, phase } =
@@ -25,7 +27,23 @@ export default function PowersLoggedIn() {
       >
         Save this journey
       </Button>
-      <p>Recall a saved journey</p>
+
+      {/* <h2>Summon past journeys</h2> */}
+      <OpenPanelButton panel="Summon">Summon past journeys</OpenPanelButton>
+      {/* <div>
+        {snapshots.length < 1 ? (
+          'No snapshots yet'
+        ) : (
+          <ul>
+            {snapshots.map((snapshot) => (
+              <li key={`snapshots-${snapshot.id}`}>
+                <SnapshotItem snapshot={snapshot} />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div> */}
+
       <p>{phase !== 'portalRecall' ? <LogoutButton /> : null}</p>
     </>
   );
