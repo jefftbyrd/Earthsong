@@ -28,7 +28,7 @@ export default function MapMessages() {
     transition: { repeat: Infinity, duration: 3 },
   };
 
-  console.log('sounds', sounds);
+  // console.log('sounds', sounds);
 
   return (
     <div className="absolute bottom-0 z-10 m-auto left-0 right-0 text-center text-lg p-2 backdrop-blur-[5px] ">
