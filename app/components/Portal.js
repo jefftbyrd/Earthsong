@@ -7,7 +7,7 @@ import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
 import PortalNav from './portal/PortalNav';
-import SoundControllerMobile from './portal/SoundControllerMobile';
+import SoundController from './portal/SoundController';
 import SoundIcon from './portal/SoundIcon';
 import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
@@ -70,7 +70,7 @@ export default function Portal() {
     <div className="flex flex-col h-screen">
       {/* Sound Controller */}
       <div className="flex-shrink-0" id="sound-controller">
-        <SoundControllerMobile
+        <SoundController
           soundsColor={soundsColor}
           displayingItem={state.displayingItem}
           setDisplayingItem={actions.setDisplayingItem}
@@ -99,11 +99,6 @@ export default function Portal() {
             SoundIcon={SoundIcon}
           />
         )}
-      </div>
-
-      {/* Navigation */}
-      <div className="flex-shrink-0 z-10 mt-auto" id="portal-nav">
-        <PortalNav isLoggedIn={user} />
       </div>
     </div>
   );

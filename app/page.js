@@ -1,7 +1,7 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Logo from '../public/Logo.js';
 // import BackToMap from './components/BackToMap';
 import Map from './components/Map';
@@ -9,6 +9,9 @@ import { clouds } from './components/p5clouds';
 import { occult } from './components/p5occult';
 import { wind } from './components/p5wind';
 import Portal from './components/Portal';
+import InfoPanel from './components/portal/InfoPanel';
+import { panels } from './components/portal/panelConfig';
+import PortalNav from './components/portal/PortalNav';
 import PortalRecall from './components/PortalRecall';
 // import Profile from './components/Profile';
 import Title from './components/Title';
@@ -19,6 +22,7 @@ import styles from './styles/ui.module.scss';
 export default function Earthsong() {
   const { user, snapshots } = useContext(userContext);
   const { phase, setPhase, pastJourney } = useContext(journeyContext);
+  const { panelId, panelOpen } = useContext(journeyContext);
 
   return (
     <>
@@ -34,12 +38,6 @@ export default function Earthsong() {
           Welcome, {user?.username}.
         </motion.h1>
       ) : null}
-
-      {/* <AnimatePresence>
-        {phase === 'portal' || phase === 'portalRecall' ? <BackToMap /> : null}
-      </AnimatePresence> */}
-
-      {/* <Profile /> */}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
@@ -79,7 +77,6 @@ export default function Earthsong() {
                 transition: { duration: 4, times: [0, 0.6, 1] },
               }}
               exit={{
-                // scale: 10,
                 opacity: 0,
                 transition: { duration: 2 },
               }}
@@ -161,6 +158,16 @@ export default function Earthsong() {
           />
         </motion.div>
       ) : null}
+
+      {panelOpen && panelId && panels[panelId]?.component && (
+        <div className="fixed inset-0 z-40">
+          {React.createElement(panels[panelId].component)}
+        </div>
+      )}
+      {/* PortalNav */}
+      <div className="fixed bottom-0 left-0 w-full z-50">
+        <PortalNav isLoggedIn={user} />
+      </div>
     </>
   );
 }
