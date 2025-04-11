@@ -185,7 +185,7 @@ export const soundPortal = (p5) => {
       // Draw fewer points for better performance
       const step = Math.max(1, Math.floor(frequencyData.length / 100));
       for (let i = 0; i < frequencyData.length; i += step) {
-        let y = p5.map(frequencyData[i], -1, 1, p5.height / 2, 0);
+        let y = p5.map(frequencyData[i], -1, 1, p5.height / 5, 0);
         p5.vertex(i * scl * (step / 2), y);
       }
       p5.endShape();
@@ -202,9 +202,9 @@ export const soundPortal = (p5) => {
       p5.line(
         step * i,
         p5.map(frequencyData[dataIndex], -1, 1, p5.height / 6, 0) +
-          p5.height / 5,
+          p5.height / 10,
         step * i * 10 - p5.width * 4,
-        p5.width,
+        p5.height, // Extend lines to the bottom of the canvas
       );
     }
 
