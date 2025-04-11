@@ -15,6 +15,7 @@ export const soundPortal = (p5) => {
   const analyzerSize = 512; // Smaller than default but not too small
   let lastWaveformData = [];
   let isInitialized = false;
+  let canvasHeight = window.innerHeight;
 
   // Variables to track touch behavior
   let touchStartTime = 0;
@@ -23,8 +24,21 @@ export const soundPortal = (p5) => {
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
   p5.updateWithProps = async (props) => {
+    // Your existing props handling code
     if (props.soundsColor) {
       sounds2 = [...props.soundsColor];
+    }
+
+    // Handle containerHeight more forcefully
+    if (props.containerHeight && props.containerHeight > 0) {
+      canvasHeight = props.containerHeight;
+      console.log('P5 received container height:', canvasHeight);
+
+      // If canvas already exists, resize it
+      if (p5.canvas) {
+        console.log('Resizing canvas to height:', canvasHeight);
+        p5.resizeCanvas(p5.width, canvasHeight);
+      }
     }
 
     // Only generate shapes if we have sounds and no shapes yet
@@ -57,9 +71,10 @@ export const soundPortal = (p5) => {
   };
 
   p5.setup = () => {
-    const soundCanvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
-    soundCanvas.style('position', 'absolute');
-    soundCanvas.style('z-index', -999);
+    console.log('Creating canvas with height:', canvasHeight);
+    const soundCanvas = p5.createCanvas(p5.windowWidth, canvasHeight);
+    // soundCanvas.style('position', 'absolute');
+    // soundCanvas.style('z-index', -999);
     multiPlayer = new Tone.Players();
     // p5.textFont(noto);
     p5.textFont('Basteleur');
@@ -95,9 +110,9 @@ export const soundPortal = (p5) => {
       const initialDiameter = p5.map(
         y,
         0,
-        p5.windowHeight,
-        p5.windowWidth / 48,
-        p5.windowWidth / 4,
+        p5.height,
+        p5.height / 48,
+        p5.height / 3,
       );
 
       // Calculate padding based on the initial diameter
@@ -179,7 +194,7 @@ export const soundPortal = (p5) => {
     // Draw fewer lines for better performance
     const lineCount = 48; // Original number for visual consistency
     for (let i = 0; i < lineCount; i++) {
-      let step = p5.windowWidth / lineCount;
+      let step = p5.width / lineCount;
       let dataIndex = Math.min(
         frequencyData.length - 1,
         Math.floor(i * (frequencyData.length / lineCount)),
@@ -188,8 +203,8 @@ export const soundPortal = (p5) => {
         step * i,
         p5.map(frequencyData[dataIndex], -1, 1, p5.height / 6, 0) +
           p5.height / 5,
-        step * i * 10 - p5.windowWidth * 4,
-        p5.windowWidth,
+        step * i * 10 - p5.width * 4,
+        p5.width,
       );
     }
 
@@ -464,16 +479,11 @@ export const soundPortal = (p5) => {
       // Update diameter based on y position and meterMap
       // This keeps the dynamic size behavior in the draw loop
       this.diameter =
-        p5.map(
-          this.y,
-          0,
-          p5.windowHeight,
-          p5.windowWidth / 48,
-          p5.windowWidth / 4,
-        ) + this.meterMap;
+        p5.map(this.y, 0, p5.height, p5.height / 48, p5.height / 3) +
+        this.meterMap;
 
       this.numberSize =
-        p5.map(this.y, 0, p5.windowHeight, 10, 200) + this.meterMap / 2;
+        p5.map(this.y, 0, p5.height, 10, 200) + this.meterMap / 2;
 
       ellipse = p5.ellipse(this.x, this.y, this.diameter);
       p5.textSize(this.numberSize);
@@ -659,8 +669,8 @@ export const soundPortal = (p5) => {
       this.meterMap = p5.map(this.meterLevel, 0, 0.3, 0, 200);
 
       // Map reverb wetness based on Y position
-      this.revWet = p5.map(this.y, 0, p5.windowHeight, 1, 0);
-      this.panX = p5.map(this.x, 0, p5.windowWidth, -1, 1);
+      this.revWet = p5.map(this.y, 0, p5.height, 1, 0);
+      this.panX = p5.map(this.x, 0, p5.width, -1, 1);
 
       // Constrain values to valid ranges
       this.panX = p5.constrain(this.panX, -1, 1);
@@ -705,7 +715,7 @@ export const soundPortal = (p5) => {
         this.volBase = p5.constrain(this.volBase, -12, 12);
 
         // Calculate final volume
-        this.volY = p5.map(this.y, 0, p5.windowHeight, -8, 6);
+        this.volY = p5.map(this.y, 0, p5.height, -8, 6);
 
         if (this.channel && this.channel.volume) {
           this.channel.volume.value = this.volY + this.volBase;
@@ -902,6 +912,7 @@ export const soundPortal = (p5) => {
   };
 
   p5.windowResized = () => {
-    p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+    console.log('Window resized, using height:', canvasHeight);
+    p5.resizeCanvas(p5.windowWidth, canvasHeight);
   };
 };

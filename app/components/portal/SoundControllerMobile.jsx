@@ -16,6 +16,7 @@ export default function SoundControllerMobile({
   setDisplayingItem,
   isOpen,
   setIsOpen,
+  className,
 }) {
   const [playerTarget, setPlayerTarget] = useState(null);
   const [playing, setPlaying] = useState(false);
@@ -34,7 +35,7 @@ export default function SoundControllerMobile({
 
   return (
     <>
-      <div className="grid gap-0.5 grid-cols-2">
+      <div className={`grid gap-0.5 grid-cols-2 ${className || ''}`}>
         <div className="text-3xl/9 uppercase text-center">Portal</div>
         {soundsColor.map((sound, index) => (
           <div key={`soundId-${sound.id}`} className="">
