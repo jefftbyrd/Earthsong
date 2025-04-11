@@ -7,6 +7,7 @@ export const panels = {
   Powers: {
     component: PowersPanel,
     label: 'Powers',
+    icon: 3,
   },
   // Summon: {
   //   component: SummonPanel,
@@ -15,9 +16,11 @@ export const panels = {
   Unlock: {
     component: UnlockPanel,
     label: 'Unlock',
+    icon: 2,
   },
   Guide: {
     component: GuidePanel,
     label: 'Guide',
+    icon: 2,
   },
 };

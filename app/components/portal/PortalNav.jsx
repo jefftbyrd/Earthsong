@@ -37,10 +37,10 @@ export default function PortalNav({ isLoggedIn }) {
           }, 0);
         }}
       >
-        <EarthsongIcons className="h-6 w-6" iconNumber={1} />
+        <EarthsongIcons className="h-6 w-6" iconNumber={5} />
         <span>Map</span>
       </button>
-      {filteredPanels.map(([id, { label }]) => (
+      {filteredPanels.map(([id, { label, icon }]) => (
         <button
           key={`panel-${id}`}
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
@@ -49,7 +49,7 @@ export default function PortalNav({ isLoggedIn }) {
             togglePanel();
           }}
         >
-          <EarthsongIcons className="h-6 w-6" iconNumber={3} />
+          <EarthsongIcons className="h-6 w-6" iconNumber={icon} />
           <span>{label}</span>
         </button>
       ))}
