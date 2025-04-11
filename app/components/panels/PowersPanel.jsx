@@ -1,15 +1,19 @@
 import { useContext, useEffect, useState } from 'react';
+import LogoutButton from '../../(auth)/logout/LogoutButton';
 import { journeyContext } from '../../context/journeyContext';
 import { userContext } from '../../context/userContext';
 import ClosePanelButton from '../panels/ClosePanelButton';
+import OpenPanelButton from '../panels/OpenPanelButton';
+import { Button } from '../ui';
 import PanelWrap from './PanelWrap';
 import PowersLoggedIn from './PowersLoggedIn';
 import PowersNotLoggedIn from './PowersNotLoggedIn';
+import SnapshotItem from './SnapshotItem';
 
 export default function PowersPanel() {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
+  const { setPanelId, panelOpen, togglePanel, panelId, phase } =
     useContext(journeyContext);
-  const { user } = useContext(userContext);
+  const { user, snapshots } = useContext(userContext);
   useEffect(() => {
     // Create handler function for document-level keyboard events
     const handleKeyDown = (e) => {
@@ -29,7 +33,40 @@ export default function PowersPanel() {
 
   return (
     <PanelWrap panel="Powers" bg="#C45353">
-      {user ? <PowersLoggedIn /> : <PowersNotLoggedIn />}
+      <>
+        <p className="text-xl">
+          Greetings, <span className="font-black">{user?.username}</span>. What
+          power will you wield?
+        </p>
+        {/* <Button click="">Save this journey</Button> */}
+        <Button
+          onClick={() => {
+            setPanelId('savePanel');
+            togglePanel();
+            // setShowSuccessMessage(false);
+          }}
+        >
+          Save this journey
+        </Button>
+
+        {/* <h2>Summon past journeys</h2> */}
+        <OpenPanelButton panel="Summon">Summon past journeys</OpenPanelButton>
+        <div>
+          {snapshots.length < 1 ? (
+            'No snapshots yet'
+          ) : (
+            <ul>
+              {snapshots.map((snapshot) => (
+                <li key={`snapshots-${snapshot.id}`}>
+                  <SnapshotItem snapshot={snapshot} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <p>{phase !== 'portalRecall' ? <LogoutButton /> : null}</p>
+      </>
     </PanelWrap>
   );
 }
