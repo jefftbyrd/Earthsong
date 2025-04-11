@@ -1,14 +1,14 @@
 'use client';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-import { soundsContext } from '../../context/soundsContext';
+// import { userContext } from '../../context/userContext';
 import EarthsongIcons from '../EarthsongIcons';
-import OpenPanelButton from '../panels/OpenPanelButton';
+import { panels } from './panelConfig';
 
-export default function PortalNav() {
-  const { setPhase, panelOpen, setReset, togglePanel, setPin } =
+export default function PortalNav({ isLoggedIn }) {
+  const { togglePanel, setPanelId, setReset, setPhase } =
     useContext(journeyContext);
-  const { setFreesoundLoading } = useContext(soundsContext);
+  // const { user } = useContext(userContext);
   const [resetDone, setResetDone] = useState(false);
 
   useEffect(() => {
@@ -17,37 +17,42 @@ export default function PortalNav() {
     }
   }, [resetDone, setPhase]);
 
+  // Filter panels based on login status
+  const filteredPanels = Object.entries(panels).filter(([id]) => {
+    if (id === 'Unlock' && isLoggedIn) return false; // Hide Unlock if logged in
+    if (id === 'Powers' && !isLoggedIn) return false; // Hide Powers if not logged in
+    return true;
+  });
+
   return (
     <footer className="h-10 border-t-1 bg-black w-full grid grid-cols-3 uppercase">
       <button
+        key="map"
         className="uppercase text-center flex items-center justify-center gap-2 text-lg"
         onClick={() => {
-          if (panelOpen) {
-            togglePanel(); // This will close the panel and clear panelId
-          }
           setReset(true);
           setTimeout(() => {
             setReset(false);
             setResetDone(true);
           }, 0);
-          setPin({});
-          setFreesoundLoading(true);
-          setPhase('map');
         }}
       >
-        <EarthsongIcons className="h-5 w-5" iconNumber={5} />
+        <EarthsongIcons className="h-6 w-6" iconNumber={1} />
         <span>Map</span>
       </button>
-
-      <OpenPanelButton panel="Powers">
-        <EarthsongIcons className="h-6 w-6" iconNumber={3} />
-        <span className="ml-1">Powers</span>
-      </OpenPanelButton>
-
-      <OpenPanelButton panel="Guide">
-        <EarthsongIcons className="h-6 w-5" iconNumber={2} />
-        <span>Guide</span>
-      </OpenPanelButton>
+      {filteredPanels.map(([id, { label }]) => (
+        <button
+          key={`panel-${id}`}
+          className="uppercase text-center flex items-center justify-center gap-2 text-lg"
+          onClick={() => {
+            setPanelId(id);
+            togglePanel();
+          }}
+        >
+          <EarthsongIcons className="h-6 w-6" iconNumber={3} />
+          <span>{label}</span>
+        </button>
+      ))}
     </footer>
   );
 }

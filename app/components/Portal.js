@@ -3,6 +3,7 @@ import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { useSoundPlayer } from '../context/soundPlayerContext';
+import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
 import PortalNav from './portal/PortalNav';
@@ -18,6 +19,7 @@ export default function Portal() {
   const { isLoading, soundsColor, error } = useSoundData();
   const [state, actions] = usePortalState();
   const { playerTarget, playing } = useSoundPlayer();
+  const { user } = useContext(userContext);
 
   // More robust approach to measure height
   useEffect(() => {
@@ -101,7 +103,7 @@ export default function Portal() {
 
       {/* Navigation */}
       <div className="flex-shrink-0 z-10 mt-auto" id="portal-nav">
-        <PortalNav />
+        <PortalNav isLoggedIn={user} />
       </div>
     </div>
   );
