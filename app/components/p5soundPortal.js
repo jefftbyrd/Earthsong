@@ -229,23 +229,18 @@ export const soundPortal = (p5) => {
   }; // END DRAW
 
   p5.keyPressed = () => {
-    if (p5.key === '1' && shapes.length >= 1) {
-      playSound(shapes[0].id);
-    }
-    if (p5.key === '2' && shapes.length >= 2) {
-      playSound(shapes[1].id);
-    }
-    if (p5.key === '3' && shapes.length >= 3) {
-      playSound(shapes[2].id);
-    }
-    if (p5.key === '4' && shapes.length >= 4) {
-      playSound(shapes[3].id);
-    }
-    if (p5.key === '5' && shapes.length >= 5) {
-      playSound(shapes[4].id);
+    // Map keys 1-5 to the shapes by their original index/number
+    // instead of their position in the array
+    if (p5.key >= '1' && p5.key <= '5') {
+      const keyNumber = parseInt(p5.key);
+      // Find the shape with the matching number property
+      const targetShape = shapes.find((shape) => shape.number === keyNumber);
+      if (targetShape) {
+        playSound(targetShape.id);
+      }
     }
 
-    // Handle 'r' key for reversing playback
+    // Handle 'r' key for reversing playback (keep as is)
     if (p5.key === 'r') {
       for (let i = 0; i < shapes.length; i++) {
         const shape = shapes[i];
@@ -335,6 +330,7 @@ export const soundPortal = (p5) => {
       // Add reverbGain to control wet/dry balance
       this.reverbGain = null;
       this.dryGain = null;
+      this.volumeVisualOffset = 0; // This will be added to the diameter
 
       // New properties for loading state
       this.isLoading = false;
@@ -478,9 +474,11 @@ export const soundPortal = (p5) => {
       // Calculate and store diameter for consistent hit detection
       // Update diameter based on y position and meterMap
       // This keeps the dynamic size behavior in the draw loop
+      // When calculating the final diameter, include the volumeVisualOffset
       this.diameter =
         p5.map(this.y, 0, p5.height, p5.height / 48, p5.height / 3) +
-        this.meterMap;
+        this.meterMap +
+        this.volumeVisualOffset; // Add the volume visual offset
 
       this.numberSize =
         p5.map(this.y, 0, p5.height, 10, 200) + this.meterMap / 2;
@@ -662,7 +660,6 @@ export const soundPortal = (p5) => {
 
     audioControls() {
       if (!this.isLoaded) return;
-
       if (!this.meter || !this.channel) return;
 
       this.meterLevel = this.meter.getValue();
@@ -701,16 +698,29 @@ export const soundPortal = (p5) => {
           }
           if (p5.key === 'e') {
             this.volBase += 0.3;
+            // Add visual volume effect - increase diameter
+            this.volumeVisualOffset += 5;
           }
           if (p5.key === 'q') {
             this.volBase -= 0.3;
+            // Add visual volume effect - decrease diameter
+            this.volumeVisualOffset -= 5;
           }
           if (p5.key === 'w') {
             this.volBase = 0;
+            // Reset visual volume effect
+            this.volumeVisualOffset = 0;
           }
         }
 
-        // Apply constraints to rate and volume
+        // Apply constraints to volume visual offset to prevent extreme sizes
+        this.volumeVisualOffset = p5.constrain(
+          this.volumeVisualOffset,
+          -50,
+          100,
+        );
+
+        // Apply constraints to rate and volume (existing code)
         this.rate = p5.constrain(this.rate, 0.05, 4);
         this.volBase = p5.constrain(this.volBase, -12, 12);
 
@@ -726,7 +736,7 @@ export const soundPortal = (p5) => {
         }
       }
     }
-  } // END SHAPE CLASS
+  }
 
   // Find which shape is under the cursor/touch point
   function getShapeAtPosition(x, y) {
