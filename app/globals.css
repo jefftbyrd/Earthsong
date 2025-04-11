@@ -71,9 +71,9 @@ ul {
 }
 
 h1 {
-  font-size: 6vw;
+  /* font-size: 6vw; */
   text-transform: uppercase;
-  color: white;
+  /* color: white; */
 }
 
 /* h2 {
