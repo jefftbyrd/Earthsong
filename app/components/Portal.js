@@ -9,7 +9,7 @@ import { soundPortal } from './p5soundPortal';
 import PortalNav from './portal/PortalNav';
 import SoundController from './portal/SoundController';
 import SoundIcon from './portal/SoundIcon';
-import { usePortalState } from './portal/usePortalState';
+// import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
 
 export default function Portal() {
@@ -17,7 +17,7 @@ export default function Portal() {
   const [containerHeight, setContainerHeight] = useState(0);
   const { reset } = useContext(journeyContext);
   const { isLoading, soundsColor, error } = useSoundData();
-  const [state, actions] = usePortalState();
+  // const [state, actions] = usePortalState();
   const { playerTarget, playing } = useSoundPlayer();
   const { user } = useContext(userContext);
 
@@ -72,10 +72,10 @@ export default function Portal() {
       <div className="flex-shrink-0" id="sound-controller">
         <SoundController
           soundsColor={soundsColor}
-          displayingItem={state.displayingItem}
-          setDisplayingItem={actions.setDisplayingItem}
-          isOpen={state.isOpen}
-          setIsOpen={actions.toggleOpen}
+          // displayingItem={state.displayingItem}
+          // setDisplayingItem={actions.setDisplayingItem}
+          // isOpen={state.isOpen}
+          // setIsOpen={actions.toggleOpen}
         />
       </div>
 

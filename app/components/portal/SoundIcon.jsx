@@ -11,23 +11,23 @@ export default function SoundIcon({
     1: <rect x="11" y="11" width="7" height="7" fill="currentColor" />,
     2: (
       <>
-        <rect x="11" y="6" width="7" height="7" fill="black" />
-        <rect x="11" y="16" width="7" height="7" fill="black" />
+        <rect x="11" y="6" width="7" height="7" fill="currentColor" />
+        <rect x="11" y="16" width="7" height="7" fill="currentColor" />
       </>
     ),
     3: (
       <>
-        <rect x="11" y="1" width="7" height="7" fill="black" />
-        <rect x="11" y="11" width="7" height="7" fill="black" />
-        <rect x="11" y="21" width="7" height="7" fill="black" />
+        <rect x="11" y="1" width="7" height="7" fill="currentColor" />
+        <rect x="11" y="11" width="7" height="7" fill="currentColor" />
+        <rect x="11" y="21" width="7" height="7" fill="currentColor" />
       </>
     ),
     4: (
       <>
-        <rect x="16" y="6" width="7" height="7" fill="black" />
-        <rect x="16" y="16" width="7" height="7" fill="black" />
-        <rect x="6" y="6" width="7" height="7" fill="black" />
-        <rect x="6" y="16" width="7" height="7" fill="black" />
+        <rect x="16" y="6" width="7" height="7" fill="currentColor" />
+        <rect x="16" y="16" width="7" height="7" fill="currentColor" />
+        <rect x="6" y="6" width="7" height="7" fill="currentColor" />
+        <rect x="6" y="16" width="7" height="7" fill="currentColor" />
       </>
     ),
     5: (

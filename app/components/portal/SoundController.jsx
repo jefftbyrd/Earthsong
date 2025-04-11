@@ -5,10 +5,10 @@ import SoundItem from './SoundItem';
 
 export default function SoundController({
   soundsColor,
-  displayingItem,
-  setDisplayingItem,
-  isOpen,
-  setIsOpen,
+  // displayingItem,
+  // setDisplayingItem,
+  // isOpen,
+  // setIsOpen,
   className,
 }) {
   const [playerTarget, setPlayerTarget] = useState(null);
@@ -35,9 +35,9 @@ export default function SoundController({
               index={index}
               onPlaySound={handlePlaySound}
               isPlaying={playing && playerTarget === sound.id}
-              displayingItem={displayingItem}
-              setIsOpen={setIsOpen}
-              isOpen={isOpen}
+              // displayingItem={displayingItem}
+              // setIsOpen={setIsOpen}
+              // isOpen={isOpen}
             />
           </div>
         ))}
