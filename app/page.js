@@ -6,6 +6,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 // import useSound from 'use-sound';
 import Logo from '../public/Logo.js';
 import Map from './components/Map';
+import Messages from './components/Messages';
 import { clouds } from './components/p5clouds';
 import { occult } from './components/p5occult';
 import { wind } from './components/p5wind';
@@ -20,8 +21,11 @@ import styles from './styles/ui.module.scss';
 
 export default function Earthsong() {
   const { user, snapshots } = useContext(userContext);
-  const { phase, setPhase, journeyToRecall } = useContext(journeyContext);
+  const { phase, setPhase, journeyToRecall, journeySaved } =
+    useContext(journeyContext);
   const { panelId, panelOpen } = useContext(journeyContext);
+  const messages = Messages({ user }); // Call the Messages function with the user object
+  console.log('journeySaved', journeySaved);
 
   // Create a ref to store the audio element
   const audioRef = useRef(null);
@@ -55,8 +59,32 @@ export default function Earthsong() {
 
   return (
     <>
-      {/* If sound portal is open, display the return to map icon/link */}
       {user ? (
+        <motion.h1
+          className="welcomeMessage"
+          animate={{
+            opacity: [0, 1, 0],
+            transition: { duration: 3, times: [0, 0.5, 1] },
+          }}
+        >
+          {messages.Welcome}
+          {/* Welcome, {user?.username}. */}
+        </motion.h1>
+      ) : null}
+
+      {journeySaved ? (
+        <motion.h1
+          className="welcomeMessage"
+          animate={{
+            opacity: [0, 1, 0],
+            transition: { duration: 3, times: [0, 0.5, 1] },
+          }}
+        >
+          Your Journey was Saved!
+        </motion.h1>
+      ) : null}
+
+      {/* {user ? (
         <motion.h1
           className="welcomeMessage"
           animate={{
@@ -66,7 +94,7 @@ export default function Earthsong() {
         >
           Welcome, {user?.username}.
         </motion.h1>
-      ) : null}
+      ) : null} */}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
