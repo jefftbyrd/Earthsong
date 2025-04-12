@@ -12,11 +12,11 @@ export default function SnapshotItem({ snapshot }: SnapshotItemProps) {
 
   return (
     <button
-      onClick={async () => {
-        await setReset(true);
-        await setReset(false);
-        await setJourneyToRecall(snapshot.id);
-        await setPhase('portalRecall');
+      onClick={() => {
+        setReset(true);
+        setReset(false);
+        setJourneyToRecall(snapshot.id);
+        setPhase('portalRecall');
       }}
     >
       {snapshot.title}
