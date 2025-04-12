@@ -186,11 +186,24 @@ export default function Earthsong() {
         </motion.div>
       ) : null}
 
-      {panelOpen && panelId && panels[panelId]?.component && (
-        <div className="fixed inset-0 z-40">
-          {React.createElement(panels[panelId].component)}
-        </div>
-      )}
+      <AnimatePresence>
+        {panelOpen && panelId && panels[panelId]?.component && (
+          <motion.div
+            className="fixed inset-0 z-40"
+            animate={{
+              opacity: [0, 1],
+              transition: { duration: 0.25 },
+            }}
+            exit={{
+              opacity: 0,
+              transition: { duration: 0.25 },
+            }}
+          >
+            {React.createElement(panels[panelId].component)}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* PortalNav */}
       <div className="fixed bottom-0 left-0 w-full z-50">
         <PortalNav isLoggedIn={user} />
