@@ -23,9 +23,9 @@ const formatSoundName = (name) =>
 
 export function useSoundData() {
   const [isLoading, setIsLoading] = useState(true);
-  const [soundsColor, setSoundsColor] = useState([]);
+  // const [soundsColor, setSoundsColor] = useState([]);
   const [error, setError] = useState(null);
-  const { sounds } = useContext(soundsContext);
+  const { sounds, soundsColor, setSoundsColor } = useContext(soundsContext);
 
   const processedRef = useRef(false);
 
