@@ -2,7 +2,9 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext } from 'react';
+import useSound from 'use-sound';
 import Logo from '../public/Logo.js';
+// import silence from '../public/silent.mp3';
 import Map from './components/Map';
 import { clouds } from './components/p5clouds';
 import { occult } from './components/p5occult';
@@ -20,6 +22,14 @@ export default function Earthsong() {
   const { user, snapshots } = useContext(userContext);
   const { phase, setPhase, journeyToRecall } = useContext(journeyContext);
   const { panelId, panelOpen } = useContext(journeyContext);
+
+  // Initialize the sound hook
+  const [playSound] = useSound('/silent.mp3');
+
+  const handleLogoClick = () => {
+    playSound(); // Play the sound
+    setPhase('map'); // Transition to map phase
+  };
 
   return (
     <>
@@ -41,9 +51,7 @@ export default function Earthsong() {
         <div className="grid justify-center items-center h-full">
           <motion.div
             className={styles.star}
-            onClick={() => {
-              setPhase('map');
-            }}
+            onClick={handleLogoClick}
             animate={{
               opacity: [0.2, 0.6, 0.2],
               scale: [1, 1.08, 1],
