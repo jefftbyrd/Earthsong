@@ -57,7 +57,7 @@ export default function Earthsong() {
     <>
       {/* Render messages */}
       <Message
-        text={`Welcome, ${user.username}.`}
+        text={`Welcome, ${user?.username}.`}
         isVisible={!!user}
         animationProps={{ transition: { duration: 4 } }}
       />
