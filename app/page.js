@@ -1,10 +1,10 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
-import React, { useContext } from 'react';
-import useSound from 'use-sound';
+import React, { useContext, useEffect, useRef } from 'react';
+// Remove the useSound import since we're not using it anymore
+// import useSound from 'use-sound';
 import Logo from '../public/Logo.js';
-// import silence from '../public/silent.mp3';
 import Map from './components/Map';
 import { clouds } from './components/p5clouds';
 import { occult } from './components/p5occult';
@@ -23,9 +23,31 @@ export default function Earthsong() {
   const { phase, setPhase, journeyToRecall } = useContext(journeyContext);
   const { panelId, panelOpen } = useContext(journeyContext);
 
-  // Initialize the sound hook
-  const [playSound] = useSound('/silent.mp3');
+  // Create a ref to store the audio element
+  const audioRef = useRef(null);
 
+  // Initialize audio on component mount
+  useEffect(() => {
+    audioRef.current = new Audio('/silent.mp3');
+  }, []);
+
+  // Function to play sound
+  const playSound = () => {
+    // Reset the audio to the beginning
+    audioRef.current.currentTime = 0;
+
+    // Play the sound
+    audioRef.current
+      .play()
+      .then(() => {
+        console.log('Audio playback started successfully');
+      })
+      .catch((error) => {
+        console.error('Audio playback failed:', error);
+      });
+  };
+
+  // Logo click handler that plays sound and transitions to map
   const handleLogoClick = () => {
     playSound(); // Play the sound
     setPhase('map'); // Transition to map phase
