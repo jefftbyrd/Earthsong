@@ -4,8 +4,8 @@ import { userContext } from '../../context/userContext';
 import ClosePanelButton from '../panels/ClosePanelButton';
 import Login from './Login';
 import PanelWrap from './PanelWrap';
-import PowersLoggedIn from './PowersLoggedIn';
-import PowersNotLoggedIn from './PowersNotLoggedIn';
+// import PowersLoggedIn from './PowersLoggedIn';
+// import PowersNotLoggedIn from './PowersNotLoggedIn';
 import Register from './Register';
 
 export default function UnlockPanel() {

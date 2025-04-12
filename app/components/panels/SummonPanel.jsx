@@ -3,8 +3,8 @@ import { journeyContext } from '../../context/journeyContext';
 import { userContext } from '../../context/userContext';
 import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
-import PowersLoggedIn from './PowersLoggedIn';
-import PowersNotLoggedIn from './PowersNotLoggedIn';
+// import PowersLoggedIn from './PowersLoggedIn';
+// import PowersNotLoggedIn from './PowersNotLoggedIn';
 import SnapshotItem from './SnapshotItem';
 
 export default function SummonPanel() {
