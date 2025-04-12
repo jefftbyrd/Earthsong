@@ -18,7 +18,7 @@ import styles from './styles/ui.module.scss';
 
 export default function Earthsong() {
   const { user, snapshots } = useContext(userContext);
-  const { phase, setPhase, pastJourney } = useContext(journeyContext);
+  const { phase, setPhase, journeyToRecall } = useContext(journeyContext);
   const { panelId, panelOpen } = useContext(journeyContext);
 
   return (
@@ -150,7 +150,8 @@ export default function Earthsong() {
         >
           <PortalRecall
             sounds={
-              snapshots?.find((snapshot) => snapshot?.id === pastJourney).sounds
+              snapshots?.find((snapshot) => snapshot?.id === journeyToRecall)
+                .sounds
             }
           />
         </motion.div>
