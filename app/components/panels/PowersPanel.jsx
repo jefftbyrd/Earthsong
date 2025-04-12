@@ -6,30 +6,14 @@ import ClosePanelButton from '../panels/ClosePanelButton';
 import OpenPanelButton from '../panels/OpenPanelButton';
 import { Button } from '../ui';
 import PanelWrap from './PanelWrap';
-import PowersLoggedIn from './PowersLoggedIn';
-import PowersNotLoggedIn from './PowersNotLoggedIn';
+// import PowersLoggedIn from './PowersLoggedIn';
+// import PowersNotLoggedIn from './PowersNotLoggedIn';
 import SnapshotItem from './SnapshotItem';
 
 export default function PowersPanel() {
   const { setPanelId, panelOpen, togglePanel, panelId, phase } =
     useContext(journeyContext);
   const { user, snapshots } = useContext(userContext);
-  useEffect(() => {
-    // Create handler function for document-level keyboard events
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && panelOpen) {
-        togglePanel();
-      }
-    };
-
-    // Add keyboard event listener to document
-    document.addEventListener('keydown', handleKeyDown);
-
-    // Cleanup function
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [panelOpen, togglePanel]);
 
   return (
     <PanelWrap panel="Powers" bg="#C45353">
@@ -41,7 +25,7 @@ export default function PowersPanel() {
         {/* <Button click="">Save this journey</Button> */}
         <Button
           onClick={() => {
-            setPanelId('savePanel');
+            setPanelId('Save');
             togglePanel();
             // setShowSuccessMessage(false);
           }}
