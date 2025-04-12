@@ -80,9 +80,6 @@ importers:
       uniqolor:
         specifier: ^1.1.1
         version: 1.1.1
-      use-sound:
-        specifier: ^5.0.0
-        version: 5.0.0(react@19.0.0-rc-5d19e1c8-20240923)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -1998,9 +1995,6 @@ packages:
   hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
 
-  howler@2.2.4:
-    resolution: {integrity: sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==}
-
   html-tags@3.3.1:
     resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
@@ -3348,11 +3342,6 @@ packages:
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
-
-  use-sound@5.0.0:
-    resolution: {integrity: sha512-MNHT3FFC5HxNCrgZtrnpIMJI2cw/0D2xismcrtyht8BTuF5FhFhb57xO/jlQr2xJaFrc/0btzRQvGyHQwB7PVA==}
-    peerDependencies:
-      react: '>=16.8'
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
@@ -5497,8 +5486,6 @@ snapshots:
 
   hosted-git-info@2.8.9: {}
 
-  howler@2.2.4: {}
-
   html-tags@3.3.1: {}
 
   http-cache-semantics@4.1.1: {}
@@ -6895,11 +6882,6 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
-
-  use-sound@5.0.0(react@19.0.0-rc-5d19e1c8-20240923):
-    dependencies:
-      howler: 2.2.4
-      react: 19.0.0-rc-5d19e1c8-20240923
 
   util-deprecate@1.0.2: {}
 

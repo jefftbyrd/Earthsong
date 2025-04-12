@@ -35,7 +35,6 @@
     "tone": "^15.0.4",
     "tsx": "^4.19.1",
     "uniqolor": "^1.1.1",
-    "use-sound": "^5.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
