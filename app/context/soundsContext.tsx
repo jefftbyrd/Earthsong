@@ -37,6 +37,8 @@ interface SoundsContextType {
   setNotEnough: Dispatch<SetStateAction<boolean>>;
   freesoundLoading: boolean;
   setFreesoundLoading: Dispatch<SetStateAction<boolean>>;
+  soundsColor: Sounds;
+  setSoundsColor: Dispatch<SetStateAction<Sounds>>;
 }
 
 export const soundsContext = createContext<SoundsContextType | null>(null);
@@ -49,6 +51,24 @@ export const SoundsContextProvider = ({ children }: Props) => {
   // Initialize with an empty sound object that matches the Sound type
   const [freesoundLoading, setFreesoundLoading] = useState(true);
   const [notEnough, setNotEnough] = useState(false);
+  const [soundsColor, setSoundsColor] = useState<Sounds>({
+    count: 0,
+    pin: {
+      lat: 0,
+      lng: 0,
+    },
+    results: {
+      description: '',
+      duration: 0,
+      freesoundUrl: '',
+      geotag: '',
+      id: 0,
+      name: '',
+      tags: [],
+      url: '',
+      username: '',
+    },
+  });
   const [sounds, setSounds] = useState<Sounds>({
     count: 0,
     pin: {
@@ -77,6 +97,8 @@ export const SoundsContextProvider = ({ children }: Props) => {
         setFreesoundLoading,
         notEnough,
         setNotEnough,
+        soundsColor,
+        setSoundsColor,
       }}
     >
       {children}
