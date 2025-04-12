@@ -18,6 +18,8 @@ export interface JourneyContextType {
   setPhase: Dispatch<SetStateAction<string>>;
   reset: boolean;
   setReset: Dispatch<SetStateAction<boolean>>;
+  journeySaved: boolean;
+  setJourneySaved: Dispatch<SetStateAction<boolean>>;
   journeyToRecall: number;
   setJourneyToRecall: Dispatch<SetStateAction<number>>;
   panelId: string;
@@ -28,6 +30,7 @@ export interface JourneyContextType {
   mobileCheck: boolean;
   pin: Pin | null;
   setPin: Dispatch<SetStateAction<Pin | object>>;
+  triggerJourneySaved: () => void;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -35,6 +38,8 @@ export const journeyContext = createContext<JourneyContextType>({
   setPhase: () => {},
   reset: false,
   setReset: () => {},
+  journeySaved: false,
+  setJourneySaved: () => {},
   journeyToRecall: 0,
   setJourneyToRecall: () => {},
   panelId: '',
@@ -42,6 +47,7 @@ export const journeyContext = createContext<JourneyContextType>({
   panelOpen: false,
   setPanelOpen: () => {},
   togglePanel: () => {},
+  triggerJourneySaved: () => {},
   mobileCheck: false,
   pin: {},
   setPin: () => {},
@@ -60,6 +66,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [panelOpen, setPanelOpen] = useState(false);
   // const [isMobile, setIsMobile] = useState(false);
   const [pin, setPin] = useState<Pin | object>({});
+  const [journeySaved, setJourneySaved] = useState(false);
 
   // const togglePanel = () => setPanelOpen((prev) => !prev);
 
@@ -75,6 +82,11 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
       }
       return !prev;
     });
+  };
+
+  const triggerJourneySaved = () => {
+    setJourneySaved(true);
+    setTimeout(() => setJourneySaved(false), 4000); // Reset immediately
   };
 
   // Either remove the useEffect entirely, or modify it:
@@ -100,6 +112,9 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         mobileCheck,
         pin,
         setPin,
+        journeySaved,
+        setJourneySaved,
+        triggerJourneySaved,
       }}
     >
       {children}
