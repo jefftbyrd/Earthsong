@@ -663,7 +663,7 @@ export const soundPortal = (p5) => {
       if (!this.meter || !this.channel) return;
 
       this.meterLevel = this.meter.getValue();
-      this.meterMap = p5.map(this.meterLevel, 0, 0.3, 0, 200);
+      this.meterMap = p5.map(this.meterLevel, 0, 0.3, 0, p5.width / 5);
 
       // Map reverb wetness based on Y position
       this.revWet = p5.map(this.y, 0, p5.height, 1, 0);
