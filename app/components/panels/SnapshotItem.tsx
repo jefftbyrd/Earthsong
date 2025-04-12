@@ -8,7 +8,7 @@ interface SnapshotItemProps {
 }
 
 export default function SnapshotItem({ snapshot }: SnapshotItemProps) {
-  const { setPhase, setReset, setJouneyToRecall, togglePanel } =
+  const { setPhase, setReset, setJourneyToRecall, togglePanel } =
     useContext(journeyContext);
 
   return (
@@ -16,7 +16,7 @@ export default function SnapshotItem({ snapshot }: SnapshotItemProps) {
       onClick={() => {
         setReset(true);
         setReset(false);
-        setJouneyToRecall(snapshot.id);
+        setJourneyToRecall(snapshot.id);
         setPhase('portalRecall');
         togglePanel();
       }}
