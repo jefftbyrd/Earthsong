@@ -2,8 +2,6 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef } from 'react';
-// Remove the useSound import since we're not using it anymore
-// import useSound from 'use-sound';
 import Logo from '../public/Logo.js';
 import Map from './components/Map';
 import { clouds } from './components/p5clouds';
@@ -23,34 +21,21 @@ export default function Earthsong() {
   const { phase, setPhase, journeyToRecall } = useContext(journeyContext);
   const { panelId, panelOpen } = useContext(journeyContext);
 
-  // Create a ref to store the audio element
-  const audioRef = useRef(null);
-
-  // Initialize audio on component mount
-  useEffect(() => {
-    audioRef.current = new Audio('/silent.mp3');
-  }, []);
-
-  // Function to play sound
-  const playSound = () => {
-    // Reset the audio to the beginning
-    audioRef.current.currentTime = 0;
-
-    // Play the sound
-    audioRef.current
-      .play()
-      .then(() => {
-        console.log('Audio playback started successfully');
-      })
-      .catch((error) => {
-        console.error('Audio playback failed:', error);
-      });
+  // Create audio element lazily
+  const getAudio = () => {
+    // Create an audio element only when needed
+    return new Audio('/silent.mp3');
   };
 
-  // Logo click handler that plays sound and transitions to map
   const handleLogoClick = () => {
-    playSound(); // Play the sound
-    setPhase('map'); // Transition to map phase
+    // Play the sound
+    const audio = getAudio();
+    audio
+      .play()
+      .catch((error) => console.error('Audio playback failed:', error));
+
+    // Transition to map phase
+    setPhase('map');
   };
 
   return (
@@ -127,7 +112,7 @@ export default function Earthsong() {
         ) : null}
       </AnimatePresence>
 
-      {/* Show the occult text */}
+      {/* Rest of component unchanged */}
       {phase === 'portal' || phase === 'portalRecall' ? (
         <>
           <motion.div
@@ -140,7 +125,6 @@ export default function Earthsong() {
             <NextReactP5Wrapper sketch={occult} />
           </motion.div>
 
-          {/* Show initiating */}
           <motion.div
             className={styles.initiating}
             animate={{
@@ -158,7 +142,6 @@ export default function Earthsong() {
         </>
       ) : null}
 
-      {/* Portal waits for enterPortal */}
       {phase === 'portal' ? (
         <motion.div
           animate={{
@@ -170,7 +153,6 @@ export default function Earthsong() {
         </motion.div>
       ) : null}
 
-      {/* PortalRecall */}
       {phase === 'portalRecall' && snapshots ? (
         <motion.div
           animate={{
@@ -192,7 +174,7 @@ export default function Earthsong() {
           {React.createElement(panels[panelId].component)}
         </div>
       )}
-      {/* PortalNav */}
+
       <div className="fixed bottom-0 left-0 w-full z-50">
         <PortalNav isLoggedIn={user} />
       </div>
