@@ -86,7 +86,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
 
   const triggerJourneySaved = () => {
     setJourneySaved(true);
-    setTimeout(() => setJourneySaved(false), 4000); // Reset immediately
+    setTimeout(() => setJourneySaved(false), 6000);
   };
 
   // Either remove the useEffect entirely, or modify it:
