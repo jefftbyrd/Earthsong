@@ -10,10 +10,11 @@ import { journeyContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/ui.module.scss';
 import About from './About';
+
 // import type { User } from '../../migrations/00000-createTableUsers';
 // import type { Snapshot } from '../../migrations/00002-createTableSnapshots';
 // import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
-import SnapshotItem from './SnapshotItem';
+// import SnapshotItem from './SnapshotItem';
 
 // import ErrorMessage from '../ErrorMessage';
 // import styles from './SnapshotsForm.module.scss';
