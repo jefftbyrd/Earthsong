@@ -9,14 +9,7 @@ import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
 
 export default function SummonPanel() {
-  const {
-    setPanelId,
-    panelOpen,
-    togglePanel,
-    panelId,
-    setJourneySaved,
-    triggerJourneySaved,
-  } = useContext(journeyContext);
+  const { togglePanel, triggerJourneySaved } = useContext(journeyContext);
   const { user, snapshots } = useContext(userContext);
   const { soundsColor, setSoundsColor } = useContext(soundsContext);
   const [errorMessage, setErrorMessage] = useState('');
@@ -34,7 +27,6 @@ export default function SummonPanel() {
         <form
           onSubmit={async (event) => {
             event.preventDefault();
-            // setSaveIsOpen(false);
 
             const response = await fetch('/api/snapshots', {
               method: 'POST',
@@ -58,9 +50,7 @@ export default function SummonPanel() {
             }
 
             setTitle('');
-            // await setShowSuccessMessage(!showSuccessMessage);
             await triggerJourneySaved();
-            // await setJourneySaved(false);
             await togglePanel();
             router.refresh();
           }}
