@@ -23,7 +23,9 @@ export default function PowersPanel() {
           power will you wield?
         </p>
 
-        <OpenPanelButton panel="Save">Save this journey</OpenPanelButton>
+        {phase === 'portal' || phase === 'portalRecall' ? (
+          <OpenPanelButton panel="Save">Save this journey</OpenPanelButton>
+        ) : null}
 
         {/* <h2>Summon past journeys</h2> */}
         <OpenPanelButton panel="Summon">Summon past journeys</OpenPanelButton>
