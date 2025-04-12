@@ -22,16 +22,8 @@ export default function PowersPanel() {
           Greetings, <span className="font-black">{user?.username}</span>. What
           power will you wield?
         </p>
-        {/* <Button click="">Save this journey</Button> */}
-        <Button
-          onClick={() => {
-            setPanelId('Save');
-            togglePanel();
-            // setShowSuccessMessage(false);
-          }}
-        >
-          Save this journey
-        </Button>
+
+        <OpenPanelButton panel="Save">Save this journey</OpenPanelButton>
 
         {/* <h2>Summon past journeys</h2> */}
         <OpenPanelButton panel="Summon">Summon past journeys</OpenPanelButton>
