@@ -5,6 +5,8 @@ import ErrorMessage from '../../ErrorMessage';
 import { Button, ButtonText } from '../ui';
 
 export default function Login() {
+  const { setPanelId, panelOpen, togglePanel, panelId } =
+    useContext(journeyContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
@@ -32,6 +34,7 @@ export default function Login() {
     }
 
     router.refresh();
+    togglePanel();
   }
 
   return (
@@ -75,7 +78,7 @@ export default function Login() {
         ))}
       </form>
 
-      <p>
+      {/* <p>
         If you don't have an account, you should{' '}
         <ButtonText
           className=""
@@ -86,7 +89,7 @@ export default function Login() {
           register
         </ButtonText>
         . Registered users can save their journeys and return to them later.
-      </p>
+      </p> */}
     </>
   );
 }

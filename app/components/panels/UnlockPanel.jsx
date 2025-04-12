@@ -14,22 +14,6 @@ export default function UnlockPanel() {
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
   const { user } = useContext(userContext);
-  useEffect(() => {
-    // Create handler function for document-level keyboard events
-    const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && panelOpen) {
-        togglePanel();
-      }
-    };
-
-    // Add keyboard event listener to document
-    document.addEventListener('keydown', handleKeyDown);
-
-    // Cleanup function
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [panelOpen, togglePanel]);
 
   return (
     <PanelWrap panel="Unlock" bg="#C45353">
