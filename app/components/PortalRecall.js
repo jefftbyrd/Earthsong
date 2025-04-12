@@ -6,23 +6,23 @@ import { useSoundPlayer } from '../context/soundPlayerContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
-import PortalNav from './portal/PortalNav';
+// import PortalNav from './portal/PortalNav';
 import SoundController from './portal/SoundController';
 import SoundIcon from './portal/SoundIcon';
 // import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
 
-export default function Portal() {
+export default function PortalRecall(props) {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
   const { reset } = useContext(journeyContext);
-  const { isLoading, setIsLoading, error } = useSoundData();
+  // const { isLoading, setIsLoading, error } = useSoundData();
   // const [state, actions] = usePortalState();
   const { playerTarget, playing } = useSoundPlayer();
   const { user } = useContext(userContext);
   const { setPlayerTarget, setPlaying } = useSoundPlayer();
-  const [soundsColor, setSoundsColor] = useState();
-  // const [isLoading, setIsLoading] = useState(true);
+  const [soundsColorRecalled, setSoundsColorRecalled] = useState();
+  const [recallIsLoading, setRecallIsLoading] = useState(true);
 
   // More robust approach to measure height
   useEffect(() => {
@@ -63,33 +63,27 @@ export default function Portal() {
 
   useEffect(() => {
     const recallSnapshot = async () => {
-      const recalledSounds = await props.sounds;
-      setSoundsColor(recalledSounds);
-      setIsLoading(false);
+      const recalledSounds = await props.recalledSounds;
+      setSoundsColorRecalled(recalledSounds);
+      setRecallIsLoading(false);
     };
 
     recallSnapshot();
   }, []);
 
-  if (isLoading) {
+  if (recallIsLoading) {
     return <div className={styles.loading}>Loading...</div>;
   }
 
-  if (error) {
-    return <div className={styles.error}>Error: {error}</div>;
-  }
+  // if (error) {
+  //   return <div className={styles.error}>Error: {error}</div>;
+  // }
 
   return (
     <div className="flex flex-col h-screen">
       {/* Sound Controller */}
       <div className="flex-shrink-0" id="sound-controller">
-        <SoundController
-          soundsColor={soundsColor}
-          // displayingItem={state.displayingItem}
-          // setDisplayingItem={actions.setDisplayingItem}
-          // isOpen={state.isOpen}
-          // setIsOpen={actions.toggleOpen}
-        />
+        <SoundController soundsColor={soundsColorRecalled} />
       </div>
 
       {/* Canvas Container */}
@@ -101,10 +95,10 @@ export default function Portal() {
           maxHeight: 'calc(100vh - 100px)',
         }}
       >
-        {soundsColor?.length > 0 && containerHeight > 0 && (
+        {soundsColorRecalled?.length > 0 && containerHeight > 0 && (
           <NextReactP5Wrapper
             sketch={soundPortal}
-            soundsColor={soundsColor}
+            soundsColor={soundsColorRecalled}
             containerHeight={containerHeight}
             playerTarget={playerTarget}
             play={playing}

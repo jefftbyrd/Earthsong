@@ -149,7 +149,7 @@ export default function Earthsong() {
           }}
         >
           <PortalRecall
-            sounds={
+            recalledSounds={
               snapshots?.find((snapshot) => snapshot?.id === journeyToRecall)
                 .sounds
             }
