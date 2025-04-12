@@ -21,7 +21,7 @@ export default function PortalNav({ isLoggedIn }) {
   const filteredPanels = Object.entries(panels).filter(([id]) => {
     if (id === 'Unlock' && isLoggedIn) return false; // Hide Unlock if logged in
     if (id === 'Powers' && !isLoggedIn) return false; // Hide Powers if not logged in
-    return true;
+    return !(id === 'Summon' || id === 'Save');
   });
 
   return (

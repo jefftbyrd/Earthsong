@@ -10,11 +10,11 @@ export const panels = {
     label: 'Powers',
     icon: 3,
   },
-  // Summon: {
-  //   component: SummonPanel,
-  //   label: 'Summon',
-  //   icon: 4,
-  // },
+  Summon: {
+    component: SummonPanel,
+    label: 'Summon',
+    icon: 4,
+  },
   Unlock: {
     component: UnlockPanel,
     label: 'Unlock',
@@ -25,9 +25,9 @@ export const panels = {
     label: 'Save',
     icon: 2,
   },
-  // Guide: {
-  //   component: GuidePanel,
-  //   label: 'Guide',
-  //   icon: 2,
-  // },
+  Guide: {
+    component: GuidePanel,
+    label: 'Guide',
+    icon: 2,
+  },
 };
