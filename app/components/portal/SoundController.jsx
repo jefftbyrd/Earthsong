@@ -1,19 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+// import Messages from '../Messages';
 import InfoPanel from './InfoPanel';
 import SoundItem from './SoundItem';
 
-export default function SoundController({
-  soundsColor,
-  // displayingItem,
-  // setDisplayingItem,
-  // isOpen,
-  // setIsOpen,
-  className,
-}) {
+export default function SoundController({ soundsColor, className }) {
   const [playerTarget, setPlayerTarget] = useState(null);
   const [playing, setPlaying] = useState(false);
   const { panelId, panelOpen } = useContext(journeyContext);
+  // const messages = Messages(); // Call the Messages function with the user object
 
   const handlePlaySound = (soundId) => {
     if (playerTarget === soundId && playing) {

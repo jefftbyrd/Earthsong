@@ -27,7 +27,7 @@ export default function PowersPanel() {
 
         {/* <h2>Summon past journeys</h2> */}
         <OpenPanelButton panel="Summon">Summon past journeys</OpenPanelButton>
-        <div>
+        {/* <div>
           {snapshots.length < 1 ? (
             'No snapshots yet'
           ) : (
@@ -39,7 +39,7 @@ export default function PowersPanel() {
               ))}
             </ul>
           )}
-        </div>
+        </div> */}
 
         <p>{phase !== 'portalRecall' ? <LogoutButton /> : null}</p>
       </>
