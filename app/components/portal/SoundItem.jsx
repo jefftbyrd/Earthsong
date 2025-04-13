@@ -30,7 +30,7 @@ export default function SoundItem({ sound, index }) {
               isPlaying={isPlaying}
             />
 
-            <span className="text-sm line-clamp-1 text-black col-span-13">
+            <span className="text-sm lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 text-black col-span-13">
               {sound.name}
             </span>
           </div>
