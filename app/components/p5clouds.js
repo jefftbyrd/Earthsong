@@ -8,7 +8,6 @@ export const clouds = (p5) => {
   let noiseAcceleration;
   let button;
   let startTime;
-  let showStartScreen = false;
 
   let initialSkyColor;
   let targetSkyColor;
@@ -21,9 +20,14 @@ export const clouds = (p5) => {
   // Flag to track if sketch has been disposed
   let isDisposed = false;
 
+  // Add these variables at the top with other declarations
+  let currentWidth;
+  let currentHeight;
+
   p5.setup = () => {
     let canvas = p5.createCanvas(p5.windowWidth, p5.windowHeight);
     canvas.position(0, 0);
+    canvas.style('z-index', '-1'); // Ensure canvas stays behind other elements
 
     p5.frameRate(15); // Reduce from 30 to 15
 
@@ -48,9 +52,18 @@ export const clouds = (p5) => {
     initialCloudColor = p5.color(252, 230, 252);
     targetCloudColor = p5.color(255, 105, 180);
     startTime = p5.millis();
+
+    // Store initial dimensions
+    currentWidth = p5.windowWidth;
+    currentHeight = p5.windowHeight;
   };
 
   p5.updateWithProps = (props) => {
+    // Check if canvas needs resize on mount/update
+    if (p5.width !== p5.windowWidth || p5.height !== p5.windowHeight) {
+      p5.windowResized();
+    }
+
     if (props.phase === 'portal' || props.phase === 'portalRecall') {
       stopAll();
     }
@@ -65,78 +78,72 @@ export const clouds = (p5) => {
     // Skip drawing if disposed
     if (isDisposed) return;
 
-    // Show screen
-    if (showStartScreen) {
-      p5.background(252, 230, 252);
-      if (button) button.show();
-    } else {
-      // Calculate the progress over 30 seconds
-      let timeElapsed = p5.millis() - startTime;
-      let progress = p5.constrain(timeElapsed / 30000, 0, 1);
+    // Calculate the progress over 30 seconds
+    let timeElapsed = p5.millis() - startTime;
+    let progress = p5.constrain(timeElapsed / 30000, 0, 1);
 
-      // Change cloud colors based on the progress
-      let currentCloudColor = p5.lerpColor(
-        initialCloudColor,
-        targetCloudColor,
-        progress,
-      );
+    // Change cloud colors based on the progress
+    let currentCloudColor = p5.lerpColor(
+      initialCloudColor,
+      targetCloudColor,
+      progress,
+    );
 
-      // Clear main canvas
-      p5.clear();
+    // Clear main canvas
+    p5.clear();
 
-      // Clear buffer canvas
-      if (cloudBuffer) cloudBuffer.clear();
+    // Clear buffer canvas
+    if (cloudBuffer) cloudBuffer.clear();
 
-      // Update the noise field
-      noiseVelocity.add(noiseAcceleration);
-      noiseVector.sub(noiseVelocity);
+    // Update the noise field
+    noiseVelocity.add(noiseAcceleration);
+    noiseVector.sub(noiseVelocity);
 
-      // Move noise field slightly in all directions
-      noiseAcceleration.x = p5.random(-0.0005, 0.0005);
-      noiseAcceleration.y = p5.random(-0.0005, 0.0005);
+    // Move noise field slightly in all directions
+    noiseAcceleration.x = p5.random(-0.0005, 0.0005);
+    noiseAcceleration.y = p5.random(-0.0005, 0.0005);
 
-      // Calculate size of tiles for the smaller buffer
-      let tileSize = cloudBuffer ? cloudBuffer.width / tileCount : 0;
+    // Calculate size of tiles for the smaller buffer
+    let tileSize = cloudBuffer ? cloudBuffer.width / tileCount : 0;
 
-      // Draw clouds to buffer - using original rectangle method
-      if (cloudBuffer) {
-        cloudBuffer.noStroke();
+    // Draw clouds to buffer - using original rectangle method
+    if (cloudBuffer) {
+      cloudBuffer.noStroke();
 
-        for (let row = 0; row < tileCount * 2; row++) {
-          for (let col = 0; col < tileCount * 2; col++) {
-            let x = col * tileSize;
-            let y = row * tileSize;
+      for (let row = 0; row < tileCount * 2; row++) {
+        for (let col = 0; col < tileCount * 2; col++) {
+          let x = col * tileSize;
+          let y = row * tileSize;
 
-            // Stop if we're outside the buffer
-            if (x > cloudBuffer.width || y > cloudBuffer.height) continue;
+          // Stop if we're outside the buffer
+          if (x > cloudBuffer.width || y > cloudBuffer.height) continue;
 
-            // Calculate Perlin noise value based on noiseVector and grid position
-            let xnoise = noiseVector.x + col * noiseScale;
-            let ynoise = noiseVector.y + row * noiseScale;
-            let noiseValue = p5.noise(xnoise, ynoise);
+          // Calculate Perlin noise value based on noiseVector and grid position
+          let xnoise = noiseVector.x + col * noiseScale;
+          let ynoise = noiseVector.y + row * noiseScale;
+          let noiseValue = p5.noise(xnoise, ynoise);
 
-            // Map noise to opacity to create cloud transparency
-            let a = p5.map(noiseValue, 0, 0.5, 0, 210);
+          // Map noise to opacity to create cloud transparency
+          let a = p5.map(noiseValue, 0, 0.5, 0, 210);
 
-            // Only draw if there's some visibility
-            if (a > 5) {
-              cloudBuffer.fill(
-                currentCloudColor.levels[0],
-                currentCloudColor.levels[1],
-                currentCloudColor.levels[2],
-                a,
-              );
-              cloudBuffer.rect(x, y, tileSize, tileSize);
-            }
+          // Only draw if there's some visibility
+          if (a > 5) {
+            cloudBuffer.fill(
+              currentCloudColor.levels[0],
+              currentCloudColor.levels[1],
+              currentCloudColor.levels[2],
+              a,
+            );
+            cloudBuffer.rect(x, y, tileSize, tileSize);
           }
         }
-
-        // Apply blur filter to the buffer
-        cloudBuffer.filter(p5.BLUR, 5);
-
-        // Draw the buffer to the main canvas, scaling up
-        p5.image(cloudBuffer, 0, 0, p5.width, p5.height);
       }
+
+      // Apply blur filter to the buffer
+      cloudBuffer.filter(p5.BLUR, 5);
+
+      // Draw the buffer to the main canvas, scaling up
+      p5.image(cloudBuffer, 0, 0, p5.width, p5.height);
     }
   };
 
@@ -144,8 +151,10 @@ export const clouds = (p5) => {
     // Skip if disposed
     if (isDisposed) return;
 
+    // Resize main canvas
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
-    // Resize buffer to half the canvas size
+
+    // Resize buffer to half the new canvas size
     if (cloudBuffer) {
       cloudBuffer.resizeCanvas(
         Math.floor(p5.windowWidth / 2),

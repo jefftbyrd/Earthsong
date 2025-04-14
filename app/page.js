@@ -51,6 +51,8 @@ export default function Earthsong() {
   const handleLogoClick = () => {
     playSound(); // Play the sound
     setPhase('map'); // Transition to map phase
+    // Force window resize event after a brief delay to ensure components are mounted
+    setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
   };
 
   return (
@@ -102,7 +104,7 @@ export default function Earthsong() {
 
       {/* Map waits for start */}
       <AnimatePresence>
-        {phase === 'map' ? (
+        {phase === 'map' && (
           <>
             {/* Title h1 waits for start */}
             <Title className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none text-center leading-none text-[22vw] lg:text-[15vw]" />
@@ -120,6 +122,7 @@ export default function Earthsong() {
             </motion.div>
             <motion.div
               className={styles.noClick}
+              initial={{ opacity: 0 }}
               animate={{
                 opacity: [0, 0, 0.7, 0.4],
                 transition: { duration: 6, times: [0, 0.2, 0.9, 1] },
@@ -132,7 +135,7 @@ export default function Earthsong() {
               <NextReactP5Wrapper sketch={clouds} phase={phase} />
             </motion.div>
           </>
-        ) : null}
+        )}
       </AnimatePresence>
 
       {/* Show the occult text */}
