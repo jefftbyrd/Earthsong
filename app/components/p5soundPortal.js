@@ -31,16 +31,16 @@ export const soundPortal = (p5) => {
     }
 
     isPanelOpen = props.panelOpen;
-    console.log('isPanelOpen', isPanelOpen);
+    // console.log('isPanelOpen', isPanelOpen);
 
     // Handle containerHeight more forcefully
     if (props.containerHeight && props.containerHeight > 0) {
       canvasHeight = props.containerHeight;
-      console.log('P5 received container height:', canvasHeight);
+      // console.log('P5 received container height:', canvasHeight);
 
       // If canvas already exists, resize it
       if (p5.canvas) {
-        console.log('Resizing canvas to height:', canvasHeight);
+        // console.log('Resizing canvas to height:', canvasHeight);
         p5.resizeCanvas(p5.width, canvasHeight);
       }
     }
@@ -69,13 +69,13 @@ export const soundPortal = (p5) => {
     }
 
     if (props.reset) {
-      console.log('Reset triggered in p5soundPortal, stopping all sounds');
+      // console.log('Reset triggered in p5soundPortal, stopping all sounds');
       await stopAll(); // Make sure this is awaited
     }
   };
 
   p5.setup = () => {
-    console.log('Creating canvas with height:', canvasHeight);
+    // console.log('Creating canvas with height:', canvasHeight);
     const soundCanvas = p5.createCanvas(p5.windowWidth, canvasHeight);
     soundCanvas.style('position', 'absolute');
     soundCanvas.style('z-index', -999);
@@ -265,7 +265,7 @@ export const soundPortal = (p5) => {
               }
             }
           } catch (error) {
-            console.error('DOM manipulation error:', error);
+            // console.error('DOM manipulation error:', error);
           }
         }
       }
@@ -589,7 +589,7 @@ export const soundPortal = (p5) => {
 
       // Set up error handling
       tempAudio.addEventListener('error', () => {
-        console.error(`Error loading sound: ${this.url}`);
+        // console.error(`Error loading sound: ${this.url}`);
         this.loadProgress = 0;
         this.isLoading = false;
       });
@@ -950,7 +950,7 @@ export const soundPortal = (p5) => {
   };
 
   p5.windowResized = () => {
-    console.log('Window resized, using height:', canvasHeight);
+    // console.log('Window resized, using height:', canvasHeight);
     p5.resizeCanvas(p5.windowWidth, canvasHeight);
   };
 };
