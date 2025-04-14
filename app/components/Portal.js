@@ -11,11 +11,13 @@ import SoundController from './portal/SoundController';
 import SoundIcon from './portal/SoundIcon';
 // import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
+import { AnimatePresence, motion } from 'motion/react';
+import { panels } from './portal/panelConfig';
 
 export default function Portal() {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
-  const { reset } = useContext(journeyContext);
+  const { reset, panelOpen, panelId } = useContext(journeyContext);
   const { isLoading, soundsColor, error } = useSoundData();
   // const [state, actions] = usePortalState();
   const { playerTarget, playing } = useSoundPlayer();
@@ -99,7 +101,33 @@ export default function Portal() {
             SoundIcon={SoundIcon}
           />
         )}
+        <AnimatePresence>
+          {panelOpen && panelId && panels[panelId]?.component && (
+            <motion.div
+              className="absolute inset-x-0 z-40 overflow-hidden"
+              style={{
+                top: 0,
+                height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
+                maxHeight: 'calc(100vh - 2.5rem)',
+              }}
+              animate={{
+                opacity: [0, 1],
+                transition: { duration: 0.25 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.25 },
+              }}
+            >
+              {React.createElement(panels[panelId].component)}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* <div className="fixed bottom-0 left-0 w-full z-50">
+        <PortalNav isLoggedIn={user} />
+      </div> */}
     </div>
   );
 }

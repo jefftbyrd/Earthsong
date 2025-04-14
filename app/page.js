@@ -181,21 +181,25 @@ export default function Earthsong() {
       ) : null}
 
       <AnimatePresence>
-        {panelOpen && panelId && panels[panelId]?.component && (
-          <motion.div
-            className="fixed inset-0 z-40"
-            animate={{
-              opacity: [0, 1],
-              transition: { duration: 0.25 },
-            }}
-            exit={{
-              opacity: 0,
-              transition: { duration: 0.25 },
-            }}
-          >
-            {React.createElement(panels[panelId].component)}
-          </motion.div>
-        )}
+        {panelOpen &&
+          panelId &&
+          panels[panelId]?.component &&
+          phase !== 'portal' &&
+          phase !== 'portalRecall' && (
+            <motion.div
+              className="fixed inset-0 z-40"
+              animate={{
+                opacity: [0, 1],
+                transition: { duration: 0.25 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.25 },
+              }}
+            >
+              {React.createElement(panels[panelId].component)}
+            </motion.div>
+          )}
       </AnimatePresence>
 
       {/* PortalNav */}
