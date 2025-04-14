@@ -67,6 +67,19 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [pin, setPin] = useState<Pin | object>({});
   const [journeySaved, setJourneySaved] = useState(false);
 
+  const triggerReset = async () => {
+    setReset(true);
+
+    // Return the awaited promise
+    return await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        setReset(false);
+        setPhase('map');
+        resolve();
+      }, 500);
+    });
+  };
+
   const togglePanel = () => {
     setPanelOpen((prev) => {
       // If we're closing the panel, also clear the panel ID
@@ -108,6 +121,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         journeySaved,
         setJourneySaved,
         triggerJourneySaved,
+        triggerReset,
       }}
     >
       {children}
