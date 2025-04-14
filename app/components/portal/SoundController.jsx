@@ -22,9 +22,11 @@ export default function SoundController({ soundsColor, className }) {
   return (
     <>
       <div
-        className={`grid gap-0.5 grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 ${className || ''}`}
+        className={`grid gap-0.5 grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ${className || ''}`}
       >
-        <div className="text-3xl/9 uppercase text-center">Portal</div>
+        <div className="text-3xl/9 uppercase text-center flex items-center justify-center xl:hidden">
+          Portal
+        </div>
         {soundsColor.map((sound, index) => (
           <div key={`soundId-${sound.id}`} className="">
             <SoundItem

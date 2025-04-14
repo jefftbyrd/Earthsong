@@ -18,25 +18,25 @@ export default function SoundItem({ sound, index }) {
     <header className="">
       <div className={`s${sound.id} grid grid-cols-16`}>
         <button
-          // className="p-0 m-0 w-full grid col-span-14 grid-cols-16 h-full bg-blue-900"
           className="block w-full col-span-14 p-2"
           onClick={() => handlePlaySound(sound.id)}
         >
-          <div className="grid grid-cols-16">
-            <SoundIcon
-              height="6vw"
-              width="6vw"
-              soundNumber={index + 1}
-              isPlaying={isPlaying}
-            />
-
-            <span className="text-sm lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 text-black col-span-13">
+          <div className="flex items-center gap-x-0">
+            <div className="flex-shrink-0">
+              <SoundIcon
+                height="6vw"
+                width="6vw"
+                soundNumber={index + 1}
+                isPlaying={isPlaying}
+              />
+            </div>
+            <span className="text-sm lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 text-black text-left ml-3">
               {sound.name}
             </span>
           </div>
         </button>
         <button
-          className="p-1 mt-2 bg-black rounded-full w-5 h-5 grid place-content-center col-span-2"
+          className="p-1 my-auto bg-black rounded-full w-5 h-5 grid place-content-center col-span-2"
           data-info-toggle="true"
           onClick={(e) => {
             e.stopPropagation();
