@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext'; // Import the context
 // import InfoPanel from './InfoPanel';
-import SoundIcon from './SoundIcon';
+import SoundSpinner from './SoundSpinner';
 
 export default function SoundItem({ sound, index }) {
   const { setPanelId, panelOpen, togglePanel, panelId, setPanelOpen } =
@@ -21,14 +21,9 @@ export default function SoundItem({ sound, index }) {
           className="block w-full col-span-14 p-2"
           onClick={() => handlePlaySound(sound.id)}
         >
-          <div className="flex items-center gap-x-0">
+          <div className="flex items-center justify-start gap-x-0">
             <div className="flex-shrink-0">
-              <SoundIcon
-                height="6vw"
-                width="6vw"
-                soundNumber={index + 1}
-                isPlaying={isPlaying}
-              />
+              <SoundSpinner soundNumber={index + 1} isPlaying={isPlaying} />
             </div>
             <span className="text-sm lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 text-black text-left ml-3">
               {sound.name}
