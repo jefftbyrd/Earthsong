@@ -1,23 +1,25 @@
 import React, { useContext, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+// import soundPlayerContext from '../../context/soundPlayerContext'; // Import the context
 // import Messages from '../Messages';
 import InfoPanel from './InfoPanel';
 import SoundItem from './SoundItem';
 
 export default function SoundController({ soundsColor, className }) {
-  const [playerTarget, setPlayerTarget] = useState(null);
-  const [playing, setPlaying] = useState(false);
+  // const [playerTarget, setPlayerTarget] = useState(null);
+  // const [playing, setPlaying] = useState(false);
   const { panelId, panelOpen } = useContext(journeyContext);
+  // const { handlePlaySound } = useContext(soundPlayerContext);
   // const messages = Messages(); // Call the Messages function with the user object
 
-  const handlePlaySound = (soundId) => {
-    if (playerTarget === soundId && playing) {
-      setPlaying(false);
-    } else {
-      setPlayerTarget(soundId);
-      setPlaying(true);
-    }
-  };
+  // const handlePlaySound = (soundId) => {
+  //   if (playerTarget === soundId && playing) {
+  //     setPlaying(false);
+  //   } else {
+  //     setPlayerTarget(soundId);
+  //     setPlaying(true);
+  //   }
+  // };
 
   return (
     <>
@@ -32,11 +34,8 @@ export default function SoundController({ soundsColor, className }) {
             <SoundItem
               sound={sound}
               index={index}
-              onPlaySound={handlePlaySound}
-              isPlaying={playing && playerTarget === sound.id}
-              // displayingItem={displayingItem}
-              // setIsOpen={setIsOpen}
-              // isOpen={isOpen}
+              // onPlaySound={handlePlaySound}
+              // isPlaying={playing && playerTarget === sound.id}
             />
           </div>
         ))}
