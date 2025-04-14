@@ -1,7 +1,8 @@
 import './globals.css';
-import '@fontsource/noto-sans-linear-a';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+// import '@fontsource/noto-sans-linear-a';
+import { Noto_Sans_Linear_A } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
@@ -14,6 +15,17 @@ import { JourneyContextProvider } from './context/journeyContext';
 import { SoundPlayerProvider } from './context/soundPlayerContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
+
+// const noto = noto_sans_linear_a({
+//   subsets: ['latin'],
+//   variable: '--font-noto',
+// });
+
+const noto = Noto_Sans_Linear_A({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-noto',
+});
 
 // const basteleurMoonlight = localFont({
 //   src: './fonts/Basteleur-Moonlight.woff2',
@@ -29,6 +41,8 @@ import { UserContextProvider } from './context/userContext';
 
 const basteleur = localFont({
   variable: '--font-basteleur',
+  preload: true,
+  display: 'swap',
   src: [
     {
       path: './fonts/Basteleur-Moonlight.woff2',
@@ -38,7 +52,7 @@ const basteleur = localFont({
     {
       path: './fonts/Basteleur-Bold.woff2',
       weight: '800',
-      style: 'bold',
+      style: 'normal',
     },
   ],
 });
@@ -86,7 +100,7 @@ export default async function RootLayout({ children }) {
         />
       </head>
 
-      <body className={basteleur.variable}>
+      <body className={`${basteleur.variable} font-basteleur ${noto.variable}`}>
         <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
             <SoundsContextProvider>

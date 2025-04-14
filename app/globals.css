@@ -23,6 +23,7 @@ body {
   height: 100%;
   min-height: 100%;
   position: relative;
+  font-family: var(--font-basteleur);
 }
 
 /* html,
@@ -46,8 +47,8 @@ a {
 body {
   /* color: var(--foreground);
   background: var(--background); */
-
-  font-family: var(--font-basteleur);
+  /*
+  font-family: var(--font-basteleur); */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background-color: black; */
