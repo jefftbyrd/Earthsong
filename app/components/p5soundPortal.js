@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 
 export const soundPortal = (p5) => {
-  // const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
+  const noto = p5.loadFont('/NotoSansLinearA-Regular.ttf');
   const scl = 10;
   let waveform;
   let ellipse;
@@ -50,7 +50,6 @@ export const soundPortal = (p5) => {
     if (
       props.playerTarget &&
       isInitialized &&
-      multiPlayer &&
       multiPlayer.player(props.playerTarget) &&
       multiPlayer.player(props.playerTarget).loaded
     ) {
@@ -76,8 +75,8 @@ export const soundPortal = (p5) => {
     // soundCanvas.style('position', 'absolute');
     // soundCanvas.style('z-index', -999);
     multiPlayer = new Tone.Players();
-    // p5.textFont(noto);
-    p5.textFont('Basteleur');
+    p5.textFont(noto);
+    // p5.textFont('Basteleur');
 
     // Create the shared reverb instance
     sharedReverb = new Tone.Reverb();
@@ -477,11 +476,21 @@ export const soundPortal = (p5) => {
       // When calculating the final diameter, include the volumeVisualOffset
       this.diameter =
         p5.map(this.y, 0, p5.height, p5.height / 48, p5.height / 3) +
-        this.meterMap +
+        this.meterMap / 2 +
         this.volumeVisualOffset; // Add the volume visual offset
 
+      // this.numberSize =
+      //   p5.map(this.y, 0, p5.height, 10, 200) + this.meterMap / 2;
       this.numberSize =
-        p5.map(this.y, 0, p5.height, 10, 200) + this.meterMap / 2;
+        p5.map(
+          this.y,
+          0,
+          p5.height,
+          p5.windowHeight / 100,
+          p5.windowHeight / 6,
+        ) +
+        this.meterMap / 2 +
+        this.volumeVisualOffset / 2;
 
       ellipse = p5.ellipse(this.x, this.y, this.diameter);
       p5.textSize(this.numberSize);
@@ -533,7 +542,12 @@ export const soundPortal = (p5) => {
 
       // Make sure the index is valid before accessing aegean
       if (this.number > 0 && this.number <= aegean.length) {
-        p5.text(aegean[this.number - 1], 0, 0);
+        // Add small fixed pixel offset for numbers 4 and 5
+        let yOffset = 0;
+        if (this.number === 4 || this.number === 5) {
+          yOffset = -p5.height / 28; // Adjust this value (-2 pixels up) as needed
+        }
+        p5.text(aegean[this.number - 1], 0, yOffset);
       }
 
       p5.pop();
