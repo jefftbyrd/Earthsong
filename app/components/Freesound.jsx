@@ -24,11 +24,8 @@ export default function Freesound() {
 
       try {
         for (const radius of searchRadiuses) {
-          const filter = encodeURIComponent(
-            `{!geofilt sfield=geotag pt=${pin.lat},${pin.lng} d=${radius}}`,
-          );
           const response = await fetch(
-            `https://freesound.org/apiv2/search/text/?filter=${filter}&fields=previews,name,description,username,id,tags,duration,geotag,url&page_size=100&token=${process.env.NEXT_PUBLIC_FREESOUND_API_KEY}`,
+            `/api/freesound?lat=${pin.lat}&lng=${pin.lng}&radius=${radius}`,
             { signal },
           );
 
