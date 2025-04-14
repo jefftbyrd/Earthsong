@@ -1,14 +1,12 @@
 'use client';
 import React, { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-// import { userContext } from '../../context/userContext';
 import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
 export default function PortalNav({ isLoggedIn }) {
   const { togglePanel, setPanelId, setReset, setPhase, phase } =
     useContext(journeyContext);
-  // const { user } = useContext(userContext);
   const [resetDone, setResetDone] = useState(false);
 
   useEffect(() => {
@@ -16,6 +14,11 @@ export default function PortalNav({ isLoggedIn }) {
       setPhase('map');
     }
   }, [resetDone, setPhase]);
+
+  // Prevent event propagation to canvas
+  const handleInteraction = (e) => {
+    e.stopPropagation();
+  };
 
   // Filter panels based on login status
   const filteredPanels = Object.entries(panels).filter(([id]) => {
@@ -25,12 +28,23 @@ export default function PortalNav({ isLoggedIn }) {
   });
 
   return (
-    <footer className="h-10 border-t-1 bg-black w-full grid grid-cols-3 uppercase">
+    <nav
+      className="h-10 border-t-1 bg-black w-full grid grid-cols-3 uppercase"
+      onClick={handleInteraction}
+      onMouseDown={handleInteraction}
+      onTouchStart={handleInteraction}
+      style={{
+        position: 'relative',
+        zIndex: 50,
+        pointerEvents: 'auto',
+      }}
+    >
       {phase === 'portal' || phase === 'portalRecall' ? (
         <button
           key="map"
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation(); // Extra safeguard
             setReset(true);
             setTimeout(() => {
               setReset(false);
@@ -47,7 +61,8 @@ export default function PortalNav({ isLoggedIn }) {
         <button
           key={`panel-${id}`}
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation(); // Extra safeguard
             setPanelId(id);
             togglePanel();
           }}
@@ -56,6 +71,6 @@ export default function PortalNav({ isLoggedIn }) {
           <span>{label}</span>
         </button>
       ))}
-    </footer>
+    </nav>
   );
 }
