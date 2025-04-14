@@ -5,7 +5,7 @@ import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
 export default function PortalNav({ isLoggedIn }) {
-  const { togglePanel, setPanelId, setReset, setPhase, phase } =
+  const { togglePanel, setPanelId, setReset, setPhase, phase, triggerReset } =
     useContext(journeyContext);
   const [resetDone, setResetDone] = useState(false);
 
@@ -45,11 +45,12 @@ export default function PortalNav({ isLoggedIn }) {
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
           onClick={(e) => {
             e.stopPropagation(); // Extra safeguard
-            setReset(true);
-            setTimeout(() => {
-              setReset(false);
-              setResetDone(true);
-            }, 0);
+            triggerReset();
+            // setReset(true);
+            // setTimeout(() => {
+            //   setReset(false);
+            //   setResetDone(true);
+            // }, 0);
           }}
         >
           <EarthsongIcons className="h-6 w-6" iconNumber={5} />
