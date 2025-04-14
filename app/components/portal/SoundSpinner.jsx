@@ -24,7 +24,7 @@ export default function SoundSpinner({ soundNumber = 1, isPlaying = false }) {
       {...animationProps}
     >
       <span
-        className="font-(family-name:--font-noto) text-7xl leading-none absolute"
+        className="font-(family-name:--font-noto) text-7xl xl:text-9xl leading-none absolute"
         style={{
           transformOrigin: '50% 45%', // Adjust these percentages to fine-tune the center
           transform: 'translate(-50%, -50%)',

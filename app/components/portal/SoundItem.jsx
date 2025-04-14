@@ -15,17 +15,17 @@ export default function SoundItem({ sound, index }) {
   const isPlaying = isSoundPlaying(sound.id);
 
   return (
-    <header className="">
-      <div className={`s${sound.id} grid grid-cols-16`}>
+    <header className="lg:h-20 xl:h-28">
+      <div className={`s${sound.id} grid grid-cols-16 h-full`}>
         <button
-          className="block w-full col-span-14 p-2"
+          className="block w-full col-span-14 p-2 h-full"
           onClick={() => handlePlaySound(sound.id)}
         >
-          <div className="flex items-center justify-start gap-x-0">
+          <div className="flex items-center justify-start gap-x-0 h-full">
             <div className="flex-shrink-0">
               <SoundSpinner soundNumber={index + 1} isPlaying={isPlaying} />
             </div>
-            <span className="text-sm lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 text-black text-left ml-3">
+            <span className="text-sm lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 lg:line-clamp-2 xl:line-clamp-3 text-black text-left ml-3">
               {sound.name}
             </span>
           </div>
