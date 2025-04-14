@@ -17,24 +17,24 @@ export default function InfoPanel({ sound, index, color }) {
   // const adjustColor = color.replace('1)', '0.5)').replace(/\s/g, '');
   // const adjustColor = color.replace(/\s/g, '');
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      // Don't close if the click was on the info toggle button
-      if (e.target.closest('[data-info-toggle="true"]')) {
-        return;
-      }
-      togglePanel();
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (e) => {
+  //     // Don't close if the click was on the info toggle button
+  //     if (e.target.closest('[data-info-toggle="true"]')) {
+  //       return;
+  //     }
+  //     togglePanel();
+  //   };
 
-    if (panelOpen) {
-      document.body.addEventListener('click', handleClickOutside);
+  //   if (panelOpen) {
+  //     document.body.addEventListener('click', handleClickOutside);
 
-      // Cleanup function to remove the event listener
-      return () => {
-        document.body.removeEventListener('click', handleClickOutside);
-      };
-    }
-  }, [panelOpen, togglePanel]); // Remove panelId from the dependency array
+  //     // Cleanup function to remove the event listener
+  //     return () => {
+  //       document.body.removeEventListener('click', handleClickOutside);
+  //     };
+  //   }
+  // }, [panelOpen, togglePanel]); // Remove panelId from the dependency array
 
   useEffect(() => {
     // Create handler function for document-level keyboard events
