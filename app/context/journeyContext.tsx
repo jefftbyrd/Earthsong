@@ -31,6 +31,7 @@ export interface JourneyContextType {
   pin: Pin | null;
   setPin: Dispatch<SetStateAction<Pin | object>>;
   triggerJourneySaved: () => void;
+  triggerReset: () => Promise<void>;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -51,6 +52,7 @@ export const journeyContext = createContext<JourneyContextType>({
   mobileCheck: false,
   pin: {},
   setPin: () => {},
+  triggerReset: () => {},
 });
 
 interface Props {
