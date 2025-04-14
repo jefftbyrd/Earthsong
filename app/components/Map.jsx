@@ -7,14 +7,29 @@ import Freesound from './Freesound';
 import MapMessages from './MapMessages';
 
 const initialCenter = [4.510020088079064, 44.66199079784276];
-const initialZoom = 2.14;
+const getInitialZoom = () => {
+  if (typeof window !== 'undefined') {
+    const width = window.innerWidth;
+    // For mobile devices
+    if (width < 768) {
+      return 1.3;
+    }
+    // For tablets
+    if (width < 1024) {
+      return 1.8;
+    }
+    // For larger screens
+    return 2.14;
+  }
+  return 2.14; // Default fallback
+};
 
 export default function Map() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
   const [fetch, setFetch] = useState(false);
   const [center, setCenter] = useState(initialCenter);
-  const [zoom, setZoom] = useState(initialZoom);
+  const [zoom, setZoom] = useState(getInitialZoom());
 
   const { pin, setPin } = useContext(journeyContext);
 
@@ -61,7 +76,11 @@ export default function Map() {
   return (
     <>
       <MapMessages />
-      <div id="map-container" ref={mapContainerRef} />
+      <div
+        id="map-container"
+        ref={mapContainerRef}
+        className="w-full h-[calc(100vh-2.5rem)]"
+      />
       {pin.lat ? <Freesound /> : null}
     </>
   );

@@ -114,8 +114,8 @@ h3 {
 
 #map-container {
   /* height: 100%; */
-  height: 100vh;
-  width: 100%;
+  /* height: 100vh;
+  width: 100%; */
   /* background-color: lightgrey; */
   /* position: inherit; */
   background: rgb(43, 23, 56);

@@ -85,7 +85,7 @@ export default function Portal() {
         className="flex-grow relative overflow-hidden"
         style={{
           height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
-          maxHeight: 'calc(100vh - 160px)',
+          maxHeight: 'calc(100vh - 2.5rem)',
         }}
       >
         {soundsColor?.length > 0 && containerHeight > 0 && (
