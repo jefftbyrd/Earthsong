@@ -66,6 +66,15 @@ export default function Earthsong() {
         isVisible={journeySaved}
         animationProps={{ transition: { duration: 4 } }}
       />
+      <Message
+        text="Initiating Sonic Projection"
+        isVisible={phase === 'portal' || phase === 'portalRecall'}
+        animationProps={{
+          opacity: [0, 1, 1, 0],
+          color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
+          transition: { duration: 4, times: [0, 0.4, 0.8, 1] },
+        }}
+      />
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
@@ -128,33 +137,15 @@ export default function Earthsong() {
 
       {/* Show the occult text */}
       {phase === 'portal' || phase === 'portalRecall' ? (
-        <>
-          <motion.div
-            className={styles.occult}
-            animate={{
-              opacity: [0, 0.4, 0.6, 0],
-              transition: { duration: 3, times: [0, 0.1, 0.8, 1] },
-            }}
-          >
-            <NextReactP5Wrapper sketch={occult} />
-          </motion.div>
-
-          {/* Show initiating */}
-          <motion.div
-            className={styles.initiating}
-            animate={{
-              opacity: [0, 1, 1, 0],
-              color: [
-                'rgb(255, 0, 89)',
-                'rgb(255, 255, 255)',
-                'rgb(255, 0, 89)',
-              ],
-              transition: { duration: 4, times: [0, 0.4, 0.8, 1] },
-            }}
-          >
-            Initiating Sonic Projection
-          </motion.div>
-        </>
+        <motion.div
+          className={styles.occult}
+          animate={{
+            opacity: [0, 0.4, 0.6, 0],
+            transition: { duration: 3, times: [0, 0.1, 0.8, 1] },
+          }}
+        >
+          <NextReactP5Wrapper sketch={occult} />
+        </motion.div>
       ) : null}
 
       {/* Portal waits for enterPortal */}
