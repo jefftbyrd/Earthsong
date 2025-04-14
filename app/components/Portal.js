@@ -99,6 +99,7 @@ export default function Portal() {
             play={playing}
             reset={reset}
             SoundIcon={SoundIcon}
+            panelOpen={panelOpen}
           />
         )}
         <AnimatePresence>

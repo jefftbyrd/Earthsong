@@ -16,6 +16,7 @@ export const soundPortal = (p5) => {
   let lastWaveformData = [];
   let isInitialized = false;
   let canvasHeight = window.innerHeight;
+  let isPanelOpen;
 
   // Variables to track touch behavior
   let touchStartTime = 0;
@@ -28,6 +29,9 @@ export const soundPortal = (p5) => {
     if (props.soundsColor) {
       sounds2 = [...props.soundsColor];
     }
+
+    isPanelOpen = props.panelOpen;
+    console.log('isPanelOpen', isPanelOpen);
 
     // Handle containerHeight more forcefully
     if (props.containerHeight && props.containerHeight > 0) {
@@ -72,8 +76,8 @@ export const soundPortal = (p5) => {
   p5.setup = () => {
     console.log('Creating canvas with height:', canvasHeight);
     const soundCanvas = p5.createCanvas(p5.windowWidth, canvasHeight);
-    // soundCanvas.style('position', 'absolute');
-    // soundCanvas.style('z-index', -999);
+    soundCanvas.style('position', 'absolute');
+    soundCanvas.style('z-index', -999);
     multiPlayer = new Tone.Players();
     // p5.textFont(noto);
     p5.textFont('Noto Sans Linear A');
@@ -774,6 +778,7 @@ export const soundPortal = (p5) => {
 
   // Refactored touch/mouse handling
   p5.mousePressed = () => {
+    if (isPanelOpen) return; // Just return, don't return false
     // Record the start time and position for distinguishing between tap and drag
     touchStartTime = p5.millis();
     touchStartPos = { x: p5.mouseX, y: p5.mouseY };
@@ -800,6 +805,7 @@ export const soundPortal = (p5) => {
   };
 
   p5.mouseReleased = () => {
+    if (isPanelOpen) return; // Just return, don't return false
     // Calculate touch duration and distance moved
     const touchDuration = p5.millis() - touchStartTime;
     const distMoved = p5.dist(
@@ -833,6 +839,7 @@ export const soundPortal = (p5) => {
 
   // For mobile touch events
   p5.touchStarted = (event) => {
+    if (isPanelOpen) return; // Just return, don't return false
     // Use the same logic as mousePressed
     touchStartTime = p5.millis();
     touchStartPos = { x: p5.mouseX, y: p5.mouseY };
@@ -848,6 +855,7 @@ export const soundPortal = (p5) => {
   };
 
   p5.touchEnded = (event) => {
+    if (isPanelOpen) return; // Just return, don't return false
     // Use the same logic as mouseReleased
     const touchDuration = p5.millis() - touchStartTime;
     const distMoved = p5.dist(
@@ -878,6 +886,7 @@ export const soundPortal = (p5) => {
   };
 
   p5.mouseDragged = () => {
+    if (isPanelOpen) return; // Just return, don't return false
     // Only process if we've moved enough to consider it a drag
     const distMoved = p5.dist(
       touchStartPos.x,
@@ -935,6 +944,7 @@ export const soundPortal = (p5) => {
 
   // Make touchMoved behavior match mouseDragged
   p5.touchMoved = () => {
+    if (isPanelOpen) return; // Just return, don't return false
     return p5.mouseDragged();
   };
 
