@@ -56,16 +56,18 @@ export function useSoundData() {
         const soundsShuffled = shuffleArray(filteredSounds).slice(0, 5);
 
         // Add color and format sound data
-        const soundsWithColor = soundsShuffled.map((sound) => ({
-          ...sound,
-          freesoundUrl: sound?.url,
-          color: uniqolor
-            .random({ format: 'rgb' })
-            .color.replace(')', ', 1)')
-            .replace('rgb', 'rgba'),
-          url: sound?.previews['preview-lq-mp3'],
-          name: formatSoundName(sound?.name || ''),
-        }));
+        const soundsWithColor = soundsShuffled.map(
+          ({ previews, ...sound }) => ({
+            ...sound,
+            freesoundUrl: sound?.url,
+            color: uniqolor
+              .random({ format: 'rgb' })
+              .color.replace(')', ', 1)')
+              .replace('rgb', 'rgba'),
+            url: previews?.['preview-lq-mp3'], // Use the value from previews if needed
+            name: formatSoundName(sound?.name || ''),
+          }),
+        );
 
         setSoundsColor(soundsWithColor);
         processedRef.current = true;
