@@ -54,7 +54,11 @@ export const journeyContext = createContext<JourneyContextType>({
   mobileCheck: false,
   pin: {},
   setPin: () => {},
-  triggerReset: () => {},
+  triggerReset() {
+    // This function is not implemented in the context provider
+    // but is expected to be called in the context consumer
+    return Promise.resolve();
+  },
   test: false,
   setTest: () => {},
 });
@@ -68,7 +72,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
   const [journeyToRecall, setJourneyToRecall] = useState(0);
-  const [panelId, setPanelId] = useState(0);
+  const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
   const [pin, setPin] = useState<Pin | object>({});
   const [journeySaved, setJourneySaved] = useState(false);
