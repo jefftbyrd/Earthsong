@@ -24,7 +24,7 @@ interface Pin {
   lng: number;
 }
 
-interface Sounds {
+export interface Sounds {
   count: number;
   results: Sound;
   pin: Pin;
