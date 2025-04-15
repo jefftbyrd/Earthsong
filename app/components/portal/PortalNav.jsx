@@ -55,6 +55,7 @@ export default function PortalNav({ isLoggedIn }) {
               .catch((error) => {
                 console.error('Error triggering reset:', error);
               });
+            setPhase('returnToMap');
             // setReset(true);
             // setTimeout(() => {
             //   setReset(false);

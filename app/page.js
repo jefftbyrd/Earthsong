@@ -71,12 +71,26 @@ export default function Earthsong() {
         animationProps={{ transition: { duration: 4 } }}
       />
       <Message
+        text="Returning to map"
+        isVisible={phase === 'returnToMap'}
+        animationProps={{ transition: { duration: 4 } }}
+      />
+      <Message
         text="Initiating Sonic Projection"
         isVisible={phase === 'portal' || phase === 'portalRecall'}
         animationProps={{
           opacity: [0, 1, 1, 0],
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 4, times: [0, 0.4, 0.8, 1] },
+        }}
+      />
+      <Message
+        text="Entering Sound Portal"
+        isVisible={phase === 'portal' || phase === 'portalRecall'}
+        animationProps={{
+          opacity: [0, 0, 1, 1, 0],
+          color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
+          transition: { duration: 4, times: [0, 0, 0.4, 0.8, 1] },
         }}
       />
 
@@ -104,12 +118,17 @@ export default function Earthsong() {
       {/* Wind generator is ready, but waits for start. */}
       <NextReactP5Wrapper sketch={wind} phase={phase} />
 
-      {/* Map waits for start */}
+      {/* Title waits for start */}
       <AnimatePresence>
         {phase === 'map' && (
+          <Title className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none text-center leading-none text-[22vw] lg:text-[15vw]" />
+        )}
+      </AnimatePresence>
+
+      {/* Map waits for start */}
+      <AnimatePresence>
+        {phase === 'map' || phase === 'returnToMap' ? (
           <>
-            {/* Title h1 waits for start */}
-            <Title className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none text-center leading-none text-[22vw] lg:text-[15vw]" />
             <motion.div
               animate={{
                 opacity: [0, 0, 1],
@@ -137,7 +156,7 @@ export default function Earthsong() {
               <NextReactP5Wrapper sketch={clouds} phase={phase} />
             </motion.div>
           </>
-        )}
+        ) : null}
       </AnimatePresence>
 
       {/* Show the occult text */}

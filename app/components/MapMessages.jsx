@@ -10,17 +10,22 @@ export default function MapMessages() {
     useContext(soundsContext);
 
   const mapConditions = {
-    initial: !pin.lat && phase === 'map',
-    location: pin.lat && phase === 'map',
-    loading: pin.lat && phase === 'map' && freesoundLoading === true,
+    initial: !pin.lat && (phase === 'map' || phase === 'returnToMap'),
+    location: pin.lat && (phase === 'map' || phase === 'returnToMap'),
+    loading:
+      pin.lat &&
+      (phase === 'map' || phase === 'returnToMap') &&
+      freesoundLoading === true,
     found: !freesoundLoading && sounds,
     hasResults:
-      phase === 'map' &&
+      (phase === 'map' || phase === 'returnToMap') &&
       notEnough === false &&
       sounds?.results?.length > 0 &&
       freesoundLoading === false,
     noResults:
-      phase === 'map' && notEnough === true && freesoundLoading === false,
+      (phase === 'map' || phase === 'returnToMap') &&
+      notEnough === true &&
+      freesoundLoading === false,
   };
 
   const glowAnimation = {
