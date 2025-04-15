@@ -24,7 +24,7 @@ export default function Portal() {
     useSoundPlayer();
   const { user } = useContext(userContext);
 
-  // console.log('soundsColor in Portal.js', soundsColor);
+  console.log('soundsColor in Portal.js', soundsColor);
 
   // More robust approach to measure height
   useEffect(() => {
