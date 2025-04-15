@@ -84,7 +84,7 @@ export default function Earthsong() {
           transition: { duration: 4, times: [0, 0.4, 0.8, 1] },
         }}
       />
-      <Message
+      {/* <Message
         text="Entering Sound Portal"
         isVisible={phase === 'portal' || phase === 'portalRecall'}
         animationProps={{
@@ -92,7 +92,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 4, times: [0, 0, 0.4, 0.8, 1] },
         }}
-      />
+      /> */}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
