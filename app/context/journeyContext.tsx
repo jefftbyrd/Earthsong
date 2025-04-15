@@ -32,6 +32,7 @@ export interface JourneyContextType {
   setPin: Dispatch<SetStateAction<Pin | object>>;
   triggerJourneySaved: () => void;
   triggerReset: () => Promise<void>;
+  triggerReset2: () => Promise<void>;
   test: boolean;
   setTest: Dispatch<SetStateAction<boolean>>;
 }
@@ -55,6 +56,11 @@ export const journeyContext = createContext<JourneyContextType>({
   pin: {},
   setPin: () => {},
   triggerReset() {
+    // This function is not implemented in the context provider
+    // but is expected to be called in the context consumer
+    return Promise.resolve();
+  },
+  triggerReset2() {
     // This function is not implemented in the context provider
     // but is expected to be called in the context consumer
     return Promise.resolve();
@@ -84,7 +90,18 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
     return await new Promise<void>((resolve) => {
       setTimeout(() => {
         setReset(false);
-        // setPhase('map');
+        resolve();
+      }, 500);
+    });
+  };
+
+  const triggerReset2 = async ({ nextPhase }: { nextPhase: string }) => {
+    setReset(true);
+    // Return the awaited promise
+    return await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        setReset(false);
+        setPhase(nextPhase);
         resolve();
       }, 500);
     });
@@ -132,6 +149,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         setJourneySaved,
         triggerJourneySaved,
         triggerReset,
+        triggerReset2,
         test,
         setTest,
       }}
