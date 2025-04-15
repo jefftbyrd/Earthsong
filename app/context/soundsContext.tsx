@@ -41,7 +41,44 @@ interface SoundsContextType {
   setSoundsColor: Dispatch<SetStateAction<Sounds>>;
 }
 
-export const soundsContext = createContext<SoundsContextType | null>(null);
+export const soundsContext = createContext<SoundsContextType>({
+  sounds: {
+    count: 0,
+    pin: { lat: 0, lng: 0 },
+    results: {
+      description: '',
+      duration: 0,
+      freesoundUrl: '',
+      geotag: '',
+      id: 0,
+      name: '',
+      tags: [],
+      url: '',
+      username: '',
+    },
+  },
+  setSounds: () => {},
+  notEnough: false,
+  setNotEnough: () => {},
+  freesoundLoading: false,
+  setFreesoundLoading: () => {},
+  soundsColor: {
+    count: 0,
+    pin: { lat: 0, lng: 0 },
+    results: {
+      description: '',
+      duration: 0,
+      freesoundUrl: '',
+      geotag: '',
+      id: 0,
+      name: '',
+      tags: [],
+      url: '',
+      username: '',
+    },
+  },
+  setSoundsColor: () => {},
+});
 
 interface Props {
   children: ReactNode;
