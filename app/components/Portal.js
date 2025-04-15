@@ -24,6 +24,8 @@ export default function Portal() {
     useSoundPlayer();
   const { user } = useContext(userContext);
 
+  console.log('soundsColor in Portal.js', soundsColor);
+
   // More robust approach to measure height
   useEffect(() => {
     // Function to calculate available height
@@ -73,13 +75,7 @@ export default function Portal() {
     <div className="flex flex-col h-screen">
       {/* Sound Controller */}
       <div className="flex-shrink-0" id="sound-controller">
-        <SoundController
-          soundsColor={soundsColor}
-          // displayingItem={state.displayingItem}
-          // setDisplayingItem={actions.setDisplayingItem}
-          // isOpen={state.isOpen}
-          // setIsOpen={actions.toggleOpen}
-        />
+        <SoundController soundsColor={soundsColor} />
       </div>
 
       {/* Canvas Container */}
@@ -99,11 +95,9 @@ export default function Portal() {
             playerTarget={playerTarget}
             playing={playing}
             reset={reset}
-            // test={test}
             activateTarget={activateTarget}
-            forceChange={forceChange}
-            // SoundIcon={SoundIcon}
             panelOpen={panelOpen}
+            forceChange={forceChange}
           />
         )}
         <AnimatePresence>
@@ -129,10 +123,6 @@ export default function Portal() {
           )}
         </AnimatePresence>
       </div>
-
-      {/* <div className="fixed bottom-0 left-0 w-full z-50">
-        <PortalNav isLoggedIn={user} />
-      </div> */}
     </div>
   );
 }

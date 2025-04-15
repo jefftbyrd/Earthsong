@@ -25,10 +25,14 @@ export const soundPortal = (p5) => {
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
   p5.updateWithProps = async (props) => {
+    console.log('soundsColor arrives in p5.updateWithProps', props.soundsColor);
     // Your existing props handling code
     if (props.soundsColor) {
-      sounds2 = [...props.soundsColor];
+      // sounds2 = [...props.soundsColor];
+      sounds2 = props.soundsColor;
     }
+
+    console.log('sounds2 in p5.updateWithProps', sounds2);
 
     isPanelOpen = props.panelOpen;
     // console.log('isPanelOpen', isPanelOpen);
@@ -46,7 +50,7 @@ export const soundPortal = (p5) => {
     }
 
     // Only generate shapes if we have sounds and no shapes yet
-    if (props.soundsColor && shapes.length < 1 && isInitialized) {
+    if (sounds2 && shapes.length < 1 && isInitialized) {
       generateShapes();
     }
 

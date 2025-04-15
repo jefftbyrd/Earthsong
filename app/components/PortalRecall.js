@@ -1,11 +1,13 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
+import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { useSoundPlayer } from '../context/soundPlayerContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
+import { panels } from './portal/panelConfig';
 // import PortalNav from './portal/PortalNav';
 import SoundController from './portal/SoundController';
 import SoundIcon from './portal/SoundIcon';
@@ -15,14 +17,15 @@ import { useSoundData } from './portal/useSoundData';
 export default function PortalRecall(props) {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
-  const { reset } = useContext(journeyContext);
-  // const { isLoading, setIsLoading, error } = useSoundData();
-  // const [state, actions] = usePortalState();
+  const { reset, panelOpen, panelId, test } = useContext(journeyContext);
   const { playerTarget, playing } = useSoundPlayer();
   const { user } = useContext(userContext);
-  const { setPlayerTarget, setPlaying } = useSoundPlayer();
-  const [soundsColorRecalled, setSoundsColorRecalled] = useState();
-  const [recallIsLoading, setRecallIsLoading] = useState(true);
+  const { setPlayerTarget, setPlaying, activateTarget, forceChange } =
+    useSoundPlayer();
+  // const [soundsColorRecalled, setSoundsColorRecalled] = useState();
+  // const [recallIsLoading, setRecallIsLoading] = useState(true);
+
+  // console.log('soundsColorRecalled in PortalRecall.js', soundsColorRecalled);
 
   // More robust approach to measure height
   useEffect(() => {
@@ -61,19 +64,21 @@ export default function PortalRecall(props) {
     };
   }, []);
 
-  useEffect(() => {
-    const recallSnapshot = async () => {
-      const recalledSounds = await props.recalledSounds;
-      setSoundsColorRecalled(recalledSounds);
-      setRecallIsLoading(false);
-    };
+  // useEffect(() => {
+  //   const recallSnapshot = async () => {
+  //     const recalledSounds = await props.recalledSounds;
+  //     setSoundsColorRecalled(recalledSounds);
+  //     setRecallIsLoading(false);
+  //   };
 
-    recallSnapshot();
-  }, []);
+  //   recallSnapshot().catch((error) => {
+  //     console.error('Error recalling snapshot:', error);
+  //   });
+  // }, [props.recalledSounds]);
 
-  if (recallIsLoading) {
-    return <div className={styles.loading}>Loading...</div>;
-  }
+  // if (recallIsLoading) {
+  //   return <div className={styles.loading}>Loading...</div>;
+  // }
 
   // if (error) {
   //   return <div className={styles.error}>Error: {error}</div>;
@@ -83,7 +88,7 @@ export default function PortalRecall(props) {
     <div className="flex flex-col h-screen">
       {/* Sound Controller */}
       <div className="flex-shrink-0" id="sound-controller">
-        <SoundController soundsColor={soundsColorRecalled} />
+        <SoundController soundsColor={props.recalledSounds} />
       </div>
 
       {/* Canvas Container */}
@@ -95,19 +100,48 @@ export default function PortalRecall(props) {
           maxHeight: 'calc(100vh - 100px)',
         }}
       >
-        {soundsColorRecalled?.length > 0 && containerHeight > 0 && (
-          <NextReactP5Wrapper
-            sketch={soundPortal}
-            soundsColor={soundsColorRecalled}
-            containerHeight={containerHeight}
-            playerTarget={playerTarget}
-            play={playing}
-            reset={reset}
-            SoundIcon={SoundIcon}
-            setPlayerTarget={setPlayerTarget}
-            setPlaying={setPlaying}
-          />
-        )}
+        {props.recalledSounds?.length > 0 &&
+          containerHeight > 0 &&
+          (console.log(
+            'props.recalledSounds at sound portal render',
+            props.recalledSounds,
+          ),
+          console.log('Rendering sound portal with recalled sounds'),
+          (
+            <NextReactP5Wrapper
+              sketch={soundPortal}
+              soundsColor={props.recalledSounds}
+              containerHeight={containerHeight}
+              playerTarget={playerTarget}
+              playing={playing}
+              reset={reset}
+              activateTarget={activateTarget}
+              panelOpen={panelOpen}
+              forceChange={forceChange}
+            />
+          ))}
+        <AnimatePresence>
+          {panelOpen && panelId && panels[panelId]?.component && (
+            <motion.div
+              className="absolute inset-x-0 z-40 overflow-hidden"
+              style={{
+                top: 0,
+                height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
+                maxHeight: 'calc(100vh - 2.5rem)',
+              }}
+              animate={{
+                opacity: [0, 1],
+                transition: { duration: 0.25 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.25 },
+              }}
+            >
+              {React.createElement(panels[panelId].component)}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
