@@ -80,12 +80,11 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
 
   const triggerReset = async () => {
     setReset(true);
-
     // Return the awaited promise
     return await new Promise<void>((resolve) => {
       setTimeout(() => {
         setReset(false);
-        setPhase('map');
+        // setPhase('map');
         resolve();
       }, 500);
     });
