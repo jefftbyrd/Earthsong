@@ -2,6 +2,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import { useSoundPlayer } from '../../context/soundPlayerContext';
 import { soundsContext } from '../../context/soundsContext';
 import { type Snapshot } from '../../context/userContext';
 import { Button, ButtonText } from '../ui';
@@ -18,6 +19,7 @@ export default function SnapshotItem({
   const { setPhase, setJourneyToRecall, togglePanel, triggerReset, setPin } =
     useContext(journeyContext);
   const { setFreesoundLoading } = useContext(soundsContext);
+  const { setActivateTarget } = useSoundPlayer();
 
   const handleDelete = async () => {
     try {
@@ -69,6 +71,7 @@ export default function SnapshotItem({
 
               // Perform the other actions after reset
               setJourneyToRecall(snapshot.id);
+              setActivateTarget(false);
               togglePanel();
               setPin({});
               setFreesoundLoading(true);
