@@ -6,10 +6,23 @@ import { useSoundPlayer } from '../../context/soundPlayerContext'; // Import the
 import SoundNumber from './SoundNumber';
 
 export default function SoundItem({ sound, index }) {
-  const { setPanelId, panelOpen, togglePanel, panelId, setPanelOpen } =
-    useContext(journeyContext);
+  const {
+    setPanelId,
+    panelOpen,
+    togglePanel,
+    panelId,
+    setPanelOpen,
+    setTest,
+    test,
+  } = useContext(journeyContext);
   // Get sound player functions from context
-  const { handlePlaySound, isSoundPlaying } = useSoundPlayer();
+  const {
+    handlePlaySound,
+    isSoundPlaying,
+    setPlayerTarget,
+    setPlaying,
+    playing,
+  } = useSoundPlayer();
 
   // Check if this specific sound is playing
   const isPlaying = isSoundPlaying(sound.id);
@@ -19,7 +32,13 @@ export default function SoundItem({ sound, index }) {
       <div className={`s${sound.id} grid grid-cols-16 h-full`}>
         <button
           className="block w-full col-span-14 p-2 h-full"
-          onClick={() => handlePlaySound(sound.id)}
+          // onClick={() => handlePlaySound(sound.id)}
+          onClick={() => {
+            // e.stopPropagation();
+            setPlaying(!playing);
+            setPlayerTarget(sound.id);
+            setTest(true);
+          }}
         >
           <div className="flex items-center justify-start gap-x-0 h-full">
             <div className="flex-shrink-0">
@@ -35,7 +54,7 @@ export default function SoundItem({ sound, index }) {
           data-info-toggle="true"
           onClick={(e) => {
             e.stopPropagation();
-
+            setTest(false);
             // If this exact panel is already open, just toggle it closed
             if (panelOpen && panelId === sound.id) {
               togglePanel(); // This will close the panel and clear panelId

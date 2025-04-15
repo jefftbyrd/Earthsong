@@ -25,6 +25,9 @@ export const soundPortal = (p5) => {
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
   p5.updateWithProps = async (props) => {
+    console.log('props.playerTarget', props.playerTarget);
+    console.log('props.playing', props.playing);
+    console.log('props.test', props.test);
     // Your existing props handling code
     if (props.soundsColor) {
       sounds2 = [...props.soundsColor];
@@ -52,6 +55,7 @@ export const soundPortal = (p5) => {
 
     // Only attempt to play if multiPlayer exists and the sound is loaded
     if (
+      props.test &&
       props.playerTarget &&
       isInitialized &&
       multiPlayer.player(props.playerTarget) &&

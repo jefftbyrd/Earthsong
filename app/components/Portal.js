@@ -1,23 +1,23 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
+import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { useSoundPlayer } from '../context/soundPlayerContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
+import { panels } from './portal/panelConfig';
 import PortalNav from './portal/PortalNav';
 import SoundController from './portal/SoundController';
 import SoundIcon from './portal/SoundIcon';
 // import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
-import { AnimatePresence, motion } from 'motion/react';
-import { panels } from './portal/panelConfig';
 
 export default function Portal() {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
-  const { reset, panelOpen, panelId } = useContext(journeyContext);
+  const { reset, panelOpen, panelId, test } = useContext(journeyContext);
   const { isLoading, soundsColor, error } = useSoundData();
   // const [state, actions] = usePortalState();
   const { playerTarget, playing } = useSoundPlayer();
@@ -96,10 +96,11 @@ export default function Portal() {
             soundsColor={soundsColor}
             containerHeight={containerHeight}
             playerTarget={playerTarget}
-            play={playing}
+            playing={playing}
             reset={reset}
-            SoundIcon={SoundIcon}
-            panelOpen={panelOpen}
+            test={test}
+            // SoundIcon={SoundIcon}
+            // panelOpen={panelOpen}
           />
         )}
         <AnimatePresence>

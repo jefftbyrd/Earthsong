@@ -32,6 +32,8 @@ export interface JourneyContextType {
   setPin: Dispatch<SetStateAction<Pin | object>>;
   triggerJourneySaved: () => void;
   triggerReset: () => Promise<void>;
+  test: boolean;
+  setTest: Dispatch<SetStateAction<boolean>>;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -53,6 +55,8 @@ export const journeyContext = createContext<JourneyContextType>({
   pin: {},
   setPin: () => {},
   triggerReset: () => {},
+  test: false,
+  setTest: () => {},
 });
 
 interface Props {
@@ -68,6 +72,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [panelOpen, setPanelOpen] = useState(false);
   const [pin, setPin] = useState<Pin | object>({});
   const [journeySaved, setJourneySaved] = useState(false);
+  const [test, setTest] = useState(false);
 
   const triggerReset = async () => {
     setReset(true);
@@ -124,6 +129,8 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         setJourneySaved,
         triggerJourneySaved,
         triggerReset,
+        test,
+        setTest,
       }}
     >
       {children}
