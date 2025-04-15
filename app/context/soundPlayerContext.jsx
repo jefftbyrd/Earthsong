@@ -8,6 +8,7 @@ const soundPlayerContext = createContext();
 export function SoundPlayerProvider({ children }) {
   const [playerTarget, setPlayerTarget] = useState(null);
   const [playing, setPlaying] = useState(false);
+  const [soundStates, setSoundStates] = useState({});
 
   // Combined function to handle playing and pausing sounds
   const handlePlaySound = (soundId) => {
@@ -21,9 +22,21 @@ export function SoundPlayerProvider({ children }) {
     }
   };
 
+  // Function to toggle the playing state of a specific sound
+  const toggleSound = (soundId) => {
+    setSoundStates((prevStates) => {
+      const newStates = {
+        ...prevStates,
+        [soundId]: !prevStates[soundId], // Toggle the playing state
+      };
+      // console.log('Updated soundStates:', newStates); // Debugging
+      return newStates;
+    });
+  };
+
   // Check if a specific sound is currently playing
   const isSoundPlaying = (soundId) => {
-    return playing && playerTarget === soundId;
+    return !!soundStates[soundId]; // Return true if the soundId is playing
   };
 
   // Value object that will be passed to consumers
@@ -35,6 +48,8 @@ export function SoundPlayerProvider({ children }) {
     // You might want these direct setters for special cases
     setPlayerTarget,
     setPlaying,
+    toggleSound,
+    soundStates, // Ensure this is included
   };
 
   return (
