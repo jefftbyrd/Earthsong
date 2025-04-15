@@ -1,16 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
-import { journeyContext } from '../../context/journeyContext';
+// import { journeyContext } from '../../context/journeyContext';
 import { userContext } from '../../context/userContext';
-import ClosePanelButton from '../panels/ClosePanelButton';
+// import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
 // import PowersLoggedIn from './PowersLoggedIn';
 // import PowersNotLoggedIn from './PowersNotLoggedIn';
 import SnapshotItem from './SnapshotItem';
 
 export default function SummonPanel() {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
-    useContext(journeyContext);
-  const { user, snapshots } = useContext(userContext);
+  // const { setPanelId, panelOpen, togglePanel, panelId } =
+  //   useContext(journeyContext);
+  const { snapshots } = useContext(userContext);
 
   return (
     <PanelWrap panel="Summon" bg="#C45353">

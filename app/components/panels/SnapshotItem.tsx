@@ -1,6 +1,7 @@
 'use client';
 import { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import { soundsContext } from '../../context/soundsContext';
 import { type Snapshot } from '../../context/userContext';
 
 interface SnapshotItemProps {
@@ -15,7 +16,9 @@ export default function SnapshotItem({ snapshot }: SnapshotItemProps) {
     togglePanel,
     triggerReset,
     phase,
+    setPin,
   } = useContext(journeyContext);
+  const { setFreesoundLoading } = useContext(soundsContext);
 
   return (
     <button
@@ -39,6 +42,8 @@ export default function SnapshotItem({ snapshot }: SnapshotItemProps) {
           // Perform the other actions after reset
           setJourneyToRecall(snapshot.id);
           togglePanel();
+          setPin({});
+          setFreesoundLoading(true);
           setPhase('portalRecall');
         } catch (error) {
           console.error('Error triggering reset:', error);
