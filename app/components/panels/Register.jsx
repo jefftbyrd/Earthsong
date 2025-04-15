@@ -74,7 +74,7 @@ export default function Register() {
           />
         </label>
 
-        <Button>register</Button>
+        <button>register</button>
 
         {/* <p>
           Already have an account? Then you should{' '}
