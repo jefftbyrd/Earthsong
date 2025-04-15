@@ -60,7 +60,7 @@ export default function PanelWrap({ children, panel, bg }) {
   return (
     <>
       {/* Invisible overlay that only covers the panel area */}
-      <div
+      {/* <div
         className="fixed inset-x-0 z-30"
         style={{
           top: `${panelDimensions.top}px`,
@@ -75,7 +75,7 @@ export default function PanelWrap({ children, panel, bg }) {
             togglePanel();
           }
         }}
-      />
+      /> */}
 
       {/* Original panel with its positioning intact */}
       <div
@@ -85,13 +85,16 @@ export default function PanelWrap({ children, panel, bg }) {
           backgroundColor: bg,
           pointerEvents: 'auto', // Ensure clicks on panel content are captured
         }}
-        onClick={stopPropagation} // Prevent clicks from reaching the overlay
+        // onClick={stopPropagation} // Prevent clicks from reaching the overlay
       >
-        {/* <ClosePanelButton panel={panel} /> */}
-        <div className="p-5 grid gap-5">{children}</div>
-        <h2 className="absolute bottom-0 left-0 right-0 text-7xl uppercase opacity-30 text-center">
+        <h2 className=" left-0 right-0 text-7xl uppercase opacity-30 text-center">
           {panel}
         </h2>
+        {/* <ClosePanelButton panel={panel} /> */}
+        <div className="p-5 grid gap-5">{children}</div>
+        {/* <h2 className="absolute bottom-0 left-0 right-0 text-7xl uppercase opacity-30 text-center">
+          {panel}
+        </h2> */}
       </div>
     </>
   );
