@@ -25,14 +25,12 @@ export const soundPortal = (p5) => {
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
   p5.updateWithProps = async (props) => {
-    console.log('soundsColor arrives in p5.updateWithProps', props.soundsColor);
+    // console.log('soundsColor arrives in p5.updateWithProps', props.soundsColor);
     // Your existing props handling code
     if (props.soundsColor) {
       // sounds2 = [...props.soundsColor];
       sounds2 = props.soundsColor;
     }
-
-    console.log('sounds2 in p5.updateWithProps', sounds2);
 
     isPanelOpen = props.panelOpen;
     // console.log('isPanelOpen', isPanelOpen);
@@ -295,6 +293,7 @@ export const soundPortal = (p5) => {
   }
 
   async function stopAll() {
+    console.log('p5 STOP ALL');
     if (multiPlayer) {
       await multiPlayer.stopAll();
       await multiPlayer.dispose();

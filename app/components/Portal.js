@@ -24,7 +24,7 @@ export default function Portal() {
     useSoundPlayer();
   const { user } = useContext(userContext);
 
-  console.log('soundsColor in Portal.js', soundsColor);
+  // console.log('soundsColor in Portal.js', soundsColor);
 
   // More robust approach to measure height
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function Portal() {
       const finalHeight = Math.max(availableHeight, 100);
 
       setContainerHeight(finalHeight);
-      console.log('Container height set to:', finalHeight);
+      // console.log('Container height set to:', finalHeight);
     };
 
     // Initial measurement after a short delay to ensure DOM is ready

@@ -49,7 +49,7 @@ export default function PortalRecall(props) {
       const finalHeight = Math.max(availableHeight, 100);
 
       setContainerHeight(finalHeight);
-      console.log('Container height set to:', finalHeight);
+      // console.log('Container height set to:', finalHeight);
     };
 
     // Initial measurement after a short delay to ensure DOM is ready
@@ -100,26 +100,19 @@ export default function PortalRecall(props) {
           maxHeight: 'calc(100vh - 100px)',
         }}
       >
-        {props.recalledSounds?.length > 0 &&
-          containerHeight > 0 &&
-          (console.log(
-            'props.recalledSounds at sound portal render',
-            props.recalledSounds,
-          ),
-          console.log('Rendering sound portal with recalled sounds'),
-          (
-            <NextReactP5Wrapper
-              sketch={soundPortal}
-              soundsColor={props.recalledSounds}
-              containerHeight={containerHeight}
-              playerTarget={playerTarget}
-              playing={playing}
-              reset={reset}
-              activateTarget={activateTarget}
-              panelOpen={panelOpen}
-              forceChange={forceChange}
-            />
-          ))}
+        {props.recalledSounds?.length > 0 && containerHeight > 0 && (
+          <NextReactP5Wrapper
+            sketch={soundPortal}
+            soundsColor={props.recalledSounds}
+            containerHeight={containerHeight}
+            playerTarget={playerTarget}
+            playing={playing}
+            reset={reset}
+            activateTarget={activateTarget}
+            panelOpen={panelOpen}
+            forceChange={forceChange}
+          />
+        )}
         <AnimatePresence>
           {panelOpen && panelId && panels[panelId]?.component && (
             <motion.div
