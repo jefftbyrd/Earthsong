@@ -9,15 +9,19 @@ import { logout } from './actions';
 
 export default function LogoutButton() {
   const router = useRouter();
-  const { setPhase, panelOpen, setReset, togglePanel, setPin, setPanelId } =
-    useContext(journeyContext);
+  const { setPanelId, togglePanel } = useContext(journeyContext);
 
   const handleLogout = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await logout();
-    router.refresh();
-    setPanelId('PowersPanel');
-    togglePanel();
+    try {
+      await logout();
+      router.refresh();
+      setPanelId('PowersPanel');
+      togglePanel();
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Optionally, display an error message to the user
+    }
   };
 
   return (
