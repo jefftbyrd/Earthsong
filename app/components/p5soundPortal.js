@@ -71,6 +71,8 @@ export const soundPortal = (p5) => {
       }
     }
 
+    console.log('props.reset received at p5 soundportal', props.reset);
+
     if (props.reset) {
       // console.log('Reset triggered in p5soundPortal, stopping all sounds');
       await stopAll(); // Make sure this is awaited
