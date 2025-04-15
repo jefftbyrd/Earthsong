@@ -32,7 +32,7 @@ export interface JourneyContextType {
   setPin: Dispatch<SetStateAction<Pin | object>>;
   triggerJourneySaved: () => void;
   triggerReset: () => Promise<void>;
-  triggerReset2: () => Promise<void>;
+  triggerReset2: (args: { nextPhase: string }) => Promise<void>;
   test: boolean;
   setTest: Dispatch<SetStateAction<boolean>>;
 }
