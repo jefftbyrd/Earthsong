@@ -6,7 +6,7 @@ import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
 export default function PortalNav({ isLoggedIn }) {
-  const { togglePanel, setPanelId, setReset, setPhase, phase, triggerReset } =
+  const { togglePanel, setPanelId, setReset, setPhase, phase, triggerReset2 } =
     useContext(journeyContext);
   const [resetDone, setResetDone] = useState(false);
   const { setActivateTarget } = useSoundPlayer();
@@ -45,17 +45,16 @@ export default function PortalNav({ isLoggedIn }) {
         <button
           key="map"
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
-          onClick={(e) => {
+          onClick={async (e) => {
             e.stopPropagation(); // Extra safeguard
             setActivateTarget(false);
-            triggerReset()
-              .then(() => {
-                console.log('Reset triggered successfully');
-              })
-              .catch((error) => {
-                console.error('Error triggering reset:', error);
-              });
-            setPhase('returnToMap');
+            try {
+              await triggerReset2({ nextPhase: 'returnToMap' }); // Pass the required object
+              console.log('Reset triggered successfully');
+            } catch (error) {
+              console.error('Error triggering reset:', error);
+            }
+            // setPhase('returnToMap');
             // setReset(true);
             // setTimeout(() => {
             //   setReset(false);
