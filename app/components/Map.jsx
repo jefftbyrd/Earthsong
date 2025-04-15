@@ -71,7 +71,7 @@ export default function Map() {
     return () => {
       mapRef.current.remove();
     };
-  }, [setPin]); // Empty dependency array - create map only once
+  }, []); // Empty dependency array - create map only once
 
   return (
     <>
