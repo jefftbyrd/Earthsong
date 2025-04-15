@@ -4,15 +4,24 @@ import { useContext } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 
-export default function MapMessages() {
+export default function MapMessages(props) {
   const { setPhase, phase, pin, setPin } = useContext(journeyContext);
-  const { sounds, freesoundLoading, notEnough, setFreesoundLoading } =
-    useContext(soundsContext);
+  const {
+    sounds,
+    freesoundLoading,
+    notEnough,
+    setFreesoundLoading,
+    isFetchingSounds,
+  } = useContext(soundsContext);
 
   const mapConditions = {
     initial: !pin.lat && (phase === 'map' || phase === 'returnToMap'),
     location: pin.lat && (phase === 'map' || phase === 'returnToMap'),
-    loading:
+    fetching:
+      pin.lat &&
+      (phase === 'map' || phase === 'returnToMap') &&
+      isFetchingSounds === true,
+    searching:
       pin.lat &&
       (phase === 'map' || phase === 'returnToMap') &&
       freesoundLoading === true,
@@ -33,7 +42,9 @@ export default function MapMessages() {
     transition: { repeat: Infinity, duration: 3 },
   };
 
-  // console.log('sounds', sounds);
+  console.log('MapMessages: pin.lat:', pin.lat);
+  console.log('MapMessages: phase:', phase);
+  console.log('MapMessages: isFetchingSounds:', isFetchingSounds);
 
   return (
     <div className="absolute bottom-10 z-10 m-auto left-0 right-0 text-center text-xl sm:text-3xl p-2 backdrop-blur-[5px] ">
@@ -42,12 +53,12 @@ export default function MapMessages() {
           {mapConditions.initial ? 'Choose a place to explore' : null}
         </motion.p>
         {mapConditions.location
-          ? `You chose ${pin.lat.toFixed(4)}, ${pin.lng.toFixed(4)}.`
+          ? `You chose ${pin.lat.toFixed(3)}, ${pin.lng.toFixed(3)} ${props.location === null ? null : props.location}.`
           : null}
       </div>
 
       <div>
-        {mapConditions.loading ? (
+        {mapConditions.fetching ? (
           <p>
             Searching the area.
             <br />
