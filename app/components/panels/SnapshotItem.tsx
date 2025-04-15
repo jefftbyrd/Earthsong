@@ -15,15 +15,8 @@ export default function SnapshotItem({
   snapshot,
   onDelete,
 }: SnapshotItemProps) {
-  const {
-    setPhase,
-    setReset,
-    setJourneyToRecall,
-    togglePanel,
-    triggerReset,
-    phase,
-    setPin,
-  } = useContext(journeyContext);
+  const { setPhase, setJourneyToRecall, togglePanel, triggerReset, setPin } =
+    useContext(journeyContext);
   const { setFreesoundLoading } = useContext(soundsContext);
 
   const handleDelete = async () => {
