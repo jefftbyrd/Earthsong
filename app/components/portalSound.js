@@ -37,7 +37,9 @@ export const portalSound = (p5) => {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   p5.updateWithProps = (props) => {
-    // console.log('resetPortal on portalSound', props.resetPortal);
+    console.log('props.playerTarget', props.playerTarget);
+    console.log('props.playing', props.playing);
+    
     if (props.soundsColor) {
       sounds2 = [...props.soundsColor];
     }
