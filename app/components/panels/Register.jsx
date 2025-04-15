@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import ErrorMessage from '../../ErrorMessage';
 import styles from '../../styles/ui.module.scss';
+import { Button, ButtonText } from '../ui';
 
 export default function Register() {
   const { setPanelId, panelOpen, togglePanel, panelId } =
@@ -56,7 +57,8 @@ export default function Register() {
         <label>
           Username
           <input
-            autoFocus={true}
+            // autoFocus={true}
+            className="bg-blue-600"
             value={username}
             onChange={(event) => setUsername(event.currentTarget.value)}
           />
@@ -65,13 +67,14 @@ export default function Register() {
         <label>
           Password
           <input
+            className="bg-blue-600"
             type="password"
             value={password}
             onChange={(event) => setPassword(event.currentTarget.value)}
           />
         </label>
 
-        <button>register</button>
+        <Button>register</Button>
 
         {/* <p>
           Already have an account? Then you should{' '}
