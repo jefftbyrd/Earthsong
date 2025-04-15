@@ -39,6 +39,8 @@ interface SoundsContextType {
   setFreesoundLoading: Dispatch<SetStateAction<boolean>>;
   soundsColor: Sounds;
   setSoundsColor: Dispatch<SetStateAction<Sounds>>;
+  isFetchingSounds: boolean; // New property added to SoundsContextType
+  setIsFetchingSounds: Dispatch<SetStateAction<boolean>>; // New property added to SoundsContextType
 }
 
 export const soundsContext = createContext<SoundsContextType>({
@@ -78,6 +80,8 @@ export const soundsContext = createContext<SoundsContextType>({
     },
   },
   setSoundsColor: () => {},
+  isFetchingSounds: false, // Initialize the new property
+  setIsFetchingSounds: () => {}, // Initialize the new property
 });
 
 interface Props {
