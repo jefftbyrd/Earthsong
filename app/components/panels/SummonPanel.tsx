@@ -1,11 +1,8 @@
-import { AnimatePresence } from 'motion/react';
 import { useContext, useState } from 'react';
-// import { journeyContext } from '../../context/journeyContext';
+import { type Snapshot } from '../../../migrations/00002-createTableSnapshots';
 import { userContext } from '../../context/userContext';
 // import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
-// import PowersLoggedIn from './PowersLoggedIn';
-// import PowersNotLoggedIn from './PowersNotLoggedIn';
 import SnapshotItem from './SnapshotItem';
 
 function SnapshotList({ snapshots }: { snapshots: Snapshot[] }) {
@@ -29,8 +26,6 @@ function SnapshotList({ snapshots }: { snapshots: Snapshot[] }) {
 }
 
 export default function SummonPanel() {
-  // const { setPanelId, panelOpen, togglePanel, panelId } =
-  //   useContext(journeyContext);
   const { snapshots } = useContext(userContext);
 
   return (
