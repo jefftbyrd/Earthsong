@@ -22,6 +22,7 @@ export default function SoundItem({ sound, index }) {
     setPlayerTarget,
     setPlaying,
     playing,
+    setActivateTarget,
   } = useSoundPlayer();
 
   // Check if this specific sound is playing
@@ -34,10 +35,12 @@ export default function SoundItem({ sound, index }) {
           className="block w-full col-span-14 p-2 h-full"
           // onClick={() => handlePlaySound(sound.id)}
           onClick={() => {
+            setActivateTarget(true);
+            // handlePlaySound(sound.id);
             // e.stopPropagation();
-            setPlaying(!playing);
+            // setPlaying(!playing);
             setPlayerTarget(sound.id);
-            setTest(true);
+            // setTest(true);
           }}
         >
           <div className="flex items-center justify-start gap-x-0 h-full">
@@ -54,7 +57,8 @@ export default function SoundItem({ sound, index }) {
           data-info-toggle="true"
           onClick={(e) => {
             e.stopPropagation();
-            setTest(false);
+            // setTest(false);
+            setActivateTarget(false);
             // If this exact panel is already open, just toggle it closed
             if (panelOpen && panelId === sound.id) {
               togglePanel(); // This will close the panel and clear panelId
