@@ -239,6 +239,7 @@ export const soundPortal = (p5) => {
   }; // END DRAW
 
   p5.keyPressed = () => {
+    if (isPanelOpen) return; // Just return, don't return false
     // Map keys 1-5 to the shapes by their original index/number
     // instead of their position in the array
     if (p5.key >= '1' && p5.key <= '5') {
