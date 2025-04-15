@@ -410,18 +410,19 @@ export const soundPortal = (p5) => {
             );
 
             // Add loading text to the DOM element
-            const loadingTextEl = element.querySelector('.loading-text');
-            if (!loadingTextEl) {
-              const loadingText = document.createElement('div');
-              loadingText.className = 'loading-text';
-              loadingText.style.position = 'absolute';
-              loadingText.style.top = '50%';
-              loadingText.style.left = '50%';
-              loadingText.style.transform = 'translate(-50%, -50%)';
-              loadingText.style.color = 'white';
-              loadingText.textContent = 'Loading...';
-              element.appendChild(loadingText);
-            }
+            // HIDE THIS LOADING MESSAGE, SINCE THE SOUND CIRCLES ALREADY SAY 'LOADING'
+            // const loadingTextEl = element.querySelector('.loading-text');
+            // if (!loadingTextEl) {
+            //   const loadingText = document.createElement('div');
+            //   loadingText.className = 'loading-text';
+            //   loadingText.style.position = 'absolute';
+            //   loadingText.style.top = '50%';
+            //   loadingText.style.left = '50%';
+            //   loadingText.style.transform = 'translate(-50%, -50%)';
+            //   loadingText.style.color = 'white';
+            //   loadingText.textContent = 'Loading...';
+            //   element.appendChild(loadingText);
+            // }
           }
         } catch (error) {
           // Silent error - DOM element might not exist
