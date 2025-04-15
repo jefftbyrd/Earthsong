@@ -87,7 +87,7 @@ export default function SnapshotItem({
         >
           {snapshot.title}
         </button>
-        <Button onClick={handleDelete}>Delete</Button>
+        <button onClick={handleDelete}>Delete</button>
       </motion.div>
     </AnimatePresence>
   );
