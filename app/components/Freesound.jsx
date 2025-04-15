@@ -2,10 +2,37 @@ import { useContext, useEffect } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 
-export default function Freesound() {
-  const { setSounds, freesoundLoading, setFreesoundLoading, setNotEnough } =
-    useContext(soundsContext);
-  const { setPhase, phase, pin, setPin } = useContext(journeyContext);
+export default function Freesound({ location }) {
+  const {
+    setSounds,
+    sounds,
+    freesoundLoading,
+    setFreesoundLoading,
+    setNotEnough,
+    isFetchingSounds,
+    setIsFetchingSounds, // Use the new state
+  } = useContext(soundsContext);
+  const { pin } = useContext(journeyContext);
+
+  console.log('sounds on Freesound:', sounds);
+  console.log('location on Freesound:', location);
+
+  // Reset Freesound results whenever the pin changes
+  // useEffect(() => {
+  //   if (pin && pin.lat && pin.lng) {
+  //     console.log('Pin changed, resetting Freesound results...');
+  //     setSounds(null); // Reset sounds to initial state
+  //     setNotEnough(false); // Reset "not enough results" state
+  //     setIsFetchingSounds(true); // Set fetching state to true
+  //   }
+  // }, [pin, setSounds, setNotEnough, setIsFetchingSounds]);
+
+  useEffect(() => {
+    if (pin && pin.lat && pin.lng) {
+      console.log('Pin changed, setting isFetchingSounds to true...');
+      setIsFetchingSounds(true); // This should be called
+    }
+  }, [pin, setIsFetchingSounds]);
 
   useEffect(() => {
     const searchRadiuses = [10, 50, 100, 200];
@@ -16,6 +43,7 @@ export default function Freesound() {
       if (!pin || !pin.lat || !pin.lng) {
         console.error('Invalid pin location:', pin);
         setFreesoundLoading(false);
+        setIsFetchingSounds(false); // Reset fetching state
         return;
       }
 
@@ -40,10 +68,12 @@ export default function Freesound() {
             setSounds({
               ...data,
               pin,
+              location: location || 'Unknown location', // Use the latest location or a fallback
               searchRadius: radius,
               soundCount: data.count,
             });
             setNotEnough(false);
+            setIsFetchingSounds(false); // Reset fetching state
             return;
           }
         }
@@ -58,6 +88,7 @@ export default function Freesound() {
         }
       } finally {
         setFreesoundLoading(false);
+        setIsFetchingSounds(false); // Reset fetching state
       }
     };
 
@@ -68,7 +99,18 @@ export default function Freesound() {
     return () => {
       controller.abort();
     };
-  }, [pin, setSounds, setFreesoundLoading, setNotEnough, setPhase]);
+  }, [
+    // pin,
+    // setSounds,
+    // setFreesoundLoading,
+    // setNotEnough,
+    // setIsFetchingSounds,
+    location,
+  ]);
+
+  if (isFetchingSounds) {
+    return <div>Fetching new sounds for the selected pin...</div>;
+  }
 
   if (freesoundLoading) {
     return <div>Loading sounds from this location...</div>;
