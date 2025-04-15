@@ -2,7 +2,7 @@
 import { createContext, type ReactNode } from 'react';
 import { type Sound } from './soundsContext';
 
-interface User {
+export interface User {
   id: number;
   username: string;
   email: string;
