@@ -10,6 +10,7 @@ export function SoundPlayerProvider({ children }) {
   const [playing, setPlaying] = useState(false);
   const [soundStates, setSoundStates] = useState({});
   const [activateTarget, setActivateTarget] = useState(false);
+  const [forceChange, setForceChange] = useState(false);
 
   // Combined function to handle playing and pausing sounds
   const handlePlaySound = (soundId) => {
@@ -53,6 +54,8 @@ export function SoundPlayerProvider({ children }) {
     soundStates, // Ensure this is included
     activateTarget,
     setActivateTarget,
+    forceChange,
+    setForceChange,
   };
 
   return (

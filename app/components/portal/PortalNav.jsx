@@ -1,6 +1,7 @@
 'use client';
 import React, { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import { useSoundPlayer } from '../../context/soundPlayerContext';
 import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
@@ -8,6 +9,7 @@ export default function PortalNav({ isLoggedIn }) {
   const { togglePanel, setPanelId, setReset, setPhase, phase, triggerReset } =
     useContext(journeyContext);
   const [resetDone, setResetDone] = useState(false);
+  const { setActivateTarget } = useSoundPlayer();
 
   useEffect(() => {
     if (resetDone) {
@@ -45,6 +47,7 @@ export default function PortalNav({ isLoggedIn }) {
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
           onClick={(e) => {
             e.stopPropagation(); // Extra safeguard
+            setActivateTarget(false);
             triggerReset();
             // setReset(true);
             // setTimeout(() => {
@@ -64,6 +67,7 @@ export default function PortalNav({ isLoggedIn }) {
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
           onClick={(e) => {
             e.stopPropagation(); // Extra safeguard
+            setActivateTarget(false);
             setPanelId(id);
             togglePanel();
           }}

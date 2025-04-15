@@ -23,6 +23,9 @@ export default function SoundItem({ sound, index }) {
     setPlaying,
     playing,
     setActivateTarget,
+    activateTarget,
+    setForceChange,
+    forceChange,
   } = useSoundPlayer();
 
   // Check if this specific sound is playing
@@ -36,6 +39,7 @@ export default function SoundItem({ sound, index }) {
           // onClick={() => handlePlaySound(sound.id)}
           onClick={() => {
             setActivateTarget(true);
+            setForceChange(!forceChange);
             // handlePlaySound(sound.id);
             // e.stopPropagation();
             // setPlaying(!playing);

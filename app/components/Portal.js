@@ -20,7 +20,8 @@ export default function Portal() {
   const { reset, panelOpen, panelId, test } = useContext(journeyContext);
   const { isLoading, soundsColor, error } = useSoundData();
   // const [state, actions] = usePortalState();
-  const { playerTarget, playing, activateTarget } = useSoundPlayer();
+  const { playerTarget, playing, activateTarget, forceChange } =
+    useSoundPlayer();
   const { user } = useContext(userContext);
 
   // More robust approach to measure height
@@ -100,6 +101,7 @@ export default function Portal() {
             reset={reset}
             // test={test}
             activateTarget={activateTarget}
+            forceChange={forceChange}
             // SoundIcon={SoundIcon}
             panelOpen={panelOpen}
           />
