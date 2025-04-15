@@ -65,9 +65,9 @@ export default function MapMessages() {
             animate={glowAnimation}
             className="font-bold"
             onClick={() => {
-              setPhase('portal');
               setPin({});
               setFreesoundLoading(true);
+              setPhase('portal');
             }}
           >
             Take me there
