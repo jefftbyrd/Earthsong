@@ -48,7 +48,13 @@ export default function PortalNav({ isLoggedIn }) {
           onClick={(e) => {
             e.stopPropagation(); // Extra safeguard
             setActivateTarget(false);
-            triggerReset();
+            triggerReset()
+              .then(() => {
+                console.log('Reset triggered successfully');
+              })
+              .catch((error) => {
+                console.error('Error triggering reset:', error);
+              });
             // setReset(true);
             // setTimeout(() => {
             //   setReset(false);
@@ -61,7 +67,7 @@ export default function PortalNav({ isLoggedIn }) {
         </button>
       ) : null}
 
-      {filteredPanels.map(([id, { label, icon }]) => (
+      {filteredPanels.map(([id, { label, icon, iconClassName }]) => (
         <button
           key={`panel-${id}`}
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
@@ -72,7 +78,11 @@ export default function PortalNav({ isLoggedIn }) {
             togglePanel();
           }}
         >
-          <EarthsongIcons className="h-6 w-6" iconNumber={icon} />
+          <EarthsongIcons
+            // className="h-6 w-6"
+            iconNumber={icon}
+            className={iconClassName}
+          />
           <span>{label}</span>
         </button>
       ))}
