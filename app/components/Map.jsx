@@ -46,7 +46,7 @@ export default function Map() {
       console.log('API response data:', data);
 
       if (data.features && data.features.length > 0) {
-        const place = data.features[0]?.properties?.place_formatted;
+        const place = data.features[1]?.properties?.place_formatted;
         if (place) {
           console.log('Extracted place_formatted:', place);
           setPlaceFormatted(place); // Update state
