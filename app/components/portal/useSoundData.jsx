@@ -55,7 +55,7 @@ export function useSoundData() {
         // Shuffle and pick the first 5 sounds
         const soundsShuffled = shuffleArray(filteredSounds).slice(0, 5);
 
-        // Add color and format sound data
+        // Add color, format sound data, and include pin, location, and searchRadius
         const soundsWithColor = soundsShuffled.map(
           ({ previews, ...sound }) => ({
             ...sound,
@@ -66,6 +66,9 @@ export function useSoundData() {
               .replace('rgb', 'rgba'),
             url: previews?.['preview-lq-mp3'], // Use the value from previews if needed
             name: formatSoundName(sound?.name || ''),
+            pin: sounds.pin, // Add pin
+            location: sounds.location, // Add location
+            searchRadius: sounds.searchRadius, // Add searchRadius
           }),
         );
 
