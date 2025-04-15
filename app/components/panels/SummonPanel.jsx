@@ -1,14 +1,14 @@
 import { useContext, useState } from 'react';
-import { type Snapshot } from '../../../migrations/00002-createTableSnapshots';
+// import { type Snapshot } from '../../../migrations/00002-createTableSnapshots';
 import { userContext } from '../../context/userContext';
 // import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
 import SnapshotItem from './SnapshotItem';
 
-function SnapshotList({ snapshots }: { snapshots: Snapshot[] }) {
+function SnapshotList({ snapshots }) {
   const [snapshotList, setSnapshotList] = useState(snapshots);
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id) => {
     setSnapshotList(snapshotList.filter((snapshot) => snapshot.id !== id));
   };
 
