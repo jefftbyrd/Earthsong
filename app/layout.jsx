@@ -7,10 +7,6 @@ import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
 import { getSnapshots } from '../database/snapshots';
 import { getUser } from '../database/users';
-// import { isMobile } from '../util/isMobile';
-// import FullscreenComponent from './components/FullscreenComponent';
-// import MobileFullscreen from './components/MobileFullscreen';
-// import MobileViewportHandler from './components/MobileViewportHandler';
 import { JourneyContextProvider } from './context/journeyContext';
 import { SoundPlayerProvider } from './context/soundPlayerContext';
 import { SoundsContextProvider } from './context/soundsContext';
@@ -26,18 +22,6 @@ const noto = Noto_Sans_Linear_A({
   subsets: ['latin'],
   variable: '--font-noto',
 });
-
-// const basteleurMoonlight = localFont({
-//   src: './fonts/Basteleur-Moonlight.woff2',
-//   variable: '--font-basteleurM',
-//   weight: '300',
-// });
-
-// const basteleurBold = localFont({
-//   src: './fonts/Basteleur-Bold.woff2',
-//   variable: '--font-basteleurB',
-//   weight: '900',
-// });
 
 const basteleur = localFont({
   variable: '--font-basteleur',
