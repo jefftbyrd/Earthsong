@@ -29,7 +29,7 @@ export default function SoundController({ soundsColor, className }) {
         <div className="text-3xl/9 uppercase text-center flex items-center justify-center xl:hidden">
           Portal
         </div>
-        {soundsColor.map((sound, index) => (
+        {soundsColor?.map((sound, index) => (
           <div key={`soundId-${sound.id}`} className="">
             <SoundItem
               sound={sound}
@@ -41,7 +41,7 @@ export default function SoundController({ soundsColor, className }) {
         ))}
       </div>
       <div>
-        {soundsColor.map((sound, index) => (
+        {soundsColor?.map((sound, index) => (
           <div key={`soundId-${sound.id}`} className="">
             {panelOpen && panelId === sound.id && (
               <InfoPanel sound={sound} index={index} color={sound.color} />
