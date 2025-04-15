@@ -8,17 +8,41 @@ interface SnapshotItemProps {
 }
 
 export default function SnapshotItem({ snapshot }: SnapshotItemProps) {
-  const { setPhase, setReset, setJourneyToRecall, togglePanel } =
-    useContext(journeyContext);
+  const {
+    setPhase,
+    setReset,
+    setJourneyToRecall,
+    togglePanel,
+    triggerReset,
+    phase,
+  } = useContext(journeyContext);
 
   return (
     <button
-      onClick={() => {
-        setReset(true);
-        setReset(false);
-        setJourneyToRecall(snapshot.id);
-        setPhase('portalRecall');
-        togglePanel();
+      onClick={async () => {
+        try {
+          // Trigger reset first
+          await triggerReset();
+          console.log('Reset triggered successfully');
+
+          // Await the first setPhase
+          await new Promise((resolve) => {
+            setPhase('initial');
+            resolve(undefined);
+          });
+
+          // Wait 100ms before proceeding
+          await new Promise<void>((resolve) => {
+            setTimeout(() => resolve(), 100);
+          });
+
+          // Perform the other actions after reset
+          setJourneyToRecall(snapshot.id);
+          togglePanel();
+          setPhase('portalRecall');
+        } catch (error) {
+          console.error('Error triggering reset:', error);
+        }
       }}
     >
       {snapshot.title}
