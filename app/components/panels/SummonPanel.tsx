@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { AnimatePresence } from 'motion/react';
+import { useContext, useState } from 'react';
 // import { journeyContext } from '../../context/journeyContext';
 import { userContext } from '../../context/userContext';
 // import ClosePanelButton from '../panels/ClosePanelButton';
@@ -6,6 +7,26 @@ import PanelWrap from './PanelWrap';
 // import PowersLoggedIn from './PowersLoggedIn';
 // import PowersNotLoggedIn from './PowersNotLoggedIn';
 import SnapshotItem from './SnapshotItem';
+
+function SnapshotList({ snapshots }: { snapshots: Snapshot[] }) {
+  const [snapshotList, setSnapshotList] = useState(snapshots);
+
+  const handleDelete = (id: number) => {
+    setSnapshotList(snapshotList.filter((snapshot) => snapshot.id !== id));
+  };
+
+  return (
+    <div>
+      {snapshotList.map((snapshot) => (
+        <SnapshotItem
+          key={`snapshot-${snapshot.id}`}
+          snapshot={snapshot}
+          onDelete={handleDelete}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function SummonPanel() {
   // const { setPanelId, panelOpen, togglePanel, panelId } =
@@ -20,13 +41,7 @@ export default function SummonPanel() {
         {snapshots.length < 1 ? (
           'No snapshots yet'
         ) : (
-          <ul>
-            {snapshots.map((snapshot) => (
-              <li key={`snapshots-${snapshot.id}`}>
-                <SnapshotItem snapshot={snapshot} />
-              </li>
-            ))}
-          </ul>
+          <SnapshotList snapshots={snapshots} />
         )}
       </div>
     </PanelWrap>
