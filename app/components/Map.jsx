@@ -22,7 +22,7 @@ export default function Map() {
   const mapContainerRef = useRef();
   const [center, setCenter] = useState(initialCenter);
   const [zoom, setZoom] = useState(getInitialZoom());
-  const [placeFormatted, setPlaceFormatted] = useState(null);
+  const [placeFormatted, setPlaceFormatted] = useState('no place found');
 
   console.log('placeFormatted in Map:', placeFormatted);
 
@@ -38,7 +38,7 @@ export default function Map() {
 
       if (!response.ok) {
         console.error('API call failed with status:', response.status);
-        setPlaceFormatted(null); // Set warning message
+        setPlaceFormatted('Error fetching location'); // Set warning message
         return null;
       }
 
@@ -53,17 +53,17 @@ export default function Map() {
           return place; // Return the value
         } else {
           console.error('place_formatted is missing in the response');
-          setPlaceFormatted(null); // Set warning message
+          setPlaceFormatted('No location found'); // Set warning message
           return null;
         }
       } else {
         console.error('No features found in response');
-        setPlaceFormatted(null); // Set warning message
+        setPlaceFormatted('No location found'); // Set warning message
         return null;
       }
     } catch (error) {
       console.error('Error fetching place_formatted:', error);
-      setPlaceFormatted(null); // Set warning message
+      setPlaceFormatted('Error fetching location'); // Set warning message
       return null;
     }
   };
