@@ -1,26 +1,26 @@
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext';
 import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
 export default function PortalNav({ isLoggedIn }) {
-  const { togglePanel, setPanelId, setReset, setPhase, phase, triggerReset2 } =
+  const { togglePanel, setPanelId, phase, triggerReset2, panelId, panelOpen } =
     useContext(journeyContext);
-  const [resetDone, setResetDone] = useState(false);
+  // const [resetDone, setResetDone] = useState(false);
   const { setActivateTarget } = useSoundPlayer();
 
-  useEffect(() => {
-    if (resetDone) {
-      setPhase('map');
-    }
-  }, [resetDone, setPhase]);
+  // useEffect(() => {
+  //   if (resetDone) {
+  //     setPhase('map');
+  //   }
+  // }, [resetDone, setPhase]);
 
   // Prevent event propagation to canvas
-  const handleInteraction = (e) => {
-    e.stopPropagation();
-  };
+  // const handleInteraction = (e) => {
+  //   e.stopPropagation();
+  // };
 
   // Filter panels based on login status
   const filteredPanels = Object.entries(panels).filter(([id]) => {
@@ -32,9 +32,6 @@ export default function PortalNav({ isLoggedIn }) {
   return (
     <nav
       className="h-10 border-t-1 bg-black w-full grid grid-cols-3 uppercase"
-      onClick={handleInteraction}
-      onMouseDown={handleInteraction}
-      onTouchStart={handleInteraction}
       style={{
         position: 'relative',
         zIndex: 50,
@@ -48,18 +45,13 @@ export default function PortalNav({ isLoggedIn }) {
           onClick={async (e) => {
             e.stopPropagation(); // Extra safeguard
             setActivateTarget(false);
+            togglePanel();
             try {
               await triggerReset2({ nextPhase: 'returnToMap' }); // Pass the required object
               console.log('Reset triggered successfully');
             } catch (error) {
               console.error('Error triggering reset:', error);
             }
-            // setPhase('returnToMap');
-            // setReset(true);
-            // setTimeout(() => {
-            //   setReset(false);
-            //   setResetDone(true);
-            // }, 0);
           }}
         >
           <EarthsongIcons className="h-6 w-6" iconNumber={5} />
@@ -73,9 +65,14 @@ export default function PortalNav({ isLoggedIn }) {
           className="uppercase text-center flex items-center justify-center gap-2 text-lg"
           onClick={(e) => {
             e.stopPropagation(); // Extra safeguard
-            setActivateTarget(false);
-            setPanelId(id);
-            togglePanel();
+            if (panelOpen && panelId === id) {
+              togglePanel(); // This will close the panel and clear panelId
+            }
+            // Otherwise, set this panel as active
+            else {
+              setPanelId(id);
+              // The useEffect will handle opening the panel if needed
+            }
           }}
         >
           <EarthsongIcons
