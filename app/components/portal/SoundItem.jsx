@@ -2,62 +2,35 @@
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext'; // Import the context
-// import InfoPanel from './InfoPanel';
 import SoundNumber from './SoundNumber';
 
 export default function SoundItem({ sound, index }) {
-  const {
-    setPanelId,
-    panelOpen,
-    togglePanel,
-    panelId,
-    setPanelOpen,
-    setTest,
-    test,
-  } = useContext(journeyContext);
+  const { setPanelId, panelOpen, togglePanel, panelId } =
+    useContext(journeyContext);
   // Get sound player functions from context
-  const {
-    handlePlaySound,
-    isSoundPlaying,
-    setPlayerTarget,
-    setPlaying,
-    playing,
-    setActivateTarget,
-    activateTarget,
-    setForceChange,
-    forceChange,
-  } = useSoundPlayer();
-
-  // Check if this specific sound is playing
-  const isPlaying = isSoundPlaying(sound.id);
+  const { setPlayerTarget, setActivateTarget, setForceChange, forceChange } =
+    useSoundPlayer();
 
   return (
     <header className="lg:h-20 xl:h-28">
-      <div className={`s${sound.id} grid grid-cols-16 h-full`}>
+      <div className={`s${sound.id}`}>
         <button
-          className="block w-full col-span-14 p-2 h-full"
-          // onClick={() => handlePlaySound(sound.id)}
+          className="block w-full h-full"
           onClick={() => {
             setActivateTarget(true);
             setForceChange(!forceChange);
-            // handlePlaySound(sound.id);
-            // e.stopPropagation();
-            // setPlaying(!playing);
             setPlayerTarget(sound.id);
-            // setTest(true);
           }}
         >
-          <div className="flex items-center justify-start gap-x-0 h-full">
+          <div className="flex items-center justify-center gap-x-0 h-full p-2">
             <div className="flex-shrink-0">
               <SoundNumber soundNumber={index + 1} />
             </div>
-            <span className="text-sm lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 lg:line-clamp-2 xl:line-clamp-3 text-black text-left ml-3">
-              {sound.name}
-            </span>
           </div>
         </button>
+        <div className="h-0.5 w-full bg-black" />
         <button
-          className="p-1 my-auto bg-black rounded-full w-5 h-5 grid place-content-center col-span-2"
+          className="p-1 "
           data-info-toggle="true"
           onClick={(e) => {
             e.stopPropagation();
@@ -74,12 +47,11 @@ export default function SoundItem({ sound, index }) {
             }
           }}
         >
-          <span className="text-center font-bold text-xs">i</span>
+          <span className="p-1 text-sm min-h-10 lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 lg:line-clamp-2 xl:line-clamp-3 text-black text-left">
+            {sound.name}
+          </span>
         </button>
       </div>
-      {/* {panelOpen && panelId === sound.id && (
-        <InfoPanel sound={sound} index={index} color={sound.color} />
-      )} */}
     </header>
   );
 }
