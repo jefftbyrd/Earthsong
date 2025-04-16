@@ -43,18 +43,25 @@ export const wind = (p5) => {
     // Check if phase changed
     const phaseChanged = prevPhase !== currentPhase;
 
-    // Start wind when entering map phase
-    if (currentPhase === 'map' && !isDisposed) {
+    // Start wind when entering map or returnToMap phase
+    if (
+      (currentPhase === 'map' || currentPhase === 'returnToMap') &&
+      !isDisposed
+    ) {
       if (noise1?.state === 'stopped') {
-        console.log('Starting wind sounds for map phase');
+        console.log('Starting wind sounds for map or returnToMap phase');
         // Start both noise sources
         noise1.start();
         noise2.start();
       }
     }
-    // Stop wind immediately when leaving map phase
-    else if (phaseChanged && prevPhase === 'map' && !isDisposed) {
-      console.log('Stopping wind sounds - exited map phase');
+    // Stop wind immediately when leaving map or returnToMap phase
+    else if (
+      phaseChanged &&
+      (prevPhase === 'map' || prevPhase === 'returnToMap') &&
+      !isDisposed
+    ) {
+      console.log('Stopping wind sounds - exited map or returnToMap phase');
       if (noise1?.state === 'started') {
         noise1.stop();
       }
@@ -70,8 +77,12 @@ export const wind = (p5) => {
   };
 
   p5.draw = () => {
-    // Only process audio modulation when in map phase
-    if (currentPhase !== 'map' || isDisposed) return;
+    // Only process audio modulation when in map or returnToMap phase
+    if (
+      (currentPhase !== 'map' && currentPhase !== 'returnToMap') ||
+      isDisposed
+    )
+      return;
 
     // Modulate filter1 frequency (wind base)
     drift1 += p5.random(-5, 5);
