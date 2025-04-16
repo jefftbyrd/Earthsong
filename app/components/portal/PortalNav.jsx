@@ -18,9 +18,9 @@ export default function PortalNav({ isLoggedIn }) {
   // }, [resetDone, setPhase]);
 
   // Prevent event propagation to canvas
-  // const handleInteraction = (e) => {
-  //   e.stopPropagation();
-  // };
+  const handleInteraction = (e) => {
+    e.stopPropagation();
+  };
 
   // Filter panels based on login status
   const filteredPanels = Object.entries(panels).filter(([id]) => {
@@ -31,7 +31,10 @@ export default function PortalNav({ isLoggedIn }) {
 
   return (
     <nav
-      className="h-10 border-t-1 bg-black w-full grid grid-cols-3 uppercase"
+      onClick={handleInteraction}
+      onMouseDown={handleInteraction}
+      onTouchStart={handleInteraction}
+      className="h-10 bg-black border-t-1 border-[#0073FF] text-white w-full grid grid-cols-3 uppercase text-xl tracking-wide"
       style={{
         position: 'relative',
         zIndex: 50,
@@ -41,7 +44,7 @@ export default function PortalNav({ isLoggedIn }) {
       {phase === 'portal' || phase === 'portalRecall' ? (
         <button
           key="map"
-          className="uppercase text-center flex items-center justify-center gap-2 text-lg"
+          className="uppercase text-center flex items-center justify-center gap-0 "
           onClick={async (e) => {
             e.stopPropagation(); // Extra safeguard
             setActivateTarget(false);
@@ -54,35 +57,36 @@ export default function PortalNav({ isLoggedIn }) {
             }
           }}
         >
-          <EarthsongIcons className="h-6 w-6" iconNumber={5} />
+          <EarthsongIcons className="h-6 w-6 mr-1" iconNumber={5} />
           <span>Map</span>
         </button>
       ) : null}
-
-      {filteredPanels.map(([id, { label, icon, iconClassName }]) => (
-        <button
-          key={`panel-${id}`}
-          className="uppercase text-center flex items-center justify-center gap-2 text-lg"
-          onClick={(e) => {
-            e.stopPropagation(); // Extra safeguard
-            if (panelOpen && panelId === id) {
-              togglePanel(); // This will close the panel and clear panelId
-            }
-            // Otherwise, set this panel as active
-            else {
-              setPanelId(id);
-              // The useEffect will handle opening the panel if needed
-            }
-          }}
-        >
-          <EarthsongIcons
-            // className="h-6 w-6"
-            iconNumber={icon}
-            className={iconClassName}
-          />
-          <span>{label}</span>
-        </button>
-      ))}
+      <div className="col-span-2 col-start-2 grid grid-cols-2 gap-0">
+        {filteredPanels.map(([id, { label, icon, iconClassName }]) => (
+          <button
+            key={`panel-${id}`}
+            className="uppercase text-center flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation(); // Extra safeguard
+              if (panelOpen && panelId === id) {
+                togglePanel(); // This will close the panel and clear panelId
+              }
+              // Otherwise, set this panel as active
+              else {
+                setPanelId(id);
+                // The useEffect will handle opening the panel if needed
+              }
+            }}
+          >
+            <EarthsongIcons
+              // className="h-6 w-6"
+              iconNumber={icon}
+              className={iconClassName}
+            />
+            <span>{label}</span>
+          </button>
+        ))}
+      </div>
     </nav>
   );
 }

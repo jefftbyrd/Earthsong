@@ -8,8 +8,8 @@ export const panels = {
   Powers: {
     component: PowersPanel,
     label: 'Powers',
-    icon: 3,
-    iconClassName: 'h-6 w-6 -rotate-35',
+    icon: 6,
+    iconClassName: 'h-9 w-9 -rotate-45',
   },
   Summon: {
     component: SummonPanel,
@@ -33,6 +33,6 @@ export const panels = {
     component: GuidePanel,
     label: 'Guide',
     icon: 2,
-    iconClassName: 'h-6 w-3',
+    iconClassName: 'h-6.5 w-5',
   },
 };
