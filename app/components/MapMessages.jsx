@@ -98,7 +98,7 @@ export default function MapMessages(props) {
         {mapConditions.fetching ? (
           <motion.p
             animate={combinedAnimation}
-            className="font-bold text-shadow-lg/20 text-4xl"
+            className="font-bold text-shadow-lg/20"
           >
             Searching the area.
             <br />
