@@ -92,7 +92,7 @@ export const SoundsContextProvider = ({ children }: Props) => {
   // Initialize with an empty sound object that matches the Sound type
   const [freesoundLoading, setFreesoundLoading] = useState(true);
   const [notEnough, setNotEnough] = useState(false);
-  const [isFetchingSounds, setIsFetchingSounds] = useState(false); // New state
+  const [isFetchingSounds, setIsFetchingSounds] = useState(true); // New state
   const [soundsColor, setSoundsColor] = useState<Sounds>({
     count: 0,
     pin: {
