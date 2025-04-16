@@ -110,7 +110,7 @@ export default function Freesound({ location }) {
     // setFreesoundLoading,
     // setNotEnough,
     // setIsFetchingSounds,
-    // location,
+    location,
   ]);
 
   if (isFetchingSounds) {
