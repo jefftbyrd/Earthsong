@@ -12,7 +12,7 @@ export default function SoundItem({ sound, index }) {
     useSoundPlayer();
 
   return (
-    <header className="lg:h-20 xl:h-28">
+    <header className="">
       <div className={`s${sound.id}`}>
         <button
           className="block w-full h-full"
@@ -22,7 +22,7 @@ export default function SoundItem({ sound, index }) {
             setPlayerTarget(sound.id);
           }}
         >
-          <div className="flex items-center justify-center gap-x-0 h-full p-2">
+          <div className="flex items-center justify-center gap-x-0 h-full p-2 lg:p-0 lg:min-h-24">
             <div className="flex-shrink-0">
               <SoundNumber soundNumber={index + 1} />
             </div>
@@ -30,7 +30,7 @@ export default function SoundItem({ sound, index }) {
         </button>
         <div className="h-0.5 w-full bg-black" />
         <button
-          className="p-1 "
+          className="p-1 lg:p-3"
           data-info-toggle="true"
           onClick={(e) => {
             e.stopPropagation();
@@ -47,7 +47,7 @@ export default function SoundItem({ sound, index }) {
             }
           }}
         >
-          <span className="wrap-break-word text-truncate text-sm min-h-10 lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 lg:line-clamp-2 xl:line-clamp-3 text-black text-left">
+          <span className="wrap-break-word text-truncate break-all text-sm min-h-10 lg:min-h-14 lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 lg:line-clamp-2 xl:line-clamp-2 text-black text-left">
             {sound.name}
           </span>
         </button>
