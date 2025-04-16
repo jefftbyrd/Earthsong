@@ -59,7 +59,8 @@ export default function SummonPanel() {
             <label>
               <h3>Give your journey a name:</h3>
               <input
-                autoFocus={true}
+                // autoFocus={true}
+                autoCapitalize="off"
                 className="bg-blue-600"
                 value={title}
                 onChange={(event) => setTitle(event.currentTarget.value)}

@@ -58,6 +58,7 @@ export default function Register() {
           Username
           <input
             // autoFocus={true}
+            autoCapitalize="off"
             className="bg-blue-600"
             value={username}
             onChange={(event) => setUsername(event.currentTarget.value)}
@@ -69,6 +70,7 @@ export default function Register() {
           <input
             className="bg-blue-600"
             type="password"
+            autoCapitalize="off"
             value={password}
             onChange={(event) => setPassword(event.currentTarget.value)}
           />

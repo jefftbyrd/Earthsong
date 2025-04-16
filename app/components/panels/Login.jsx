@@ -49,6 +49,7 @@ export default function Login() {
             // id="username"
             // type="text"
             placeholder="identify yourself"
+            autoCapitalize="off"
             // autoFocus={true}
             value={username}
             onChange={(event) => setUsername(event.currentTarget.value)}
@@ -63,6 +64,7 @@ export default function Login() {
             // type="password"
             // placeholder="******************"
             // autoFocus={true}
+            autoCapitalize="off"
             type="password"
             value={password}
             onChange={(event) => setPassword(event.currentTarget.value)}
