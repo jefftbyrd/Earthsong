@@ -9,6 +9,7 @@ export default function Freesound({ location }) {
     freesoundLoading,
     setFreesoundLoading,
     setNotEnough,
+    notEnough,
     isFetchingSounds,
     setIsFetchingSounds, // Use the new state
   } = useContext(soundsContext);
@@ -16,6 +17,8 @@ export default function Freesound({ location }) {
 
   console.log('sounds on Freesound:', sounds);
   console.log('location on Freesound:', location);
+  console.log('Freesound: isFetchingSounds:', isFetchingSounds);
+  console.log('Freesound: notEnough:', notEnough);
 
   // Reset Freesound results whenever the pin changes
   // useEffect(() => {
@@ -30,9 +33,11 @@ export default function Freesound({ location }) {
   useEffect(() => {
     if (pin && pin.lat && pin.lng) {
       console.log('Pin changed, setting isFetchingSounds to true...');
+      setNotEnough(false); // Reset "not enough results" state
       setIsFetchingSounds(true); // This should be called
+      setSounds(null); // Reset sounds to initial state
     }
-  }, [pin, setIsFetchingSounds]);
+  }, [pin]);
 
   useEffect(() => {
     const searchRadiuses = [10, 50, 100, 200];
@@ -100,12 +105,12 @@ export default function Freesound({ location }) {
       controller.abort();
     };
   }, [
-    // pin,
+    pin,
     // setSounds,
     // setFreesoundLoading,
     // setNotEnough,
     // setIsFetchingSounds,
-    location,
+    // location,
   ]);
 
   if (isFetchingSounds) {
