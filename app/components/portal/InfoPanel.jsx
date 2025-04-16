@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 
 export default function InfoPanel({ sound, index, color }) {
@@ -16,25 +16,6 @@ export default function InfoPanel({ sound, index, color }) {
   const cleanDescription = sound.description.replace(/<[^>]*>/g, '');
   // const adjustColor = color.replace('1)', '0.5)').replace(/\s/g, '');
   // const adjustColor = color.replace(/\s/g, '');
-
-  // useEffect(() => {
-  //   const handleClickOutside = (e) => {
-  //     // Don't close if the click was on the info toggle button
-  //     if (e.target.closest('[data-info-toggle="true"]')) {
-  //       return;
-  //     }
-  //     togglePanel();
-  //   };
-
-  //   if (panelOpen) {
-  //     document.body.addEventListener('click', handleClickOutside);
-
-  //     // Cleanup function to remove the event listener
-  //     return () => {
-  //       document.body.removeEventListener('click', handleClickOutside);
-  //     };
-  //   }
-  // }, [panelOpen, togglePanel]); // Remove panelId from the dependency array
 
   useEffect(() => {
     // Create handler function for document-level keyboard events
@@ -57,28 +38,10 @@ export default function InfoPanel({ sound, index, color }) {
     <div
       className="p-5 text-black box-border overflow-auto h-[calc(100vh-2.5rem-7.5rem)] mt-0.5"
       style={{ backgroundColor: color }}
-      onClick={(e) => e.stopPropagation()}
-      onKeyDown={(e) => {
-        // Handle Escape key to close panel
-        if (e.key === 'Escape') {
-          togglePanel();
-        }
-      }}
-      tabIndex="0" // Make the div focusable
       role="dialog" // Indicate this is a dialog
       aria-modal="true" // Indicate this is a modal dialog
       aria-labelledby="info-panel-title" // Reference to the title element
     >
-      {/* <button
-        className="closeButton"
-        onClick={() => {
-          togglePanel();
-        }}
-      >
-        𐛠
-      </button> */}
-      {/* <div> */}
-      {/* <div className={styles.infoSoundNumber}>{aegean[index]}</div> */}
       <h2 id="info-panel-title" className="text-3xl wrap-break-word">
         {sound.name}
       </h2>
