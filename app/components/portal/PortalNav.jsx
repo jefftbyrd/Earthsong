@@ -34,7 +34,7 @@ export default function PortalNav({ isLoggedIn }) {
       onClick={handleInteraction}
       onMouseDown={handleInteraction}
       onTouchStart={handleInteraction}
-      className="h-10 bg-black border-t-1 border-[#0073FF] text-white w-full grid grid-cols-3 uppercase text-xl tracking-wide"
+      className="h-10 bg-black border-t-1 border-gray-600 text-white border-solid w-full grid grid-cols-3 uppercase text-xl tracking-wide"
       style={{
         position: 'relative',
         zIndex: 50,
@@ -44,7 +44,7 @@ export default function PortalNav({ isLoggedIn }) {
       {phase === 'portal' || phase === 'portalRecall' ? (
         <button
           key="map"
-          className="uppercase text-center flex items-center justify-center gap-0 "
+          className="uppercase text-center flex items-center justify-center gap-0  hover:bg-[#0033FF] transition-all duration-100 ease-in-out"
           onClick={async (e) => {
             e.stopPropagation(); // Extra safeguard
             setActivateTarget(false);
@@ -65,7 +65,7 @@ export default function PortalNav({ isLoggedIn }) {
         {filteredPanels.map(([id, { label, icon, iconClassName }]) => (
           <button
             key={`panel-${id}`}
-            className="uppercase text-center flex items-center justify-center"
+            className="uppercase text-center flex items-center justify-center hover:bg-[#0033FF] transition-all duration-100 ease-in-out"
             onClick={(e) => {
               e.stopPropagation(); // Extra safeguard
               if (panelOpen && panelId === id) {
