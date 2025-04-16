@@ -68,6 +68,7 @@ export default function PortalNav({ isLoggedIn }) {
             className="uppercase text-center flex items-center justify-center hover:bg-[#0033FF] transition-all duration-100 ease-in-out"
             onClick={(e) => {
               e.stopPropagation(); // Extra safeguard
+              setActivateTarget(false);
               if (panelOpen && panelId === id) {
                 togglePanel(); // This will close the panel and clear panelId
               }
