@@ -42,3 +42,6 @@ next-env.d.ts
 .eslintcache
 
 /public/sounds
+app/components/portal/old-SoundItem.jsx
+app/components/portal/InfoPanel2.jsx
+app/components/portal/old-SoundController.jsx
