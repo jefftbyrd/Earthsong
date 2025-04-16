@@ -16,8 +16,14 @@ export default function SnapshotItem({
   snapshot,
   onDelete,
 }: SnapshotItemProps) {
-  const { setPhase, setJourneyToRecall, togglePanel, triggerReset, setPin } =
-    useContext(journeyContext);
+  const {
+    setPhase,
+    setJourneyToRecall,
+    togglePanel,
+    triggerReset,
+    setPin,
+    setPanelId,
+  } = useContext(journeyContext);
   const { setFreesoundLoading } = useContext(soundsContext);
   const { setActivateTarget } = useSoundPlayer();
 
@@ -55,6 +61,10 @@ export default function SnapshotItem({
           onClick={async () => {
             try {
               // Trigger reset first
+
+              setActivateTarget(false);
+              setPanelId('');
+
               await triggerReset();
               console.log('Reset triggered successfully');
 
@@ -71,7 +81,7 @@ export default function SnapshotItem({
 
               // Perform the other actions after reset
               setJourneyToRecall(snapshot.id);
-              setActivateTarget(false);
+
               togglePanel();
               setPin({});
               setFreesoundLoading(true);
