@@ -1,7 +1,7 @@
 import { useDynamicHeight } from '../../hooks/useDynamicHeight';
 import ClosePanelButton from '../panels/ClosePanelButton';
 
-export default function PanelWrap({ children, panel, bg }) {
+export default function PanelWrap({ children, panel, bg, ...props }) {
   const { ref } = useDynamicHeight();
 
   return (
@@ -9,6 +9,7 @@ export default function PanelWrap({ children, panel, bg }) {
       ref={ref}
       className="text-black box-border overflow-auto mt-0.5 z-40 relative"
       style={{ backgroundColor: bg }}
+      {...props}
     >
       <ClosePanelButton panel={panel} />
       <div className="p-3 pt-6">
