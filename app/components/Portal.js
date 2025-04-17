@@ -7,7 +7,7 @@ import { useSoundPlayer } from '../context/soundPlayerContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
-// import InfoPanel2 from './portal/InfoPanel2';
+import InfoPanel from './portal/InfoPanel';
 import { panels } from './portal/panelConfig';
 // import PortalNav from './portal/PortalNav';
 import SoundController from './portal/SoundController';
@@ -123,15 +123,6 @@ export default function Portal() {
             </motion.div>
           )}
         </AnimatePresence>
-        {/* <div>
-          {soundsColor.map((sound, index) => (
-            <div key={`soundId-${sound.id}`} className="">
-              {panelOpen && panelId === sound.id && (
-                <InfoPanel2 sound={sound} index={index} color={sound.color} />
-              )}
-            </div>
-          ))}
-        </div> */}
       </div>
     </div>
   );
