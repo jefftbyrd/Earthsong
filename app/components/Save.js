@@ -7,6 +7,7 @@ import { journeyContext } from '../context/journeyContext';
 // import type { CreateSnapshotResponseBodyPost } from '../api/snapshots/route';
 import ErrorMessage from '../ErrorMessage';
 import styles from '../styles/ui.module.scss';
+import EarthsongButton from './EarthsongButton';
 
 // import styles from './SnapshotsForm.module.scss';
 
@@ -91,7 +92,7 @@ export default function Save({
               />
             </label>
           </div>
-          <button className={styles.uiButton}>Save</button>
+          <EarthsongButton buttonStyle={3}>Save</EarthsongButton>
         </form>
 
         <ErrorMessage>{errorMessage}</ErrorMessage>

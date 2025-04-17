@@ -28,10 +28,10 @@ export default function PowersPanel() {
       // )`,
       // }}
     >
-      <p className="text-xl">
-        Greetings, <span className="font-bold">{user?.username}</span>. What
-        power will you wield?
-      </p>
+      <h3 className="text-xl">
+        Greetings, <span className="font-bold">{user?.username}</span>. <br />
+        What power will you wield?
+      </h3>
 
       {phase === 'portal' || phase === 'portalRecall' ? (
         <OpenPanelButton panel="Save">Save this journey</OpenPanelButton>

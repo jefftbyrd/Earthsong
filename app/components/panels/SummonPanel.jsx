@@ -13,7 +13,7 @@ function SnapshotList({ snapshots }) {
   };
 
   return (
-    <div>
+    <div className="grid grid-col-2 gap-2">
       {snapshotList.map((snapshot) => (
         <SnapshotItem
           key={`snapshot-${snapshot.id}`}
@@ -30,9 +30,9 @@ export default function SummonPanel() {
 
   return (
     <PanelWrap panel="Summon" bg="#C45353">
-      <h2>Summon past journeys</h2>
+      <h3 className="text-xl">Summon past journeys</h3>
 
-      <div>
+      <div className="">
         {snapshots.length < 1 ? (
           'No snapshots yet'
         ) : (

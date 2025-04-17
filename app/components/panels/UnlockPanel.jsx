@@ -7,6 +7,7 @@ import PanelWrap from './PanelWrap';
 // import PowersLoggedIn from './PowersLoggedIn';
 // import PowersNotLoggedIn from './PowersNotLoggedIn';
 import Register from './Register';
+import EarthsongButton from '../EarthsongButton';
 
 export default function UnlockPanel() {
   const [loginOpen, setLoginOpen] = useState(false);
@@ -19,34 +20,34 @@ export default function UnlockPanel() {
     <PanelWrap panel="Unlock" bg="#C45353">
       {' '}
       <>
-        <p className="text-xl">
+        <h3 className="text-xl">
           Welcome, <span className="font-black">stranger</span>.
-        </p>
+        </h3>
         {!loginOpen && !registerOpen ? (
           <>
             <p>
               To save and recall your favorite journeys,{' '}
-              <button
-                className="font-black"
+              <EarthsongButton
+                buttonStyle={3}
                 onClick={() => {
                   setLoginOpen(false);
                   setRegisterOpen(true);
                 }}
               >
                 create an account
-              </button>
+              </EarthsongButton>
               .
             </p>
             <p>
               If you already have an account,{' '}
-              <button
-                className="font-black"
+              <EarthsongButton
+                buttonStyle={3}
                 onClick={() => {
                   setLoginOpen(true);
                 }}
               >
                 sign in
-              </button>
+              </EarthsongButton>
               .
             </p>{' '}
           </>

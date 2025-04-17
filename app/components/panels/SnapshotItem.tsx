@@ -58,7 +58,7 @@ export default function SnapshotItem({
         }}
       >
         <EarthsongButton
-          buttonStyle={'journey'}
+          buttonStyle={4}
           onClick={async () => {
             try {
               // Trigger reset first
@@ -95,7 +95,7 @@ export default function SnapshotItem({
           {snapshot.title}
         </EarthsongButton>
         <EarthsongButton buttonStyle={'remove'} onClick={handleDelete}>
-          remove
+          delete
         </EarthsongButton>
       </motion.div>
     </AnimatePresence>

@@ -39,11 +39,11 @@ export default function Login() {
 
   return (
     <>
-      <p className="text-xl">Please sign in.</p>
+      <h3 className="text-xl">Please sign in.</h3>
 
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} className="flex flex-col gap-4 text-left">
         <label>
-          Name
+          <span className="uppercase font-bold">Name</span>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             // id="username"
@@ -57,7 +57,7 @@ export default function Login() {
         </label>
 
         <label>
-          Password
+          <span className="uppercase font-bold">Password</span>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             // id="password"
@@ -71,8 +71,8 @@ export default function Login() {
           />
         </label>
 
-        <EarthsongButton type="submit" buttonStyle={1}>
-          sign in
+        <EarthsongButton type="submit" buttonStyle={3}>
+          Sign in
         </EarthsongButton>
 
         {errors.map((error) => (

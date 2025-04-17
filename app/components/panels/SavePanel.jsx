@@ -22,9 +22,9 @@ export default function SummonPanel() {
   return (
     <PanelWrap panel="Save" bg="#C45353">
       <div>
-        {' '}
-        <h2>Save this journey</h2>
-        <p>Save this journey so you can revisit it later.</p>
+        <h3 className="text-xl">
+          Save this journey so you can revisit it later.
+        </h3>
         <form
           onSubmit={async (event) => {
             event.preventDefault();
@@ -68,7 +68,7 @@ export default function SummonPanel() {
               />
             </label>
           </div>
-          <EarthsongButton buttonStyle={1} type="submit">
+          <EarthsongButton buttonStyle={3} type="submit">
             Save
           </EarthsongButton>
         </form>
