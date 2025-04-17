@@ -1,17 +1,19 @@
 'use client';
 import React, { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import { useDynamicHeight } from '../../hooks/useDynamicHeight';
 import ClosePanelButton from '../panels/ClosePanelButton';
 
 export default function InfoPanel({ sound, index, color }) {
-  const minutes = Math.floor(sound.duration / 60);
-  const seconds = Math.floor(sound.duration % 60)
+  const minutes = Math.floor(sound?.duration / 60);
+  const seconds = Math.floor(sound?.duration % 60)
     .toString()
     .padStart(2, '0');
-  const geotagSplit = sound.geotag.split(' ');
+  const geotagSplit = sound?.geotag.split(' ');
   const location = `${Number(geotagSplit[0]).toFixed(4)}, ${Number(geotagSplit[1]).toFixed(4)}`;
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
+  const { ref } = useDynamicHeight();
   // const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   const cleanDescription = sound.description.replace(/<[^>]*>/g, '');
@@ -37,14 +39,15 @@ export default function InfoPanel({ sound, index, color }) {
 
   return (
     <div
-      className="box-border overflow-auto h-[calc(100vh-2.5rem-7.5rem)] mt-0.5"
+      ref={ref}
+      className=" text-black box-border overflow-auto mt-0.5 z-40 relative"
       style={{ backgroundColor: color }}
-      role="dialog" // Indicate this is a dialog
-      aria-modal="true" // Indicate this is a modal dialog
-      aria-labelledby="info-panel-title" // Reference to the title element
+      // role="dialog" // Indicate this is a dialog
+      // aria-modal="true" // Indicate this is a modal dialog
+      // aria-labelledby="info-panel-title" // Reference to the title element
     >
       <ClosePanelButton panel={sound} />
-      <div className="p-7 text-black ">
+      <div className="p-5 text-black ">
         <h2
           id="info-panel-title"
           className="text-3xl lg:text-5xl wrap-break-word mt-2 lg:mt-2"
