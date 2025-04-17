@@ -5,7 +5,8 @@ import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 
 export default function MapMessages(props) {
-  const { setPhase, phase, pin, setPin } = useContext(journeyContext);
+  const { setPhase, phase, pin, setPin, searchMessage } =
+    useContext(journeyContext);
   const {
     sounds,
     freesoundLoading,
@@ -75,6 +76,21 @@ export default function MapMessages(props) {
 
   return (
     <div className="absolute bottom-10 z-10 m-auto left-0 right-0 text-center text-lg lg:text-4xl/13 p-2 backdrop-blur-[5px]  text-shadow-lg/20">
+      {/* <div className="absolute top-4 left-4 z-10 bg-white/80 backdrop-blur-sm p-3 rounded-lg shadow-md max-w-md">
+        {searchMessage && (
+          <p className="text-sm font-medium">{searchMessage}</p>
+        )}
+        {!searchMessage && pin?.locationName && (
+          <p className="text-sm font-medium">
+            Current location: {pin.locationName}
+          </p>
+        )}
+        {!searchMessage && !pin?.locationName && (
+          <p className="text-sm font-medium">
+            Click on the map to select a location
+          </p>
+        )}
+      </div> */}
       {/* LINE 1 */}
       <div>
         <motion.p animate={fadeInAnimation}>
@@ -95,16 +111,14 @@ export default function MapMessages(props) {
 
       {/* LINE 2 */}
       <div>
-        {mapConditions.fetching ? (
-          <motion.p
-            animate={combinedAnimation}
-            className="font-bold text-shadow-lg/20"
-          >
-            Searching the area.
-            <br />
-            <br />
-          </motion.p>
-        ) : null}
+        <motion.p
+          animate={combinedAnimation}
+          className="font-bold text-shadow-lg/20"
+        >
+          {searchMessage}
+          <br />
+          <br />
+        </motion.p>
       </div>
 
       {/* LINE 3 */}

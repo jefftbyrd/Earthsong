@@ -83,6 +83,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [pin, setPin] = useState({ lat: null, lng: null, locationName: null });
   const [journeySaved, setJourneySaved] = useState(false);
   const [test, setTest] = useState(false);
+  const [searchMessage, setSearchMessage] = useState(null);
 
   const triggerReset = async () => {
     setReset(true);
@@ -152,6 +153,8 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         triggerReset2,
         test,
         setTest,
+        searchMessage,
+        setSearchMessage,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 
@@ -13,7 +13,8 @@ export default function Freesound() {
     isFetchingSounds,
     setIsFetchingSounds,
   } = useContext(soundsContext);
-  const { pin } = useContext(journeyContext);
+  const { pin, setSearchMessage } = useContext(journeyContext); // Add setSearchMessage from context
+  const [currentRadius, setCurrentRadius] = useState(null);
 
   console.log('sounds on Freesound:', sounds);
   console.log('location from pin:', pin?.locationName);
@@ -27,6 +28,8 @@ export default function Freesound() {
       setNotEnough(false); // Reset "not enough results" state
       setIsFetchingSounds(true); // This should be called
       setSounds(null); // Reset sounds to initial state
+      setSearchMessage('Searching for sounds...'); // Initial message
+      setCurrentRadius(null);
     }
   }, [pin]);
 
@@ -46,10 +49,21 @@ export default function Freesound() {
 
       setFreesoundLoading(true);
       console.log('Starting sound searches:', searchRadiuses);
+      setSearchMessage(
+        `Searching for sounds near ${pin.locationName || 'this location'}...`,
+      );
 
       try {
         for (const radius of searchRadiuses) {
           if (!isFetchingSounds) break; // Stop if fetching was canceled
+
+          // Update message for each radius
+          if (radius > 10) {
+            setSearchMessage(`Expanding search radius to ${radius}km...`);
+          } else {
+            setSearchMessage(`Searching within ${radius}km radius...`);
+          }
+          setCurrentRadius(radius);
 
           const response = await fetch(
             `/api/freesound?lat=${pin.lat}&lng=${pin.lng}&radius=${radius}`,
@@ -64,10 +78,6 @@ export default function Freesound() {
               `Using results from ${radius}km radius: ${data.count} sounds`,
             );
 
-            // Always use the current value of location at this moment
-            // const currentLocation = pin.locationName || 'Unknown location';
-            // console.log('Using current location:', currentLocation);
-
             setSounds({
               ...data,
               pin,
@@ -76,6 +86,9 @@ export default function Freesound() {
               soundCount: data.count,
             });
 
+            setSearchMessage(
+              `Found ${data.count} sounds within ${radius}km of ${pin.locationName || 'this location'}`,
+            );
             setNotEnough(false);
             setIsFetchingSounds(false); // Reset fetching state once sounds are set
             return;
@@ -84,11 +97,16 @@ export default function Freesound() {
 
         console.log('Insufficient results in all radiuses');
         setNotEnough(true);
+        setSearchMessage(
+          `No sounds found near ${pin.locationName || 'this location'}. Try a different location.`,
+        );
       } catch (error) {
         if (error.name === 'AbortError') {
           console.log('Fetch aborted');
+          setSearchMessage('Sound search cancelled.');
         } else {
           console.error('Error fetching sounds:', error);
+          setSearchMessage('Error searching for sounds. Please try again.');
         }
       } finally {
         setFreesoundLoading(false);
@@ -100,6 +118,7 @@ export default function Freesound() {
       fetchData().catch((error) => {
         console.error('Error in fetchData:', error);
         setIsFetchingSounds(false);
+        setSearchMessage('Error searching for sounds. Please try again.');
       });
     }
 
