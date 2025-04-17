@@ -29,8 +29,8 @@ export default function PowersPanel() {
       // }}
     >
       <p className="text-xl">
-        Greetings, <span className="">{user?.username}</span>. What power will
-        you wield?
+        Greetings, <span className="font-bold">{user?.username}</span>. What
+        power will you wield?
       </p>
 
       {phase === 'portal' || phase === 'portalRecall' ? (
