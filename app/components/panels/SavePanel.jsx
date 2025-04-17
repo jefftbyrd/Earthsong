@@ -5,9 +5,9 @@ import { soundsContext } from '../../context/soundsContext';
 import { userContext } from '../../context/userContext';
 import ErrorMessage from '../../ErrorMessage';
 import styles from '../../styles/ui.module.scss';
+import EarthsongButton from '../EarthsongButton';
 import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
-import EarthsongButton from '../EarthsongButton';
 
 export default function SummonPanel() {
   const { togglePanel, triggerJourneySaved } = useContext(journeyContext);
@@ -22,10 +22,11 @@ export default function SummonPanel() {
   return (
     <PanelWrap panel="Save" bg="#C45353">
       <div>
-        <h3 className="text-xl">
+        <h3 className="text-xl mb-5">
           Save this journey so you can revisit it later.
         </h3>
         <form
+          className="text-left flex flex-col gap-5"
           onSubmit={async (event) => {
             event.preventDefault();
 
@@ -56,18 +57,16 @@ export default function SummonPanel() {
             router.refresh();
           }}
         >
-          <div className={styles.journey}>
-            <label>
-              <h3>Give your journey a name:</h3>
-              <input
-                // autoFocus={true}
-                autoCapitalize="off"
-                className="bg-blue-600"
-                value={title}
-                onChange={(event) => setTitle(event.currentTarget.value)}
-              />
-            </label>
-          </div>
+          <label>
+            <p className="">Give this journey a name:</p>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              autoCapitalize="off"
+              value={title}
+              onChange={(event) => setTitle(event.currentTarget.value)}
+            />
+          </label>
+
           <EarthsongButton buttonStyle={3} type="submit">
             Save
           </EarthsongButton>

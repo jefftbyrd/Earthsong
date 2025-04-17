@@ -40,7 +40,7 @@ export default function InfoPanel({ sound, index, color }) {
   return (
     <div
       ref={ref}
-      className=" text-black box-border overflow-auto mt-0.5 z-40 relative"
+      className=" text-black box-border overflow-auto mt-0.5 z-40 relative lg:m-20 lg:border-black/50 lg:border-6"
       style={{ backgroundColor: color }}
       // role="dialog" // Indicate this is a dialog
       // aria-modal="true" // Indicate this is a modal dialog

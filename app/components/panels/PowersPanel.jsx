@@ -6,6 +6,7 @@ import { userContext } from '../../context/userContext';
 import OpenPanelButton from '../panels/OpenPanelButton';
 // import EarthsongButton from '../EarthsongButton';
 import PanelWrap from './PanelWrap';
+
 // import PowersLoggedIn from './PowersLoggedIn';
 // import PowersNotLoggedIn from './PowersNotLoggedIn';
 // import SnapshotItem from './SnapshotItem';
@@ -28,7 +29,7 @@ export default function PowersPanel() {
       // )`,
       // }}
     >
-      <h3 className="text-xl">
+      <h3 className="text-xl mb-5">
         Greetings, <span className="font-bold">{user?.username}</span>. <br />
         What power will you wield?
       </h3>

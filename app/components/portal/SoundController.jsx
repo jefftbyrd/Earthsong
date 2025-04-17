@@ -27,9 +27,7 @@ export default function SoundController({
             : `${recalledName}`}
         </p>
       </div>
-      <div
-        className={`grid gap-0.5 grid-cols-5 lg:grid-cols-3 xl:grid-cols-5 ${className || ''}`}
-      >
+      <div className={`grid gap-0.5 grid-cols-5 ${className || ''}`}>
         {soundsColor?.map((sound, index) => (
           <div key={`soundId-${sound.id}`} className="">
             <SoundItem sound={sound} index={index} />
