@@ -23,7 +23,7 @@ export default function ClosePanelButton({ panel }) {
 
   return (
     <button
-      className="h-6 w-6 lg:h-10 lg:w-10 text-black absolute right-0.5 top-0.5 flex items-center justify-center font-[--font-noto] text-4xl lg:text-4xl pb-1 lg:pb-2 opacity-30"
+      className="h-6 w-6 lg:h-10 lg:w-10 text-black fixed right-1 flex items-center justify-center font-[--font-noto] text-4xl lg:text-4xl pb-1 lg:pb-2 opacity-30"
       onClick={(e) => {
         e.stopPropagation();
 
