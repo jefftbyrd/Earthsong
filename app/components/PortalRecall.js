@@ -24,7 +24,7 @@ export default function PortalRecall(props) {
     useSoundPlayer();
   // const [soundsColorRecalled, setSoundsColorRecalled] = useState();
   // const [recallIsLoading, setRecallIsLoading] = useState(true);
-
+  console.log('props.recalledName', props.recalledName);
   // console.log('soundsColorRecalled in PortalRecall.js', soundsColorRecalled);
 
   // More robust approach to measure height
@@ -88,7 +88,10 @@ export default function PortalRecall(props) {
     <div className="flex flex-col h-screen">
       {/* Sound Controller */}
       <div className="flex-shrink-0" id="sound-controller">
-        <SoundController soundsColor={props.recalledSounds} />
+        <SoundController
+          soundsColor={props.recalledSounds}
+          {...(props.recalledName && { recalledName: props.recalledName })}
+        />
       </div>
 
       {/* Canvas Container */}
