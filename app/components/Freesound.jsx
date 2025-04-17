@@ -103,7 +103,7 @@ export default function Freesound() {
       } catch (error) {
         if (error.name === 'AbortError') {
           console.log('Fetch aborted');
-          setSearchMessage('Sound search cancelled.');
+          setSearchMessage('Sound search cancelled. Try again.');
         } else {
           console.error('Error fetching sounds:', error);
           setSearchMessage('Error searching for sounds. Please try again.');

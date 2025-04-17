@@ -117,19 +117,19 @@ export default function MapMessages(props) {
         >
           {searchMessage}
           <br />
-          <br />
+          {/* <br /> */}
         </motion.p>
       </div>
 
       {/* LINE 3 */}
       {mapConditions.hasResults && (
         <>
-          <motion.p animate={fadeInAnimation}>
+          {/* <motion.p animate={fadeInAnimation}>
             Found {sounds.soundCount} sounds within {sounds.searchRadius}km
-          </motion.p>
+          </motion.p> */}
           <motion.button
             animate={combinedAnimation}
-            className="font-bold text-shadow-lg/20"
+            className="font-bold text-shadow-lg/20 text-6xl"
             onClick={() => {
               setPin({});
               setFreesoundLoading(true);
