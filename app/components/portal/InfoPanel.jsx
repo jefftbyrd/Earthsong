@@ -42,11 +42,14 @@ export default function InfoPanel({ sound, index, color }) {
       aria-modal="true" // Indicate this is a modal dialog
       aria-labelledby="info-panel-title" // Reference to the title element
     >
-      <h2 id="info-panel-title" className="text-3xl wrap-break-word">
+      <h2
+        id="info-panel-title"
+        className="text-3xl lg:text-5xl wrap-break-word"
+      >
         {sound.name}
       </h2>
-      {/* </div> */}
-      <div className="border-2 p-2 my-4 text-sm leading-6">
+
+      <div className="border-2 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block">
         <div>
           <span className="font-black">Location:</span> {location}
         </div>
@@ -60,13 +63,21 @@ export default function InfoPanel({ sound, index, color }) {
           <span className="font-black">Uploaded by:</span> {sound.username}
         </div>
         <div>
-          <span className="font-black">Page on Freesound:</span>{' '}
-          <a href={sound.freesoundUrl} target="_blank" rel="noreferrer">
+          <span className="font-black">Freesound page:</span>{' '}
+          <a
+            href={sound.freesoundUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="hover:bg-black/30 hover:text-white p-1 text-black bg-white/30 transition-all duration-100"
+          >
             {sound.name}
           </a>
         </div>
       </div>
-      <p className="text-sm leading-6 wrap-break-word">{cleanDescription}</p>
+
+      <p className="text-sm/6 lg:text-lg/8 wrap-break-word">
+        {cleanDescription}
+      </p>
     </div>
   );
 }

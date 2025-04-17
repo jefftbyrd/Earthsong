@@ -35,14 +35,14 @@ body {
   overflow: hidden;
 } */
 
-a {
+/* a {
   color: rgba(255, 0, 89, 1);
 
   &:hover {
     color: rgba(255, 0, 89, 1);
     background-color: rgba(0, 0, 0, 0.5);
   }
-}
+} */
 
 body {
   /* color: var(--foreground);
