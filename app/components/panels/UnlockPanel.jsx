@@ -20,7 +20,7 @@ export default function UnlockPanel() {
       {' '}
       <>
         <p className="text-xl">
-          Welcome, <span className="font-black">seeker</span>.
+          Welcome, <span className="font-black">stranger</span>.
         </p>
         {!loginOpen && !registerOpen ? (
           <>
