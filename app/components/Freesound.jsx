@@ -11,7 +11,7 @@ export default function Freesound({ location }) {
     setNotEnough,
     notEnough,
     isFetchingSounds,
-    setIsFetchingSounds, // Use the new state
+    setIsFetchingSounds,
   } = useContext(soundsContext);
   const { pin } = useContext(journeyContext);
 
@@ -20,16 +20,7 @@ export default function Freesound({ location }) {
   console.log('Freesound: isFetchingSounds:', isFetchingSounds);
   console.log('Freesound: notEnough:', notEnough);
 
-  // Reset Freesound results whenever the pin changes
-  // useEffect(() => {
-  //   if (pin && pin.lat && pin.lng) {
-  //     console.log('Pin changed, resetting Freesound results...');
-  //     setSounds(null); // Reset sounds to initial state
-  //     setNotEnough(false); // Reset "not enough results" state
-  //     setIsFetchingSounds(true); // Set fetching state to true
-  //   }
-  // }, [pin, setSounds, setNotEnough, setIsFetchingSounds]);
-
+  // Only depends on pin changes
   useEffect(() => {
     if (pin && pin.lat && pin.lng) {
       console.log('Pin changed, setting isFetchingSounds to true...');
@@ -39,16 +30,17 @@ export default function Freesound({ location }) {
     }
   }, [pin]);
 
+  // Only depends on pin and isFetchingSounds
   useEffect(() => {
     const searchRadiuses = [10, 50, 100, 200];
     const controller = new AbortController();
     const { signal } = controller;
 
     const fetchData = async () => {
-      if (!pin || !pin.lat || !pin.lng) {
-        console.error('Invalid pin location:', pin);
+      if (!pin || !pin.lat || !pin.lng || !isFetchingSounds) {
+        console.log('Skipping fetch: invalid pin or not in fetching state');
         setFreesoundLoading(false);
-        setIsFetchingSounds(false); // Reset fetching state
+        setIsFetchingSounds(false);
         return;
       }
 
@@ -57,6 +49,8 @@ export default function Freesound({ location }) {
 
       try {
         for (const radius of searchRadiuses) {
+          if (!isFetchingSounds) break; // Stop if fetching was canceled
+
           const response = await fetch(
             `/api/freesound?lat=${pin.lat}&lng=${pin.lng}&radius=${radius}`,
             { signal },
@@ -73,12 +67,12 @@ export default function Freesound({ location }) {
             setSounds({
               ...data,
               pin,
-              location: location || 'Unknown location', // Use the latest location or a fallback
+              location: location || 'Unknown location',
               searchRadius: radius,
               soundCount: data.count,
             });
             setNotEnough(false);
-            setIsFetchingSounds(false); // Reset fetching state
+            setIsFetchingSounds(false); // Reset fetching state once sounds are set
             return;
           }
         }
@@ -93,25 +87,21 @@ export default function Freesound({ location }) {
         }
       } finally {
         setFreesoundLoading(false);
-        setIsFetchingSounds(false); // Reset fetching state
+        setIsFetchingSounds(false); // Always reset fetching state when done
       }
     };
 
-    fetchData().catch((error) => {
-      console.error('Error in fetchData:', error);
-    });
+    if (isFetchingSounds) {
+      fetchData().catch((error) => {
+        console.error('Error in fetchData:', error);
+        setIsFetchingSounds(false);
+      });
+    }
 
     return () => {
       controller.abort();
     };
-  }, [
-    pin,
-    // setSounds,
-    // setFreesoundLoading,
-    // setNotEnough,
-    // setIsFetchingSounds,
-    location,
-  ]);
+  }, [pin, isFetchingSounds]);
 
   if (isFetchingSounds) {
     return <div>Fetching new sounds for the selected pin...</div>;
