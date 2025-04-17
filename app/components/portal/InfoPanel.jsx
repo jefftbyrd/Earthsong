@@ -44,7 +44,7 @@ export default function InfoPanel({ sound, index, color }) {
     >
       <h2
         id="info-panel-title"
-        className="text-3xl lg:text-5xl wrap-break-word"
+        className="text-3xl lg:text-5xl wrap-break-word lg:mt-2"
       >
         {sound.name}
       </h2>
