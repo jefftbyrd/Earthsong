@@ -112,40 +112,65 @@ export const soundPortal = (p5) => {
     // Clear existing shapes to prevent duplicates on reset
     shapes.length = 0;
 
-    sounds2.map((sound, index) => {
-      // First, select a random y position
-      const y = p5.random(300, p5.height - 100);
-
-      // Calculate initial diameter based on y position
-      const initialDiameter = p5.map(
-        y,
-        0,
-        p5.height,
-        p5.height / 48,
-        p5.height / 3,
-      );
-
-      // Calculate padding based on the initial diameter
-      const padding = initialDiameter / 2;
-
-      // Generate x position that keeps the shape fully within the canvas
-      const x = p5.random(padding, p5.width - padding);
-
+    // Try to place shapes with no overlaps
+    sounds2.forEach((sound, index) => {
       const id = sound.id;
       const name = sound.name;
       const bg = sound.color;
       const url = sound.url;
       const number = index + 1;
 
-      // Pass the initial diameter to the Shape constructor
+      // Calculate a suitable diameter based on canvas size and number of shapes
+      const baseDiameter = p5.min(
+        p5.height / 4,
+        p5.width / (sounds2.length + 1),
+      );
+      let initialDiameter = p5.random(baseDiameter * 0.7, baseDiameter * 1.2);
+
+      // Try to find a non-overlapping position
+      let x, y;
+      let attempts = 0;
+      const maxAttempts = 50;
+      let validPosition = false;
+
+      while (!validPosition && attempts < maxAttempts) {
+        // Generate random position
+        // Keep padding from edges based on diameter
+        const padding = initialDiameter / 2;
+        x = p5.random(padding, p5.width - padding);
+        y = p5.random(300, p5.height - 100);
+
+        // Check if this position overlaps with any existing shape
+        validPosition = true;
+        for (let i = 0; i < shapes.length; i++) {
+          const existingShape = shapes[i];
+          const distance = p5.dist(x, y, existingShape.x, existingShape.y);
+          const minDistance = (initialDiameter + existingShape.diameter) / 2;
+
+          if (distance < minDistance) {
+            validPosition = false;
+            break;
+          }
+        }
+
+        attempts++;
+      }
+
+      // If we couldn't find a non-overlapping position after max attempts,
+      // adjust the diameter to be smaller and try one more time with relaxed constraints
+      if (!validPosition) {
+        initialDiameter *= 0.8;
+        x = p5.random(initialDiameter / 2, p5.width - initialDiameter / 2);
+        y = p5.random(300, p5.height - 100);
+      }
+
+      // Create and add the shape
       const b = new Shape(x, y, id, name, bg, url, number, initialDiameter);
       shapes.push(b);
     });
 
     // Start loading process for each shape
-    for (let i = 0; i < shapes.length; i++) {
-      shapes[i].initLoad();
-    }
+    shapes.forEach((shape) => shape.initLoad());
   }
 
   p5.draw = () => {
