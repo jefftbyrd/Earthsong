@@ -23,7 +23,7 @@ export default function ClosePanelButton({ panel }) {
 
   return (
     <button
-      className="uppercase h-5 w-5 bg-black text-white text-center"
+      className="h-6 w-6 lg:h-10 lg:w-10 bg-black/50 text-white/60 absolute right-0 flex items-center justify-center font-[--font-noto] text-xl lg:text-4xl pb-1 lg:pb-2"
       onClick={(e) => {
         e.stopPropagation();
 
@@ -38,7 +38,7 @@ export default function ClosePanelButton({ panel }) {
         }
       }}
     >
-      <p className="text-white text-center">x</p>
+      <span className="">𐄂</span>
     </button>
   );
 }

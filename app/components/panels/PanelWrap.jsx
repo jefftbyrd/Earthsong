@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-
-// import ClosePanelButton from '../panels/ClosePanelButton';
+import ClosePanelButton from '../panels/ClosePanelButton';
 
 export default function PanelWrap({ children, panel, bg }) {
   const { panelOpen, togglePanel } = useContext(journeyContext);
@@ -80,21 +79,24 @@ export default function PanelWrap({ children, panel, bg }) {
       {/* Original panel with its positioning intact */}
       <div
         ref={panelRef}
-        className="p-1 text-black box-border overflow-auto mt-0.5 z-40 relative"
+        className=" text-black box-border overflow-auto mt-0.5 z-40 relative"
         style={{
           backgroundColor: bg,
           pointerEvents: 'auto', // Ensure clicks on panel content are captured
         }}
         // onClick={stopPropagation} // Prevent clicks from reaching the overlay
       >
-        <h2 className=" left-0 right-0 text-7xl uppercase opacity-30 text-center">
-          {panel}
-        </h2>
-        {/* <ClosePanelButton panel={panel} /> */}
-        <div className="p-5 grid gap-5">{children}</div>
-        {/* <h2 className="absolute bottom-0 left-0 right-0 text-7xl uppercase opacity-30 text-center">
+        <ClosePanelButton panel={panel} />
+        <div className="p-3 pt-6">
+          <h2 className=" left-0 right-0 text-7xl uppercase opacity-30 text-center">
+            {panel}
+          </h2>
+
+          <div className="p-5 grid gap-5">{children}</div>
+          {/* <h2 className="absolute bottom-0 left-0 right-0 text-7xl uppercase opacity-30 text-center">
           {panel}
         </h2> */}
+        </div>
       </div>
     </>
   );

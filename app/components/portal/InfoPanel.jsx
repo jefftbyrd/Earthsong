@@ -1,6 +1,7 @@
 'use client';
 import React, { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import ClosePanelButton from '../panels/ClosePanelButton';
 
 export default function InfoPanel({ sound, index, color }) {
   const minutes = Math.floor(sound.duration / 60);
@@ -36,48 +37,51 @@ export default function InfoPanel({ sound, index, color }) {
 
   return (
     <div
-      className="p-5 text-black box-border overflow-auto h-[calc(100vh-2.5rem-7.5rem)] mt-0.5"
+      className="box-border overflow-auto h-[calc(100vh-2.5rem-7.5rem)] mt-0.5"
       style={{ backgroundColor: color }}
       role="dialog" // Indicate this is a dialog
       aria-modal="true" // Indicate this is a modal dialog
       aria-labelledby="info-panel-title" // Reference to the title element
     >
-      <h2
-        id="info-panel-title"
-        className="text-3xl lg:text-5xl wrap-break-word lg:mt-2"
-      >
-        {sound.name}
-      </h2>
+      <ClosePanelButton panel={sound} />
+      <div className="p-7 text-black ">
+        <h2
+          id="info-panel-title"
+          className="text-3xl lg:text-5xl wrap-break-word mt-2 lg:mt-2"
+        >
+          {sound.name}
+        </h2>
 
-      <div className="border-2 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block">
-        <div>
-          <span className="font-black">Location:</span> {location}
+        <div className="border-2 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block">
+          <div>
+            <span className="font-black">Location:</span> {location}
+          </div>
+          <div>
+            <span className="font-black">Duration:</span> {minutes}:{seconds}
+          </div>
+          <div>
+            <span className="font-black">Tags:</span> {sound.tags.join(', ')}
+          </div>
+          <div>
+            <span className="font-black">Uploaded by:</span> {sound.username}
+          </div>
+          <div>
+            <span className="font-black">Freesound page:</span>{' '}
+            <a
+              href={sound.freesoundUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:bg-black/30 hover:text-white p-1 text-black bg-white/30 transition-all duration-100"
+            >
+              {sound.name}
+            </a>
+          </div>
         </div>
-        <div>
-          <span className="font-black">Duration:</span> {minutes}:{seconds}
-        </div>
-        <div>
-          <span className="font-black">Tags:</span> {sound.tags.join(', ')}
-        </div>
-        <div>
-          <span className="font-black">Uploaded by:</span> {sound.username}
-        </div>
-        <div>
-          <span className="font-black">Freesound page:</span>{' '}
-          <a
-            href={sound.freesoundUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="hover:bg-black/30 hover:text-white p-1 text-black bg-white/30 transition-all duration-100"
-          >
-            {sound.name}
-          </a>
-        </div>
+
+        <p className="text-sm/6 lg:text-lg/8 wrap-break-word">
+          {cleanDescription}
+        </p>
       </div>
-
-      <p className="text-sm/6 lg:text-lg/8 wrap-break-word">
-        {cleanDescription}
-      </p>
     </div>
   );
 }
