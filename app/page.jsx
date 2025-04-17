@@ -76,7 +76,7 @@ export default function Earthsong() {
         animationProps={{ transition: { duration: 4 } }}
       />
       <Message
-        text="Initiating Sonic Projection"
+        text="Entering sound portal"
         isVisible={phase === 'portal' || phase === 'portalRecall'}
         animationProps={{
           opacity: [0, 1, 1, 0],
@@ -112,7 +112,7 @@ export default function Earthsong() {
       {/* Title waits for start */}
       <AnimatePresence>
         {phase === 'map' && (
-          <Title className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none text-center leading-none text-[22vw] lg:text-[15vw]" />
+          <Title className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none text-center leading-none text-[22vw] lg:text-[15vw] uppercase" />
         )}
       </AnimatePresence>
 
