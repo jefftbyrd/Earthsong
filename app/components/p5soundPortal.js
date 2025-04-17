@@ -583,11 +583,15 @@ export const soundPortal = (p5) => {
 
       // Make sure the index is valid before accessing aegean
       if (this.number > 0 && this.number <= aegean.length) {
-        // Add small fixed pixel offset for numbers 4 and 5
-        let yOffset = 0;
-        if (this.number === 1 || this.number === 2 || this.number === 3) {
-          yOffset = this.diameter / 7; // Adjust this value (-2 pixels up) as needed
+        // Center-align the text
+        p5.textAlign(p5.CENTER, p5.CENTER);
+
+        // Calculate yOffset to perfectly center the text vertically
+        let yOffset = this.numberSize * 0.23; // Adjust based on font metrics
+        if (this.number === 4 || this.number === 5 ) {
+          yOffset = this.numberSize * 0.05 // Adjust this value (-2 pixels up) as needed
         }
+        // Render the text at the center of the circle
         p5.text(aegean[this.number - 1], 0, yOffset);
       }
 
