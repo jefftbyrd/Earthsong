@@ -585,9 +585,9 @@ export const soundPortal = (p5) => {
       if (this.number > 0 && this.number <= aegean.length) {
         // Add small fixed pixel offset for numbers 4 and 5
         let yOffset = 0;
-        // if (this.number === 4 || this.number === 5) {
-        //   yOffset = -p5.height / 28; // Adjust this value (-2 pixels up) as needed
-        // }
+        if (this.number === 1 || this.number === 2 || this.number === 3) {
+          yOffset = this.diameter / 7; // Adjust this value (-2 pixels up) as needed
+        }
         p5.text(aegean[this.number - 1], 0, yOffset);
       }
 
