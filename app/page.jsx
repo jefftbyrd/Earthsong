@@ -188,6 +188,10 @@ export default function Earthsong() {
               snapshots?.find((snapshot) => snapshot?.id === journeyToRecall)
                 .sounds
             }
+            recalledName={
+              snapshots?.find((snapshot) => snapshot?.id === journeyToRecall)
+                .title
+            }
           />
         </motion.div>
       ) : null}
