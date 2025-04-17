@@ -5,7 +5,7 @@ import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext';
 import { soundsContext } from '../../context/soundsContext';
 import { type Snapshot } from '../../context/userContext';
-import { Button, ButtonText } from '../ui';
+import EarthsongButton from '../EarthsongButton';
 
 interface SnapshotItemProps {
   snapshot: Snapshot;
@@ -57,7 +57,8 @@ export default function SnapshotItem({
           transition: { duration: 2 },
         }}
       >
-        <button
+        <EarthsongButton
+          buttonStyle={'journey'}
           onClick={async () => {
             try {
               // Trigger reset first
@@ -92,8 +93,10 @@ export default function SnapshotItem({
           }}
         >
           {snapshot.title}
-        </button>
-        <button onClick={handleDelete}>Delete</button>
+        </EarthsongButton>
+        <EarthsongButton buttonStyle={'remove'} onClick={handleDelete}>
+          remove
+        </EarthsongButton>
       </motion.div>
     </AnimatePresence>
   );

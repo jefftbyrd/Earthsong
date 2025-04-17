@@ -7,6 +7,7 @@ import ErrorMessage from '../../ErrorMessage';
 import styles from '../../styles/ui.module.scss';
 import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
+import EarthsongButton from '../EarthsongButton';
 
 export default function SummonPanel() {
   const { togglePanel, triggerJourneySaved } = useContext(journeyContext);
@@ -67,7 +68,9 @@ export default function SummonPanel() {
               />
             </label>
           </div>
-          <button className={styles.uiButton}>Save</button>
+          <EarthsongButton buttonStyle={1} type="submit">
+            Save
+          </EarthsongButton>
         </form>
       </div>
     </PanelWrap>

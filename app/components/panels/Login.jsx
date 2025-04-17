@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import ErrorMessage from '../../ErrorMessage';
-import { Button, ButtonText } from '../ui';
+import EarthsongButton from '../EarthsongButton';
 
 export default function Login() {
   const { setPanelId, panelOpen, togglePanel, panelId } =
@@ -71,7 +71,9 @@ export default function Login() {
           />
         </label>
 
-        <Button type="submit">sign in</Button>
+        <EarthsongButton type="submit" buttonStyle={1}>
+          sign in
+        </EarthsongButton>
 
         {errors.map((error) => (
           <div className="error" key={`error-${error.message}`}>

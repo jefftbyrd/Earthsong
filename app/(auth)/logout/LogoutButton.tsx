@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import type { FormEvent } from 'react';
 import { useContext } from 'react';
-import { Button } from '../../components/ui';
+import EarthsongButton from '../../components/EarthsongButton';
 import { journeyContext } from '../../context/journeyContext';
 import { logout } from './actions';
 
@@ -26,7 +26,9 @@ export default function LogoutButton() {
 
   return (
     <form onSubmit={handleLogout}>
-      <Button type="submit">Logout</Button>
+      <EarthsongButton type="submit" buttonStyle={1}>
+        Logout
+      </EarthsongButton>
     </form>
   );
 }

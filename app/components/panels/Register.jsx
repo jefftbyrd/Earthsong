@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import ErrorMessage from '../../ErrorMessage';
 import styles from '../../styles/ui.module.scss';
-import { Button, ButtonText } from '../ui';
+import EarthsongButton from '../EarthsongButton';
 
 export default function Register() {
   const { setPanelId, panelOpen, togglePanel, panelId } =
@@ -76,7 +76,9 @@ export default function Register() {
           />
         </label>
 
-        <button>register</button>
+        <EarthsongButton type="submit" buttonStyle={1}>
+          register
+        </EarthsongButton>
 
         {/* <p>
           Already have an account? Then you should{' '}
