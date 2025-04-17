@@ -157,7 +157,7 @@ export const soundPortal = (p5) => {
       }
 
       // If we couldn't find a non-overlapping position after max attempts,
-      // adjust the diameter to be smaller and try one more time with relaxed constraints
+      // adjust the diameter to be smaller and try one more time with relaxed constraints.
       if (!validPosition) {
         initialDiameter *= 0.8;
         x = p5.random(initialDiameter / 2, p5.width - initialDiameter / 2);
