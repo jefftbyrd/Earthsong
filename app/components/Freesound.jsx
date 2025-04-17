@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 
-export default function Freesound({ location }) {
+export default function Freesound() {
   const {
     setSounds,
     sounds,
@@ -16,7 +16,7 @@ export default function Freesound({ location }) {
   const { pin } = useContext(journeyContext);
 
   console.log('sounds on Freesound:', sounds);
-  console.log('location on Freesound:', location);
+  console.log('location from pin:', pin?.locationName);
   console.log('Freesound: isFetchingSounds:', isFetchingSounds);
   console.log('Freesound: notEnough:', notEnough);
 
@@ -64,13 +64,18 @@ export default function Freesound({ location }) {
               `Using results from ${radius}km radius: ${data.count} sounds`,
             );
 
+            // Always use the current value of location at this moment
+            // const currentLocation = pin.locationName || 'Unknown location';
+            // console.log('Using current location:', currentLocation);
+
             setSounds({
               ...data,
               pin,
-              location: location || 'Unknown location',
+              location: pin.locationName || 'Unknown location',
               searchRadius: radius,
               soundCount: data.count,
             });
+
             setNotEnough(false);
             setIsFetchingSounds(false); // Reset fetching state once sounds are set
             return;

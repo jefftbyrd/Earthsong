@@ -24,7 +24,7 @@ export default function Map() {
   const [zoom, setZoom] = useState(getInitialZoom());
   const [placeFormatted, setPlaceFormatted] = useState(null);
 
-  console.log('placeFormatted in Map:', placeFormatted);
+  // console.log('placeFormatted in Map:', placeFormatted);
 
   const { pin, setPin } = useContext(journeyContext);
 
@@ -81,21 +81,26 @@ export default function Map() {
 
     const marker = new mapboxgl.Marker({ color: '#314ccd' });
 
-    mapRef.current.on('click', (event) => {
+    mapRef.current.on('click', async (event) => {
       const lng = event.lngLat.lng;
       const lat = event.lngLat.lat;
       const coords = { lng, lat };
-      console.log('Map clicked at coordinates:', coords);
 
       marker.setLngLat(coords).addTo(mapRef.current);
-      setPin(coords);
-      console.log('Pin set to:', coords);
+      setPlaceFormatted(null); // Reset immediately
 
-      // Reset placeFormatted when a new pin is chosen
-      setPlaceFormatted(null);
+      // Fetch place formatted first
+      const locationName = await fetchPlaceFormatted(lng, lat);
 
-      // Fetch place_formatted after setting the pin
-      fetchPlaceFormatted(lng, lat);
+      // Only set the pin with complete info after location is fetched
+      setPin({
+        ...coords,
+        locationName: locationName || 'Unknown location',
+      });
+      console.log(
+        'Setting pin with locationName:',
+        locationName || 'Unknown location',
+      );
     });
 
     mapRef.current.on('move', () => {
@@ -126,7 +131,7 @@ export default function Map() {
         ref={mapContainerRef}
         className="w-full h-[calc(100vh-2.5rem)]"
       />
-      {pin.lat ? <Freesound location={placeFormatted} /> : null}
+      {pin.lat ? <Freesound /> : null}
     </>
   );
 }

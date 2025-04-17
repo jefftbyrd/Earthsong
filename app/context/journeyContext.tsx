@@ -80,7 +80,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [journeyToRecall, setJourneyToRecall] = useState(0);
   const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
-  const [pin, setPin] = useState<Pin | object>({});
+  const [pin, setPin] = useState({ lat: null, lng: null, locationName: null });
   const [journeySaved, setJourneySaved] = useState(false);
   const [test, setTest] = useState(false);
 
