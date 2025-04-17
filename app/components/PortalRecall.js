@@ -4,28 +4,17 @@ import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { useSoundPlayer } from '../context/soundPlayerContext';
-import { userContext } from '../context/userContext';
-import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
 import { panels } from './portal/panelConfig';
-// import PortalNav from './portal/PortalNav';
 import SoundController from './portal/SoundController';
-import SoundIcon from './portal/SoundIcon';
-// import { usePortalState } from './portal/usePortalState';
-import { useSoundData } from './portal/useSoundData';
 
 export default function PortalRecall(props) {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
   const { reset, panelOpen, panelId, test } = useContext(journeyContext);
   const { playerTarget, playing } = useSoundPlayer();
-  const { user } = useContext(userContext);
   const { setPlayerTarget, setPlaying, activateTarget, forceChange } =
     useSoundPlayer();
-  // const [soundsColorRecalled, setSoundsColorRecalled] = useState();
-  // const [recallIsLoading, setRecallIsLoading] = useState(true);
-  console.log('props.recalledName', props.recalledName);
-  // console.log('soundsColorRecalled in PortalRecall.js', soundsColorRecalled);
 
   // More robust approach to measure height
   useEffect(() => {
