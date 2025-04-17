@@ -2,19 +2,19 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef } from 'react';
-import Logo from '../public/Logo.js';
-import Map from './components/Map.jsx';
-import Message from './components/Message.jsx';
-import { clouds } from './components/p5clouds.js';
-import { occult } from './components/p5occult.js';
-import { wind } from './components/p5wind.js';
-import Portal from './components/Portal.js';
-import { panels } from './components/portal/panelConfig.js';
-import PortalNav from './components/portal/PortalNav.jsx';
-import PortalRecall from './components/PortalRecall.js';
-import Title from './components/Title.jsx';
-import { journeyContext } from './context/journeyContext.jsx';
-import { userContext } from './context/userContext.jsx';
+import Logo from '../public/Logo';
+import Map from './components/Map';
+import Message from './components/Message';
+import { clouds } from './components/p5clouds';
+import { occult } from './components/p5occult';
+import { wind } from './components/p5wind';
+import Portal from './components/Portal';
+import { panels } from './components/portal/panelConfig';
+import PortalNav from './components/portal/PortalNav';
+import PortalRecall from './components/PortalRecall';
+import Title from './components/Title';
+import { journeyContext } from './context/journeyContext';
+import { userContext } from './context/userContext';
 import styles from './styles/ui.module.scss';
 
 export default function Earthsong() {
@@ -84,15 +84,6 @@ export default function Earthsong() {
           transition: { duration: 4, times: [0, 0.4, 0.8, 1] },
         }}
       />
-      {/* <Message
-        text="Entering Sound Portal"
-        isVisible={phase === 'portal' || phase === 'portalRecall'}
-        animationProps={{
-          opacity: [0, 0, 1, 1, 0],
-          color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
-          transition: { duration: 4, times: [0, 0, 0.4, 0.8, 1] },
-        }}
-      /> */}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
