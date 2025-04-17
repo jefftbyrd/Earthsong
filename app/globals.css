@@ -71,11 +71,11 @@ ul {
   margin-bottom: 2rem;
 }
 
-h1 {
-  /* font-size: 6vw; */
-  text-transform: uppercase;
-  /* color: white; */
-}
+/* h1 { */
+/* font-size: 6vw; */
+/* text-transform: uppercase; */
+/* color: white; */
+/* } */
 
 /* h2 {
   font-size: 3vw;
@@ -285,7 +285,7 @@ button:hover {
   }
 }
 
-.welcomeMessage {
+.message {
   position: absolute;
   top: 75%;
   left: 50%;
@@ -293,8 +293,9 @@ button:hover {
   z-index: 15;
   pointer-events: none;
   text-align: center;
-  opacity: 0;
-  font-size: 6vw;
+  @apply text-5xl lg:text-[6vw];
+  /* opacity: 0; */
+  /* font-size: 6vw; */
 }
 
 /* For iOS devices */
