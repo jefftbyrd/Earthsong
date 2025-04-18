@@ -25,17 +25,17 @@ export default function GuideNavigatePanel() {
   return (
     <PanelWrap panel="Navigate" bg="#5381C4">
       <h2 className="text-xl mb-5">
-        Navigate Earth Song using the menu at the bottom of your screen.
+        Navigate EARTH SONG using the menu at the bottom of your screen
       </h2>
-      <div>
+      <div className="border-b-1 pb-5 border-black/30">
         <h3 className="text-3xl font-bold">MAP</h3>
         Return to the map page to choose a new location to explore.
       </div>
-      <div>
+      <div className="border-b-1 pb-5 border-black/30">
         <h3 className="text-3xl font-bold">UNLOCK</h3>
         Create an EARTHSONG account or sign in.
       </div>
-      <div>
+      <div className="border-b-1 pb-5 border-black/30">
         <h3 className="text-3xl font-bold">POWERS</h3>
         Once signed in, you can save and recall your favorite journeys.
       </div>

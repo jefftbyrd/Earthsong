@@ -66,14 +66,14 @@ body {
   );
 }
 
-ul {
+/* ul {
   display: flex;
   flex-direction: column;
   gap: 15px;
   line-height: 1.7rem;
   margin-left: 2rem;
   margin-bottom: 2rem;
-}
+} */
 
 /* h1 { */
 /* font-size: 6vw; */
@@ -129,6 +129,18 @@ ul {
     rgba(0, 0, 128, 1) 0%,
     rgba(144, 70, 193, 1) 100%
   );
+}
+
+.thanks-list {
+  @apply list-disc flex flex-col gap-3 ml-5 leading-6;
+
+  li {
+    /* @apply list-disc; */
+  }
+
+  a {
+    @apply text-white underline hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all;
+  }
 }
 
 .sidebar {
