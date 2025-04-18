@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createSnapshot } from '../../../database/snapshots';
+import { createSnapshot, deleteSnapshot } from '../../../database/snapshots'; // Import the delete function
 import {
   type Snapshot,
   snapshotSchema,
@@ -81,4 +81,48 @@ export async function POST(
   return NextResponse.json({
     snapshot: { sounds: newSnapshot.sounds },
   });
+}
+
+export async function DELETE(
+  request: Request,
+): Promise<NextResponse<{ message?: string; error?: string }>> {
+  // 1. Parse the snapshot ID from the request URL
+  const url = new URL(request.url);
+  const snapshotId = url.searchParams.get('id');
+
+  if (!snapshotId) {
+    return NextResponse.json(
+      { error: 'Snapshot ID is required' },
+      { status: 400 },
+    );
+  }
+
+  // Convert snapshotId to a number since `deleteSnapshot` expects a number
+  const snapshotIdNumber = parseInt(snapshotId, 10);
+  if (isNaN(snapshotIdNumber)) {
+    return NextResponse.json({ error: 'Invalid Snapshot ID' }, { status: 400 });
+  }
+
+  // 2. Get the token from the cookie
+  const sessionTokenCookie = await getCookie('sessionToken');
+
+  if (!sessionTokenCookie) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  // 3. Attempt to delete the snapshot
+  const deletedSnapshot = await deleteSnapshot(
+    sessionTokenCookie,
+    snapshotIdNumber,
+  );
+
+  if (!deletedSnapshot) {
+    return NextResponse.json(
+      { error: 'Failed to delete snapshot or access denied' },
+      { status: 400 },
+    );
+  }
+
+  // 4. Return a success response
+  return NextResponse.json({ message: 'Snapshot deleted successfully' });
 }

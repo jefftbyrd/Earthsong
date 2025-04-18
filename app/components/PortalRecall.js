@@ -1,108 +1,133 @@
 'use client';
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
-import { motion } from 'motion/react';
-import React, { useEffect, useState } from 'react';
-import LoginToSaveButton from './LoginToSaveButton';
-import styles from './portal.module.scss';
-import { portalSound } from './portalSound';
-import Save from './Save';
-import SaveButton from './SaveButton';
-import SoundPlayerItem from './SoundPlayerItem';
+import { AnimatePresence, motion } from 'motion/react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { journeyContext } from '../context/journeyContext';
+import { useSoundPlayer } from '../context/soundPlayerContext';
+import { soundPortal } from './p5soundPortal';
+import { panels } from './portal/panelConfig';
+import SoundController from './portal/SoundController';
 
 export default function PortalRecall(props) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [soundsColor, setSoundsColor] = useState();
-  const [generate, setGenerate] = useState(false);
-  const [playerTarget, setPlayerTarget] = useState();
-  const [playing, setPlaying] = useState(false);
-  const [dataFromChild, setDataFromChild] = useState();
-  const [displayingItem, setDisplayingItem] = useState();
-  const [isOpen, setIsOpen] = useState(false);
-  const [saveIsOpen, setSaveIsOpen] = useState(false);
-  const [manualClose, setManualClose] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const canvasContainerRef = useRef(null);
+  const [containerHeight, setContainerHeight] = useState(0);
+  const { reset, panelOpen, panelId, test } = useContext(journeyContext);
+  const { playerTarget, playing } = useSoundPlayer();
+  const { setPlayerTarget, setPlaying, activateTarget, forceChange } =
+    useSoundPlayer();
 
-  function handleDataFromChild(data) {
-    setDataFromChild(data);
-  }
-
+  // More robust approach to measure height
   useEffect(() => {
-    const recallSnapshot = async () => {
-      const recalledSounds = await props.sounds;
-      setSoundsColor(recalledSounds);
-      setIsLoading(false);
-      // console.log('soundsColor on portal recall', soundsColor);
+    // Function to calculate available height
+    const calculateHeight = () => {
+      if (!canvasContainerRef.current) return;
+
+      const soundController = document.getElementById('sound-controller');
+      const portalNav = document.getElementById('portal-nav');
+
+      const totalHeight = window.innerHeight;
+      const controllerHeight = soundController
+        ? soundController.offsetHeight
+        : 0;
+      const navHeight = portalNav ? portalNav.offsetHeight : 0;
+
+      // Calculate available space
+      const availableHeight = totalHeight - controllerHeight - navHeight;
+
+      // Set a minimum height to prevent issues
+      const finalHeight = Math.max(availableHeight, 100);
+
+      setContainerHeight(finalHeight);
+      // console.log('Container height set to:', finalHeight);
     };
 
-    recallSnapshot();
+    // Initial measurement after a short delay to ensure DOM is ready
+    const timer = setTimeout(calculateHeight, 100);
+
+    // Recalculate on window resize
+    window.addEventListener('resize', calculateHeight);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', calculateHeight);
+    };
   }, []);
 
-  if (isLoading) {
-    // early return
-    return 'Loading...';
-  }
+  // useEffect(() => {
+  //   const recallSnapshot = async () => {
+  //     const recalledSounds = await props.recalledSounds;
+  //     setSoundsColorRecalled(recalledSounds);
+  //     setRecallIsLoading(false);
+  //   };
+
+  //   recallSnapshot().catch((error) => {
+  //     console.error('Error recalling snapshot:', error);
+  //   });
+  // }, [props.recalledSounds]);
+
+  // if (recallIsLoading) {
+  //   return <div className={styles.loading}>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div className={styles.error}>Error: {error}</div>;
+  // }
 
   return (
-    <>
-      {console.log('showSuccessMessage', showSuccessMessage)}
-      {soundsColor.length > 0 ? (
-        <NextReactP5Wrapper
-          sketch={portalSound}
-          soundsColor={soundsColor}
-          generate={generate}
-          playerTarget={playerTarget}
-          play={playing}
-          resetPortal={props.resetPortal}
+    <div className="flex flex-col h-screen">
+      {/* Sound Controller */}
+      <div className="flex-shrink-0" id="sound-controller">
+        <SoundController
+          soundsColor={props.recalledSounds}
+          {...(props.recalledName && { recalledName: props.recalledName })}
         />
-      ) : null}
-      <div className={styles.multiController}>
-        {soundsColor.map((sound, index) => {
-          return (
-            <div key={`soundId-${sound.id}`} className={styles.soundItem}>
-              <SoundPlayerItem
-                sound={sound}
-                index={index}
-                setPlayerTarget={setPlayerTarget}
-                setPlaying={setPlaying}
-                setDisplayingItem={setDisplayingItem}
-                playing={playing}
-                displayingItem={displayingItem}
-                setIsOpen={setIsOpen}
-                isOpen={isOpen}
-              />
-            </div>
-          );
-        })}
-        {props.user ? (
-          <SaveButton
-            setSaveIsOpen={setSaveIsOpen}
-            saveIsOpen={saveIsOpen}
-            setShowSuccessMessage={setShowSuccessMessage}
-          />
-        ) : (
-          <LoginToSaveButton />
-        )}
-        {saveIsOpen ? (
-          <Save
-            sounds={soundsColor}
-            setSaveIsOpen={setSaveIsOpen}
-            setShowSuccessMessage={setShowSuccessMessage}
-            showSuccessMessage={showSuccessMessage}
-          />
-        ) : null}
-        {showSuccessMessage ? (
-          <motion.h1
-            className="successMessage"
-            animate={{
-              opacity: [0, 1, 0],
-              transition: { duration: 3, times: [0, 0.5, 1] },
-            }}
-          >
-            Your journey was saved!
-          </motion.h1>
-        ) : null}
       </div>
-      {/* End multiController */}
-    </>
+
+      {/* Canvas Container */}
+      <div
+        ref={canvasContainerRef}
+        className="flex-grow relative overflow-hidden"
+        style={{
+          height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
+          maxHeight: 'calc(100vh - 100px)',
+        }}
+      >
+        {props.recalledSounds?.length > 0 && containerHeight > 0 && (
+          <NextReactP5Wrapper
+            sketch={soundPortal}
+            soundsColor={props.recalledSounds}
+            containerHeight={containerHeight}
+            playerTarget={playerTarget}
+            playing={playing}
+            reset={reset}
+            activateTarget={activateTarget}
+            panelOpen={panelOpen}
+            forceChange={forceChange}
+          />
+        )}
+        <AnimatePresence>
+          {panelOpen && panelId && panels[panelId]?.component && (
+            <motion.div
+              className="absolute inset-x-0 z-40 overflow-hidden"
+              style={{
+                top: 0,
+                height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
+                maxHeight: 'calc(100vh - 2.5rem)',
+              }}
+              animate={{
+                opacity: [0, 1],
+                transition: { duration: 0.25 },
+              }}
+              exit={{
+                opacity: 0,
+                transition: { duration: 0.25 },
+              }}
+            >
+              {React.createElement(panels[panelId].component)}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
   );
 }

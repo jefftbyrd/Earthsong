@@ -12,5 +12,15 @@
   ],
   // Enable Next.js TypeScript plugin
   // https://nextjs.org/docs/app/building-your-application/configuring/typescript#typescript-plugin
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "cSpell.words": [
+    "fakoo",
+    "flac",
+    "geofilt",
+    "geotag",
+    "mapbox",
+    "mapboxgl",
+    "noto",
+    "sfield"
+  ]
 }

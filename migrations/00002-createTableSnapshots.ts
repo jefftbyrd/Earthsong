@@ -1,10 +1,11 @@
 import type { Sql } from 'postgres';
 import { z } from 'zod';
+import type { Sounds } from '../app/context/soundsContext';
 
 export type Snapshot = {
   id: number;
   title: string;
-  sounds: any;
+  sounds: Sounds;
   userId: number;
 };
 

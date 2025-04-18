@@ -42,3 +42,13 @@ next-env.d.ts
 .eslintcache
 
 /public/sounds
+app/components/portal/old-SoundItem.jsx
+app/components/portal/InfoPanel2.jsx
+app/components/portal/old-SoundController.jsx
+app/components/old-p5soundPortal-250409.jsx
+app/components/old-p5soundPortal.jsx
+app/components/p5soundPortal-250409.jsx
+app/components/p5soundPortal-old.jsx
+app/components/p5soundPortal-250409.jsx
+app/components/p5soundPortal-old.jsx
+app/components/old-PortalRecall.jsx

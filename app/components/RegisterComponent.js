@@ -5,7 +5,7 @@ import { useState } from 'react';
 // import type { RegisterResponseBody } from '../(auth)/api/register/route';
 // import { getSafeReturnToPath } from '../../util/validation';
 import ErrorMessage from '../ErrorMessage';
-import styles from './ui.module.scss';
+import styles from '../styles/ui.module.scss';
 
 // type Props = { returnTo?: string | string[] };
 

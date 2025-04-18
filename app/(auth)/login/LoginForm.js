@@ -2,17 +2,19 @@
 
 import { AnimatePresence, motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import RegisterComponent from '../../components/RegisterComponent';
-import styles from '../../components/ui.module.scss';
+import { journeyContext } from '../../context/journeyContext';
 import ErrorMessage from '../../ErrorMessage';
+import styles from '../../styles/ui.module.scss';
 
-export default function LoginForm({ setLoginOpen, loginOpen }) {
+export default function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState([]);
   const [registerOpen, setRegisterOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
+  const { togglePanel } = useContext(journeyContext);
 
   const router = useRouter();
 
@@ -52,7 +54,8 @@ export default function LoginForm({ setLoginOpen, loginOpen }) {
         <button
           className="closeButtonAlt"
           onClick={() => {
-            setLoginOpen(!loginOpen);
+            // setLoginOpen(!loginOpen);
+            togglePanel();
           }}
         >
           𐛠
