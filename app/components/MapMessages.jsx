@@ -5,8 +5,15 @@ import { journeyContext } from '../context/journeyContext';
 import { soundsContext } from '../context/soundsContext';
 
 export default function MapMessages(props) {
-  const { setPhase, phase, pin, setPin, searchMessage, freesoundError } =
-    useContext(journeyContext);
+  const {
+    setPhase,
+    phase,
+    pin,
+    setPin,
+    searchMessage,
+    freesoundError,
+    setPanelOpen,
+  } = useContext(journeyContext);
   const {
     sounds,
     freesoundLoading,
@@ -123,6 +130,7 @@ export default function MapMessages(props) {
             animate={combinedAnimation}
             className="font-bold text-shadow-lg/20 hover:scale-105 transition-all duration-300 active:scale-97"
             onClick={() => {
+              setPanelOpen(false); // Close the panel if it's open
               setPin({});
               setFreesoundLoading(true);
               setPhase('portal');
