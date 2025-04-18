@@ -26,6 +26,10 @@ body {
   font-family: var(--font-basteleur);
 }
 
+button {
+  cursor: pointer;
+}
+
 /* html,
 body {
   height: 100%;
