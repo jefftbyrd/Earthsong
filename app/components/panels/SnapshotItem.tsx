@@ -28,6 +28,7 @@ export default function SnapshotItem({
     triggerReset,
     setPin,
     setPanelId,
+    setPanelOpen,
   } = useContext(journeyContext);
   const { setFreesoundLoading } = useContext(soundsContext);
   const { setActivateTarget } = useSoundPlayer() as SoundPlayerContextType;
@@ -67,7 +68,7 @@ export default function SnapshotItem({
           onClick={async () => {
             try {
               // Trigger reset first
-
+              setPanelOpen(false);
               (setActivateTarget as (value: boolean) => void)(false);
               setPanelId('');
 
@@ -88,7 +89,7 @@ export default function SnapshotItem({
               // Perform the other actions after reset
               setJourneyToRecall(snapshot.id);
 
-              togglePanel();
+              // togglePanel();
               setPin({
                 lat: null,
                 lng: null,

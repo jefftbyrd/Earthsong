@@ -108,7 +108,6 @@ export default function MapMessages(props) {
           >
             {searchMessage || 'Searching...'}
             <br />
-            {/* <br /> */}
           </motion.p>
         )}
       </div>

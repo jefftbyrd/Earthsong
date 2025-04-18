@@ -7,8 +7,15 @@ import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
 export default function PortalNav({ isLoggedIn }) {
-  const { togglePanel, setPanelId, phase, triggerReset2, panelId, panelOpen } =
-    useContext(journeyContext);
+  const {
+    togglePanel,
+    setPanelId,
+    phase,
+    triggerReset2,
+    panelId,
+    panelOpen,
+    setPanelOpen,
+  } = useContext(journeyContext);
   const { setActivateTarget } = useSoundPlayer();
 
   // Prevent event propagation to canvas
@@ -57,7 +64,8 @@ export default function PortalNav({ isLoggedIn }) {
             onClick={async (e) => {
               e.stopPropagation(); // Extra safeguard
               setActivateTarget(false);
-              togglePanel();
+              // togglePanel();
+              setPanelOpen(false); // Close the panel if it's open
               try {
                 await triggerReset2({ nextPhase: 'returnToMap' }); // Pass the required object
                 console.log('Reset triggered successfully');

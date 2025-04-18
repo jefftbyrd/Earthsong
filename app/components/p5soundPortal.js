@@ -16,7 +16,7 @@ export const soundPortal = (p5) => {
   let lastWaveformData = [];
   let isInitialized = false;
   let canvasHeight = window.innerHeight;
-  let isPanelOpen;
+  let isPanelOpen = false;
 
   // Variables to track touch behavior
   let touchStartTime = 0;
@@ -31,9 +31,9 @@ export const soundPortal = (p5) => {
       // sounds2 = [...props.soundsColor];
       sounds2 = props.soundsColor;
     }
-
+    console.log('props.panelOpen', props.panelOpen);
     isPanelOpen = props.panelOpen;
-    // console.log('isPanelOpen', isPanelOpen);
+    console.log('isPanelOpen', isPanelOpen);
 
     // Handle containerHeight more forcefully
     if (props.containerHeight && props.containerHeight > 0) {
@@ -70,8 +70,6 @@ export const soundPortal = (p5) => {
         targetShape.playWhenLoaded = true;
       }
     }
-
-    console.log('props.reset received at p5 soundportal', props.reset);
 
     if (props.reset) {
       // console.log('Reset triggered in p5soundPortal, stopping all sounds');
@@ -588,8 +586,8 @@ export const soundPortal = (p5) => {
 
         // Calculate yOffset to perfectly center the text vertically
         let yOffset = this.numberSize * 0.23; // Adjust based on font metrics
-        if (this.number === 4 || this.number === 5 ) {
-          yOffset = this.numberSize * 0.05 // Adjust this value (-2 pixels up) as needed
+        if (this.number === 4 || this.number === 5) {
+          yOffset = this.numberSize * 0.05; // Adjust this value (-2 pixels up) as needed
         }
         // Render the text at the center of the circle
         p5.text(aegean[this.number - 1], 0, yOffset);
