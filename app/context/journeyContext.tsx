@@ -9,8 +9,9 @@ import {
 } from 'react';
 
 interface Pin {
-  lat?: number;
-  lng?: number;
+  lat: number | null;
+  lng: number | null;
+  locationName: string | null;
 }
 
 export interface JourneyContextType {
@@ -29,12 +30,14 @@ export interface JourneyContextType {
   togglePanel: () => void;
   mobileCheck: boolean;
   pin: Pin | null;
-  setPin: Dispatch<SetStateAction<Pin | object>>;
+  setPin: Dispatch<SetStateAction<Pin>>;
   triggerJourneySaved: () => void;
   triggerReset: () => Promise<void>;
   triggerReset2: (args: { nextPhase: string }) => Promise<void>;
-  test: boolean;
-  setTest: Dispatch<SetStateAction<boolean>>;
+  searchMessage: string;
+  setSearchMessage: Dispatch<SetStateAction<string>>;
+  freesoundError: boolean;
+  setFreesoundError: Dispatch<SetStateAction<boolean>>;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -53,7 +56,7 @@ export const journeyContext = createContext<JourneyContextType>({
   togglePanel: () => {},
   triggerJourneySaved: () => {},
   mobileCheck: false,
-  pin: {},
+  pin: { lat: null, lng: null, locationName: null },
   setPin: () => {},
   triggerReset() {
     // This function is not implemented in the context provider
@@ -65,8 +68,10 @@ export const journeyContext = createContext<JourneyContextType>({
     // but is expected to be called in the context consumer
     return Promise.resolve();
   },
-  test: false,
-  setTest: () => {},
+  searchMessage: '',
+  setSearchMessage: () => {},
+  freesoundError: false,
+  setFreesoundError: () => {},
 });
 
 interface Props {
@@ -80,10 +85,14 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [journeyToRecall, setJourneyToRecall] = useState(0);
   const [panelId, setPanelId] = useState('');
   const [panelOpen, setPanelOpen] = useState(false);
-  const [pin, setPin] = useState({ lat: null, lng: null, locationName: null });
+  const [pin, setPin] = useState<Pin>({
+    lat: null,
+    lng: null,
+    locationName: null,
+  });
   const [journeySaved, setJourneySaved] = useState(false);
-  const [test, setTest] = useState(false);
-  const [searchMessage, setSearchMessage] = useState(null);
+  const [searchMessage, setSearchMessage] = useState('');
+  const [freesoundError, setFreesoundError] = useState(false);
 
   const triggerReset = async () => {
     setReset(true);
@@ -151,10 +160,10 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         triggerJourneySaved,
         triggerReset,
         triggerReset2,
-        test,
-        setTest,
         searchMessage,
         setSearchMessage,
+        setFreesoundError,
+        freesoundError,
       }}
     >
       {children}
