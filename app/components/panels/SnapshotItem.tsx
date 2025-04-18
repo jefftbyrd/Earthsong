@@ -12,6 +12,11 @@ interface SnapshotItemProps {
   onDelete: (id: number) => void; // Optional callback to refresh the list after deletion
 }
 
+interface SoundPlayerContextType {
+  setActivateTarget: (value: boolean) => void;
+  // Other properties...
+}
+
 export default function SnapshotItem({
   snapshot,
   onDelete,
@@ -25,7 +30,7 @@ export default function SnapshotItem({
     setPanelId,
   } = useContext(journeyContext);
   const { setFreesoundLoading } = useContext(soundsContext);
-  const { setActivateTarget } = useSoundPlayer();
+  const { setActivateTarget } = useSoundPlayer() as SoundPlayerContextType;
 
   const handleDelete = async () => {
     try {
@@ -63,7 +68,7 @@ export default function SnapshotItem({
             try {
               // Trigger reset first
 
-              setActivateTarget(false);
+              (setActivateTarget as (value: boolean) => void)(false);
               setPanelId('');
 
               await triggerReset();
@@ -84,7 +89,11 @@ export default function SnapshotItem({
               setJourneyToRecall(snapshot.id);
 
               togglePanel();
-              setPin({});
+              setPin({
+                lat: null,
+                lng: null,
+                locationName: null,
+              });
               setFreesoundLoading(true);
               setPhase('portalRecall');
             } catch (error) {
