@@ -28,7 +28,7 @@ export default function GuidePanel() {
   return (
     <PanelWrap panel="Guide" bg="#5381C4">
       <button
-        className="relative w-4/5 aspect-video overflow-hidden border-2 border-black/30 mt-3"
+        className="relative w-4/5 lg:w-1/2 aspect-video overflow-hidden border-2 border-black/30 mt-3"
         onClick={(e) => {
           e.stopPropagation();
           if (panelOpen && panelId === 'Navigate') {
@@ -38,7 +38,7 @@ export default function GuidePanel() {
           }
         }}
       >
-        <Image
+        <img
           src="/guide-navigate.webp"
           className="absolute inset-0 object-cover opacity-50 w-full h-full"
           alt="Navigation"
@@ -46,14 +46,14 @@ export default function GuidePanel() {
           height={900}
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl text-white z-10 text-shadow-md">
+          <h1 className="text-4xl text-white z-10 text-shadow-md lg:text-7xl">
             Navigation
           </h1>
         </div>
       </button>
 
       <button
-        className="relative w-4/5 aspect-video overflow-hidden"
+        className="relative w-4/5 lg:w-1/2 aspect-video overflow-hidden"
         onClick={(e) => {
           e.stopPropagation();
           if (panelOpen && panelId === 'Portal') {
@@ -71,14 +71,14 @@ export default function GuidePanel() {
           height={900}
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl text-white z-10 text-shadow-md">
+          <h1 className="text-4xl text-white z-10 text-shadow-md lg:text-7xl">
             Sound Portal
           </h1>
         </div>
       </button>
 
       <button
-        className="relative w-4/5 aspect-video overflow-hidden"
+        className="relative w-4/5 lg:w-1/2 aspect-video overflow-hidden"
         onClick={(e) => {
           e.stopPropagation();
           if (panelOpen && panelId === 'About') {
@@ -96,7 +96,7 @@ export default function GuidePanel() {
           height={900}
         />
         <div className="absolute inset-0 flex items-center justify-center">
-          <h1 className="text-4xl text-white z-10 text-shadow-md">
+          <h1 className="text-4xl text-white z-10 text-shadow-md lg:text-7xl">
             What is it?
           </h1>
         </div>
