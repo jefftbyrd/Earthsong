@@ -134,6 +134,7 @@ export default function MapMessages(props) {
               setPin({});
               setFreesoundLoading(true);
               setPhase('portal');
+              setPanelOpen(false); // Close the panel if it's open
             }}
           >
             Take me there
