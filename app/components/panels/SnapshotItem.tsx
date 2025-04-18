@@ -94,7 +94,7 @@ export default function SnapshotItem({
         >
           {snapshot.title}
         </EarthsongButton>
-        <EarthsongButton buttonStyle={'remove'} onClick={handleDelete}>
+        <EarthsongButton buttonStyle={6} onClick={handleDelete}>
           delete
         </EarthsongButton>
       </motion.div>
