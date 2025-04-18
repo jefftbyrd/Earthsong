@@ -1,4 +1,7 @@
+import GuideAboutPanel from '../panels/GuideAboutPanel';
+import GuideNavigatePanel from '../panels/GuideNavigatePanel';
 import GuidePanel from '../panels/GuidePanel';
+import GuidePortalPanel from '../panels/GuidePortalPanel';
 import PowersPanel from '../panels/PowersPanel';
 import SavePanel from '../panels/SavePanel';
 import SummonPanel from '../panels/SummonPanel';
@@ -34,5 +37,17 @@ export const panels = {
     label: 'Guide',
     icon: 2,
     iconClassName: 'h-6.5 w-5',
+  },
+  Navigate: {
+    component: GuideNavigatePanel,
+    label: 'Navigate',
+  },
+  Portal: {
+    component: GuidePortalPanel,
+    label: 'Portal',
+  },
+  About: {
+    component: GuideAboutPanel,
+    label: 'About',
   },
 };
