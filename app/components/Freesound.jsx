@@ -101,7 +101,7 @@ export default function Freesound() {
         if (error.name === 'AbortError') {
           console.log('Fetch aborted');
           setFreesoundError(true);
-          setSearchMessage('Sound search cancelled. Try again.');
+          setSearchMessage('Search cancelled. Try again.');
         } else {
           console.error('Error fetching sounds:', error);
           setFreesoundError(true);
