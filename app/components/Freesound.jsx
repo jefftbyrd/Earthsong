@@ -13,19 +13,16 @@ export default function Freesound() {
     isFetchingSounds,
     setIsFetchingSounds,
   } = useContext(soundsContext);
-  const { pin, setSearchMessage } = useContext(journeyContext); // Add setSearchMessage from context
+  const { pin, setSearchMessage, setFreesoundError } =
+    useContext(journeyContext); // Add setSearchMessage from context
   const [currentRadius, setCurrentRadius] = useState(null);
-
-  console.log('sounds on Freesound:', sounds);
-  console.log('location from pin:', pin?.locationName);
-  console.log('Freesound: isFetchingSounds:', isFetchingSounds);
-  console.log('Freesound: notEnough:', notEnough);
 
   // Only depends on pin changes
   useEffect(() => {
     if (pin && pin.lat && pin.lng) {
       console.log('Pin changed, setting isFetchingSounds to true...');
       setNotEnough(false); // Reset "not enough results" state
+      setFreesoundError(false); // Reset error state
       setIsFetchingSounds(true); // This should be called
       setSounds(null); // Reset sounds to initial state
       setSearchMessage('Searching for sounds...'); // Initial message
@@ -103,9 +100,11 @@ export default function Freesound() {
       } catch (error) {
         if (error.name === 'AbortError') {
           console.log('Fetch aborted');
+          setFreesoundError(true);
           setSearchMessage('Sound search cancelled. Try again.');
         } else {
           console.error('Error fetching sounds:', error);
+          setFreesoundError(true);
           setSearchMessage('Error searching for sounds. Please try again.');
         }
       } finally {
@@ -117,6 +116,7 @@ export default function Freesound() {
     if (isFetchingSounds) {
       fetchData().catch((error) => {
         console.error('Error in fetchData:', error);
+        setFreesoundError(true);
         setIsFetchingSounds(false);
         setSearchMessage('Error searching for sounds. Please try again.');
       });
