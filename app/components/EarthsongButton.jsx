@@ -9,7 +9,7 @@ export default function EarthsongButton({
     3: 'rounded-md bg-white/50 p-2 text-md text-black border-1 border-gray-500 cursor-pointer w-fit shadow-md hover:bg-white/80',
     4: 'rounded-md bg-white/50 p-2 text-lg text-black border-1 border-gray-500 cursor-pointer w-fit shadow-md hover:bg-white/80',
     journey: 'text-xl cursor-pointer',
-    remove: 'text-white text-sm cursor-pointer underline hover:font-bold',
+    6: 'text-white text-sm cursor-pointer underline hover:font-bold',
   };
 
   const className = buttonStyles[buttonStyle] || buttonStyles[1]; // Default to style 1 if invalid style is passed
