@@ -24,24 +24,40 @@ export default function GuidePortalPanel() {
 
   return (
     <PanelWrap panel="Portal" bg="#5381C4">
-      <h2 className="text-xl mb-5">
-        Use the menu at the bottom to navigate EARTH SONG.
-      </h2>
+      <h2 className="text-xl mb-5">Interacting with sounds.</h2>
       <div>
-        <h3 className="text-3xl font-bold">MAP</h3>
-        Return to the map page to choose a new location to explore.
+        <h3 className="text-3xl font-bold">Play or stop a sound</h3>
+        Tap a circle or the numbers in the play bar at the top of your screen.
       </div>
       <div>
-        <h3 className="text-3xl font-bold">UNLOCK</h3>
-        Create an EARTHSONG account or sign in.
+        <h3 className="text-3xl font-bold">Move sounds in the sonic field</h3>
+        Touch and drag sound circles.
       </div>
       <div>
-        <h3 className="text-3xl font-bold">POWERS</h3>
-        Once signed in, you can save and recall your favorite journeys.
+        <h3 className="text-3xl font-bold">Open a sound's info panel</h3>
+        Touch the sound title in the play bar.
       </div>
-      <div>
-        <h3 className="text-3xl font-bold">GUIDE</h3>
-        Access this guide.
+      {/* <div>
+        <h3 className="text-3xl font-bold">Special Features</h3>
+        (currently only available on desktop site)
+      </div> */}
+
+      <div className="border-1 p-3">
+        <h3 className="text-3xl font-bold">Special Features</h3>
+        (currently only available on desktop site)
+        <h4>
+          While hovering cursor over a sound circle, use keyboard commands:
+        </h4>
+        <div>
+          <h3 className="text-xl font-bold">Set volume trim</h3>
+        </div>
+        <div>
+          <h3 className="text-xl font-bold">Change playback speed</h3>
+        </div>
+        <div>
+          <h3 className="text-xl font-bold">Toggle playback direction</h3>
+          backwards/forwards
+        </div>
       </div>
     </PanelWrap>
   );

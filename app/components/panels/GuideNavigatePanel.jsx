@@ -25,7 +25,7 @@ export default function GuideNavigatePanel() {
   return (
     <PanelWrap panel="Navigate" bg="#5381C4">
       <h2 className="text-xl mb-5">
-        Use the menu at the bottom to navigate EARTH SONG.
+        Navigate Earth Song using the menu at the bottom of your screen.
       </h2>
       <div>
         <h3 className="text-3xl font-bold">MAP</h3>
