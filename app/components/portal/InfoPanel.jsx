@@ -40,14 +40,14 @@ export default function InfoPanel({ sound, index, color }) {
   return (
     <div
       ref={ref}
-      className=" text-black box-border overflow-auto mt-0.5 z-40 relative lg:m-20 lg:border-black/50 lg:border-6"
+      className=" text-black box-border overflow-auto mt-0.5 z-40 relative lg:m-20 lg:border-black/50 lg:border-x-6 lg:border-t-6"
       style={{ backgroundColor: color }}
       // role="dialog" // Indicate this is a dialog
       // aria-modal="true" // Indicate this is a modal dialog
       // aria-labelledby="info-panel-title" // Reference to the title element
     >
       <ClosePanelButton panel={sound} />
-      <div className="p-5 text-black ">
+      <div className="p-5 lg:p-9 text-black ">
         <h2
           id="info-panel-title"
           className="text-3xl lg:text-5xl wrap-break-word mt-2 lg:mt-2"
