@@ -23,7 +23,7 @@ export const panels = {
   Unlock: {
     component: UnlockPanel,
     label: 'Unlock',
-    icon: 2,
+    icon: 4,
     iconClassName: 'h-6 w-6',
   },
   Save: {
