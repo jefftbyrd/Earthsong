@@ -55,10 +55,10 @@ export default function MapMessages(props) {
   //   transition: { repeat: Infinity, duration: 3 },
   // };
 
-  const fadeInAnimation = {
-    opacity: [0, 1],
-    transition: { duration: 1 },
-  };
+  // const fadeInAnimation = {
+  //   opacity: [0, 1],
+  //   transition: { duration: 1 },
+  // };
 
   const fadeAnimation = {
     initial: { opacity: 0 },
@@ -71,14 +71,14 @@ export default function MapMessages(props) {
   //   animate: { opacity: 1 },
   // };
 
-  const combinedAnimation = {
-    color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
-    opacity: [0, 1],
-    transition: {
-      color: { repeat: Infinity, duration: 3 }, // Infinite color oscillation
-      opacity: { duration: 2 }, // Fade-in effect
-    },
-  };
+  // const combinedAnimation = {
+  //   color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
+  //   opacity: [0, 1],
+  //   transition: {
+  //     color: { repeat: Infinity, duration: 3 }, // Infinite color oscillation
+  //     opacity: { duration: 2 }, // Fade-in effect
+  //   },
+  // };
 
   const combinedFadeAnimation = {
     initial: { opacity: 0 },
