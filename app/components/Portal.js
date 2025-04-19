@@ -7,23 +7,17 @@ import { useSoundPlayer } from '../context/soundPlayerContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
-import InfoPanel from './portal/InfoPanel';
 import { panels } from './portal/panelConfig';
-// import PortalNav from './portal/PortalNav';
 import SoundController from './portal/SoundController';
-// import SoundIcon from './portal/SoundIcon';
-// import { usePortalState } from './portal/usePortalState';
 import { useSoundData } from './portal/useSoundData';
 
 export default function Portal() {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
-  const { reset, panelOpen, panelId, test } = useContext(journeyContext);
+  const { reset, panelOpen, panelId } = useContext(journeyContext);
   const { isLoading, soundsColor, error } = useSoundData();
-  // const [state, actions] = usePortalState();
   const { playerTarget, playing, activateTarget, forceChange } =
     useSoundPlayer();
-  const { user } = useContext(userContext);
 
   console.log('soundsColor in Portal.js', soundsColor);
 
