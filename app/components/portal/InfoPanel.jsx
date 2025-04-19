@@ -46,7 +46,7 @@ export default function InfoPanel({ sound, index, color }) {
       // aria-modal="true" // Indicate this is a modal dialog
       // aria-labelledby="info-panel-title" // Reference to the title element
     >
-      <ClosePanelButton panel={sound} />
+      <ClosePanelButton panel={sound.id} />
       <div className="p-5 lg:p-9 text-black ">
         <h2
           id="info-panel-title"
