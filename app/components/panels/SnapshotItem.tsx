@@ -25,7 +25,9 @@ export default function SnapshotItem({
     setPhase,
     setJourneyToRecall,
     togglePanel,
+    incrementSnapshotVersion,
     triggerReset,
+    phase,
     setPin,
     setPanelId,
     setPanelOpen,
@@ -67,38 +69,32 @@ export default function SnapshotItem({
           buttonStyle={4}
           onClick={async () => {
             try {
-              // Trigger reset first
+              // Close panel and reset targets
               setPanelOpen(false);
-              (setActivateTarget as (value: boolean) => void)(false);
+              setActivateTarget(false);
               setPanelId('');
 
+              // Reset audio
               await triggerReset();
-              console.log('Reset triggered successfully');
 
-              // Await the first setPhase
-              await new Promise((resolve) => {
-                setPhase('initial');
-                resolve(undefined);
-              });
-
-              // Wait 100ms before proceeding
-              await new Promise<void>((resolve) => {
-                setTimeout(() => resolve(), 100);
-              });
-
-              // Perform the other actions after reset
+              // Update state for new snapshot
               setJourneyToRecall(snapshot.id);
-
-              // togglePanel();
               setPin({
                 lat: null,
                 lng: null,
                 locationName: null,
               });
               setFreesoundLoading(true);
-              setPhase('portalRecall');
+
+              // Force component remount with version increment
+              incrementSnapshotVersion();
+
+              // Ensure we're in portalRecall phase (only changes if not already there)
+              if (phase !== 'portalRecall') {
+                setPhase('portalRecall');
+              }
             } catch (error) {
-              console.error('Error triggering reset:', error);
+              console.error('Error recalling snapshot:', error);
             }
           }}
         >
