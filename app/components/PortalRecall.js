@@ -60,18 +60,6 @@ export default function PortalRecall(props) {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const recallSnapshot = async () => {
-  //     const recalledSounds = await props.recalledSounds;
-  //     setSoundsColorRecalled(recalledSounds);
-  //     setRecallIsLoading(false);
-  //   };
-
-  //   recallSnapshot().catch((error) => {
-  //     console.error('Error recalling snapshot:', error);
-  //   });
-  // }, [props.recalledSounds]);
-
   // if (recallIsLoading) {
   //   return <div className={styles.loading}>Loading...</div>;
   // }
