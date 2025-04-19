@@ -60,6 +60,12 @@ export default function MapMessages(props) {
     transition: { duration: 1 },
   };
 
+  const fadeAnimation = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    transition: { duration: 1 },
+  };
+
   // const fadeIn = {
   //   initial: { opacity: 0 },
   //   animate: { opacity: 1 },
@@ -74,14 +80,27 @@ export default function MapMessages(props) {
     },
   };
 
+  const combinedFadeAnimation = {
+    initial: { opacity: 0 },
+    animate: {
+      opacity: 1,
+      color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
+    },
+    transition: {
+      opacity: { duration: 2 },
+      color: { repeat: Infinity, duration: 3 },
+    },
+  };
+
   return (
     <div className="absolute bottom-10 z-10 m-auto left-0 right-0 text-center text-lg lg:text-4xl/13 p-2 backdrop-blur-[5px]  text-shadow-lg/20 md:w-3/4">
       {/* LINE 1 */}
       <div>
-        <motion.p animate={fadeInAnimation}>
-          {mapConditions.initial ? 'Choose a place to explore' : null}
-        </motion.p>
-        <motion.p animate={fadeInAnimation}>
+        {mapConditions.initial && (
+          <motion.p {...fadeAnimation}>Choose a place to explore</motion.p>
+        )}
+
+        <motion.p {...fadeAnimation}>
           {mapConditions.location &&
           !mapConditions.hasResults &&
           !mapConditions.noResults ? (
@@ -100,7 +119,7 @@ export default function MapMessages(props) {
       <div>
         {Boolean(mapConditions.fetching) && (
           <motion.p
-            animate={combinedAnimation}
+            {...combinedFadeAnimation}
             className="font-bold text-shadow-lg/20"
           >
             {searchMessage || 'Searching...'}
@@ -109,10 +128,7 @@ export default function MapMessages(props) {
           </motion.p>
         )}
         {mapConditions.hasError && (
-          <motion.p
-            animate={fadeInAnimation}
-            className="font-bold text-shadow-lg/20"
-          >
+          <motion.p {...fadeAnimation} className="font-bold text-shadow-lg/20">
             {searchMessage || 'Searching...'}
             <br />
           </motion.p>
@@ -122,12 +138,12 @@ export default function MapMessages(props) {
       {/* LINE 3 */}
       {mapConditions.hasResults && (
         <>
-          <motion.p animate={fadeInAnimation}>
+          <motion.p {...fadeAnimation}>
             {/* Found {sounds.soundCount} sounds within {sounds.searchRadius}km. */}
             {searchMessage}.
           </motion.p>
           <motion.button
-            animate={combinedAnimation}
+            {...combinedFadeAnimation}
             className="font-bold text-shadow-lg/20 hover:scale-105 transition-all duration-300 active:scale-97"
             onClick={() => {
               setPanelOpen(false); // Close the panel if it's open
