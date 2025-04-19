@@ -54,7 +54,7 @@ export default function PowersPanel() {
           )}
         </div> */}
 
-      <p>{phase !== 'portalRecall' ? <LogoutButton /> : null}</p>
+      {phase !== 'portalRecall' ? <LogoutButton /> : null}
     </PanelWrap>
   );
 }
