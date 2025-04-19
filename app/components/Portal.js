@@ -14,7 +14,8 @@ import { useSoundData } from './portal/useSoundData';
 export default function Portal() {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
-  const { reset, panelOpen, panelId } = useContext(journeyContext);
+  const { reset, panelOpen, panelId, snapshotVersion } =
+    useContext(journeyContext);
   const { isLoading, soundsColor, error } = useSoundData();
   const { playerTarget, playing, activateTarget, forceChange } =
     useSoundPlayer();
@@ -84,6 +85,7 @@ export default function Portal() {
       >
         {soundsColor?.length > 0 && containerHeight > 0 && (
           <NextReactP5Wrapper
+            key={`p5-wrapper-${snapshotVersion}`}
             sketch={soundPortal}
             soundsColor={soundsColor}
             containerHeight={containerHeight}
@@ -93,6 +95,7 @@ export default function Portal() {
             activateTarget={activateTarget}
             panelOpen={panelOpen}
             forceChange={forceChange}
+            version={snapshotVersion}
           />
         )}
         <AnimatePresence>

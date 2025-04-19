@@ -11,7 +11,8 @@ import SoundController from './portal/SoundController';
 export default function PortalRecall(props) {
   const canvasContainerRef = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
-  const { reset, panelOpen, panelId, test } = useContext(journeyContext);
+  const { reset, panelOpen, panelId, snapshotVersion } =
+    useContext(journeyContext);
   const { playerTarget, playing } = useSoundPlayer();
   const { setPlayerTarget, setPlaying, activateTarget, forceChange } =
     useSoundPlayer();
@@ -94,6 +95,7 @@ export default function PortalRecall(props) {
       >
         {props.recalledSounds?.length > 0 && containerHeight > 0 && (
           <NextReactP5Wrapper
+            key={`p5-wrapper-${snapshotVersion}`} // This forces React to remount the component
             sketch={soundPortal}
             soundsColor={props.recalledSounds}
             containerHeight={containerHeight}
@@ -103,6 +105,7 @@ export default function PortalRecall(props) {
             activateTarget={activateTarget}
             panelOpen={panelOpen}
             forceChange={forceChange}
+            version={snapshotVersion} // Also pass as prop
           />
         )}
         <AnimatePresence>
