@@ -12,7 +12,7 @@ export default function PortalRecall(props) {
   const canvasContainerRef = useRef(null);
   const p5Ref = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
-  const { reset, panelOpen, panelId, snapshotVersion } =
+  const { reset, panelOpen, panelId, snapshotVersion, phase } =
     useContext(journeyContext);
   const { playerTarget, playing } = useSoundPlayer();
   const { setPlayerTarget, setPlaying, activateTarget, forceChange } =
@@ -101,7 +101,7 @@ export default function PortalRecall(props) {
       >
         {props.recalledSounds?.length > 0 && containerHeight > 0 && (
           <NextReactP5Wrapper
-            key={`p5-wrapper-${snapshotVersion}`} // This forces React to remount the component
+            key={`p5-wrapper-${snapshotVersion}-${phase}`} // Include phase in the key
             sketch={soundPortal}
             soundsColor={props.recalledSounds}
             containerHeight={containerHeight}

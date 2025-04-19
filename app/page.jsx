@@ -23,7 +23,7 @@ export default function Earthsong() {
     useContext(journeyContext);
   const { panelId, panelOpen } = useContext(journeyContext);
 
-  console.log('phase', phase);
+  // console.log('phase', phase);
 
   // Create a ref to store the audio element
   const audioRef = useRef(null);
