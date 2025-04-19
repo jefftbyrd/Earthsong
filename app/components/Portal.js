@@ -114,13 +114,12 @@ export default function Portal() {
                 height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
                 maxHeight: 'calc(100vh - 2.5rem)',
               }}
-              animate={{
-                opacity: [0, 1],
-                transition: { duration: 0.25 },
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
               exit={{
                 opacity: 0,
-                transition: { duration: 0.25 },
+                transition: { duration: 0.5 },
               }}
             >
               {React.createElement(panels[panelId].component)}

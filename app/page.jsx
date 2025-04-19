@@ -234,10 +234,9 @@ export default function Earthsong() {
       {phase !== 'initial' && (
         <motion.div
           className="fixed bottom-0 left-0 w-full z-50"
-          animate={{
-            opacity: [0, 1],
-            transition: { duration: 1 },
-          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
         >
           <PortalNav isLoggedIn={user} />
         </motion.div>
