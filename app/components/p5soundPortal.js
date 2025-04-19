@@ -25,6 +25,21 @@ export const soundPortal = (p5) => {
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
   p5.updateWithProps = async (props) => {
+    // If reset is triggered, ensure proper cleanup
+    if (props.reset) {
+      console.log('Reset triggered in p5soundPortal, stopping all sounds');
+      await stopAll(); // Make sure this is awaited
+
+      // After stopAll completes, check if we need to regenerate
+      if (props.soundsColor && props.soundsColor.length > 0) {
+        sounds2 = props.soundsColor;
+        if (isInitialized) {
+          generateShapes();
+        }
+      }
+      return; // Exit early to avoid other processing during reset
+    }
+
     // console.log('soundsColor arrives in p5.updateWithProps', props.soundsColor);
     // Your existing props handling code
     if (props.soundsColor) {
@@ -321,36 +336,44 @@ export const soundPortal = (p5) => {
   async function stopAll() {
     console.log('p5 STOP ALL');
 
-    // Dispose of all Shape's audio resources first
+    // Cancel all scheduled events first
+    const transport = Tone.getTransport();
+    transport.cancel();
+    transport.stop();
+
+    // Ensure all audio processing is stopped before cleanup
+    if (multiPlayer) {
+      await multiPlayer.stopAll();
+    }
+
+    // Dispose of all Shape's audio resources
     for (let shape of shapes) {
       if (shape.meter) await shape.meter.dispose();
       if (shape.channel) await shape.channel.dispose();
       if (shape.reverbGain) await shape.reverbGain.dispose();
       if (shape.dryGain) await shape.dryGain.dispose();
+
+      // Remove any DOM event listeners that might have been added
+      const element = document.querySelector(`.s${shape.id}`);
+      if (element) {
+        // Clone and replace to remove all listeners
+        const newElement = element.cloneNode(true);
+        if (element.parentNode) {
+          element.parentNode.replaceChild(newElement, element);
+        }
+      }
     }
 
-    if (multiPlayer) {
-      await multiPlayer.stopAll();
-      await multiPlayer.dispose();
-    }
+    // Then dispose master objects
+    if (multiPlayer) await multiPlayer.dispose();
+    if (sharedReverb) await sharedReverb.dispose();
+    if (waveform) await waveform.dispose();
 
-    // Make sure to dispose the shared reverb
-    if (sharedReverb) {
-      await sharedReverb.dispose();
-    }
-
-    // Also dispose the waveform analyzer
-    if (waveform) {
-      await waveform.dispose();
-    }
-
-    // Clear the shapes array to prevent memory leaks
+    // Clear arrays
     shapes.length = 0;
+    lastWaveformData.length = 0;
 
-    Tone.Transport.cancel(); // Cancel all scheduled events
-    Tone.Transport.stop();
-
-    // Reset initialization flag
+    // Reset flags
     isInitialized = false;
 
     p5.remove();
@@ -616,42 +639,51 @@ export const soundPortal = (p5) => {
       this.loadStartTime = Date.now();
       this.loadProgress = 0;
 
-      // Start loading the player in the background
-      if (!multiPlayer) return;
-
-      // Create a temporary audio element to track loading progress
+      // Create a temporary audio element with reference to clean up later
       const tempAudio = new Audio();
+      this.tempAudio = tempAudio; // Store reference for cleanup
       tempAudio.src = this.url;
 
-      // Add event listeners to track loading progress
-      tempAudio.addEventListener('loadeddata', () => {
-        // Pre-load is complete enough to start playing
+      // Add named functions that can be removed later if needed
+      const onLoadedData = () => {
         this.loadProgress = 0.5;
-      });
-
-      tempAudio.addEventListener('canplaythrough', () => {
-        // Fully loaded and ready to play without buffering
+      };
+      const onCanPlayThrough = () => {
         this.loadProgress = 0.9;
-      });
-
-      // Set up error handling
-      tempAudio.addEventListener('error', () => {
-        // console.error(`Error loading sound: ${this.url}`);
+      };
+      const onError = () => {
         this.loadProgress = 0;
         this.isLoading = false;
-      });
+      };
 
-      // Actually create the Tone.js player
+      // Store these functions for potential cleanup
+      this.audioListeners = {
+        loadeddata: onLoadedData,
+        canplaythrough: onCanPlayThrough,
+        error: onError,
+      };
+
+      // Add event listeners
+      tempAudio.addEventListener('loadeddata', onLoadedData);
+      tempAudio.addEventListener('canplaythrough', onCanPlayThrough);
+      tempAudio.addEventListener('error', onError);
+
+      // Add cleanup when Tone.js finishes loading
       multiPlayer.add(this.id, this.url, () => {
-        // This callback executes when Tone.js finishes loading
+        // Clean up temp audio element
+        if (this.tempAudio) {
+          Object.entries(this.audioListeners).forEach(([event, listener]) => {
+            this.tempAudio.removeEventListener(event, listener);
+          });
+          this.tempAudio = null;
+          this.audioListeners = null;
+        }
+
         this.isLoaded = true;
         this.isLoading = false;
         this.loadProgress = 1;
-
-        // Set up additional audio processing
         this.setupAudioProcessing();
 
-        // Autoplay if requested while loading
         if (this.playWhenLoaded) {
           playSound(this.id);
           this.playWhenLoaded = false;
@@ -804,6 +836,30 @@ export const soundPortal = (p5) => {
           multiPlayer.player(this.id).playbackRate = this.rate;
         }
       }
+    }
+    dispose() {
+      // Clean up temp audio element if it exists
+      if (this.tempAudio) {
+        if (this.audioListeners) {
+          Object.entries(this.audioListeners).forEach(([event, listener]) => {
+            this.tempAudio.removeEventListener(event, listener);
+          });
+        }
+        this.tempAudio = null;
+        this.audioListeners = null;
+      }
+
+      // Dispose audio processing nodes
+      if (this.meter) this.meter.dispose();
+      if (this.channel) this.channel.dispose();
+      if (this.reverbGain) this.reverbGain.dispose();
+      if (this.dryGain) this.dryGain.dispose();
+
+      // Clear references
+      this.meter = null;
+      this.channel = null;
+      this.reverbGain = null;
+      this.dryGain = null;
     }
   }
 

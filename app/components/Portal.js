@@ -13,6 +13,7 @@ import { useSoundData } from './portal/useSoundData';
 
 export default function Portal() {
   const canvasContainerRef = useRef(null);
+  const p5Ref = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
   const { reset, panelOpen, panelId, snapshotVersion } =
     useContext(journeyContext);
@@ -44,7 +45,6 @@ export default function Portal() {
       const finalHeight = Math.max(availableHeight, 100);
 
       setContainerHeight(finalHeight);
-      // console.log('Container height set to:', finalHeight);
     };
 
     // Initial measurement after a short delay to ensure DOM is ready
@@ -53,9 +53,15 @@ export default function Portal() {
     // Recalculate on window resize
     window.addEventListener('resize', calculateHeight);
 
+    // Store the p5Ref.current in a variable that the cleanup function can use
+    const currentP5Ref = p5Ref.current;
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener('resize', calculateHeight);
+      if (currentP5Ref) {
+        currentP5Ref.updateWithProps({ reset: true });
+      }
     };
   }, []);
 
@@ -96,6 +102,7 @@ export default function Portal() {
             panelOpen={panelOpen}
             forceChange={forceChange}
             version={snapshotVersion}
+            ref={p5Ref}
           />
         )}
         <AnimatePresence>
