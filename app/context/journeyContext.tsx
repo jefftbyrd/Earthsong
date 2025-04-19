@@ -38,6 +38,8 @@ export interface JourneyContextType {
   setSearchMessage: Dispatch<SetStateAction<string>>;
   freesoundError: boolean;
   setFreesoundError: Dispatch<SetStateAction<boolean>>;
+  snapshotVersion: number;
+  incrementSnapshotVersion: () => void;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -72,6 +74,8 @@ export const journeyContext = createContext<JourneyContextType>({
   setSearchMessage: () => {},
   freesoundError: false,
   setFreesoundError: () => {},
+  snapshotVersion: 0,
+  incrementSnapshotVersion: () => {},
 });
 
 interface Props {
@@ -93,6 +97,11 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [journeySaved, setJourneySaved] = useState(false);
   const [searchMessage, setSearchMessage] = useState('');
   const [freesoundError, setFreesoundError] = useState(false);
+  const [snapshotVersion, setSnapshotVersion] = useState(0);
+
+  const incrementSnapshotVersion = () => {
+    setSnapshotVersion((prev) => prev + 1);
+  };
 
   const triggerReset = async () => {
     setReset(true);
@@ -164,6 +173,8 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         setSearchMessage,
         setFreesoundError,
         freesoundError,
+        snapshotVersion,
+        incrementSnapshotVersion,
       }}
     >
       {children}
