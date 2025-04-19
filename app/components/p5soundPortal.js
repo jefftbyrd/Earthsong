@@ -320,6 +320,15 @@ export const soundPortal = (p5) => {
 
   async function stopAll() {
     console.log('p5 STOP ALL');
+
+    // Dispose of all Shape's audio resources first
+    for (let shape of shapes) {
+      if (shape.meter) await shape.meter.dispose();
+      if (shape.channel) await shape.channel.dispose();
+      if (shape.reverbGain) await shape.reverbGain.dispose();
+      if (shape.dryGain) await shape.dryGain.dispose();
+    }
+
     if (multiPlayer) {
       await multiPlayer.stopAll();
       await multiPlayer.dispose();
@@ -337,6 +346,9 @@ export const soundPortal = (p5) => {
 
     // Clear the shapes array to prevent memory leaks
     shapes.length = 0;
+
+    Tone.Transport.cancel(); // Cancel all scheduled events
+    Tone.Transport.stop();
 
     // Reset initialization flag
     isInitialized = false;
