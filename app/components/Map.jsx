@@ -29,7 +29,7 @@ export default function Map() {
   const { pin, setPin } = useContext(journeyContext);
 
   const fetchPlaceFormatted = async (lng, lat) => {
-    console.log('Fetching place_formatted for coordinates:', { lng, lat });
+    // console.log('Fetching place_formatted for coordinates:', { lng, lat });
 
     try {
       const response = await fetch(
@@ -43,12 +43,12 @@ export default function Map() {
       }
 
       const data = await response.json();
-      console.log('API response data:', data);
+      // console.log('API response data:', data);
 
       if (data.features && data.features.length > 0) {
         const place = data.features[1]?.properties?.place_formatted;
         if (place) {
-          console.log('Extracted place_formatted:', place);
+          // console.log('Extracted place_formatted:', place);
           setPlaceFormatted(place); // Update state
           return place; // Return the value
         } else {
@@ -69,7 +69,7 @@ export default function Map() {
   };
 
   useEffect(() => {
-    console.log('Initializing Mapbox map...');
+    // console.log('Initializing Mapbox map...');
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
 
     mapRef.current = new mapboxgl.Map({
@@ -97,23 +97,23 @@ export default function Map() {
         ...coords,
         locationName: locationName || 'Unknown location',
       });
-      console.log(
-        'Setting pin with locationName:',
-        locationName || 'Unknown location',
-      );
+      // console.log(
+      //   'Setting pin with locationName:',
+      //   locationName || 'Unknown location',
+      // );
     });
 
     mapRef.current.on('move', () => {
       const mapCenter = mapRef.current.getCenter();
       const mapZoom = mapRef.current.getZoom();
-      console.log('Map moved. New center:', mapCenter, 'New zoom:', mapZoom);
+      // console.log('Map moved. New center:', mapCenter, 'New zoom:', mapZoom);
 
       setCenter([mapCenter.lng, mapCenter.lat]);
       setZoom(mapZoom);
     });
 
     return () => {
-      console.log('Cleaning up Mapbox map...');
+      // console.log('Cleaning up Mapbox map...');
       mapRef.current.remove();
     };
   }, []); // Empty dependency array - create map only once
