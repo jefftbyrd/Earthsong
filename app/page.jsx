@@ -242,16 +242,22 @@ export default function Earthsong() {
       </AnimatePresence>
 
       {/* PortalNav */}
-      {phase !== 'initial' && (
-        <motion.div
-          className="fixed bottom-0 left-0 w-full z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <PortalNav isLoggedIn={user} />
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {phase !== 'initial' && (
+          <motion.div
+            className="fixed bottom-0 left-0 w-full z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            exit={{
+              opacity: 0,
+              transition: { duration: 4 },
+            }}
+          >
+            <PortalNav isLoggedIn={user} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
