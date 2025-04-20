@@ -20,7 +20,7 @@ export default function Freesound() {
   // Only depends on pin changes
   useEffect(() => {
     if (pin && pin.lat && pin.lng) {
-      console.log('Pin changed, setting isFetchingSounds to true...');
+      // console.log('Pin changed, setting isFetchingSounds to true...');
       setNotEnough(false); // Reset "not enough results" state
       setFreesoundError(false); // Reset error state
       setIsFetchingSounds(true); // This should be called
@@ -38,14 +38,14 @@ export default function Freesound() {
 
     const fetchData = async () => {
       if (!pin || !pin.lat || !pin.lng || !isFetchingSounds) {
-        console.log('Skipping fetch: invalid pin or not in fetching state');
+        // console.log('Skipping fetch: invalid pin or not in fetching state');
         setFreesoundLoading(false);
         setIsFetchingSounds(false);
         return;
       }
 
       setFreesoundLoading(true);
-      console.log('Starting sound searches:', searchRadiuses);
+      // console.log('Starting sound searches:', searchRadiuses);
       setSearchMessage(
         `Searching for sounds near ${pin.locationName || 'this location'}...`,
       );
@@ -71,9 +71,9 @@ export default function Freesound() {
           const data = await response.json();
 
           if (data.count >= 5) {
-            console.log(
-              `Using results from ${radius}km radius: ${data.count} sounds`,
-            );
+            // console.log(
+            //   `Using results from ${radius}km radius: ${data.count} sounds`,
+            // );
 
             setSounds({
               ...data,
@@ -92,14 +92,14 @@ export default function Freesound() {
           }
         }
 
-        console.log('Insufficient results in all radiuses');
+        // console.log('Insufficient results in all radiuses');
         setNotEnough(true);
         setSearchMessage(
           `No sounds found near ${pin.locationName || 'this location'}. Try a different location.`,
         );
       } catch (error) {
         if (error.name === 'AbortError') {
-          console.log('Fetch aborted');
+          // console.log('Fetch aborted');
           setFreesoundError(true);
           setSearchMessage('Search cancelled. Try again.');
         } else {
