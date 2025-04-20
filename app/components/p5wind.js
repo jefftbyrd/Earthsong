@@ -49,7 +49,7 @@ export const wind = (p5) => {
       !isDisposed
     ) {
       if (noise1?.state === 'stopped') {
-        console.log('Starting wind sounds for map or returnToMap phase');
+        // console.log('Starting wind sounds for map or returnToMap phase');
         // Start both noise sources
         noise1.start();
         noise2.start();
@@ -61,7 +61,7 @@ export const wind = (p5) => {
       (prevPhase === 'map' || prevPhase === 'returnToMap') &&
       !isDisposed
     ) {
-      console.log('Stopping wind sounds - exited map or returnToMap phase');
+      // console.log('Stopping wind sounds - exited map or returnToMap phase');
       if (noise1?.state === 'started') {
         noise1.stop();
       }
