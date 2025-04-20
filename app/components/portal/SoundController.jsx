@@ -14,14 +14,16 @@ export default function SoundController({
     <>
       <div className="text-center py-1">
         <p className="font-black">
-          {soundsColor[0]?.pin !== undefined
-            ? `${soundsColor[0]?.pin.lat.toFixed(3)}, ${soundsColor[0]?.pin.lng.toFixed(3)}`
-            : `${soundsColor[0]?.geotag}`}
+          {soundsColor?.[0]
+            ? soundsColor[0].pin
+              ? `${soundsColor[0].pin?.lat?.toFixed(3) || 0}, ${soundsColor[0].pin?.lng?.toFixed(3) || 0}`
+              : `${soundsColor[0].geotag || ''}`
+            : ''}
         </p>
         <p>
-          {soundsColor[0]?.location !== undefined
-            ? `${soundsColor[0]?.location}`
-            : `${recalledName}`}
+          {soundsColor?.[0]
+            ? soundsColor[0].location || recalledName || ''
+            : recalledName || ''}
         </p>
       </div>
       <div className={`grid gap-0.5 grid-cols-5 ${className || ''}`}>
