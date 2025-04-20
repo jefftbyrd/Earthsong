@@ -165,7 +165,7 @@ export default function Earthsong() {
 
       {/* Portal waits for enterPortal */}
       <AnimatePresence>
-        {phase === 'portal' ? (
+        {phase === 'portal' || phase === 'portalRecall' ? (
           <motion.div
             animate={{
               opacity: [0, 0, 1],
@@ -176,13 +176,24 @@ export default function Earthsong() {
               transition: { duration: 2 },
             }}
           >
-            <Portal />
+            <Portal
+              {...(phase === 'portalRecall' && snapshots
+                ? {
+                    recalledSounds: snapshots?.find(
+                      (snapshot) => snapshot?.id === journeyToRecall,
+                    )?.sounds,
+                    recalledName: snapshots?.find(
+                      (snapshot) => snapshot?.id === journeyToRecall,
+                    )?.title,
+                  }
+                : {})}
+            />
           </motion.div>
         ) : null}
       </AnimatePresence>
 
       {/* PortalRecall */}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {phase === 'portalRecall' && snapshots ? (
           <motion.div
             animate={{
@@ -206,7 +217,7 @@ export default function Earthsong() {
             />
           </motion.div>
         ) : null}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <AnimatePresence>
         {panelOpen &&
