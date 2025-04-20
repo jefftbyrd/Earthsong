@@ -46,9 +46,9 @@ export const soundPortal = (p5) => {
       // sounds2 = [...props.soundsColor];
       sounds2 = props.soundsColor;
     }
-    console.log('props.panelOpen', props.panelOpen);
+    // console.log('props.panelOpen', props.panelOpen);
     isPanelOpen = props.panelOpen;
-    console.log('isPanelOpen', isPanelOpen);
+    // console.log('isPanelOpen', isPanelOpen);
 
     // Handle containerHeight more forcefully
     if (props.containerHeight && props.containerHeight > 0) {
