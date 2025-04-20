@@ -173,7 +173,7 @@ export default function Earthsong() {
             }}
             exit={{
               opacity: 0,
-              transition: { duration: 2 },
+              transition: { duration: 4 },
             }}
           >
             <Portal
