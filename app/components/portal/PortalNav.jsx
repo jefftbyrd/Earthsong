@@ -62,7 +62,7 @@ export default function PortalNav({ isLoggedIn }) {
             transition={{ duration: 1 }}
             exit={{
               opacity: 0,
-              transition: { duration: 1 },
+              transition: { duration: 3 },
             }}
             key="map"
             className="uppercase text-center flex items-center justify-center gap-0  hover:bg-[#0033FF] transition-all duration-100 ease-in-out"
