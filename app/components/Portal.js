@@ -11,7 +11,7 @@ import { panels } from './portal/panelConfig';
 import SoundController from './portal/SoundController';
 import { useSoundData } from './portal/useSoundData';
 
-export default function Portal() {
+export default function Portal(props) {
   const canvasContainerRef = useRef(null);
   const p5Ref = useRef(null);
   const [containerHeight, setContainerHeight] = useState(0);
@@ -21,7 +21,8 @@ export default function Portal() {
   const { playerTarget, playing, activateTarget, forceChange } =
     useSoundPlayer();
 
-  console.log('soundsColor in Portal.js', soundsColor);
+  const soundsForPortal =
+    phase === 'portal' ? soundsColor : props.recalledSounds;
 
   // More robust approach to measure height
   useEffect(() => {
@@ -77,7 +78,7 @@ export default function Portal() {
     <div className="flex flex-col h-screen">
       {/* Sound Controller */}
       <div className="flex-shrink-0" id="sound-controller">
-        <SoundController soundsColor={soundsColor} />
+        <SoundController soundsColor={soundsForPortal} />
       </div>
 
       {/* Canvas Container */}
@@ -89,11 +90,11 @@ export default function Portal() {
           maxHeight: 'calc(100vh - 2.5rem)',
         }}
       >
-        {soundsColor?.length > 0 && containerHeight > 0 && (
+        {soundsForPortal?.length > 0 && containerHeight > 0 && (
           <NextReactP5Wrapper
             key={`p5-wrapper-${snapshotVersion}-${phase}`} // Include phase in the key
             sketch={soundPortal}
-            soundsColor={soundsColor}
+            soundsColor={soundsForPortal}
             containerHeight={containerHeight}
             playerTarget={playerTarget}
             playing={playing}
