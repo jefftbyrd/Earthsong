@@ -70,7 +70,11 @@ export default function PortalNav({ isLoggedIn }) {
               e.stopPropagation(); // Extra safeguard
               setActivateTarget(false);
               // togglePanel();
-              setPanelOpen(false); // Close the panel if it's open
+              // setPanelOpen(false); // Close the panel if it's open
+              if (panelOpen) {
+                togglePanel(); // This will close the panel and clear panelId
+              }
+              // setPanelId(''); // Clear the panelId
               await triggerReset();
               setPin({
                 lat: null,
