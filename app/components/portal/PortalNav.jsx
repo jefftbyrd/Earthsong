@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext';
+import { soundsContext } from '../../context/soundsContext';
 import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
@@ -15,7 +16,12 @@ export default function PortalNav({ isLoggedIn }) {
     panelId,
     panelOpen,
     setPanelOpen,
+    incrementSnapshotVersion,
+    setPin,
+    setPhase,
+    triggerReset,
   } = useContext(journeyContext);
+  const { setFreesoundLoading } = useContext(soundsContext);
   const { setActivateTarget } = useSoundPlayer();
 
   // Prevent event propagation to canvas
@@ -65,12 +71,21 @@ export default function PortalNav({ isLoggedIn }) {
               setActivateTarget(false);
               // togglePanel();
               setPanelOpen(false); // Close the panel if it's open
-              try {
-                await triggerReset2({ nextPhase: 'returnToMap' }); // Pass the required object
-                console.log('Reset triggered successfully');
-              } catch (error) {
-                console.error('Error triggering reset:', error);
-              }
+              await triggerReset();
+              setPin({
+                lat: null,
+                lng: null,
+                locationName: null,
+              });
+              setFreesoundLoading(true);
+              incrementSnapshotVersion();
+              setPhase('returnToMap');
+              // try {
+              //   await triggerReset2({ nextPhase: 'returnToMap' }); // Pass the required object
+              //   console.log('Reset triggered successfully');
+              // } catch (error) {
+              //   console.error('Error triggering reset:', error);
+              // }
             }}
           >
             <EarthsongIcons className="h-6 w-6 mr-1" iconNumber={5} />
