@@ -141,7 +141,7 @@ export default function Portal(props) {
               transition={{ duration: 0.5 }}
               exit={{
                 opacity: 0,
-                transition: { duration: 0.5 },
+                transition: { duration: 3 },
               }}
             >
               {React.createElement(panels[panelId].component)}
