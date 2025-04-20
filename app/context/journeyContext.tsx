@@ -104,13 +104,16 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   };
 
   const triggerReset = async () => {
+    console.log('Starting reset sequence');
     setReset(true);
-    // Return the awaited promise
+
+    // Return a promise that resolves after a longer delay
     return await new Promise<void>((resolve) => {
       setTimeout(() => {
+        console.log('Reset sequence complete');
         setReset(false);
         resolve();
-      }, 500);
+      }, 1000); // Increased from 500ms to give more time for cleanup
     });
   };
 
