@@ -52,23 +52,21 @@ export default function Register() {
 
   return (
     <div className="grid gap-5">
-      <p className="text-xl">Create an account</p>
+      <p className="text-xl">Create an account.</p>
       <form onSubmit={async (event) => await handleRegister(event)}>
         <label>
-          Username
+          <span>Username</span>
           <input
             // autoFocus={true}
             autoCapitalize="off"
-            className="bg-blue-600"
             value={username}
             onChange={(event) => setUsername(event.currentTarget.value)}
           />
         </label>
 
         <label>
-          Password
+          <span>Password</span>
           <input
-            className="bg-blue-600"
             type="password"
             autoCapitalize="off"
             value={password}
@@ -76,8 +74,8 @@ export default function Register() {
           />
         </label>
 
-        <EarthsongButton type="submit" buttonStyle={1}>
-          register
+        <EarthsongButton type="submit" buttonStyle={3}>
+          Register
         </EarthsongButton>
 
         {/* <p>
