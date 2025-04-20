@@ -24,6 +24,24 @@ export default function Portal(props) {
   const soundsForPortal =
     phase === 'portal' ? soundsColor : props.recalledSounds;
 
+  // const location = phase === 'portal' ? soundsColor : props.recalledSounds;
+
+  // const locationName =
+  //   props.recalledName !== undefined
+  //     ? props.recalledName
+  //     : soundsColor[0]?.location;
+
+  // const locationName =
+  // soundsColor[0]?.location !== undefined
+  //   ? `${soundsColor[0]?.location}`
+  //   : `${props.recalledName}`;
+
+  // {
+  //   soundsColor[0]?.location !== undefined
+  //     ? `${soundsColor[0]?.location}`
+  //     : `${recalledName}`;
+  // }
+
   // More robust approach to measure height
   useEffect(() => {
     // Function to calculate available height
@@ -66,11 +84,11 @@ export default function Portal(props) {
     };
   }, []);
 
-  if (isLoading) {
+  if (phase === 'portal' && isLoading) {
     return <div className={styles.loading}>Loading...</div>;
   }
 
-  if (error) {
+  if (phase === 'portal' && error) {
     return <div className={styles.error}>Error: {error}</div>;
   }
 
@@ -78,7 +96,10 @@ export default function Portal(props) {
     <div className="flex flex-col h-screen">
       {/* Sound Controller */}
       <div className="flex-shrink-0" id="sound-controller">
-        <SoundController soundsColor={soundsForPortal} />
+        <SoundController
+          soundsColor={soundsForPortal}
+          {...(props.recalledName && { recalledName: props.recalledName })}
+        />
       </div>
 
       {/* Canvas Container */}

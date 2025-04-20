@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import InfoPanel from './InfoPanel';
 import SoundItem from './SoundItem';
@@ -9,9 +9,6 @@ export default function SoundController({
   recalledName,
 }) {
   const { panelId, panelOpen } = useContext(journeyContext);
-
-  console.log('soundsColor on SoundController', soundsColor);
-  console.log('recalledName on SoundController', recalledName);
 
   return (
     <>
