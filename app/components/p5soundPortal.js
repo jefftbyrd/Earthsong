@@ -1047,6 +1047,11 @@ export const soundPortal = (p5) => {
         this.dryGain.gain.value = 1 - this.revWet;
       }
 
+      // Calculate the base diameter (without volume offset)
+      const baseDiameter =
+        p5.map(this.y, 0, p5.height, p5.height / 48, p5.height / 3) +
+        this.meterMap / 2;
+
       this.d = p5.dist(p5.mouseX, p5.mouseY, this.x, this.y);
       if (this.d < this.diameter / 2) {
         if (p5.keyIsPressed === true) {
@@ -1062,12 +1067,12 @@ export const soundPortal = (p5) => {
           if (p5.key === 'e') {
             this.volBase += 0.3;
             // Add visual volume effect - increase diameter
-            this.volumeVisualOffset += 5;
+            this.volumeVisualOffset += baseDiameter * 0.07;
           }
           if (p5.key === 'q') {
             this.volBase -= 0.3;
             // Add visual volume effect - decrease diameter
-            this.volumeVisualOffset -= 5;
+            this.volumeVisualOffset -= baseDiameter * 0.07;
           }
           if (p5.key === 'w') {
             this.volBase = 0;
@@ -1079,8 +1084,8 @@ export const soundPortal = (p5) => {
         // Apply constraints to volume visual offset to prevent extreme sizes
         this.volumeVisualOffset = p5.constrain(
           this.volumeVisualOffset,
-          -50,
-          100,
+          -baseDiameter * 0.7,
+          baseDiameter * 1.4,
         );
 
         // Apply constraints to rate and volume (existing code)
@@ -1345,13 +1350,8 @@ export const soundPortal = (p5) => {
         const dy = Math.abs(touchPoints[0].y - touchPoints[1].y);
 
         if (dx > dy * 1.5) {
-          // Touches are more horizontally aligned - likely a rotation gesture
           isRotating = true;
           activeRotationShape = shape;
-        } else {
-          // Touches are more vertically aligned or indeterminate -
-          // we'll determine in touchMoved if it's a volume gesture
-          activeVolumeShape = shape;
         }
 
         return false;
@@ -1514,12 +1514,22 @@ export const soundPortal = (p5) => {
       );
 
       // Visual feedback - change size based on volume
+      const baseDiameter =
+        p5.map(
+          activeVolumeShape.y,
+          0,
+          p5.height,
+          p5.height / 48,
+          p5.height / 3,
+        ) +
+        (activeVolumeShape.meterMap || 0) / 2;
+
       activeVolumeShape.volumeVisualOffset = p5.map(
         activeVolumeShape.volBase,
         -12,
         12,
-        -50,
-        100,
+        -baseDiameter * 0.7,
+        baseDiameter * 1.4,
       );
 
       // Calculate final volume
@@ -1583,80 +1593,6 @@ export const soundPortal = (p5) => {
       return false;
     }
 
-    // Handle two-finger vertical swipe for volume
-    else if (activeVolumeShape && touchPoints.length === 2 && center) {
-      // Calculate if the movement is primarily vertical (volume) or circular (rotation)
-      const dx1 = touchPoints[0].x - touchPoints[1].x;
-      const dy1 = touchPoints[0].y - touchPoints[1].y;
-      const currentY = (touchPoints[0].y + touchPoints[1].y) / 2;
-
-      // Calculate vertical movement
-      const yDiff = touchSwipeStartY - currentY;
-
-      // If significant vertical movement by both fingers in the same direction
-      if (Math.abs(yDiff) > DRAG_THRESHOLD) {
-        // If this is our first significant vertical movement, disable rotation mode
-        if (isRotating) {
-          isRotating = false;
-          activeRotationShape = null;
-        }
-
-        // Up = increase volume, Down = decrease volume
-        activeVolumeShape.volBase += yDiff * VOLUME_SWIPE_SENSITIVITY;
-
-        // Apply constraints to volume
-        activeVolumeShape.volBase = p5.constrain(
-          activeVolumeShape.volBase,
-          -12,
-          12,
-        );
-
-        // Add visual volume effect
-        activeVolumeShape.volumeVisualOffset = p5.map(
-          activeVolumeShape.volBase,
-          -12,
-          12,
-          -50,
-          100,
-        );
-
-        // Calculate final volume
-        const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
-
-        // Apply to channel if it exists
-        if (activeVolumeShape.channel && activeVolumeShape.channel.volume) {
-          activeVolumeShape.channel.volume.value =
-            volY + activeVolumeShape.volBase;
-        }
-
-        // Show volume feedback
-        if (!activeVolumeShape.showVolumeChangeFeedback) {
-          showVolumeChangeFeedback(activeVolumeShape);
-        }
-
-        // Reset starting point for continuous movement
-        touchSwipeStartY = currentY;
-        return false;
-      }
-      // If this might be a rotation gesture instead (detected by circular movement)
-      else {
-        // If movement looks more like rotation than vertical swipe,
-        // switch to rotation mode
-        const currentAngle = calculateAngle(center, touchPoints[0]);
-        let angleDiff = currentAngle - previousAngle;
-        if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
-        if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
-
-        // If we have significant angular movement, switch to rotation mode
-        if (Math.abs(angleDiff) > 0.05) {
-          isRotating = true;
-          activeRotationShape = activeVolumeShape;
-          activeVolumeShape = null;
-          // Fall through to next event for rotation handling
-        }
-      }
-    }
-
     // Handle single touch drag
     else if (touchPoints.length === 1) {
       if (p5.touches.length === 1 && draggedShape) {
@@ -1680,12 +1616,12 @@ export const soundPortal = (p5) => {
         draggedShape.x = p5.constrain(
           draggedShape.x,
           draggedShape.diameter / 2,
-          p5.width - draggedShape.diameter / 2
+          p5.width - draggedShape.diameter / 2,
         );
         draggedShape.y = p5.constrain(
           draggedShape.y,
           draggedShape.diameter / 2,
-          p5.height - draggedShape.diameter / 2
+          p5.height - draggedShape.diameter / 2,
         );
         return false;
       }
@@ -1699,8 +1635,16 @@ export const soundPortal = (p5) => {
 
   function constrainShapesToCanvas() {
     for (let shape of shapes) {
-      shape.x = p5.constrain(shape.x, shape.diameter / 2, p5.width - shape.diameter / 2);
-      shape.y = p5.constrain(shape.y, shape.diameter / 2, p5.height - shape.diameter / 2);
+      shape.x = p5.constrain(
+        shape.x,
+        shape.diameter / 2,
+        p5.width - shape.diameter / 2,
+      );
+      shape.y = p5.constrain(
+        shape.y,
+        shape.diameter / 2,
+        p5.height - shape.diameter / 2,
+      );
     }
   }
 
