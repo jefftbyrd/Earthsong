@@ -74,7 +74,12 @@ export default function Map() {
 
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      style: 'mapbox://styles/jefftbyrd/cm473j0lh011801si8hos63hp',
+      // style: 'mapbox://styles/jefftbyrd/cm473j0lh011801si8hos63hp', // Deluxe
+      // style: 'mapbox://styles/jefftbyrd/cm9qt7c6o006f01s5chreddlh', // Simpler
+      style: 'mapbox://styles/jefftbyrd/cm9qux58w006l01s56f4oaen4', // Simpler 2
+      // style: 'mapbox://styles/jefftbyrd/cm9qvgsw1006m01s50ll5b6sb', // Simpler 3
+
+      // style: 'mapbox://styles/jefftbyrd/cm9qstjrr015501qu4vku97e6', // Default
       center: center,
       zoom: zoom,
     });
