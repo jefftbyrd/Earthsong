@@ -44,8 +44,10 @@ export const soundPortal = (p5) => {
   let activeVolumeShape = null;
   const VOLUME_SWIPE_SENSITIVITY = 0.02; // How much each pixel changes volume
 
-  // Add this variable with your other touch variables
-  let isVolumeControlActive = false;
+  // Variables for pinch gesture
+  let initialPinchDistance = 0;
+  let isPinching = false;
+  const PINCH_SENSITIVITY = 0.01;
 
   // Calculate the angle between two points
   function calculateAngle(center, point) {
@@ -815,23 +817,15 @@ export const soundPortal = (p5) => {
         }
       }
 
-      // Show volume feedback when three-finger control is active
+      // Show volume feedback when pinch control is active
       if (
         this.showVolumeChangeFeedback ||
-        (isVolumeControlActive &&
-          activeVolumeShape &&
-          activeVolumeShape.id === this.id)
+        (isPinching && activeVolumeShape && activeVolumeShape.id === this.id)
       ) {
         const elapsedTime = this.showVolumeChangeFeedback
           ? p5.millis() - this.volumeChangeFeedbackStart
           : 1000;
-        const opacity = p5.map(
-          elapsedTime,
-          0,
-          1000,
-          255,
-          isVolumeControlActive ? 180 : 0,
-        ); // Keep visible while active
+        const opacity = p5.map(elapsedTime, 0, 1000, 255, isPinching ? 180 : 0); // Keep visible while active
 
         // Display volume level
         p5.noStroke();
@@ -1249,8 +1243,6 @@ export const soundPortal = (p5) => {
     }
   };
 
-  // Replace the existing touchStarted function to handle three-finger touch
-
   p5.touchStarted = (event) => {
     if (isPanelOpen) return;
 
@@ -1281,16 +1273,14 @@ export const soundPortal = (p5) => {
         // Set up long press detection for direction toggle
         if (shape.isLoaded) {
           longPressTimer = setTimeout(() => {
-            // Long press detected - toggle direction
-            shape.reversed = !shape.reversed;
-            if (multiPlayer && multiPlayer.player(shape.id)) {
-              multiPlayer.player(shape.id).reverse = shape.reversed;
+            // Only trigger if the shape is still active (not moved)
+            if (shape.active) {
+              shape.reversed = !shape.reversed;
+              if (multiPlayer && multiPlayer.player(shape.id)) {
+                multiPlayer.player(shape.id).reverse = shape.reversed;
+              }
+              showReverseDirectionFeedback(shape);
             }
-
-            // Show temporary feedback
-            showReverseDirectionFeedback(shape);
-
-            // Clear the timer
             longPressTimer = null;
           }, LONG_PRESS_THRESHOLD);
         }
@@ -1298,73 +1288,25 @@ export const soundPortal = (p5) => {
         return false;
       }
     }
-    // Handle two-finger touch for rotation
+    // Handle two-finger touch for rotation or pinch
     else if (touchPoints.length === 2) {
       // Find the shape at the center of the touch points
       const shape = getShapeAtTouchCenter(touchPoints);
 
       if (shape && shape.isLoaded) {
-        // Calculate the angle to determine if this is a rotation or vertical swipe
+        // Calculate the center point and initial distance between touches
         const center = calculateCenter(touchPoints);
+        initialPinchDistance = p5.dist(
+          touchPoints[0].x,
+          touchPoints[0].y,
+          touchPoints[1].x,
+          touchPoints[1].y,
+        );
         previousAngle = calculateAngle(center, touchPoints[0]);
 
-        // Store the initial vertical position of touch points for volume control
-        const initialY = (touchPoints[0].y + touchPoints[1].y) / 2;
-        touchSwipeStartY = initialY;
+        // We'll determine in touchMoved whether this is a rotation or pinch
+        activeVolumeShape = shape;
 
-        // Calculate if touches are more horizontal or vertical aligned
-        const dx = Math.abs(touchPoints[0].x - touchPoints[1].x);
-        const dy = Math.abs(touchPoints[0].y - touchPoints[1].y);
-
-        if (dx > dy * 1.5) {
-          // Touches are more horizontally aligned - likely a rotation gesture
-          isRotating = true;
-          activeRotationShape = shape;
-        } else {
-          // Touches are more vertically aligned or indeterminate -
-          // we'll determine in touchMoved if it's a volume gesture
-          activeVolumeShape = shape;
-        }
-
-        return false;
-      }
-    }
-    // NEW: Handle three-finger touch for volume control
-    else if (touchPoints.length === 3) {
-      // Calculate the center point of the three touches
-      let sumX = 0,
-        sumY = 0;
-      for (let touch of touchPoints) {
-        sumX += touch.x;
-        sumY += touch.y;
-      }
-      const centerX = sumX / 3;
-      const centerY = sumY / 3;
-      // Find shapes near this center point - with a more generous radius
-      // to account for smaller shapes on mobile
-      const nearbyShapes = [];
-      for (let shape of shapes) {
-        const distance = p5.dist(centerX, centerY, shape.x, shape.y);
-        // Allow interaction if at least within 1.5x the radius
-        if (distance < shape.diameter * 0.75) {
-          nearbyShapes.push({
-            shape: shape,
-            distance: distance,
-          });
-        }
-      }
-      // If we found any shapes, use the closest one
-      if (nearbyShapes.length > 0) {
-        // Sort by distance (closest first)
-        nearbyShapes.sort((a, b) => a.distance - b.distance);
-        const closestShape = nearbyShapes[0].shape;
-        // Activate volume control mode for this shape
-        activeVolumeShape = closestShape;
-        isVolumeControlActive = true;
-        // Store initial Y position
-        touchSwipeStartY = centerY;
-        // Show immediate feedback
-        showVolumeChangeFeedback(activeVolumeShape);
         return false;
       }
     }
@@ -1379,14 +1321,11 @@ export const soundPortal = (p5) => {
     }
 
     // Reset states if we don't have enough fingers
-    if (p5.touches.length < 3) {
-      isVolumeControlActive = false;
-    }
-
     if (p5.touches.length < 2) {
       activeVolumeShape = null;
       isRotating = false;
       activeRotationShape = null;
+      isPinching = false; // Reset pinching state
     }
 
     // Clear touch points array
@@ -1452,131 +1391,45 @@ export const soundPortal = (p5) => {
       });
     }
 
-    // Three-finger volume control takes highest priority
-    if (
-      isVolumeControlActive &&
-      activeVolumeShape &&
-      touchPoints.length === 3
-    ) {
-      // Calculate current center Y position
-      let sumY = 0;
-      for (let touch of touchPoints) {
-        sumY += touch.y;
-      }
-      const currentCenterY = sumY / 3;
-
-      // Calculate vertical movement (negative = upward = volume increase)
-      const yDiff = touchSwipeStartY - currentCenterY;
-
-      // Apply volume change - more sensitive than two-finger for easier control
-      activeVolumeShape.volBase += yDiff * VOLUME_SWIPE_SENSITIVITY * 1.5;
-
-      // Apply constraints
-      activeVolumeShape.volBase = p5.constrain(
-        activeVolumeShape.volBase,
-        -12,
-        12,
-      );
-
-      // Visual feedback - change size based on volume
-      activeVolumeShape.volumeVisualOffset = p5.map(
-        activeVolumeShape.volBase,
-        -12,
-        12,
-        -50,
-        100,
-      );
-
-      // Calculate final volume
-      const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
-
-      // Apply to channel
-      if (activeVolumeShape.channel && activeVolumeShape.channel.volume) {
-        activeVolumeShape.channel.volume.value =
-          volY + activeVolumeShape.volBase;
-      }
-
-      // Ensure feedback is visible
-      if (!activeVolumeShape.showVolumeChangeFeedback) {
-        showVolumeChangeFeedback(activeVolumeShape);
-      }
-
-      // Reset starting point for continuous movement
-      touchSwipeStartY = currentCenterY;
-      return false;
-    }
-
     // Calculate center between touch points for rotation or other two-finger gestures
     const center = calculateCenter(touchPoints);
 
-    // Handle rotation gesture
-    if (
-      isRotating &&
-      activeRotationShape &&
-      touchPoints.length === 2 &&
-      center
-    ) {
+    // Handle two-finger gestures (rotation or pinch)
+    if (touchPoints.length === 2 && center && activeVolumeShape) {
+      // Calculate current distance between fingers
+      const currentPinchDistance = p5.dist(
+        touchPoints[0].x,
+        touchPoints[0].y,
+        touchPoints[1].x,
+        touchPoints[1].y,
+      );
+
+      // Calculate angle for rotation detection
       const currentAngle = calculateAngle(center, touchPoints[0]);
       let angleDiff = currentAngle - previousAngle;
-
-      // Normalize angle difference to be between -PI and PI
       if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
       if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
 
-      // Convert to degrees for easier understanding
-      const angleDiffDegrees = angleDiff * (180 / Math.PI);
+      // Determine if this is a pinch or rotation gesture
+      // If pinch distance change is significant, treat as pinch
+      const pinchDiff = currentPinchDistance - initialPinchDistance;
 
-      // Apply speed change based on rotation
-      // Clockwise (positive angle) = faster, Counter-clockwise (negative angle) = slower
-      activeRotationShape.rate += angleDiffDegrees * ROTATION_SPEED_FACTOR;
+      if (Math.abs(pinchDiff) > DRAG_THRESHOLD * 2) {
+        // This is a pinch gesture - adjust volume
+        isPinching = true;
+        isRotating = false;
 
-      // Apply constraints
-      activeRotationShape.rate = p5.constrain(
-        activeRotationShape.rate,
-        0.05,
-        4,
-      );
+        // Pinch in (negative) = decrease volume, Pinch out (positive) = increase volume
+        activeVolumeShape.volBase += pinchDiff * PINCH_SENSITIVITY;
 
-      // Update the playback rate
-      if (multiPlayer && multiPlayer.player(activeRotationShape.id)) {
-        multiPlayer.player(activeRotationShape.id).playbackRate =
-          activeRotationShape.rate;
-      }
-
-      // Store current angle as previous for next calculation
-      previousAngle = currentAngle;
-      return false;
-    }
-
-    // Handle two-finger vertical swipe for volume
-    else if (activeVolumeShape && touchPoints.length === 2 && center) {
-      // Calculate if the movement is primarily vertical (volume) or circular (rotation)
-      const dx1 = touchPoints[0].x - touchPoints[1].x;
-      const dy1 = touchPoints[0].y - touchPoints[1].y;
-      const currentY = (touchPoints[0].y + touchPoints[1].y) / 2;
-
-      // Calculate vertical movement
-      const yDiff = touchSwipeStartY - currentY;
-
-      // If significant vertical movement by both fingers in the same direction
-      if (Math.abs(yDiff) > DRAG_THRESHOLD) {
-        // If this is our first significant vertical movement, disable rotation mode
-        if (isRotating) {
-          isRotating = false;
-          activeRotationShape = null;
-        }
-
-        // Up = increase volume, Down = decrease volume
-        activeVolumeShape.volBase += yDiff * VOLUME_SWIPE_SENSITIVITY;
-
-        // Apply constraints to volume
+        // Apply constraints
         activeVolumeShape.volBase = p5.constrain(
           activeVolumeShape.volBase,
           -12,
           12,
         );
 
-        // Add visual volume effect
+        // Visual feedback - change size based on volume
         activeVolumeShape.volumeVisualOffset = p5.map(
           activeVolumeShape.volBase,
           -12,
@@ -1588,7 +1441,7 @@ export const soundPortal = (p5) => {
         // Calculate final volume
         const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
 
-        // Apply to channel if it exists
+        // Apply to channel
         if (activeVolumeShape.channel && activeVolumeShape.channel.volume) {
           activeVolumeShape.channel.volume.value =
             volY + activeVolumeShape.volBase;
@@ -1599,26 +1452,36 @@ export const soundPortal = (p5) => {
           showVolumeChangeFeedback(activeVolumeShape);
         }
 
-        // Reset starting point for continuous movement
-        touchSwipeStartY = currentY;
+        // Update initial distance for smooth continuous adjustment
+        initialPinchDistance = currentPinchDistance;
         return false;
       }
-      // If this might be a rotation gesture instead (detected by circular movement)
-      else {
-        // If movement looks more like rotation than vertical swipe,
-        // switch to rotation mode
-        const currentAngle = calculateAngle(center, touchPoints[0]);
-        let angleDiff = currentAngle - previousAngle;
-        if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
-        if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+      // If angle change is significant and we're not already pinching, treat as rotation
+      else if (Math.abs(angleDiff) > 0.05 && !isPinching) {
+        // This is a rotation gesture
+        isRotating = true;
+        activeRotationShape = activeVolumeShape;
 
-        // If we have significant angular movement, switch to rotation mode
-        if (Math.abs(angleDiff) > 0.05) {
-          isRotating = true;
-          activeRotationShape = activeVolumeShape;
-          activeVolumeShape = null;
-          // Fall through to next event for rotation handling
+        // Apply speed change based on rotation
+        activeRotationShape.rate +=
+          angleDiff * (180 / Math.PI) * ROTATION_SPEED_FACTOR;
+
+        // Apply constraints
+        activeRotationShape.rate = p5.constrain(
+          activeRotationShape.rate,
+          0.05,
+          4,
+        );
+
+        // Update the playback rate
+        if (multiPlayer && multiPlayer.player(activeRotationShape.id)) {
+          multiPlayer.player(activeRotationShape.id).playbackRate =
+            activeRotationShape.rate;
         }
+
+        // Store current angle as previous for next calculation
+        previousAngle = currentAngle;
+        return false;
       }
     }
 
