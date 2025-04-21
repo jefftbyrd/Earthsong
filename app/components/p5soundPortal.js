@@ -1411,6 +1411,8 @@ export const soundPortal = (p5) => {
               // Show temporary feedback
               showResetFeedback(shape);
             }
+            // Update the last tap time
+            lastTapTime = currentTime;
           } else {
             // Single tap - normal play/pause behavior
             if (shape.isLoaded) {
@@ -1418,9 +1420,9 @@ export const soundPortal = (p5) => {
             } else if (shape.isLoading) {
               shape.playWhenLoaded = true;
             }
+            // Update the last tap time
+            lastTapTime = currentTime;
           }
-          // Update the last tap time
-          lastTapTime = currentTime;
         }
       }
 
