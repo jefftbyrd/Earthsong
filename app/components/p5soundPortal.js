@@ -1327,72 +1327,102 @@ export const soundPortal = (p5) => {
 
   // Replace the touchEnded function with this complete rewrite:
 
-  p5.touchEnded = (event) => {
-    if (isPanelOpen) return;
+p5.touchEnded = (event) => {
+  if (isPanelOpen) return;
 
-    // Cancel any pending long press
-    if (longPressTimer) {
-      clearTimeout(longPressTimer);
-      longPressTimer = null;
-    }
+  // Cancel any pending long press
+  if (longPressTimer) {
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
+  }
 
-    // Reset states if we don't have enough fingers
-    if (p5.touches.length < 2) {
-      activeVolumeShape = null;
-      isRotating = false;
-      activeRotationShape = null;
-      isPinching = false; // Reset pinching state
-    }
+  // Reset states if we don't have enough fingers
+  if (p5.touches.length < 2) {
+    activeVolumeShape = null;
+    isRotating = false;
+    activeRotationShape = null;
+    isPinching = false; // Reset pinching state
+  }
 
-    // Only process tap logic when all fingers are lifted
-    if (p5.touches.length === 0) {
-      const touchDuration = p5.millis() - touchStartTime;
-      const distMoved = p5.dist(
-        touchStartPos.x,
-        touchStartPos.y,
-        p5.mouseX,
-        p5.mouseY,
-      );
+  // Only process tap logic when all fingers are lifted
+  if (p5.touches.length === 0) {
+    const touchDuration = p5.millis() - touchStartTime;
+    const distMoved = p5.dist(
+      touchStartPos.x,
+      touchStartPos.y,
+      p5.mouseX,
+      p5.mouseY
+    );
 
-      // Only consider as tap if it was short and with minimal movement
-      if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
-        const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
-        if (shape) {
-          // Check for double-tap
-          const currentTime = p5.millis();
-          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+// Replace the touchEnded function with this complete rewrite:
 
-          // Update lastTapTime for next detection
-          lastTapTime = currentTime;
+p5.touchEnded = (event) => {
+  if (isPanelOpen) return;
 
-          if (isDoubleTap) {
-            // DOUBLE TAP HANDLING - Reset speed only
-            if (shape.isLoaded) {
-              // Reset playback speed
-              shape.rate = 1;
-              if (multiPlayer && multiPlayer.player(shape.id)) {
-                multiPlayer.player(shape.id).playbackRate = 1;
-              }
-              showResetFeedback(shape);
+  // Cancel any pending long press
+  if (longPressTimer) {
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
+  }
+
+  // Reset states if we don't have enough fingers
+  if (p5.touches.length < 2) {
+    activeVolumeShape = null;
+    isRotating = false;
+    activeRotationShape = null;
+    isPinching = false; // Reset pinching state
+  }
+
+  // Only process tap logic when all fingers are lifted
+  if (p5.touches.length === 0) {
+    const touchDuration = p5.millis() - touchStartTime;
+    const distMoved = p5.dist(
+      touchStartPos.x,
+      touchStartPos.y,
+      p5.mouseX,
+      p5.mouseY
+    );
+
+    // Only consider as tap if it was short and with minimal movement
+    if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
+      const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+      if (shape) {
+        // Check for double-tap
+        const currentTime = p5.millis();
+        const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+
+        // Update lastTapTime for next detection
+        lastTapTime = currentTime;
+
+        if (isDoubleTap) {
+          // DOUBLE TAP HANDLING - Reset speed only
+          if (shape.isLoaded) {
+            // Reset playback speed
+            shape.rate = 1;
+            if (multiPlayer && multiPlayer.player(shape.id)) {
+              multiPlayer.player(shape.id).playbackRate = 1;
             }
-            // CRITICAL: Do nothing else for double-tap - don't let it also toggle playback
-          } else {
-            // SINGLE TAP HANDLING - Toggle playback
-            if (shape.isLoaded) {
-              playSound(shape.id);
-            } else if (shape.isLoading) {
-              shape.playWhenLoaded = true;
-            }
+            showResetFeedback(shape);
+          }
+          // CRITICAL: Do nothing else for double-tap - don't let it also toggle playback
+        }
+        else {
+          // SINGLE TAP HANDLING - Toggle playback
+          if (shape.isLoaded) {
+            playSound(shape.id);
+          } else if (shape.isLoading) {
+            shape.playWhenLoaded = true;
           }
         }
       }
-
-      // Reset active state for all shapes
-      for (let i = 0; i < shapes.length; i++) {
-        shapes[i].active = false;
-      }
     }
-  };
+
+    // Reset active state for all shapes
+    for (let i = 0; i < shapes.length; i++) {
+      shapes[i].active = false;
+    }
+  }
+};
 
   p5.touchMoved = () => {
     if (isPanelOpen) return;
