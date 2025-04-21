@@ -1,12 +1,24 @@
 export const occult = (p5) => {
-  let grotesk = p5.loadFont('/Grotesk-03Regular.otf');
+  // let grotesk = p5.loadFont('/Grotesk-03Regular.otf');
+  let grotesk;
   let sourceText = 'ⵙⴻⵅⵙⵉ ⵜⵉⵎⴻⵙ ⵜⵓⵔⴰ ⵐⵄⴿ ⴵꙮⵆ ⵡⵡⵜⵚ ⵣⵣⵣⵣ ⵞⵟⵢⵙ ⵒⵓⵓⵇⴺ';
   let words;
+  let isVisible = false;
 
-  let halfText;
+  // let halfText;
+
+  p5.preload = () => {
+    grotesk = p5.loadFont('/Grotesk-03Regular.otf');
+  };
 
   let fade;
   let fadeAmount = 1;
+
+  p5.updateWithProps = (props) => {
+    if (props.setVisibility !== undefined) {
+      p5.setVisibility(props.setVisibility);
+    }
+  };
 
   p5.setup = () => {
     p5.frameRate(12);
@@ -39,6 +51,16 @@ export const occult = (p5) => {
     if (fade > 255) fadeAmount = -10;
 
     fade += fadeAmount;
+  };
+
+  // Add visibility control methods
+  p5.setVisibility = (visible) => {
+    isVisible = visible;
+    if (visible) {
+      p5.loop();
+    } else {
+      p5.noLoop();
+    }
   };
 
   p5.windowResized = () => {

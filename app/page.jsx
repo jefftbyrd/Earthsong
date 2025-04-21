@@ -159,7 +159,10 @@ export default function Earthsong() {
             transition: { duration: 3, times: [0, 0.1, 0.8, 1] },
           }}
         >
-          <NextReactP5Wrapper sketch={occult} />
+          <NextReactP5Wrapper
+            sketch={occult}
+            setVisibility={phase === 'portal' || phase === 'portalRecall'}
+          />
         </motion.div>
       ) : null}
 
