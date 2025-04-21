@@ -19,7 +19,7 @@ export async function GET(request: Request): Promise<NextResponse<any>> {
 
   try {
     const response = await fetch(
-      `https://freesound.org/apiv2/search/text/?filter=${filter}&fields=previews,name,description,username,id,tags,duration,geotag,url&page_size=100&token=${process.env.FREESOUND_API_KEY}`,
+      `https://freesound.org/apiv2/search/text/?filter=${filter}&fields=previews,name,description,username,id,tags,duration,geotag,url&page_size=150&token=${process.env.FREESOUND_API_KEY}`,
     );
 
     if (!response.ok) {
