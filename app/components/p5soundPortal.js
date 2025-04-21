@@ -47,7 +47,10 @@ export const soundPortal = (p5) => {
   // Variables for pinch gesture
   let initialPinchDistance = 0;
   let isPinching = false;
-  const PINCH_SENSITIVITY = 0.01;
+  const PINCH_SENSITIVITY = 0.05; // Much more responsive than 0.01
+
+  // Add a new constant to track initial shape diameter
+  let initialShapeDiameter = 0;
 
   // Constants for volume and visual feedback
   const MIN_VOLUME_DB = -12; // Minimum volume in dB
@@ -1308,6 +1311,10 @@ export const soundPortal = (p5) => {
           touchPoints[1].x,
           touchPoints[1].y,
         );
+
+        // Store the initial diameter for direct scaling
+        initialShapeDiameter = shape.diameter;
+
         previousAngle = calculateAngle(center, touchPoints[0]);
 
         // We'll determine in touchMoved whether this is a rotation or pinch
@@ -1423,30 +1430,41 @@ export const soundPortal = (p5) => {
         isPinching = true;
         isRotating = false;
 
-        // Pinch in (negative) = decrease volume, Pinch out (positive) = increase volume
-        activeVolumeShape.volBase += pinchDiff * PINCH_SENSITIVITY;
+        // Calculate the direct scaling factor based on finger distance
+        const scaleFactor = currentPinchDistance / initialPinchDistance;
 
-        // Apply constraints with named constants
+        // Map scaling factor directly to volume range (1.0 = no change, 0.5 = quieter, 2.0 = louder)
+        const targetVolume = p5.map(
+          scaleFactor,
+          0.5, // Half the original distance = minimum volume
+          1.5, // 1.5x the original distance = maximum volume
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+        );
+
+        // Apply the volume with some smoothing
+        activeVolumeShape.volBase +=
+          (targetVolume - activeVolumeShape.volBase) * 0.3;
+
+        // Apply constraints
         activeVolumeShape.volBase = p5.constrain(
           activeVolumeShape.volBase,
           MIN_VOLUME_DB,
           MAX_VOLUME_DB,
         );
 
-        // Calculate visual feedback based on percentage of volume range
-        // This ensures perfect alignment between visuals and volume
-        const volumePercent =
-          (activeVolumeShape.volBase - MIN_VOLUME_DB) /
-          (MAX_VOLUME_DB - MIN_VOLUME_DB);
-
-        // Map percentage directly to visual range
-        activeVolumeShape.volumeVisualOffset = p5.map(
-          volumePercent,
-          0,
-          1,
-          MIN_VISUAL_SIZE,
-          MAX_VISUAL_SIZE,
+        // Calculate direct size change - scale the initial diameter
+        const sizeRatio = p5.map(
+          activeVolumeShape.volBase,
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+          0.7, // At minimum volume, shrink to 70%
+          1.3, // At maximum volume, grow to 130%
         );
+
+        // Apply the visual size change based on the finger distance
+        activeVolumeShape.volumeVisualOffset =
+          initialShapeDiameter * sizeRatio - initialShapeDiameter;
 
         // Calculate final volume
         const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
@@ -1462,8 +1480,6 @@ export const soundPortal = (p5) => {
           showVolumeChangeFeedback(activeVolumeShape);
         }
 
-        // Update initial distance for smooth continuous adjustment
-        initialPinchDistance = currentPinchDistance;
         return false;
       }
       // If angle change is significant and we're not already pinching, treat as rotation
