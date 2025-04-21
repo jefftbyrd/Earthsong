@@ -27,8 +27,8 @@ export function useSoundData() {
   const [error, setError] = useState(null);
   const { sounds, soundsColor, setSoundsColor } = useContext(soundsContext);
 
-  console.log('useSoundData: sounds', sounds);
-  console.log('useSoundData: soundsColor', soundsColor);
+  // console.log('useSoundData: sounds', sounds);
+  // console.log('useSoundData: soundsColor', soundsColor);
 
   const processedRef = useRef(false);
 
