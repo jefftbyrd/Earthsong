@@ -248,6 +248,7 @@ export default function Earthsong() {
       <AnimatePresence>
         {phase !== 'initial' && (
           <motion.div
+            id="portal-nav"
             className="fixed bottom-0 left-0 w-full z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
