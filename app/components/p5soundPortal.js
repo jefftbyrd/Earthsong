@@ -24,6 +24,45 @@ export const soundPortal = (p5) => {
   const DRAG_THRESHOLD = 10; // pixels - movement more than this is a drag
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
+  // Variables to track multi-touch rotation
+  let touchPoints = [];
+  let previousAngle = 0;
+  let isRotating = false;
+  let activeRotationShape = null;
+  const ROTATION_SPEED_FACTOR = 0.01; // How much each degree changes the rate
+
+  // Calculate the angle between two points
+  function calculateAngle(center, point) {
+    return Math.atan2(point.y - center.y, point.x - center.x);
+  }
+
+  // Calculate the center point between two touches
+  function calculateCenter(touches) {
+    if (touches.length < 2) return null;
+
+    let sumX = 0,
+      sumY = 0;
+    for (let touch of touches) {
+      sumX += touch.x;
+      sumY += touch.y;
+    }
+
+    return {
+      x: sumX / touches.length,
+      y: sumY / touches.length,
+    };
+  }
+
+  // Check if touch points are over a shape
+  function getShapeAtTouchCenter(touchPoints) {
+    if (touchPoints.length < 2) return null;
+
+    const center = calculateCenter(touchPoints);
+    if (!center) return null;
+
+    return getShapeAtPosition(center.x, center.y);
+  }
+
   p5.updateWithProps = async (props) => {
     // If reset is triggered, ensure proper cleanup
     if (props.reset) {
@@ -628,6 +667,34 @@ export const soundPortal = (p5) => {
         p5.text(aegean[this.number - 1], 0, yOffset);
       }
 
+      // Visual feedback when rotation is active
+      if (
+        isRotating &&
+        activeRotationShape &&
+        activeRotationShape.id === this.id
+      ) {
+        // Draw a circular arrow to indicate rotation mode
+        p5.stroke(255, 255, 255, 200);
+        p5.strokeWeight(3);
+        p5.noFill();
+        p5.arc(
+          0,
+          0,
+          this.diameter * 0.7,
+          this.diameter * 0.7,
+          0,
+          Math.PI * 1.5,
+        );
+        p5.line(0, -this.diameter * 0.35, -10, -this.diameter * 0.35 + 5);
+        p5.line(0, -this.diameter * 0.35, -10, -this.diameter * 0.35 - 5);
+
+        // Display current rate
+        p5.noStroke();
+        p5.fill(255);
+        p5.textSize(this.diameter * 0.12);
+        p5.text(`${this.rate.toFixed(2)}x`, 0, this.diameter * 0.25);
+      }
+
       p5.pop();
     } // END SHOW
 
@@ -943,50 +1010,90 @@ export const soundPortal = (p5) => {
 
   // For mobile touch events
   p5.touchStarted = (event) => {
-    if (isPanelOpen) return; // Just return, don't return false
-    // Use the same logic as mousePressed
-    touchStartTime = p5.millis();
-    touchStartPos = { x: p5.mouseX, y: p5.mouseY };
+    if (isPanelOpen) return;
 
-    const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
-    if (shape) {
-      shape.active = true;
-      return false;
+    // Store all current touches
+    touchPoints = [];
+    for (let i = 0; i < p5.touches.length; i++) {
+      touchPoints.push({
+        id: i,
+        x: p5.touches[i].x,
+        y: p5.touches[i].y,
+      });
     }
 
-    // Commenting this out allows click on other items, besides canvas
-    // return false;
+    // Handle single touch like before
+    if (touchPoints.length === 1) {
+      touchStartTime = p5.millis();
+      touchStartPos = { x: p5.mouseX, y: p5.mouseY };
+
+      const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+      if (shape) {
+        shape.active = true;
+        return false;
+      }
+    }
+    // Handle multi-touch for rotation
+    else if (touchPoints.length >= 2) {
+      // Find the shape at the center of the touch points
+      activeRotationShape = getShapeAtTouchCenter(touchPoints);
+
+      if (activeRotationShape && activeRotationShape.isLoaded) {
+        isRotating = true;
+
+        // Calculate initial angle between touch points
+        const center = calculateCenter(touchPoints);
+        previousAngle = calculateAngle(center, touchPoints[0]);
+
+        return false;
+      }
+    }
   };
 
   p5.touchEnded = (event) => {
-    if (isPanelOpen) return; // Just return, don't return false
-    // Use the same logic as mouseReleased
-    const touchDuration = p5.millis() - touchStartTime;
-    const distMoved = p5.dist(
-      touchStartPos.x,
-      touchStartPos.y,
-      p5.mouseX,
-      p5.mouseY,
-    );
+    if (isPanelOpen) return;
 
-    if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
-      const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
-      if (shape) {
-        if (shape.isLoaded) {
-          playSound(shape.id);
-        } else if (shape.isLoading) {
-          // Queue play when loaded
-          shape.playWhenLoaded = true;
+    // Reset rotation state if we're no longer multi-touching
+    if (p5.touches.length < 2) {
+      isRotating = false;
+      activeRotationShape = null;
+    }
+
+    // Update our touch points array
+    touchPoints = [];
+    for (let i = 0; i < p5.touches.length; i++) {
+      touchPoints.push({
+        id: i,
+        x: p5.touches[i].x,
+        y: p5.touches[i].y,
+      });
+    }
+
+    // Handle single touch tap behavior like before
+    if (!isRotating) {
+      const touchDuration = p5.millis() - touchStartTime;
+      const distMoved = p5.dist(
+        touchStartPos.x,
+        touchStartPos.y,
+        p5.mouseX,
+        p5.mouseY,
+      );
+
+      if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
+        const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+        if (shape) {
+          if (shape.isLoaded) {
+            playSound(shape.id);
+          } else if (shape.isLoading) {
+            shape.playWhenLoaded = true;
+          }
         }
       }
-    }
 
-    for (let i = 0; i < shapes.length; i++) {
-      shapes[i].active = false;
+      for (let i = 0; i < shapes.length; i++) {
+        shapes[i].active = false;
+      }
     }
-
-    // Commenting this out allows click on other items, besides canvas
-    // return false;
   };
 
   p5.mouseDragged = () => {
@@ -1046,10 +1153,63 @@ export const soundPortal = (p5) => {
     return false;
   };
 
-  // Make touchMoved behavior match mouseDragged
+  // Replace the existing touchMoved function
+
   p5.touchMoved = () => {
-    if (isPanelOpen) return; // Just return, don't return false
-    return p5.mouseDragged();
+    if (isPanelOpen) return;
+
+    // Handle multi-touch rotation
+    if (isRotating && activeRotationShape && p5.touches.length >= 2) {
+      // Update touch points
+      touchPoints = [];
+      for (let i = 0; i < p5.touches.length; i++) {
+        touchPoints.push({
+          id: i,
+          x: p5.touches[i].x,
+          y: p5.touches[i].y,
+        });
+      }
+
+      // Calculate center and current angle
+      const center = calculateCenter(touchPoints);
+      const currentAngle = calculateAngle(center, touchPoints[0]);
+
+      // Calculate angle difference in radians
+      let angleDiff = currentAngle - previousAngle;
+
+      // Normalize angle difference to be between -PI and PI
+      if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+      if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+
+      // Convert to degrees for easier understanding
+      const angleDiffDegrees = angleDiff * (180 / Math.PI);
+
+      // Apply speed change based on rotation
+      // Clockwise (positive angle) = faster, Counter-clockwise (negative angle) = slower
+      activeRotationShape.rate += angleDiffDegrees * ROTATION_SPEED_FACTOR;
+
+      // Apply constraints
+      activeRotationShape.rate = p5.constrain(
+        activeRotationShape.rate,
+        0.05,
+        4,
+      );
+
+      // Update the playback rate
+      if (multiPlayer && multiPlayer.player(activeRotationShape.id)) {
+        multiPlayer.player(activeRotationShape.id).playbackRate =
+          activeRotationShape.rate;
+      }
+
+      // Store current angle as previous for next calculation
+      previousAngle = currentAngle;
+
+      return false;
+    }
+    // Fall back to regular drag behavior for single touch
+    else if (p5.touches.length === 1) {
+      return p5.mouseDragged();
+    }
   };
 
   p5.windowResized = () => {
