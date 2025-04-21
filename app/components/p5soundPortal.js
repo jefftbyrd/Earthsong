@@ -86,6 +86,9 @@ export const soundPortal = (p5) => {
 
   p5.updateWithProps = async (props) => {
     // If reset is triggered, ensure proper cleanup
+    console.log('p5: p5.updateWithProps called with props:', props);
+    console.log('p5: props.containerHeight', props.containerHeight);
+
     if (props.reset) {
       console.log('Reset triggered in p5soundPortal, stopping all sounds');
       await stopAll(); // Make sure this is awaited
@@ -114,10 +117,11 @@ export const soundPortal = (p5) => {
     if (props.containerHeight && props.containerHeight > 0) {
       canvasHeight = props.containerHeight;
       // console.log('P5 received container height:', canvasHeight);
+      console.log('p5: canvasHeight', canvasHeight);
 
       // If canvas already exists, resize it
       if (p5.canvas) {
-        // console.log('Resizing canvas to height:', canvasHeight);
+        console.log('Resizing canvas to height:', canvasHeight);
         p5.resizeCanvas(p5.width, canvasHeight);
       }
     }
@@ -1673,6 +1677,16 @@ export const soundPortal = (p5) => {
         // Move the dragged shape regardless of finger position
         draggedShape.x = p5.touches[0].x;
         draggedShape.y = p5.touches[0].y;
+        draggedShape.x = p5.constrain(
+          draggedShape.x,
+          draggedShape.diameter / 2,
+          p5.width - draggedShape.diameter / 2
+        );
+        draggedShape.y = p5.constrain(
+          draggedShape.y,
+          draggedShape.diameter / 2,
+          p5.height - draggedShape.diameter / 2
+        );
         return false;
       }
     }
@@ -1682,4 +1696,17 @@ export const soundPortal = (p5) => {
     // console.log('Window resized, using height:', canvasHeight);
     p5.resizeCanvas(p5.windowWidth, canvasHeight);
   };
+
+  function constrainShapesToCanvas() {
+    for (let shape of shapes) {
+      shape.x = p5.constrain(shape.x, shape.diameter / 2, p5.width - shape.diameter / 2);
+      shape.y = p5.constrain(shape.y, shape.diameter / 2, p5.height - shape.diameter / 2);
+    }
+  }
+
+  // Call this after resizing the canvas:
+  if (p5.canvas) {
+    p5.resizeCanvas(p5.width, canvasHeight);
+    constrainShapesToCanvas();
+  }
 };
