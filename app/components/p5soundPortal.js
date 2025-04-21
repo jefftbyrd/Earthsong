@@ -37,7 +37,7 @@ export const soundPortal = (p5) => {
 
   // Variables for long-press detection
   let longPressTimer = null;
-  const LONG_PRESS_THRESHOLD = 700; // milliseconds for long press
+  const LONG_PRESS_THRESHOLD = 1500; // milliseconds for long press
 
   // Variables for vertical swipe (volume control)
   let touchSwipeStartY = 0;
@@ -1193,6 +1193,25 @@ export const soundPortal = (p5) => {
     }
 
     return false; // Prevent default browser behavior
+  };
+
+  // Add this function right after p5.mouseReleased
+
+  p5.mouseDragged = () => {
+    if (isPanelOpen) return;
+
+    // Find the active shape
+    const activeShape = shapes.find((shape) => shape.active);
+
+    if (activeShape) {
+      activeShape.x = p5.mouseX;
+      activeShape.y = p5.mouseY;
+
+      // Update zIndex to bring to front while dragging
+      activeShape.zIndex = shapes.length;
+
+      return false;
+    }
   };
 
   // Replace the existing touchStarted function to handle two-finger volume control
