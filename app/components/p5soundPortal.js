@@ -1324,6 +1324,7 @@ export const soundPortal = (p5) => {
 
   // Replace the touchEnded function with this complete rewrite:
 
+  // Fix the double-tap function to prevent stopping sounds
   p5.touchEnded = (event) => {
     if (isPanelOpen) return;
 
@@ -1335,11 +1336,11 @@ export const soundPortal = (p5) => {
 
     // Reset states if we don't have enough fingers
     if (p5.touches.length < 2) {
-      gestureStartType = null; // Reset gesture type when fingers are lifted
+      gestureStartType = null;
       activeVolumeShape = null;
       isRotating = false;
       activeRotationShape = null;
-      isPinching = false; // Reset pinching state
+      isPinching = false;
     }
 
     // Only process tap logic when all fingers are lifted
@@ -1360,27 +1361,28 @@ export const soundPortal = (p5) => {
           const currentTime = p5.millis();
           const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
 
-          // Update lastTapTime for next detection
+          // Update lastTapTime for next detection regardless
           lastTapTime = currentTime;
 
+          // CRITICAL CHANGE: Use separate execution paths
           if (isDoubleTap) {
-            // DOUBLE TAP HANDLING - Reset speed only
+            // ONLY handle double-tap (reset speed)
             if (shape.isLoaded) {
-              // Reset playback speed
               shape.rate = 1;
               if (multiPlayer && multiPlayer.player(shape.id)) {
                 multiPlayer.player(shape.id).playbackRate = 1;
               }
               showResetFeedback(shape);
             }
-            // CRITICAL: Do nothing else for double-tap - don't let it also toggle playback
-          } else {
-            // SINGLE TAP HANDLING - Toggle playback
-            if (shape.isLoaded) {
-              playSound(shape.id);
-            } else if (shape.isLoading) {
-              shape.playWhenLoaded = true;
-            }
+            // Skip all other processing for this touch event
+            return;
+          }
+
+          // Only execute single tap logic if NOT a double tap
+          if (shape.isLoaded) {
+            playSound(shape.id);
+          } else if (shape.isLoading) {
+            shape.playWhenLoaded = true;
           }
         }
       }
