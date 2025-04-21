@@ -1309,7 +1309,7 @@ export const soundPortal = (p5) => {
           // Check for double-tap to reset playback speed
           const currentTime = p5.millis();
           if (currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD) {
-            // Double tap detected - reset playback speed
+            // Double tap detected - ONLY reset playback speed without toggling playback
             if (shape.isLoaded) {
               shape.rate = 1; // Reset to default speed
               if (multiPlayer && multiPlayer.player(shape.id)) {
