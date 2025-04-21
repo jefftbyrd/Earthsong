@@ -1505,7 +1505,7 @@ export const soundPortal = (p5) => {
 
   // Fix the touchEnded function to properly handle double-taps
 
-  p5.touchEnded = (event) => {
+  p5.touchEnded = () => {
     if (isPanelOpen) return;
 
     // Cancel any pending long press
@@ -1541,31 +1541,23 @@ export const soundPortal = (p5) => {
           // Check for double-tap
           const currentTime = p5.millis();
           const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
-
-          // Update lastTapTime for next detection
           lastTapTime = currentTime;
 
-          if (isDoubleTap) {
+          // CRITICAL CHANGE: Use a variable to track if we should stop processing
+          let doubleClickHandled = false;
+
+          if (isDoubleTap && shape.isLoaded) {
             // DOUBLE TAP - Reset speed only
-            if (shape.isLoaded) {
-              shape.rate = 1;
-              if (multiPlayer && multiPlayer.player(shape.id)) {
-                multiPlayer.player(shape.id).playbackRate = 1;
-              }
-              showResetFeedback(shape);
-
-              // Reset active state for all shapes
-              for (let i = 0; i < shapes.length; i++) {
-                shapes[i].active = false;
-              }
-
-              // IMPORTANT: Prevent single-tap logic with explicit event end
-              event.preventDefault();
-              event.stopPropagation();
-              return false;
+            shape.rate = 1;
+            if (multiPlayer && multiPlayer.player(shape.id)) {
+              multiPlayer.player(shape.id).playbackRate = 1;
             }
-          } else {
-            // SINGLE TAP - Normal play/pause behavior
+            showResetFeedback(shape);
+            doubleClickHandled = true; // Flag that we've handled the double-tap
+          }
+
+          // Only do single tap logic if this wasn't a double-tap
+          if (!doubleClickHandled && !isDoubleTap) {
             if (shape.isLoaded) {
               playSound(shape.id);
             } else if (shape.isLoading) {
