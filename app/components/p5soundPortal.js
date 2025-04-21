@@ -25,6 +25,7 @@ export const soundPortal = (p5) => {
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
   let justDoubleTapped = false; // Add this flag
+  let draggedShape = null;
 
   // Variables to track multi-touch rotation
   let touchPoints = [];
@@ -1276,6 +1277,7 @@ export const soundPortal = (p5) => {
       const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
       if (shape) {
         shape.active = true;
+        draggedShape = shape; // Track the dragged shape
 
         // Clear any existing timer
         if (longPressTimer) {
@@ -1416,6 +1418,8 @@ export const soundPortal = (p5) => {
 
     // Handle single touch tap behavior
     if (p5.touches.length === 0) {
+      draggedShape = null; // Clear when touch ends
+
       const touchDuration = p5.millis() - touchStartTime;
       const distMoved = p5.dist(
         touchStartPos.x,
@@ -1651,30 +1655,25 @@ export const soundPortal = (p5) => {
 
     // Handle single touch drag
     else if (touchPoints.length === 1) {
-      if (p5.touches.length === 1) {
-        // Find the shape under the touch
-        const shape = getShapeAtPosition(p5.touches[0].x, p5.touches[0].y);
+      if (p5.touches.length === 1 && draggedShape) {
+        // Calculate distance moved to determine if this is a drag
+        const distMoved = p5.dist(
+          touchStartPos.x,
+          touchStartPos.y,
+          p5.touches[0].x,
+          p5.touches[0].y,
+        );
 
-        // If we have an active shape, move it
-        if (shape && shape.active) {
-          // Calculate distance moved to determine if this is a drag
-          const distMoved = p5.dist(
-            touchStartPos.x,
-            touchStartPos.y,
-            p5.touches[0].x,
-            p5.touches[0].y,
-          );
-
-          // If user has moved beyond the drag threshold, cancel long press timer
-          if (distMoved > DRAG_THRESHOLD && longPressTimer) {
-            clearTimeout(longPressTimer);
-            longPressTimer = null;
-          }
-
-          shape.x = p5.touches[0].x;
-          shape.y = p5.touches[0].y;
-          return false;
+        // If user has moved beyond the drag threshold, cancel long press timer
+        if (distMoved > DRAG_THRESHOLD && longPressTimer) {
+          clearTimeout(longPressTimer);
+          longPressTimer = null;
         }
+
+        // Move the dragged shape regardless of finger position
+        draggedShape.x = p5.touches[0].x;
+        draggedShape.y = p5.touches[0].y;
+        return false;
       }
     }
   };
