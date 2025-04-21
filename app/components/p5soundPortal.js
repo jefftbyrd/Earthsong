@@ -1412,6 +1412,8 @@ export const soundPortal = (p5) => {
           // Update the last tap time regardless of single/double tap
           lastTapTime = currentTime;
 
+          // Update touchEnded function around line 1419-1435
+
           if (isDoubleTap) {
             // Double tap detected - ONLY reset playback speed without toggling playback
             if (shape.isLoaded) {
@@ -1422,10 +1424,10 @@ export const soundPortal = (p5) => {
 
               // Show temporary feedback
               showResetFeedback(shape);
-
-              // IMPORTANT: Return early to prevent the single-tap code from executing
-              return;
             }
+
+            // IMPORTANT: Return early regardless of isLoaded state to prevent single-tap code
+            return;
           } else {
             // Single tap - normal play/pause behavior
             if (shape.isLoaded) {
@@ -1629,11 +1631,11 @@ export const soundPortal = (p5) => {
     // Handle single touch drag
     else if (touchPoints.length === 1) {
       if (p5.touches.length === 1) {
-        // Find the shape under the touch
-        const shape = getShapeAtPosition(p5.touches[0].x, p5.touches[0].y);
+        // Find any active shape regardless of current touch position
+        const activeShape = shapes.find((shape) => shape.active);
 
         // If we have an active shape, move it
-        if (shape && shape.active) {
+        if (activeShape) {
           // Calculate distance moved to determine if this is a drag
           const distMoved = p5.dist(
             touchStartPos.x,
@@ -1648,8 +1650,13 @@ export const soundPortal = (p5) => {
             longPressTimer = null;
           }
 
-          shape.x = p5.touches[0].x;
-          shape.y = p5.touches[0].y;
+          // Update the shape's position to the current touch position
+          activeShape.x = p5.touches[0].x;
+          activeShape.y = p5.touches[0].y;
+
+          // Update zIndex to keep it on top
+          activeShape.zIndex = shapes.length;
+
           return false;
         }
       }
