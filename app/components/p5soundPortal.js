@@ -55,6 +55,9 @@ export const soundPortal = (p5) => {
   const MIN_VISUAL_SIZE = -50; // Smallest visual size change
   const MAX_VISUAL_SIZE = 100; // Largest visual size change
 
+  // Add this variable with your other touch variables
+  let gestureStartType = null; // Will be 'pinch' or 'rotate' once determined
+
   // Calculate the angle between two points
   function calculateAngle(center, point) {
     return Math.atan2(point.y - center.y, point.x - center.x);
@@ -1252,6 +1255,8 @@ export const soundPortal = (p5) => {
   p5.touchStarted = (event) => {
     if (isPanelOpen) return;
 
+    gestureStartType = null; // Reset gesture type for new touch
+
     // Store all current touches
     touchPoints = [];
     for (let i = 0; i < p5.touches.length; i++) {
@@ -1318,8 +1323,6 @@ export const soundPortal = (p5) => {
     }
   };
 
-  // Replace the touchEnded function with this complete rewrite:
-
   p5.touchEnded = (event) => {
     if (isPanelOpen) return;
 
@@ -1331,6 +1334,7 @@ export const soundPortal = (p5) => {
 
     // Reset states if we don't have enough fingers
     if (p5.touches.length < 2) {
+      gestureStartType = null; // Reset gesture type when fingers are lifted
       activeVolumeShape = null;
       isRotating = false;
       activeRotationShape = null;
@@ -1344,199 +1348,4 @@ export const soundPortal = (p5) => {
         touchStartPos.x,
         touchStartPos.y,
         p5.mouseX,
-        p5.mouseY,
-      );
-
-      // Only consider as tap if it was short and with minimal movement
-      if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
-        const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
-        if (shape) {
-          // Check for double-tap
-          const currentTime = p5.millis();
-          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
-
-          // Update lastTapTime for next detection
-          lastTapTime = currentTime;
-
-          if (isDoubleTap) {
-            // DOUBLE TAP HANDLING - Reset speed only
-            if (shape.isLoaded) {
-              // Reset playback speed
-              shape.rate = 1;
-              if (multiPlayer && multiPlayer.player(shape.id)) {
-                multiPlayer.player(shape.id).playbackRate = 1;
-              }
-              showResetFeedback(shape);
-            }
-            // CRITICAL: Do nothing else for double-tap - don't let it also toggle playback
-          } else {
-            // SINGLE TAP HANDLING - Toggle playback
-            if (shape.isLoaded) {
-              playSound(shape.id);
-            } else if (shape.isLoading) {
-              shape.playWhenLoaded = true;
-            }
-          }
-        }
-      }
-
-      // Reset active state for all shapes
-      for (let i = 0; i < shapes.length; i++) {
-        shapes[i].active = false;
-      }
-    }
-  };
-
-  p5.touchMoved = () => {
-    if (isPanelOpen) return;
-
-    // Update touch points array
-    touchPoints = [];
-    for (let i = 0; i < p5.touches.length; i++) {
-      touchPoints.push({
-        id: i,
-        x: p5.touches[i].x,
-        y: p5.touches[i].y,
-      });
-    }
-
-    // Calculate center between touch points for rotation or other two-finger gestures
-    const center = calculateCenter(touchPoints);
-
-    // Handle two-finger gestures (rotation or pinch)
-    if (touchPoints.length === 2 && center && activeVolumeShape) {
-      // Calculate current distance between fingers
-      const currentPinchDistance = p5.dist(
-        touchPoints[0].x,
-        touchPoints[0].y,
-        touchPoints[1].x,
-        touchPoints[1].y,
-      );
-
-      // Calculate angle for rotation detection
-      const currentAngle = calculateAngle(center, touchPoints[0]);
-      let angleDiff = currentAngle - previousAngle;
-      if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
-      if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
-
-      // Determine if this is a pinch or rotation gesture
-      // If pinch distance change is significant, treat as pinch
-      const pinchDiff = currentPinchDistance - initialPinchDistance;
-
-      if (Math.abs(pinchDiff) > DRAG_THRESHOLD * 2) {
-        // This is a pinch gesture - adjust volume
-        isPinching = true;
-        isRotating = false;
-
-        // Pinch in (negative) = decrease volume, Pinch out (positive) = increase volume
-        activeVolumeShape.volBase += pinchDiff * PINCH_SENSITIVITY;
-
-        // Apply constraints with named constants
-        activeVolumeShape.volBase = p5.constrain(
-          activeVolumeShape.volBase,
-          MIN_VOLUME_DB,
-          MAX_VOLUME_DB,
-        );
-
-        // Calculate visual feedback based on percentage of volume range
-        // This ensures perfect alignment between visuals and volume
-        const volumePercent =
-          (activeVolumeShape.volBase - MIN_VOLUME_DB) /
-          (MAX_VOLUME_DB - MIN_VOLUME_DB);
-
-        // Map percentage directly to visual range
-        activeVolumeShape.volumeVisualOffset = p5.map(
-          volumePercent,
-          0,
-          1,
-          MIN_VISUAL_SIZE,
-          MAX_VISUAL_SIZE,
-        );
-
-        // Calculate final volume
-        const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
-
-        // Apply to channel
-        if (activeVolumeShape.channel && activeVolumeShape.channel.volume) {
-          activeVolumeShape.channel.volume.value =
-            volY + activeVolumeShape.volBase;
-        }
-
-        // Show volume feedback
-        if (!activeVolumeShape.showVolumeChangeFeedback) {
-          showVolumeChangeFeedback(activeVolumeShape);
-        }
-
-        // Update initial distance for smooth continuous adjustment
-        initialPinchDistance = currentPinchDistance;
-        return false;
-      }
-      // If angle change is significant and we're not already pinching, treat as rotation
-      else if (Math.abs(angleDiff) > 0.05 && !isPinching) {
-        // This is a rotation gesture
-        isRotating = true;
-        activeRotationShape = activeVolumeShape;
-
-        // Apply speed change based on rotation
-        activeRotationShape.rate +=
-          angleDiff * (180 / Math.PI) * ROTATION_SPEED_FACTOR;
-
-        // Apply constraints
-        activeRotationShape.rate = p5.constrain(
-          activeRotationShape.rate,
-          0.05,
-          4,
-        );
-
-        // Update the playback rate
-        if (multiPlayer && multiPlayer.player(activeRotationShape.id)) {
-          multiPlayer.player(activeRotationShape.id).playbackRate =
-            activeRotationShape.rate;
-        }
-
-        // Store current angle as previous for next calculation
-        previousAngle = currentAngle;
-        return false;
-      }
-    }
-
-    // Handle single touch drag
-    else if (touchPoints.length === 1) {
-      if (p5.touches.length === 1) {
-        // Find any active shape regardless of current touch position
-        const activeShape = shapes.find((shape) => shape.active);
-
-        // If we have an active shape, move it
-        if (activeShape) {
-          // Calculate distance moved to determine if this is a drag
-          const distMoved = p5.dist(
-            touchStartPos.x,
-            touchStartPos.y,
-            p5.touches[0].x,
-            p5.touches[0].y,
-          );
-
-          // If user has moved beyond the drag threshold, cancel long press timer
-          if (distMoved > DRAG_THRESHOLD && longPressTimer) {
-            clearTimeout(longPressTimer);
-            longPressTimer = null;
-          }
-
-          // Update the shape's position to the current touch position
-          activeShape.x = p5.touches[0].x;
-          activeShape.y = p5.touches[0].y;
-
-          // Update zIndex to keep it on top
-          activeShape.zIndex = shapes.length;
-
-          return false;
-        }
-      }
-    }
-  };
-
-  p5.windowResized = () => {
-    // console.log('Window resized, using height:', canvasHeight);
-    p5.resizeCanvas(p5.windowWidth, canvasHeight);
-  };
-};
+        p5
