@@ -628,7 +628,7 @@ export const soundPortal = (p5) => {
       // This keeps the dynamic size behavior in the draw loop
       // When calculating the final diameter, include the volumeVisualOffset
       this.diameter =
-        p5.map(this.y, 0, p5.height, p5.height / 48, p5.height / 3) +
+        p5.map(this.y, 0, p5.height, p5.height / 40, p5.height / 3) +
         this.meterMap / 2 +
         this.volumeVisualOffset; // Add the volume visual offset
 
@@ -1049,7 +1049,7 @@ export const soundPortal = (p5) => {
 
       // Calculate the base diameter (without volume offset)
       const baseDiameter =
-        p5.map(this.y, 0, p5.height, p5.height / 48, p5.height / 3) +
+        p5.map(this.y, 0, p5.height, p5.height / 40, p5.height / 3) +
         this.meterMap / 2;
 
       this.d = p5.dist(p5.mouseX, p5.mouseY, this.x, this.y);
@@ -1084,8 +1084,8 @@ export const soundPortal = (p5) => {
         // Apply constraints to volume visual offset to prevent extreme sizes
         this.volumeVisualOffset = p5.constrain(
           this.volumeVisualOffset,
-          -baseDiameter * 0.7,
-          baseDiameter * 1.4,
+          -baseDiameter * 0.5,
+          baseDiameter * 0.7,
         );
 
         // Apply constraints to rate and volume (existing code)
@@ -1519,7 +1519,7 @@ export const soundPortal = (p5) => {
           activeVolumeShape.y,
           0,
           p5.height,
-          p5.height / 48,
+          p5.height / 40,
           p5.height / 3,
         ) +
         (activeVolumeShape.meterMap || 0) / 2;
@@ -1528,8 +1528,8 @@ export const soundPortal = (p5) => {
         activeVolumeShape.volBase,
         -12,
         12,
-        -baseDiameter * 0.7,
-        baseDiameter * 1.4,
+        -baseDiameter * 0.5,
+        baseDiameter * 0.7,
       );
 
       // Calculate final volume
