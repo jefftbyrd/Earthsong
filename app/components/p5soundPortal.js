@@ -49,6 +49,12 @@ export const soundPortal = (p5) => {
   let isPinching = false;
   const PINCH_SENSITIVITY = 0.01;
 
+  // Constants for volume and visual feedback
+  const MIN_VOLUME_DB = -12; // Minimum volume in dB
+  const MAX_VOLUME_DB = 12; // Maximum volume in dB
+  const MIN_VISUAL_SIZE = -50; // Smallest visual size change
+  const MAX_VISUAL_SIZE = 100; // Largest visual size change
+
   // Calculate the angle between two points
   function calculateAngle(center, point) {
     return Math.atan2(point.y - center.y, point.x - center.x);
@@ -1064,13 +1070,13 @@ export const soundPortal = (p5) => {
         // Apply constraints to volume visual offset to prevent extreme sizes
         this.volumeVisualOffset = p5.constrain(
           this.volumeVisualOffset,
-          -50,
-          100,
+          MIN_VISUAL_SIZE,
+          MAX_VISUAL_SIZE,
         );
 
         // Apply constraints to rate and volume (existing code)
         this.rate = p5.constrain(this.rate, 0.05, 4);
-        this.volBase = p5.constrain(this.volBase, -12, 12);
+        this.volBase = p5.constrain(this.volBase, MIN_VOLUME_DB, MAX_VOLUME_DB);
 
         // Calculate final volume
         this.volY = p5.map(this.y, 0, p5.height, -8, 6);
@@ -1423,20 +1429,26 @@ export const soundPortal = (p5) => {
         // Pinch in (negative) = decrease volume, Pinch out (positive) = increase volume
         activeVolumeShape.volBase += pinchDiff * PINCH_SENSITIVITY;
 
-        // Apply constraints
+        // Apply constraints with named constants
         activeVolumeShape.volBase = p5.constrain(
           activeVolumeShape.volBase,
-          -12,
-          12,
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
         );
 
-        // Visual feedback - change size based on volume
+        // Calculate visual feedback based on percentage of volume range
+        // This ensures perfect alignment between visuals and volume
+        const volumePercent =
+          (activeVolumeShape.volBase - MIN_VOLUME_DB) /
+          (MAX_VOLUME_DB - MIN_VOLUME_DB);
+
+        // Map percentage directly to visual range
         activeVolumeShape.volumeVisualOffset = p5.map(
-          activeVolumeShape.volBase,
-          -12,
-          12,
-          -50,
-          100,
+          volumePercent,
+          0,
+          1,
+          MIN_VISUAL_SIZE,
+          MAX_VISUAL_SIZE,
         );
 
         // Calculate final volume
