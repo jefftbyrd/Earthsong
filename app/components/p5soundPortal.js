@@ -1297,6 +1297,24 @@ export const soundPortal = (p5) => {
 
         return false;
       }
+
+      // Detect double-tap
+      const now = p5.millis();
+      if (now - lastTapTime < DOUBLE_TAP_THRESHOLD) {
+        // Find the shape under the touch
+        const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+        if (shape && shape.isLoaded) {
+          // Only reset rate, do NOT stop/start playback
+          shape.rate = 1;
+          if (multiPlayer && multiPlayer.player(shape.id)) {
+            multiPlayer.player(shape.id).playbackRate = 1;
+          }
+          showResetFeedback(shape); // Optional: show feedback
+        }
+        lastTapTime = 0; // Reset
+        return false;
+      }
+      lastTapTime = now;
     }
     // Handle two-finger touch for rotation
     else if (touchPoints.length === 2) {
