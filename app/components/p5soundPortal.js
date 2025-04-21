@@ -35,11 +35,11 @@ export const soundPortal = (p5) => {
 
   // Variables for double-tap detection
   let lastTapTime = 0;
-  const DOUBLE_TAP_THRESHOLD = 300; // milliseconds between taps
+  const DOUBLE_TAP_THRESHOLD = 200; // milliseconds between taps
 
   // Variables for long-press detection
   let longPressTimer = null;
-  const LONG_PRESS_THRESHOLD = 1500; // milliseconds for long press
+  const LONG_PRESS_THRESHOLD = 800; // milliseconds for long press
 
   // Variables for vertical swipe (volume control)
   let touchSwipeStartY = 0;
