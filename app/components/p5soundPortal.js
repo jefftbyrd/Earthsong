@@ -1364,7 +1364,17 @@ export const soundPortal = (p5) => {
     // We need at least 2 touches for rotation or volume control
     if (touchPoints.length < 2) {
       // Fall back to regular drag behavior for single touch
-      return p5.mouseDragged();
+      if (p5.touches.length === 1) {
+        // Find the shape under the touch
+        const shape = getShapeAtPosition(p5.touches[0].x, p5.touches[0].y);
+
+        // If we have an active shape, move it
+        if (shape && shape.active) {
+          shape.x = p5.touches[0].x;
+          shape.y = p5.touches[0].y;
+          return false;
+        }
+      }
     }
 
     // Calculate center between touch points
@@ -1482,7 +1492,17 @@ export const soundPortal = (p5) => {
     }
     // Handle single touch drag
     else if (touchPoints.length === 1) {
-      return p5.mouseDragged();
+      if (p5.touches.length === 1) {
+        // Find the shape under the touch
+        const shape = getShapeAtPosition(p5.touches[0].x, p5.touches[0].y);
+
+        // If we have an active shape, move it
+        if (shape && shape.active) {
+          shape.x = p5.touches[0].x;
+          shape.y = p5.touches[0].y;
+          return false;
+        }
+      }
     }
   };
 
