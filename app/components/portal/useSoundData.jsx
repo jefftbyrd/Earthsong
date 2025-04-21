@@ -27,6 +27,9 @@ export function useSoundData() {
   const [error, setError] = useState(null);
   const { sounds, soundsColor, setSoundsColor } = useContext(soundsContext);
 
+  console.log('useSoundData: sounds', sounds);
+  console.log('useSoundData: soundsColor', soundsColor);
+
   const processedRef = useRef(false);
 
   const processSounds = useCallback(
@@ -46,11 +49,64 @@ export function useSoundData() {
           return;
         }
 
-        // Filter sounds with duration <= 480 seconds if there are more than 5
-        const filteredSounds =
-          response.results.length > 5
-            ? response.results.filter((sound) => sound.duration <= 480)
-            : response.results;
+        // Ensure we have enough sounds to work with
+        let allSounds = [...response.results];
+        let filteredSounds = [];
+
+        // Step 1: First prefer sounds <= 480 seconds
+        filteredSounds = allSounds.filter((sound) => sound.duration <= 480);
+
+        // Step 2: Filter to one sound per username while maintaining short duration preference
+        const userMap = new Map();
+        filteredSounds.forEach((sound) => {
+          if (!userMap.has(sound.username)) {
+            userMap.set(sound.username, []);
+          }
+          userMap.get(sound.username).push(sound);
+        });
+
+        // Select one random sound from each user
+        let uniqueUserSounds = Array.from(userMap.values()).map(
+          (userSounds) => {
+            const randomIndex = Math.floor(Math.random() * userSounds.length);
+            return userSounds[randomIndex];
+          },
+        );
+
+        // Step 3: If we have less than 5 sounds, add back sounds from all users
+        // but still try to respect duration filter first
+        if (uniqueUserSounds.length < 5 && allSounds.length >= 5) {
+          // Add longer duration sounds from unique users not yet included
+          const usersIncluded = new Set(
+            uniqueUserSounds.map((sound) => sound.username),
+          );
+          const remainingSounds = allSounds.filter(
+            (sound) => !usersIncluded.has(sound.username),
+          );
+
+          if (remainingSounds.length > 0) {
+            // Prefer shorter sounds first
+            remainingSounds.sort((a, b) => a.duration - b.duration);
+            uniqueUserSounds = [...uniqueUserSounds, ...remainingSounds];
+          }
+
+          // If still less than 5, add duplicate users with different sounds
+          if (uniqueUserSounds.length < 5) {
+            // Get all sounds not already selected
+            const selectedSoundIds = new Set(
+              uniqueUserSounds.map((sound) => sound.id),
+            );
+            const additionalSounds = allSounds.filter(
+              (sound) => !selectedSoundIds.has(sound.id),
+            );
+
+            // Sort by duration (prefer shorter)
+            additionalSounds.sort((a, b) => a.duration - b.duration);
+            uniqueUserSounds = [...uniqueUserSounds, ...additionalSounds];
+          }
+        }
+
+        filteredSounds = uniqueUserSounds;
 
         // Shuffle and pick the first 5 sounds
         const soundsShuffled = shuffleArray(filteredSounds).slice(0, 5);
