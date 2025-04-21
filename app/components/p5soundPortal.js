@@ -1326,79 +1326,7 @@ export const soundPortal = (p5) => {
     }
   };
 
-  // Replace the touchEnded function with this complete rewrite:
-
-  // Fix the double-tap function to prevent stopping sounds
-  p5.touchEnded = (event) => {
-    if (isPanelOpen) return;
-
-    // Cancel any pending long press
-    if (longPressTimer) {
-      clearTimeout(longPressTimer);
-      longPressTimer = null;
-    }
-
-    // Reset states if we don't have enough fingers
-    if (p5.touches.length < 2) {
-      gestureStartType = null;
-      activeVolumeShape = null;
-      isRotating = false;
-      activeRotationShape = null;
-      isPinching = false;
-    }
-
-    // Only process tap logic when all fingers are lifted
-    if (p5.touches.length === 0) {
-      const touchDuration = p5.millis() - touchStartTime;
-      const distMoved = p5.dist(
-        touchStartPos.x,
-        touchStartPos.y,
-        p5.mouseX,
-        p5.mouseY,
-      );
-
-      // Only consider as tap if it was short and with minimal movement
-      if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
-        const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
-        if (shape) {
-          // Check for double-tap
-          const currentTime = p5.millis();
-          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
-
-          // Update lastTapTime for next detection regardless
-          lastTapTime = currentTime;
-
-          // CRITICAL CHANGE: Use separate execution paths
-          if (isDoubleTap) {
-            // ONLY handle double-tap (reset speed)
-            if (shape.isLoaded) {
-              shape.rate = 1;
-              if (multiPlayer && multiPlayer.player(shape.id)) {
-                multiPlayer.player(shape.id).playbackRate = 1;
-              }
-              showResetFeedback(shape);
-            }
-            // Skip all other processing for this touch event
-            return;
-          }
-
-          // Only execute single tap logic if NOT a double tap
-          if (shape.isLoaded) {
-            playSound(shape.id);
-          } else if (shape.isLoading) {
-            shape.playWhenLoaded = true;
-          }
-        }
-      }
-
-      // Reset active state for all shapes
-      for (let i = 0; i < shapes.length; i++) {
-        shapes[i].active = false;
-      }
-    }
-  };
-
-  // Fix the touchMoved function to maintain drag ability
+  // Fix the touchMoved function with comprehensive gesture handling
 
   p5.touchMoved = () => {
     if (isPanelOpen) return;
@@ -1450,27 +1378,210 @@ export const soundPortal = (p5) => {
       isPinching = false;
     }
 
-    // Calculate center between touch points for rotation or other two-finger gestures
+    // Calculate center between touch points
     const center = calculateCenter(touchPoints);
 
-    // Then handle two-finger gestures
-    if (touchPoints.length === 2 && center) {
-      // Inside the pinch handler:
-      // Calculate direct size change - scale the initial diameter
-      const sizeRatio = p5.map(
-        activeVolumeShape.volBase,
-        MIN_VOLUME_DB,
-        MAX_VOLUME_DB,
-        0.7, // At minimum volume, shrink to 70%
-        1.3, // At maximum volume, grow to 130%
+    // Handle two-finger gestures (rotation or pinch)
+    if (touchPoints.length === 2 && center && activeVolumeShape) {
+      // Calculate current distance between fingers
+      const currentPinchDistance = p5.dist(
+        touchPoints[0].x,
+        touchPoints[0].y,
+        touchPoints[1].x,
+        touchPoints[1].y,
       );
 
-      // Apply the visual size change based on the finger distance
-      activeVolumeShape.volumeVisualOffset =
-        initialShapeDiameter * sizeRatio - initialShapeDiameter;
+      // Calculate angle for rotation detection
+      const currentAngle = calculateAngle(center, touchPoints[0]);
+      let angleDiff = currentAngle - previousAngle;
+      if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+      if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
 
-      // Rest of gesture code...
+      // Calculate change in distance for pinch detection
+      const pinchDiff = currentPinchDistance - initialPinchDistance;
+
+      // If gesture type hasn't been determined yet, decide now
+      if (!gestureStartType) {
+        // First significant movement determines gesture type
+        if (Math.abs(pinchDiff) > DRAG_THRESHOLD * 2) {
+          gestureStartType = 'pinch';
+        } else if (Math.abs(angleDiff) > 0.05) {
+          gestureStartType = 'rotate';
+        }
+      }
+
+      // Process based on determined gesture type
+      if (gestureStartType === 'pinch') {
+        // Handle pinch volume control
+        isPinching = true;
+        isRotating = false;
+
+        // Calculate scaling factor based on pinch distance
+        const scaleFactor = currentPinchDistance / initialPinchDistance;
+
+        // Map scaling to volume - more sensitive for easier control
+        const targetVolume = p5.map(
+          scaleFactor,
+          0.5, // Half distance = min volume
+          1.5, // 1.5x distance = max volume
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+        );
+
+        // Apply volume with smoothing
+        activeVolumeShape.volBase +=
+          (targetVolume - activeVolumeShape.volBase) * 0.3;
+
+        // Apply constraints
+        activeVolumeShape.volBase = p5.constrain(
+          activeVolumeShape.volBase,
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+        );
+
+        // Calculate visual size change based on volume
+        const sizeRatio = p5.map(
+          activeVolumeShape.volBase,
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+          0.7, // At minimum volume, shrink to 70%
+          1.3, // At maximum volume, grow to 130%
+        );
+
+        // Apply the visual size change
+        activeVolumeShape.volumeVisualOffset =
+          initialShapeDiameter * sizeRatio - initialShapeDiameter;
+
+        // Calculate final volume
+        const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
+
+        // Apply to channel
+        if (activeVolumeShape.channel && activeVolumeShape.channel.volume) {
+          activeVolumeShape.channel.volume.value =
+            volY + activeVolumeShape.volBase;
+        }
+
+        // Show volume feedback
+        if (!activeVolumeShape.showVolumeChangeFeedback) {
+          showVolumeChangeFeedback(activeVolumeShape);
+        }
+
+        // Update initial distance for smooth continuous adjustment
+        initialPinchDistance = currentPinchDistance;
+
+        return false;
+      } else if (gestureStartType === 'rotate') {
+        // Handle rotation for playback speed
+        isRotating = true;
+        isPinching = false;
+        activeRotationShape = activeVolumeShape;
+
+        // Apply speed change based on rotation
+        activeRotationShape.rate +=
+          angleDiff * (180 / Math.PI) * ROTATION_SPEED_FACTOR;
+
+        // Apply constraints
+        activeRotationShape.rate = p5.constrain(
+          activeRotationShape.rate,
+          0.05,
+          4,
+        );
+
+        // Update the playback rate
+        if (multiPlayer && multiPlayer.player(activeRotationShape.id)) {
+          multiPlayer.player(activeRotationShape.id).playbackRate =
+            activeRotationShape.rate;
+        }
+
+        // Store current angle for next calculation
+        previousAngle = currentAngle;
+
+        return false;
+      }
     }
+
+    return false; // Prevent default browser behavior
+  };
+
+  // Fix the touchEnded function to properly handle double-taps
+
+  p5.touchEnded = (event) => {
+    if (isPanelOpen) return;
+
+    // Cancel any pending long press
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
+
+    // Reset states if we don't have enough fingers
+    if (p5.touches.length < 2) {
+      gestureStartType = null;
+      activeVolumeShape = null;
+      isRotating = false;
+      activeRotationShape = null;
+      isPinching = false;
+    }
+
+    // Only process tap logic when all fingers are lifted
+    if (p5.touches.length === 0) {
+      const touchDuration = p5.millis() - touchStartTime;
+      const distMoved = p5.dist(
+        touchStartPos.x,
+        touchStartPos.y,
+        p5.mouseX,
+        p5.mouseY,
+      );
+
+      // Only consider as tap if it was short and with minimal movement
+      if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
+        const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+
+        if (shape) {
+          // Check for double-tap
+          const currentTime = p5.millis();
+          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+
+          // Update lastTapTime for next detection
+          lastTapTime = currentTime;
+
+          if (isDoubleTap) {
+            // DOUBLE TAP - Reset speed only
+            if (shape.isLoaded) {
+              shape.rate = 1;
+              if (multiPlayer && multiPlayer.player(shape.id)) {
+                multiPlayer.player(shape.id).playbackRate = 1;
+              }
+              showResetFeedback(shape);
+
+              // Reset active state for all shapes
+              for (let i = 0; i < shapes.length; i++) {
+                shapes[i].active = false;
+              }
+
+              // IMPORTANT: Prevent single-tap logic with explicit event end
+              event.preventDefault();
+              event.stopPropagation();
+              return false;
+            }
+          } else {
+            // SINGLE TAP - Normal play/pause behavior
+            if (shape.isLoaded) {
+              playSound(shape.id);
+            } else if (shape.isLoading) {
+              shape.playWhenLoaded = true;
+            }
+          }
+        }
+      }
+
+      // Reset active state for all shapes
+      for (let i = 0; i < shapes.length; i++) {
+        shapes[i].active = false;
+      }
+    }
+
+    return false;
   };
 
   p5.windowResized = () => {
