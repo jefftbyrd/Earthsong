@@ -31,6 +31,19 @@ export const soundPortal = (p5) => {
   let activeRotationShape = null;
   const ROTATION_SPEED_FACTOR = 0.01; // How much each degree changes the rate
 
+  // Variables for double-tap detection
+  let lastTapTime = 0;
+  const DOUBLE_TAP_THRESHOLD = 300; // milliseconds between taps
+
+  // Variables for long-press detection
+  let longPressTimer = null;
+  const LONG_PRESS_THRESHOLD = 700; // milliseconds for long press
+
+  // Variables for vertical swipe (volume control)
+  let touchSwipeStartY = 0;
+  let activeVolumeShape = null;
+  const VOLUME_SWIPE_SENSITIVITY = 0.02; // How much each pixel changes volume
+
   // Calculate the angle between two points
   function calculateAngle(center, point) {
     return Math.atan2(point.y - center.y, point.x - center.x);
@@ -448,6 +461,14 @@ export const soundPortal = (p5) => {
       this.loadStartTime = 0;
       this.playWhenLoaded = false;
       this.loadingAnimation = 0;
+
+      // Feedback properties
+      this.showResetFeedback = false;
+      this.resetFeedbackStart = 0;
+      this.showReverseDirectionFeedback = false;
+      this.reverseDirectionFeedbackStart = 0;
+      this.showVolumeChangeFeedback = false;
+      this.volumeChangeFeedbackStart = 0;
     }
 
     move() {
@@ -695,6 +716,136 @@ export const soundPortal = (p5) => {
         p5.text(`${this.rate.toFixed(2)}x`, 0, this.diameter * 0.25);
       }
 
+      // Show reset feedback when double-tapped to reset speed
+      if (this.showResetFeedback) {
+        const elapsedTime = p5.millis() - this.resetFeedbackStart;
+        const opacity = p5.map(elapsedTime, 0, 1000, 255, 0); // Fade out over 1 second
+
+        p5.noStroke();
+        p5.fill(255, 255, 255, opacity);
+        p5.textSize(this.diameter * 0.15);
+        p5.text('Speed Reset', 0, 0);
+      }
+
+      // Show reverse direction feedback when long-pressed
+      if (this.showReverseDirectionFeedback) {
+        const elapsedTime = p5.millis() - this.reverseDirectionFeedbackStart;
+        const opacity = p5.map(elapsedTime, 0, 1000, 255, 0); // Fade out over 1 second
+
+        p5.noStroke();
+        p5.fill(255, 255, 255, opacity);
+        p5.textSize(this.diameter * 0.15);
+
+        // Show different text based on direction
+        const directionText = this.reversed ? '◄ Reversed' : 'Forward ►';
+        p5.text(directionText, 0, 0);
+
+        // Draw direction arrows
+        const arrowSize = this.diameter * 0.2;
+        p5.stroke(255, 255, 255, opacity);
+        p5.strokeWeight(2);
+        p5.noFill();
+
+        if (this.reversed) {
+          // Draw counterclockwise arrow for reversed
+          p5.arc(
+            0,
+            arrowSize * 0.7,
+            arrowSize,
+            arrowSize,
+            Math.PI * 0.8,
+            Math.PI * 2.2,
+          );
+          p5.line(
+            -arrowSize / 2,
+            arrowSize * 0.7,
+            -arrowSize / 2.5,
+            arrowSize * 0.5,
+          );
+          p5.line(
+            -arrowSize / 2,
+            arrowSize * 0.7,
+            -arrowSize / 2.5,
+            arrowSize * 0.9,
+          );
+        } else {
+          // Draw clockwise arrow for forward
+          p5.arc(
+            0,
+            arrowSize * 0.7,
+            arrowSize,
+            arrowSize,
+            Math.PI * 0.8,
+            Math.PI * 2.2,
+          );
+          p5.line(
+            arrowSize / 2,
+            arrowSize * 0.7,
+            arrowSize / 2.5,
+            arrowSize * 0.5,
+          );
+          p5.line(
+            arrowSize / 2,
+            arrowSize * 0.7,
+            arrowSize / 2.5,
+            arrowSize * 0.9,
+          );
+        }
+      }
+
+      // Show volume feedback when swiping
+      if (this.showVolumeChangeFeedback) {
+        const elapsedTime = p5.millis() - this.volumeChangeFeedbackStart;
+        const opacity = p5.map(elapsedTime, 0, 1000, 255, 0); // Fade out over 1 second
+
+        // Display volume level
+        p5.noStroke();
+        p5.fill(255, 255, 255, opacity);
+        p5.textSize(this.diameter * 0.15);
+
+        // Get volume in decibels to display
+        const volInDB = Math.round(this.volBase);
+        let volumeText = `Vol: ${volInDB > 0 ? '+' : ''}${volInDB} dB`;
+        p5.text(volumeText, 0, this.diameter * 0.15);
+
+        // Draw volume bars
+        const barWidth = this.diameter * 0.04;
+        const barSpacing = this.diameter * 0.02;
+        const startX = -this.diameter * 0.2;
+        const barHeight = this.diameter * 0.015;
+
+        p5.noStroke();
+        p5.fill(255, 255, 255, opacity);
+
+        // Map volume range (-12 to 12) to number of bars (0 to 10)
+        const numBars = p5.map(this.volBase, -12, 12, 0, 10);
+
+        for (let i = 0; i < 10; i++) {
+          // Draw outline for all possible bars
+          p5.stroke(255, 255, 255, opacity * 0.5);
+          p5.strokeWeight(1);
+          p5.noFill();
+          p5.rect(
+            startX + i * (barWidth + barSpacing),
+            -this.diameter * 0.05,
+            barWidth,
+            barHeight,
+          );
+
+          // Fill in active bars based on current volume
+          if (i < numBars) {
+            p5.noStroke();
+            p5.fill(255, 255, 255, opacity);
+            p5.rect(
+              startX + i * (barWidth + barSpacing),
+              -this.diameter * 0.05,
+              barWidth,
+              barHeight,
+            );
+          }
+        }
+      }
+
       p5.pop();
     } // END SHOW
 
@@ -930,6 +1081,42 @@ export const soundPortal = (p5) => {
     }
   }
 
+  // Function to show temporary feedback when speed is reset
+  function showResetFeedback(shape) {
+    // Create a temporary animation flag for this shape
+    shape.showResetFeedback = true;
+    shape.resetFeedbackStart = p5.millis();
+
+    // Clear the animation after 1 second
+    setTimeout(() => {
+      shape.showResetFeedback = false;
+    }, 1000);
+  }
+
+  // Function to show temporary feedback when direction is reversed
+  function showReverseDirectionFeedback(shape) {
+    // Create a temporary animation flag for this shape
+    shape.showReverseDirectionFeedback = true;
+    shape.reverseDirectionFeedbackStart = p5.millis();
+
+    // Clear the animation after 1 second
+    setTimeout(() => {
+      shape.showReverseDirectionFeedback = false;
+    }, 1000);
+  }
+
+  // Function to show temporary feedback for volume change
+  function showVolumeChangeFeedback(shape) {
+    // Create a temporary animation flag for this shape
+    shape.showVolumeChangeFeedback = true;
+    shape.volumeChangeFeedbackStart = p5.millis();
+
+    // Clear the animation after 1 second
+    setTimeout(() => {
+      shape.showVolumeChangeFeedback = false;
+    }, 1000);
+  }
+
   // Find which shape is under the cursor/touch point
   function getShapeAtPosition(x, y) {
     // Create a copy of shapes sorted by z-index (higher values first)
@@ -1008,7 +1195,8 @@ export const soundPortal = (p5) => {
     return false; // Prevent default browser behavior
   };
 
-  // For mobile touch events
+  // Replace the existing touchStarted function
+
   p5.touchStarted = (event) => {
     if (isPanelOpen) return;
 
@@ -1026,10 +1214,35 @@ export const soundPortal = (p5) => {
     if (touchPoints.length === 1) {
       touchStartTime = p5.millis();
       touchStartPos = { x: p5.mouseX, y: p5.mouseY };
+      touchSwipeStartY = p5.mouseY; // Track Y position for volume swipe
 
       const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
       if (shape) {
         shape.active = true;
+        activeVolumeShape = shape; // Mark this shape for potential volume changes
+
+        // Clear any existing timer
+        if (longPressTimer) {
+          clearTimeout(longPressTimer);
+        }
+
+        // Set up long press detection for direction toggle
+        if (shape.isLoaded) {
+          longPressTimer = setTimeout(() => {
+            // Long press detected - toggle direction
+            shape.reversed = !shape.reversed;
+            if (multiPlayer && multiPlayer.player(shape.id)) {
+              multiPlayer.player(shape.id).reverse = shape.reversed;
+            }
+
+            // Show temporary feedback
+            showReverseDirectionFeedback(shape);
+
+            // Clear the timer
+            longPressTimer = null;
+          }, LONG_PRESS_THRESHOLD);
+        }
+
         return false;
       }
     }
@@ -1050,14 +1263,25 @@ export const soundPortal = (p5) => {
     }
   };
 
+  // Replace the existing touchEnded function
+
   p5.touchEnded = (event) => {
     if (isPanelOpen) return;
+
+    // Cancel any pending long press
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      longPressTimer = null;
+    }
 
     // Reset rotation state if we're no longer multi-touching
     if (p5.touches.length < 2) {
       isRotating = false;
       activeRotationShape = null;
     }
+
+    // Reset volume control state
+    activeVolumeShape = null;
 
     // Update our touch points array
     touchPoints = [];
@@ -1082,11 +1306,29 @@ export const soundPortal = (p5) => {
       if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
         const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
         if (shape) {
-          if (shape.isLoaded) {
-            playSound(shape.id);
-          } else if (shape.isLoading) {
-            shape.playWhenLoaded = true;
+          // Check for double-tap to reset playback speed
+          const currentTime = p5.millis();
+          if (currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD) {
+            // Double tap detected - reset playback speed
+            if (shape.isLoaded) {
+              shape.rate = 1; // Reset to default speed
+              if (multiPlayer && multiPlayer.player(shape.id)) {
+                multiPlayer.player(shape.id).playbackRate = 1;
+              }
+
+              // Show temporary feedback
+              showResetFeedback(shape);
+            }
+          } else {
+            // Single tap - normal play/pause behavior
+            if (shape.isLoaded) {
+              playSound(shape.id);
+            } else if (shape.isLoading) {
+              shape.playWhenLoaded = true;
+            }
           }
+          // Update the last tap time
+          lastTapTime = currentTime;
         }
       }
 
@@ -1206,7 +1448,64 @@ export const soundPortal = (p5) => {
 
       return false;
     }
-    // Fall back to regular drag behavior for single touch
+    // Handle vertical swipe for volume control with single touch
+    else if (p5.touches.length === 1 && activeVolumeShape) {
+      // Cancel long press timer if we're swiping
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        longPressTimer = null;
+      }
+
+      // Calculate how much vertical movement has occurred
+      const yDiff = touchSwipeStartY - p5.mouseY;
+
+      // If significant vertical movement and less horizontal movement (to distinguish from dragging)
+      const xDiff = Math.abs(touchStartPos.x - p5.mouseX);
+      if (Math.abs(yDiff) > DRAG_THRESHOLD && xDiff < Math.abs(yDiff)) {
+        // Up = increase volume, Down = decrease volume
+        activeVolumeShape.volBase += yDiff * VOLUME_SWIPE_SENSITIVITY;
+
+        // Apply constraints to volume
+        activeVolumeShape.volBase = p5.constrain(
+          activeVolumeShape.volBase,
+          -12,
+          12,
+        );
+
+        // Add visual volume effect
+        activeVolumeShape.volumeVisualOffset = p5.map(
+          activeVolumeShape.volBase,
+          -12,
+          12,
+          -50,
+          100,
+        );
+
+        // Calculate final volume
+        const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
+
+        // Apply to channel if it exists
+        if (activeVolumeShape.channel && activeVolumeShape.channel.volume) {
+          activeVolumeShape.channel.volume.value =
+            volY + activeVolumeShape.volBase;
+        }
+
+        // Show volume feedback periodically during swipe
+        if (!activeVolumeShape.showVolumeChangeFeedback) {
+          showVolumeChangeFeedback(activeVolumeShape);
+        }
+
+        // Reset starting point for continuous movement
+        touchSwipeStartY = p5.mouseY;
+
+        return false;
+      }
+      // If horizontal drag is more dominant, let regular drag code handle it
+      else if (xDiff > DRAG_THRESHOLD && xDiff > Math.abs(yDiff)) {
+        return p5.mouseDragged();
+      }
+    }
+    // Fall back to regular drag behavior for other cases
     else if (p5.touches.length === 1) {
       return p5.mouseDragged();
     }
