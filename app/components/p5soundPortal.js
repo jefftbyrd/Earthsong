@@ -691,17 +691,13 @@ export const soundPortal = (p5) => {
             navigator.userAgent,
           ) || p5.windowWidth < 768;
 
-        // Apply symbol-specific adjustments only on desktop
-        if (!isMobile) {
-          // Only apply offsets on desktop
-          if (this.number <= 3) {
-            yOffset = this.numberSize * 0.23;
-          } else {
-            // numbers 4 and 5
-            yOffset = this.numberSize * 0.05;
-          }
+        // Apply symbol-specific and platform-specific adjustments
+        if (this.number <= 3) {
+          yOffset = isMobile ? 0 : this.numberSize * 0.23;
+        } else {
+          // numbers 4 and 5
+          yOffset = isMobile ? this.numberSize * 0.02 : this.numberSize * 0.05;
         }
-        // On mobile, yOffset remains 0 for all symbols
 
         // Render the text at the center of the circle
         p5.text(aegean[this.number - 1], 0, yOffset);
