@@ -24,6 +24,8 @@ export const soundPortal = (p5) => {
   const DRAG_THRESHOLD = 10; // pixels - movement more than this is a drag
   const TAP_THRESHOLD = 200; // milliseconds - press shorter than this is a tap
 
+  let justDoubleTapped = false; // Add this flag
+
   // Variables to track multi-touch rotation
   let touchPoints = [];
   let previousAngle = 0;
@@ -1423,29 +1425,31 @@ export const soundPortal = (p5) => {
       if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
         const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
         if (shape) {
-          // Check for double-tap to reset playback speed
           const currentTime = p5.millis();
           const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
 
-          // Update the last tap time regardless of single/double tap
           lastTapTime = currentTime;
 
           if (isDoubleTap) {
             // Double tap detected - ONLY reset playback speed without toggling playback
             if (shape.isLoaded) {
-              shape.rate = 1; // Reset to default speed
+              shape.rate = 1;
               if (multiPlayer && multiPlayer.player(shape.id)) {
                 multiPlayer.player(shape.id).playbackRate = 1;
               }
-
-              // Show temporary feedback
               showResetFeedback(shape);
-
-              // IMPORTANT: Return early to prevent the single-tap code from executing
+              justDoubleTapped = true; // Set flag
+              setTimeout(() => {
+                justDoubleTapped = false;
+              }, 350); // Reset after a short delay
               return;
             }
           } else {
             // Single tap - normal play/pause behavior
+            if (justDoubleTapped) {
+              justDoubleTapped = false; // Ignore this tap, reset flag
+              return;
+            }
             if (shape.isLoaded) {
               playSound(shape.id);
             } else if (shape.isLoading) {
