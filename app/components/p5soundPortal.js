@@ -653,6 +653,7 @@ export const soundPortal = (p5) => {
       p5.push();
       p5.translate(this.x, this.y);
 
+      // (Optional) Apply rotation to the arrow/symbol if sound is playing
       if (
         multiPlayer &&
         multiPlayer.player(this.id) &&
@@ -667,7 +668,7 @@ export const soundPortal = (p5) => {
                   0.1,
                   4,
                   0.5,
-                  10,
+                  2.5, // Lower max for readability
                 ),
             ),
           );
@@ -681,7 +682,7 @@ export const soundPortal = (p5) => {
                   0.1,
                   4,
                   0.5,
-                  10,
+                  2.5, // Lower max for readability
                 )
               ),
             ),
@@ -689,30 +690,60 @@ export const soundPortal = (p5) => {
         }
       }
 
-      // Make sure the index is valid before accessing aegean
+      // Draw the symbol/text in the center as before
       if (this.number > 0 && this.number <= aegean.length) {
-        // Center-align the text
         p5.textAlign(p5.CENTER, p5.CENTER);
-
-        // Calculate yOffset to perfectly center the text vertically
         let yOffset = 0;
-
-        // Detect if we're on mobile
         const isMobile =
           /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
             navigator.userAgent,
           ) || p5.windowWidth < 768;
-
-        // Apply symbol-specific and platform-specific adjustments
         if (this.number <= 3) {
           yOffset = isMobile ? 0 : this.numberSize * 0.23;
         } else {
-          // numbers 4 and 5
           yOffset = isMobile ? this.numberSize * 0.02 : this.numberSize * 0.05;
         }
-
-        // Render the text at the center of the circle
         p5.text(aegean[this.number - 1], 0, yOffset);
+      }
+
+      // Draw the rotating arrow if in rotation mode
+      if (
+        isRotating &&
+        activeRotationShape &&
+        activeRotationShape.id === this.id
+      ) {
+        // Draw a circular arrow to indicate rotation mode
+        p5.stroke(255, 255, 255, 200);
+        p5.strokeWeight(3);
+        p5.noFill();
+        p5.arc(
+          0,
+          0,
+          this.diameter * 0.7,
+          this.diameter * 0.7,
+          0,
+          Math.PI * 1.5,
+        );
+        p5.line(0, -this.diameter * 0.35, -10, -this.diameter * 0.35 + 5);
+        p5.line(0, -this.diameter * 0.35, -10, -this.diameter * 0.35 - 5);
+      }
+      p5.pop();
+
+      // Draw the playback rate message below the shape, NOT rotating
+      if (
+        isRotating &&
+        activeRotationShape &&
+        activeRotationShape.id === this.id
+      ) {
+        p5.noStroke();
+        p5.fill(255);
+        p5.textSize(this.diameter * 0.12);
+        p5.textAlign(p5.CENTER, p5.CENTER);
+        p5.text(
+          `${this.rate.toFixed(2)}x`,
+          this.x,
+          this.y + this.diameter * 0.55, // adjust as needed for spacing
+        );
       }
 
       // Visual feedback when rotation is active
