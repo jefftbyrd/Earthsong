@@ -1389,6 +1389,21 @@ export const soundPortal = (p5) => {
 
         // If we have an active shape, move it
         if (shape && shape.active) {
+          // Calculate distance moved to determine if this is a drag
+          const distMoved = p5.dist(
+            touchStartPos.x,
+            touchStartPos.y,
+            p5.touches[0].x,
+            p5.touches[0].y,
+          );
+
+          // If user has moved beyond the drag threshold, cancel long press timer
+          if (distMoved > DRAG_THRESHOLD && longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+          }
+
+          // Move the shape
           shape.x = p5.touches[0].x;
           shape.y = p5.touches[0].y;
           return false;
