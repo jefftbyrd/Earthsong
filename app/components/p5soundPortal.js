@@ -1405,40 +1405,34 @@ export const soundPortal = (p5) => {
       if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
         const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
         if (shape) {
-          // Check for double-tap to reset playback speed
+          // Check for double-tap
           const currentTime = p5.millis();
           const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
 
-          // Update the last tap time regardless of single/double tap
-          lastTapTime = currentTime;
-
-          // Update touchEnded function around line 1419-1435
-
           if (isDoubleTap) {
-            // Double tap detected - ONLY reset playback speed without toggling playback
+            // DOUBLE TAP: Only reset playback speed, don't toggle playback
             if (shape.isLoaded) {
-              shape.rate = 1; // Reset to default speed
+              shape.rate = 1;
               if (multiPlayer && multiPlayer.player(shape.id)) {
                 multiPlayer.player(shape.id).playbackRate = 1;
               }
-
-              // Show temporary feedback
               showResetFeedback(shape);
             }
-
-            // IMPORTANT: Return early regardless of isLoaded state to prevent single-tap code
-            return;
           } else {
-            // Single tap - normal play/pause behavior
+            // SINGLE TAP: Normal play/pause behavior
             if (shape.isLoaded) {
               playSound(shape.id);
             } else if (shape.isLoading) {
               shape.playWhenLoaded = true;
             }
           }
+
+          // Always update lastTapTime at the end
+          lastTapTime = currentTime;
         }
       }
 
+      // Reset active state for all shapes
       for (let i = 0; i < shapes.length; i++) {
         shapes[i].active = false;
       }
