@@ -1400,7 +1400,12 @@ export const soundPortal = (p5) => {
         if (shape) {
           // Check for double-tap to reset playback speed
           const currentTime = p5.millis();
-          if (currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD) {
+          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+
+          // Update the last tap time regardless of single/double tap
+          lastTapTime = currentTime;
+
+          if (isDoubleTap) {
             // Double tap detected - ONLY reset playback speed without toggling playback
             if (shape.isLoaded) {
               shape.rate = 1; // Reset to default speed
@@ -1410,9 +1415,10 @@ export const soundPortal = (p5) => {
 
               // Show temporary feedback
               showResetFeedback(shape);
+
+              // IMPORTANT: Return early to prevent the single-tap code from executing
+              return;
             }
-            // Update the last tap time
-            lastTapTime = currentTime;
           } else {
             // Single tap - normal play/pause behavior
             if (shape.isLoaded) {
@@ -1420,8 +1426,6 @@ export const soundPortal = (p5) => {
             } else if (shape.isLoading) {
               shape.playWhenLoaded = true;
             }
-            // Update the last tap time
-            lastTapTime = currentTime;
           }
         }
       }
