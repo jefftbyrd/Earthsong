@@ -1325,6 +1325,8 @@ export const soundPortal = (p5) => {
     }
   };
 
+  // Replace the touchEnded function with this complete rewrite:
+
   p5.touchEnded = (event) => {
     if (isPanelOpen) return;
 
@@ -1352,27 +1354,30 @@ export const soundPortal = (p5) => {
         p5.mouseY,
       );
 
+      // Only consider as tap if it was short and with minimal movement
       if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
         const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
-
         if (shape) {
           // Check for double-tap
           const currentTime = p5.millis();
-          const doubleTapDetected =
-            currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
 
-          // Update for next tap detection
+          // Update lastTapTime for next detection
           lastTapTime = currentTime;
 
-          if (doubleTapDetected && shape.isLoaded) {
-            // DOUBLE TAP - Only reset playback speed
-            shape.rate = 1;
-            if (multiPlayer && multiPlayer.player(shape.id)) {
-              multiPlayer.player(shape.id).playbackRate = 1;
+          if (isDoubleTap) {
+            // DOUBLE TAP HANDLING - Reset speed only
+            if (shape.isLoaded) {
+              // Reset playback speed
+              shape.rate = 1;
+              if (multiPlayer && multiPlayer.player(shape.id)) {
+                multiPlayer.player(shape.id).playbackRate = 1;
+              }
+              showResetFeedback(shape);
             }
-            showResetFeedback(shape);
-          } else if (!doubleTapDetected) {
-            // SINGLE TAP - Only if NOT a double tap
+            // CRITICAL: Do nothing else for double-tap - don't let it also toggle playback
+          } else {
+            // SINGLE TAP HANDLING - Toggle playback
             if (shape.isLoaded) {
               playSound(shape.id);
             } else if (shape.isLoading) {
