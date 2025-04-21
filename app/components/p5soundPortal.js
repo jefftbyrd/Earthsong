@@ -206,7 +206,8 @@ export const soundPortal = (p5) => {
         // Keep padding from edges based on diameter
         const padding = initialDiameter / 2;
         x = p5.random(padding, p5.width - padding);
-        y = p5.random(300, p5.height - 100);
+        const topThird = p5.height / 3;
+        y = p5.random(topThird, p5.height - padding);
 
         // Check if this position overlaps with any existing shape
         validPosition = true;
