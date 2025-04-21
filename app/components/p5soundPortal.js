@@ -206,6 +206,9 @@ export const soundPortal = (p5) => {
         // Keep padding from edges based on diameter
         const padding = initialDiameter / 2;
         x = p5.random(padding, p5.width - padding);
+
+        // Use relative positioning based on canvas height instead of fixed pixels
+        // Place in the bottom 2/3 of the screen
         const topThird = p5.height / 3;
         y = p5.random(topThird, p5.height - padding);
 
@@ -230,7 +233,10 @@ export const soundPortal = (p5) => {
       if (!validPosition) {
         initialDiameter *= 0.8;
         x = p5.random(initialDiameter / 2, p5.width - initialDiameter / 2);
-        y = p5.random(300, p5.height - 100);
+
+        // Use the same relative positioning here too
+        const topThird = p5.height / 3;
+        y = p5.random(topThird, p5.height - initialDiameter / 2);
       }
 
       // Create and add the shape
