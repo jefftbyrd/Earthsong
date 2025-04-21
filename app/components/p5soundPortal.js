@@ -1320,6 +1320,7 @@ export const soundPortal = (p5) => {
 
   p5.touchEnded = (event) => {
     if (isPanelOpen) return;
+
     // Cancel any pending long press
     if (longPressTimer) {
       clearTimeout(longPressTimer);
@@ -1334,10 +1335,7 @@ export const soundPortal = (p5) => {
       isPinching = false; // Reset pinching state
     }
 
-    // Clear touch points array
-    touchPoints = [];
-
-    // Handle single touch tap behavior
+    // Only process tap logic when all fingers are lifted
     if (p5.touches.length === 0) {
       const touchDuration = p5.millis() - touchStartTime;
       const distMoved = p5.dist(
@@ -1349,31 +1347,30 @@ export const soundPortal = (p5) => {
 
       if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
         const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+
         if (shape) {
           // Check for double-tap
           const currentTime = p5.millis();
-          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
-          // Always update lastTapTime
+          const doubleTapDetected =
+            currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+
+          // Update for next tap detection
           lastTapTime = currentTime;
 
-          if (isDoubleTap) {
-            // Double tap detected - ONLY handle speed reset
-            if (shape.isLoaded) {
-              shape.rate = 1;
-              if (multiPlayer && multiPlayer.player(shape.id)) {
-                multiPlayer.player(shape.id).playbackRate = 1;
-              }
-              showResetFeedback(shape);
+          if (doubleTapDetected && shape.isLoaded) {
+            // DOUBLE TAP - Only reset playback speed
+            shape.rate = 1;
+            if (multiPlayer && multiPlayer.player(shape.id)) {
+              multiPlayer.player(shape.id).playbackRate = 1;
             }
-            // CRITICAL: Skip the rest of the function to prevent toggling playback
-            return;
-          }
-
-          // Only handle single tap if it wasn't a double-tap
-          if (shape.isLoaded) {
-            playSound(shape.id);
-          } else if (shape.isLoading) {
-            shape.playWhenLoaded = true;
+            showResetFeedback(shape);
+          } else if (!doubleTapDetected) {
+            // SINGLE TAP - Only if NOT a double tap
+            if (shape.isLoaded) {
+              playSound(shape.id);
+            } else if (shape.isLoading) {
+              shape.playWhenLoaded = true;
+            }
           }
         }
       }
