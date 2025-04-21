@@ -49,14 +49,13 @@ export const soundPortal = (p5) => {
   let isPinching = false;
   const PINCH_SENSITIVITY = 0.01;
 
+  let gestureStartType = null; // Will be 'pinch' or 'rotate' once determined
+
   // Constants for volume and visual feedback
   const MIN_VOLUME_DB = -12; // Minimum volume in dB
   const MAX_VOLUME_DB = 12; // Maximum volume in dB
   const MIN_VISUAL_SIZE = -50; // Smallest visual size change
   const MAX_VISUAL_SIZE = 100; // Largest visual size change
-
-  // Add this variable with your other touch variables
-  let gestureStartType = null; // Will be 'pinch' or 'rotate' once determined
 
   // Calculate the angle between two points
   function calculateAngle(center, point) {
@@ -1323,6 +1322,8 @@ export const soundPortal = (p5) => {
     }
   };
 
+  // Replace the touchEnded function with this complete rewrite:
+
   p5.touchEnded = (event) => {
     if (isPanelOpen) return;
 
@@ -1348,4 +1349,193 @@ export const soundPortal = (p5) => {
         touchStartPos.x,
         touchStartPos.y,
         p5.mouseX,
-        p5
+        p5.mouseY,
+      );
+
+      // Only consider as tap if it was short and with minimal movement
+      if (touchDuration < TAP_THRESHOLD && distMoved < DRAG_THRESHOLD) {
+        const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
+        if (shape) {
+          // Check for double-tap
+          const currentTime = p5.millis();
+          const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+
+          // Update lastTapTime for next detection
+          lastTapTime = currentTime;
+
+          if (isDoubleTap) {
+            // DOUBLE TAP HANDLING - Reset speed only
+            if (shape.isLoaded) {
+              // Reset playback speed
+              shape.rate = 1;
+              if (multiPlayer && multiPlayer.player(shape.id)) {
+                multiPlayer.player(shape.id).playbackRate = 1;
+              }
+              showResetFeedback(shape);
+            }
+            // CRITICAL: Do nothing else for double-tap - don't let it also toggle playback
+          } else {
+            // SINGLE TAP HANDLING - Toggle playback
+            if (shape.isLoaded) {
+              playSound(shape.id);
+            } else if (shape.isLoading) {
+              shape.playWhenLoaded = true;
+            }
+          }
+        }
+      }
+
+      // Reset active state for all shapes
+      for (let i = 0; i < shapes.length; i++) {
+        shapes[i].active = false;
+      }
+    }
+  };
+
+  p5.touchMoved = () => {
+    if (isPanelOpen) return;
+
+    // Update touch points array
+    touchPoints = [];
+    for (let i = 0; i < p5.touches.length; i++) {
+      touchPoints.push({
+        id: i,
+        x: p5.touches[i].x,
+        y: p5.touches[i].y,
+      });
+    }
+
+    // Calculate center between touch points for rotation or other two-finger gestures
+    const center = calculateCenter(touchPoints);
+
+    // Handle two-finger gestures (rotation or pinch)
+    if (touchPoints.length === 2 && center && activeVolumeShape) {
+      // Calculate current distance between fingers
+      const currentPinchDistance = p5.dist(
+        touchPoints[0].x,
+        touchPoints[0].y,
+        touchPoints[1].x,
+        touchPoints[1].y,
+      );
+
+      // Calculate angle for rotation detection
+      const currentAngle = calculateAngle(center, touchPoints[0]);
+      let angleDiff = currentAngle - previousAngle;
+      if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+      if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+
+      // Calculate change in distance for pinch detection
+      const pinchDiff = currentPinchDistance - initialPinchDistance;
+
+      // If gesture type hasn't been determined yet, decide now
+      if (!gestureStartType) {
+        // First significant movement determines gesture type
+        if (Math.abs(pinchDiff) > DRAG_THRESHOLD * 2) {
+          gestureStartType = 'pinch';
+        } else if (Math.abs(angleDiff) > 0.05) {
+          gestureStartType = 'rotate';
+        }
+        // If neither threshold is met, wait for more movement
+      }
+
+      // Now process based on determined gesture type
+      if (gestureStartType === 'pinch') {
+        // Handle pinch volume control
+        isPinching = true;
+        isRotating = false;
+
+        // Calculate the direct scaling factor based on finger distance
+        const scaleFactor = currentPinchDistance / initialPinchDistance;
+
+        // Map scaling factor directly to volume range
+        const targetVolume = p5.map(
+          scaleFactor,
+          0.5, // Half the original distance = minimum volume
+          1.5, // 1.5x the original distance = maximum volume
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+        );
+
+        // Apply the volume with some smoothing
+        activeVolumeShape.volBase +=
+          (targetVolume - activeVolumeShape.volBase) * 0.3;
+
+        // Apply constraints
+        activeVolumeShape.volBase = p5.constrain(
+          activeVolumeShape.volBase,
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+        );
+
+        // Calculate direct size change - scale the initial diameter
+        const sizeRatio = p5.map(
+          activeVolumeShape.volBase,
+          MIN_VOLUME_DB,
+          MAX_VOLUME_DB,
+          0.7, // At minimum volume, shrink to 70%
+          1.3, // At maximum volume, grow to 130%
+        );
+
+        // Apply the visual size change based on the finger distance
+        activeVolumeShape.volumeVisualOffset =
+          initialShapeDiameter * sizeRatio - initialShapeDiameter;
+
+        // Calculate final volume
+        const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
+
+        // Apply to channel
+        if (activeVolumeShape.channel && activeVolumeShape.channel.volume) {
+          activeVolumeShape.channel.volume.value =
+            volY + activeVolumeShape.volBase;
+        }
+
+        // Show volume feedback
+        if (!activeVolumeShape.showVolumeChangeFeedback) {
+          showVolumeChangeFeedback(activeVolumeShape);
+        }
+
+        return false;
+      } else if (gestureStartType === 'rotate') {
+        // Handle rotation for playback speed
+        isRotating = true;
+        isPinching = false;
+        activeRotationShape = activeVolumeShape;
+
+        // Apply speed change based on rotation
+        activeRotationShape.rate +=
+          angleDiff * (180 / Math.PI) * ROTATION_SPEED_FACTOR;
+
+        // Apply constraints
+        activeRotationShape.rate = p5.constrain(
+          activeRotationShape.rate,
+          0.05,
+          4,
+        );
+
+        // Update the playback rate
+        if (multiPlayer && multiPlayer.player(activeRotationShape.id)) {
+          multiPlayer.player(activeRotationShape.id).playbackRate =
+            activeRotationShape.rate;
+        }
+
+        // Store current angle as previous for next calculation
+        previousAngle = currentAngle;
+        return false;
+      }
+    }
+
+    // Handle single touch drag
+    else if (touchPoints.length === 1) {
+      // Reset gesture type when returning to one finger
+      gestureStartType = null;
+
+      // Rest of one-finger touch handling remains the same
+      // ...
+    }
+  };
+
+  p5.windowResized = () => {
+    // console.log('Window resized, using height:', canvasHeight);
+    p5.resizeCanvas(p5.windowWidth, canvasHeight);
+  };
+};
