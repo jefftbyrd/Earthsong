@@ -49,6 +49,8 @@ export const soundPortal = (p5) => {
   // Add this variable with your other touch variables
   let isVolumeControlActive = false;
 
+  let singleTapTimer = null; // Add this with your other touch variables
+
   // Calculate the angle between two points
   function calculateAngle(center, point) {
     return Math.atan2(point.y - center.y, point.x - center.x);
@@ -1428,33 +1430,32 @@ export const soundPortal = (p5) => {
           const currentTime = p5.millis();
           const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
 
-          lastTapTime = currentTime;
-
           if (isDoubleTap) {
-            // Double tap detected - ONLY reset playback speed without toggling playback
-            if (shape.isLoaded) {
-              shape.rate = 1;
-              if (multiPlayer && multiPlayer.player(shape.id)) {
-                multiPlayer.player(shape.id).playbackRate = 1;
-              }
-              showResetFeedback(shape);
-              justDoubleTapped = true; // Set flag
-              setTimeout(() => {
-                justDoubleTapped = false;
-              }, 350); // Reset after a short delay
-              return;
+            // Double tap: reset speed, cancel pending single tap
+            if (singleTapTimer) {
+              clearTimeout(singleTapTimer);
+              singleTapTimer = null;
             }
+            shape.rate = 1;
+            if (multiPlayer && multiPlayer.player(shape.id)) {
+              multiPlayer.player(shape.id).playbackRate = 1;
+            }
+            showResetFeedback(shape);
+            lastTapTime = 0;
+            return;
           } else {
-            // Single tap - normal play/pause behavior
-            if (justDoubleTapped) {
-              justDoubleTapped = false; // Ignore this tap, reset flag
-              return;
-            }
-            if (shape.isLoaded) {
-              playSound(shape.id);
-            } else if (shape.isLoading) {
-              shape.playWhenLoaded = true;
-            }
+            // Start single tap timer
+            if (singleTapTimer) clearTimeout(singleTapTimer);
+            singleTapTimer = setTimeout(() => {
+              // Single tap confirmed (no double-tap)
+              if (shape.isLoaded) {
+                playSound(shape.id);
+              } else if (shape.isLoading) {
+                shape.playWhenLoaded = true;
+              }
+              singleTapTimer = null;
+            }, DOUBLE_TAP_THRESHOLD + 10); // Wait a bit longer than double-tap window
+            lastTapTime = currentTime;
           }
         }
       }
