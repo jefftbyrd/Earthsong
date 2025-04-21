@@ -26,7 +26,7 @@ After choosing a point on the globe, Earthsong finds sounds recorded nearby and 
 - [mapbox](https://www.mapbox.com/) for the interactive globe.
 - Sounds are provided by [Freesound.org](https://freesound.org/), a collaborative database of user-contributed audio content. All sounds are released under Creative Commons licenses that allow their reuse.
 
-## Thanks to
+## Thanks to:
 
 - [Sara El Abed](https://github.com/saraelaela), [Anton Kolomoiets](https://github.com/antonkolo) and [Lukas Prochazka](https://github.com/ProchaLu) for technical and emotional support.
 - [Michael Jeffrey Lee](https://www.michaeljeffreylee.com/) for coming up with the name Earthsong, which is also the title of a song from the forthcoming [Budokan Boys](https://budokanboys.club/) album, THE OOZE.
