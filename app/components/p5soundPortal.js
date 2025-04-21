@@ -1316,11 +1316,15 @@ export const soundPortal = (p5) => {
           touchPoints[1].y,
         );
 
-        // IMPORTANT: Store the initial diameter for proper scaling calculation
-        initialShapeDiameter = shape.diameter;
+        // CRITICAL: Store base diameter WITHOUT the volume offset
+        initialShapeDiameter = shape.diameter - shape.volumeVisualOffset;
 
         previousAngle = calculateAngle(center, touchPoints[0]);
         activeVolumeShape = shape;
+
+        // Set higher sensitivity for more responsiveness
+        const PINCH_SENSITIVITY = 0.03;
+
         return false;
       }
     }
@@ -1419,18 +1423,14 @@ export const soundPortal = (p5) => {
         // Calculate scaling factor based on pinch distance
         const scaleFactor = currentPinchDistance / initialPinchDistance;
 
-        // Map scaling to volume - more sensitive for easier control
-        const targetVolume = p5.map(
+        // Map scaling directly to volume range
+        activeVolumeShape.volBase = p5.map(
           scaleFactor,
           0.5, // Half distance = min volume
           1.5, // 1.5x distance = max volume
           MIN_VOLUME_DB,
           MAX_VOLUME_DB,
         );
-
-        // Apply volume with smoothing
-        activeVolumeShape.volBase +=
-          (targetVolume - activeVolumeShape.volBase) * 0.3;
 
         // Apply constraints
         activeVolumeShape.volBase = p5.constrain(
@@ -1439,18 +1439,18 @@ export const soundPortal = (p5) => {
           MAX_VOLUME_DB,
         );
 
-        // Calculate visual size change based on volume
-        const sizeRatio = p5.map(
-          activeVolumeShape.volBase,
-          MIN_VOLUME_DB,
-          MAX_VOLUME_DB,
-          0.7, // At minimum volume, shrink to 70%
-          1.3, // At maximum volume, grow to 130%
+        // Calculate visual size directly from scaling factor for more natural feel
+        const visualScale = p5.map(
+          scaleFactor,
+          0.5,
+          1.5,
+          0.7, // At minimum scale, shrink to 70%
+          1.3, // At maximum scale, grow to 130%
         );
 
-        // Apply the visual size change
+        // Apply visual change directly from scaled initial diameter
         activeVolumeShape.volumeVisualOffset =
-          initialShapeDiameter * sizeRatio - initialShapeDiameter;
+          initialShapeDiameter * visualScale - initialShapeDiameter;
 
         // Calculate final volume
         const volY = p5.map(activeVolumeShape.y, 0, p5.height, -8, 6);
