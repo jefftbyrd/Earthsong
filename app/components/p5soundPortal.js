@@ -1195,7 +1195,7 @@ export const soundPortal = (p5) => {
     return false; // Prevent default browser behavior
   };
 
-  // Replace the existing touchStarted function
+  // Replace the existing touchStarted function to handle two-finger volume control
 
   p5.touchStarted = (event) => {
     if (isPanelOpen) return;
@@ -1214,12 +1214,10 @@ export const soundPortal = (p5) => {
     if (touchPoints.length === 1) {
       touchStartTime = p5.millis();
       touchStartPos = { x: p5.mouseX, y: p5.mouseY };
-      touchSwipeStartY = p5.mouseY; // Track Y position for volume swipe
 
       const shape = getShapeAtPosition(p5.mouseX, p5.mouseY);
       if (shape) {
         shape.active = true;
-        activeVolumeShape = shape; // Mark this shape for potential volume changes
 
         // Clear any existing timer
         if (longPressTimer) {
@@ -1246,24 +1244,38 @@ export const soundPortal = (p5) => {
         return false;
       }
     }
-    // Handle multi-touch for rotation
-    else if (touchPoints.length >= 2) {
+    // Handle multi-touch for rotation or volume control
+    else if (touchPoints.length === 2) {
       // Find the shape at the center of the touch points
-      activeRotationShape = getShapeAtTouchCenter(touchPoints);
+      const shape = getShapeAtTouchCenter(touchPoints);
 
-      if (activeRotationShape && activeRotationShape.isLoaded) {
-        isRotating = true;
-
-        // Calculate initial angle between touch points
+      if (shape && shape.isLoaded) {
+        // Calculate the angle to determine if this is a rotation or vertical swipe
         const center = calculateCenter(touchPoints);
         previousAngle = calculateAngle(center, touchPoints[0]);
+
+        // Store the initial vertical position of touch points for volume control
+        const initialY = (touchPoints[0].y + touchPoints[1].y) / 2;
+        touchSwipeStartY = initialY;
+
+        // Calculate if touches are more horizontal or vertical aligned
+        const dx = Math.abs(touchPoints[0].x - touchPoints[1].x);
+        const dy = Math.abs(touchPoints[0].y - touchPoints[1].y);
+
+        if (dx > dy * 1.5) {
+          // Touches are more horizontally aligned - likely a rotation gesture
+          isRotating = true;
+          activeRotationShape = shape;
+        } else {
+          // Touches are more vertically aligned or indeterminate -
+          // we'll determine in touchMoved if it's a volume gesture
+          activeVolumeShape = shape;
+        }
 
         return false;
       }
     }
   };
-
-  // Replace the existing touchEnded function
 
   p5.touchEnded = (event) => {
     if (isPanelOpen) return;
@@ -1274,14 +1286,12 @@ export const soundPortal = (p5) => {
       longPressTimer = null;
     }
 
-    // Reset rotation state if we're no longer multi-touching
+    // Reset rotation and volume control states if we're no longer multi-touching
     if (p5.touches.length < 2) {
       isRotating = false;
       activeRotationShape = null;
+      activeVolumeShape = null;
     }
-
-    // Reset volume control state
-    activeVolumeShape = null;
 
     // Update our touch points array
     touchPoints = [];
@@ -1293,8 +1303,8 @@ export const soundPortal = (p5) => {
       });
     }
 
-    // Handle single touch tap behavior like before
-    if (!isRotating) {
+    // Handle single touch tap behavior
+    if (p5.touches.length === 0) {
       const touchDuration = p5.millis() - touchStartTime;
       const distMoved = p5.dist(
         touchStartPos.x,
@@ -1338,82 +1348,30 @@ export const soundPortal = (p5) => {
     }
   };
 
-  p5.mouseDragged = () => {
-    if (isPanelOpen) return; // Just return, don't return false
-    // Only process if we've moved enough to consider it a drag
-    const distMoved = p5.dist(
-      touchStartPos.x,
-      touchStartPos.y,
-      p5.mouseX,
-      p5.mouseY,
-    );
-
-    if (distMoved < DRAG_THRESHOLD) {
-      return false; // Not enough movement to be considered a drag yet
-    }
-
-    // Handle shape dragging
-    if (shapes.length > 0) {
-      let shapeMoved = false;
-
-      for (let i = 0; i < shapes.length; i++) {
-        let shape = shapes[i];
-        if (shape.active) {
-          // Calculate new position
-          let newX = p5.mouseX;
-          let newY = p5.mouseY;
-
-          // Constrain position to keep the shape fully within canvas
-          // Consider the radius (diameter/2) when setting boundaries
-          newX = p5.constrain(
-            newX,
-            shape.diameter / 2,
-            p5.width - shape.diameter / 2,
-          );
-          newY = p5.constrain(
-            newY,
-            shape.diameter / 2,
-            p5.height - shape.diameter / 2,
-          );
-
-          // Update the shape's position
-          shape.x = newX;
-          shape.y = newY;
-
-          // When dragging a shape to a new y-position, we'll update its zIndex
-          // in the next draw cycle automatically via the sorting mechanism
-
-          shapeMoved = true;
-          break; // Only move the first active shape (original behavior)
-        }
-      }
-
-      if (shapeMoved) {
-        return false;
-      }
-    }
-    return false;
-  };
-
-  // Replace the existing touchMoved function
-
   p5.touchMoved = () => {
     if (isPanelOpen) return;
 
-    // Handle multi-touch rotation
-    if (isRotating && activeRotationShape && p5.touches.length >= 2) {
-      // Update touch points
-      touchPoints = [];
-      for (let i = 0; i < p5.touches.length; i++) {
-        touchPoints.push({
-          id: i,
-          x: p5.touches[i].x,
-          y: p5.touches[i].y,
-        });
-      }
+    // Updated touch points
+    touchPoints = [];
+    for (let i = 0; i < p5.touches.length; i++) {
+      touchPoints.push({
+        id: i,
+        x: p5.touches[i].x,
+        y: p5.touches[i].y,
+      });
+    }
 
-      // Calculate center and current angle
-      const center = calculateCenter(touchPoints);
+    // We need at least 2 touches for rotation or volume control
+    if (touchPoints.length < 2) {
+      // Fall back to regular drag behavior for single touch
+      return p5.mouseDragged();
+    }
+
+    // Calculate center between touch points
+    const center = calculateCenter(touchPoints);
+
+    // Handle rotation gesture
+    if (isRotating && activeRotationShape) {
       const currentAngle = calculateAngle(center, touchPoints[0]);
 
       // Calculate angle difference in radians
@@ -1448,20 +1406,24 @@ export const soundPortal = (p5) => {
 
       return false;
     }
-    // Handle vertical swipe for volume control with single touch
-    else if (p5.touches.length === 1 && activeVolumeShape) {
-      // Cancel long press timer if we're swiping
-      if (longPressTimer) {
-        clearTimeout(longPressTimer);
-        longPressTimer = null;
-      }
+    // Handle two-finger vertical swipe for volume
+    else if (activeVolumeShape && touchPoints.length === 2) {
+      // Calculate if the movement is primarily vertical (volume) or circular (should be rotation)
+      const dx1 = touchPoints[0].x - touchPoints[1].x;
+      const dy1 = touchPoints[0].y - touchPoints[1].y;
+      const currentY = (touchPoints[0].y + touchPoints[1].y) / 2;
 
-      // Calculate how much vertical movement has occurred
-      const yDiff = touchSwipeStartY - p5.mouseY;
+      // Calculate vertical movement
+      const yDiff = touchSwipeStartY - currentY;
 
-      // If significant vertical movement and less horizontal movement (to distinguish from dragging)
-      const xDiff = Math.abs(touchStartPos.x - p5.mouseX);
-      if (Math.abs(yDiff) > DRAG_THRESHOLD && xDiff < Math.abs(yDiff)) {
+      // If significant vertical movement by both fingers in the same direction
+      if (Math.abs(yDiff) > DRAG_THRESHOLD) {
+        // If this is our first significant vertical movement, disable rotation mode
+        if (!isRotating) {
+          isRotating = false;
+          activeRotationShape = null;
+        }
+
         // Up = increase volume, Down = decrease volume
         activeVolumeShape.volBase += yDiff * VOLUME_SWIPE_SENSITIVITY;
 
@@ -1490,23 +1452,36 @@ export const soundPortal = (p5) => {
             volY + activeVolumeShape.volBase;
         }
 
-        // Show volume feedback periodically during swipe
+        // Show volume feedback
         if (!activeVolumeShape.showVolumeChangeFeedback) {
           showVolumeChangeFeedback(activeVolumeShape);
         }
 
         // Reset starting point for continuous movement
-        touchSwipeStartY = p5.mouseY;
+        touchSwipeStartY = currentY;
 
         return false;
       }
-      // If horizontal drag is more dominant, let regular drag code handle it
-      else if (xDiff > DRAG_THRESHOLD && xDiff > Math.abs(yDiff)) {
-        return p5.mouseDragged();
+      // If this might be a rotation gesture instead (detected by circular movement)
+      else {
+        // If movement looks more like rotation than vertical swipe,
+        // switch to rotation mode
+        const currentAngle = calculateAngle(center, touchPoints[0]);
+        let angleDiff = currentAngle - previousAngle;
+        if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+        if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+
+        // If we have significant angular movement, switch to rotation mode
+        if (Math.abs(angleDiff) > 0.05) {
+          isRotating = true;
+          activeRotationShape = activeVolumeShape;
+          activeVolumeShape = null;
+          // Fall through to next event for rotation handling
+        }
       }
     }
-    // Fall back to regular drag behavior for other cases
-    else if (p5.touches.length === 1) {
+    // Handle single touch drag
+    else if (touchPoints.length === 1) {
       return p5.mouseDragged();
     }
   };
