@@ -1347,9 +1347,11 @@ export const soundPortal = (p5) => {
           // Check for double-tap
           const currentTime = p5.millis();
           const isDoubleTap = currentTime - lastTapTime < DOUBLE_TAP_THRESHOLD;
+          // Always update lastTapTime
+          lastTapTime = currentTime;
 
           if (isDoubleTap) {
-            // DOUBLE TAP: Only reset playback speed, don't toggle playback
+            // Double tap detected - ONLY handle speed reset
             if (shape.isLoaded) {
               shape.rate = 1;
               if (multiPlayer && multiPlayer.player(shape.id)) {
@@ -1357,17 +1359,16 @@ export const soundPortal = (p5) => {
               }
               showResetFeedback(shape);
             }
-          } else {
-            // SINGLE TAP: Normal play/pause behavior
-            if (shape.isLoaded) {
-              playSound(shape.id);
-            } else if (shape.isLoading) {
-              shape.playWhenLoaded = true;
-            }
+            // CRITICAL: Skip the rest of the function to prevent toggling playback
+            return;
           }
 
-          // Always update lastTapTime at the end
-          lastTapTime = currentTime;
+          // Only handle single tap if it wasn't a double-tap
+          if (shape.isLoaded) {
+            playSound(shape.id);
+          } else if (shape.isLoading) {
+            shape.playWhenLoaded = true;
+          }
         }
       }
 
