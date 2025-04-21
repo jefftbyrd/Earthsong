@@ -683,10 +683,26 @@ export const soundPortal = (p5) => {
         p5.textAlign(p5.CENTER, p5.CENTER);
 
         // Calculate yOffset to perfectly center the text vertically
-        let yOffset = this.numberSize * 0.23; // Adjust based on font metrics
-        if (this.number === 4 || this.number === 5) {
-          yOffset = this.numberSize * 0.05; // Adjust this value (-2 pixels up) as needed
+        let yOffset = 0;
+
+        // Detect if we're on mobile
+        const isMobile =
+          /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+            navigator.userAgent,
+          ) || p5.windowWidth < 768;
+
+        // Apply symbol-specific adjustments only on desktop
+        if (!isMobile) {
+          // Only apply offsets on desktop
+          if (this.number <= 3) {
+            yOffset = this.numberSize * 0.23;
+          } else {
+            // numbers 4 and 5
+            yOffset = this.numberSize * 0.05;
+          }
         }
+        // On mobile, yOffset remains 0 for all symbols
+
         // Render the text at the center of the circle
         p5.text(aegean[this.number - 1], 0, yOffset);
       }
