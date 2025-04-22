@@ -332,13 +332,13 @@ button:hover {
 
 .message {
   position: absolute;
-  top: 75%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 15;
   pointer-events: none;
   text-align: center;
-  @apply text-5xl md:text-[10vw];
+  @apply text-5xl md:text-[6vw] md:leading-[7.5vw];
   /* opacity: 0; */
   /* font-size: 6vw; */
 }
