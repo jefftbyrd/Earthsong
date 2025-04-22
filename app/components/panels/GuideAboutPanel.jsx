@@ -25,6 +25,20 @@ export default function GuideAboutPanel() {
   return (
     <PanelWrap panel="About" bg="#5381C4">
       <div className="text-left p-5">
+        <div className="flex justify-start items-center mb-7 text-center">
+          <iframe
+            // width="560"
+            // height="315"
+            className="aspect-16/9 w-full md:w-2/3"
+            src="https://www.youtube.com/embed/8z_00In-8Ig?si=aUvXfk019PZrQk89"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </div>
+        <hr className="border-black/30 my-5" />
         <h2 className="text-2xl mb-3">Thanks</h2>
         <ul className="thanks-list">
           <li>
