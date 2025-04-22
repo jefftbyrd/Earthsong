@@ -48,7 +48,7 @@ export default function SoundItem({ sound, index }) {
             }
           }}
         >
-          <span className="wrap-break-word text-truncate break-all text-sm min-h-10 lg:min-h-14 lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 lg:line-clamp-2 xl:line-clamp-2 text-black text-left">
+          <span className="wrap-break-word text-truncate break-all md:break-normal text-sm min-h-10 lg:min-h-14 lg:text-xl xl:text-lg 2xl:text-xl line-clamp-1 lg:line-clamp-2 xl:line-clamp-2 text-black text-left">
             {sound.name}
           </span>
         </button>
