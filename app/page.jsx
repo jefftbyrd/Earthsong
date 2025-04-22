@@ -104,7 +104,7 @@ export default function Earthsong() {
         animationProps={{
           opacity: [0, 0, 1, 0],
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
-          transition: { duration: 5, times: [0, 0.6, 0.9, 1] },
+          transition: { duration: 5, times: [0, 0.6, 0.8, 1] },
         }}
         style={{ top: '65%' }}
       />
