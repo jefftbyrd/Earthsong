@@ -8,16 +8,10 @@ export default function SecretTouch() {
         </p>
         <ul>
           <li>
-            <span>
-              Clockwise <span>&#11118;</span>
-            </span>{' '}
-            faster
+            <span>Clockwise</span> faster
           </li>
           <li>
-            <span>
-              Counter-clockwise <span>&#11119;</span>
-            </span>{' '}
-            slower
+            <span>Counter-clockwise</span> slower
           </li>
           <li>
             <span>Double-tap</span> reset speed
@@ -39,16 +33,10 @@ export default function SecretTouch() {
         <p className="text-lg">Touch and drag with 3 fingers.</p>
         <ul>
           <li>
-            <span>
-              Drag UP <span>&#129029;</span>
-            </span>{' '}
-            louder
+            <span>Drag UP</span> louder
           </li>
           <li>
-            <span>
-              Drag DOWN <span>&#129031;</span>
-            </span>{' '}
-            quieter
+            <span>Drag DOWN</span> quieter
           </li>
         </ul>
       </div>
