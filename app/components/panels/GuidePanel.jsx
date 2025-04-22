@@ -39,8 +39,9 @@ export default function GuidePanel() {
             }
           }}
         >
-          <img
+          <Image
             src="/guide-navigate.webp"
+            priority
             className="absolute inset-0 object-cover opacity-50 w-full h-full"
             alt="Navigation"
             width={1600}
@@ -66,6 +67,7 @@ export default function GuidePanel() {
         >
           <Image
             src="/guide-portal.webp"
+            priority
             className="absolute inset-0 object-cover opacity-50 w-full h-full"
             alt="Portal"
             width={1600}
@@ -91,6 +93,7 @@ export default function GuidePanel() {
         >
           <Image
             src="/guide-about.png"
+            priority
             className="absolute inset-0 object-cover opacity-60 w-full h-full"
             alt="About"
             width={1600}
