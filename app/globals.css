@@ -53,7 +53,7 @@ form {
     @apply my-6 flex gap-4 flex-col text-left;
     li {
       span {
-        @apply border-1 border-black/30 p-2 rounded-md bg-black/30 text-white text-lg m-1;
+        @apply border-1 border-black/30 p-2 rounded-md bg-black/30 text-white m-1;
       }
     }
   }

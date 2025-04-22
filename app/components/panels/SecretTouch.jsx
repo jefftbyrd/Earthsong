@@ -21,11 +21,11 @@ export default function SecretTouch() {
 
       <div className="border-b-1 border-black/30 ">
         <h4>Toggle playback direction</h4>
-        {/* <p>Grab the corners of a circle with two fingers and spin it</p> */}
         <ul>
           <li>
-            <span>Touch and hold for 1 second</span>
+            <span>Touch & hold for 1 second</span>
           </li>
+          <li>Forward/reverse</li>
         </ul>
       </div>
 
