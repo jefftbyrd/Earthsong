@@ -124,7 +124,7 @@ export default function Earthsong() {
               duration: 3,
             }}
           >
-            <Logo className="w-[40vw] h-[40vw] lg:h-[15vw] lg:w-[15vw]" />
+            <Logo className="w-[45vw] h-[45vw] lg:h-[18vw] lg:w-[18vw]" />
           </motion.div>
         </div>
       ) : null}
