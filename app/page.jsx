@@ -78,7 +78,7 @@ export default function Earthsong() {
         style={{ top: '50%' }}
       />
       <Message
-        text="Conjuring Sounds from the Ether"
+        text="Initiating Sonic Projection"
         isVisible={phase === 'portal'}
         animationProps={{
           opacity: [0, 1, 1, 0],
