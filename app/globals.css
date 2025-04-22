@@ -54,7 +54,10 @@ form {
     li {
       @apply font-bold;
       span {
-        @apply font-medium border-1 border-black/30 p-2 rounded-md bg-black/30 text-white m-1;
+        @apply font-medium border-1 border-black/30 p-2 rounded-md bg-black/30 text-white m-1 relative;
+        span {
+          @apply text-3xl/0 font-bold bg-transparent border-0 mx-0 top-0.5;
+        }
       }
     }
   }
