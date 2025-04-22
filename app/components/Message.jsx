@@ -8,7 +8,7 @@ export default function Message({ text, isVisible, animationProps }) {
       className="message uppercase"
       initial={{ opacity: 0 }}
       animate={{
-        opacity: [0, 1, 0],
+        // opacity: [0, 1, 0],
         ...animationProps, // Allow custom animations
       }}
     >
