@@ -70,6 +70,7 @@ export default function Earthsong() {
         text="Your Journey was Saved!"
         isVisible={journeySaved}
         animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
+        style={{ top: '65%' }}
       />
       <Message
         text="Returning to map"
