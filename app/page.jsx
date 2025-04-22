@@ -86,7 +86,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 3, times: [0, 0.25, 0.6, 0.9] },
         }}
-        style={{ top: '40%' }}
+        style={{ top: '50%' }}
       />
       <Message
         text="Summoning journey"
@@ -96,7 +96,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 4, times: [0, 0.25, 0.5, 1] },
         }}
-        style={{ top: '40%' }}
+        style={{ top: '50%' }}
       />
       <Message
         text="Entering Sound Portal"
@@ -106,7 +106,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 5, times: [0, 0.6, 0.8, 1] },
         }}
-        style={{ top: '65%' }}
+        style={{ top: '50%' }}
       />
 
       {/* Wait until user clicks ✹ to start Earthsong */}
