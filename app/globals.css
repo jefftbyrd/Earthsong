@@ -338,7 +338,7 @@ button:hover {
   z-index: 15;
   pointer-events: none;
   text-align: center;
-  @apply text-5xl md:text-[6vw] md:leading-[7.5vw];
+  @apply text-5xl md:text-[8vw] md:leading-[9vw];
   /* opacity: 0; */
   /* font-size: 6vw; */
 }
