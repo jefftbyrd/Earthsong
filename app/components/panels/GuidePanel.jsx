@@ -42,10 +42,10 @@ export default function GuidePanel() {
           <Image
             src="/guide-navigate.webp"
             priority
-            className="absolute inset-0 object-cover opacity-50 w-full h-full"
+            className=" inset-0 object-cover opacity-60"
             alt="Navigation"
-            width={1600}
-            height={900}
+            fill
+            sizes="(max-width: 1024px) 80vw, 50vw"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <h1 className="text-4xl text-white z-10 text-shadow-lg/30 lg:text-7xl">
@@ -68,10 +68,9 @@ export default function GuidePanel() {
           <Image
             src="/guide-portal.webp"
             priority
-            className="absolute inset-0 object-cover opacity-50 w-full h-full"
+            fill
+            className=" inset-0 object-cover opacity-60"
             alt="Portal"
-            width={1600}
-            height={900}
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <h1 className="text-4xl text-white z-10 text-shadow-lg/30 lg:text-7xl">
@@ -94,10 +93,10 @@ export default function GuidePanel() {
           <Image
             src="/guide-about.png"
             priority
-            className="absolute inset-0 object-cover opacity-60 w-full h-full"
+            className=" inset-0 object-cover opacity-60 w-full h-full"
             alt="About"
-            width={1600}
-            height={900}
+            fill
+            sizes="(max-width: 1024px) 80vw, 50vw"
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <h1 className="text-4xl text-white z-10 text-shadow-lg/30 lg:text-7xl">
