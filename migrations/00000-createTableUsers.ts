@@ -2,8 +2,12 @@ import type { Sql } from 'postgres';
 import { z } from 'zod';
 
 export const userSchema = z.object({
-  username: z.string().min(3),
-  password: z.string().min(3),
+  username: z
+    .string()
+    .min(3, { message: 'Username must be at least 3 characters.' }),
+  password: z
+    .string()
+    .min(3, { message: 'Password must be at least 3 characters.' }),
 });
 
 export type User = {

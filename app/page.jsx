@@ -98,7 +98,7 @@ export default function Earthsong() {
         style={{ top: '40%' }}
       />
       <Message
-        text="Entering sound portal"
+        text="Entering Sound Portal"
         isVisible={phase === 'portal' || phase === 'portalRecall'}
         animationProps={{
           opacity: [0, 0, 1, 0],
