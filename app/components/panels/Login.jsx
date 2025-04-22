@@ -45,7 +45,7 @@ export default function Login() {
         <label>
           <span className="uppercase font-bold">Name</span>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 "
+            // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 "
             // id="username"
             // type="text"
             placeholder="identify yourself"
@@ -59,7 +59,7 @@ export default function Login() {
         <label>
           <span className="uppercase font-bold">Password</span>
           <input
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
+            // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
             // id="password"
             // type="password"
             // placeholder="******************"
