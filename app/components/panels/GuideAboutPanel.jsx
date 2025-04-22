@@ -24,10 +24,10 @@ export default function GuideAboutPanel() {
 
   return (
     <PanelWrap panel="About" bg="#5381C4">
-      <div className="text-left p-5">
-        <div className="flex justify-start items-center mb-7 text-center">
+      <div className="w-full md:w-2/3 mx-auto text-left p-5">
+        <div className=" flex justify-start items-center mb-7 text-center">
           <iframe
-            className="aspect-16/9 w-full md:w-2/3"
+            className="aspect-16/9 w-full"
             src="https://www.youtube.com/embed/8z_00In-8Ig?si=aUvXfk019PZrQk89"
             title="YouTube video player"
             frameBorder="0"
