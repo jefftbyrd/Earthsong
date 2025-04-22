@@ -43,12 +43,12 @@ export default function Login() {
 
       <form onSubmit={handleLogin} className="flex flex-col gap-4 text-left">
         <label>
-          <span className="uppercase font-bold">Name</span>
+          <span className="uppercase font-bold">Username</span>
           <input
             // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 "
             // id="username"
             // type="text"
-            placeholder="identify yourself"
+            placeholder="Identify yourself"
             autoCapitalize="off"
             // autoFocus={true}
             value={username}
