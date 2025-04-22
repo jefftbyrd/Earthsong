@@ -93,7 +93,7 @@ export default function MapMessages(props) {
   };
 
   return (
-    <div className="absolute bottom-10 z-10 m-auto left-0 right-0 text-center text-lg sm:text-3xl/10 lg:text-4xl/13 p-2 backdrop-blur-[5px]  text-shadow-lg/20 sm:w-3/4">
+    <div className="absolute bottom-12 z-10 m-auto left-0 right-0 text-center text-lg sm:text-3xl/10 lg:text-4xl/13 p-2 backdrop-blur-[5px]  text-shadow-lg/20 sm:w-3/4">
       {/* LINE 1 */}
       <div>
         {mapConditions.initial && (
