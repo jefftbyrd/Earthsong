@@ -52,7 +52,9 @@ export default function SecretKeyboard() {
           </div>
         </div>
         <div className="">
-          <h3 className="text-xl font-bold mb-2">Set volume trim</h3>
+          <h3 className="text-xl font-bold mb-2">
+            Change a sound's base volume
+          </h3>
           <div className="grid grid-cols-3  gap-4 w-full md:w-60 mx-auto ">
             <div className="flex flex-col items-center justify-center">
               <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
