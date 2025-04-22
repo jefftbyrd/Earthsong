@@ -50,10 +50,11 @@ form {
     @apply text-center;
   }
   ul {
-    @apply my-6 flex gap-4 flex-col text-left;
+    @apply my-6 flex gap-5 flex-col text-left;
     li {
+      @apply font-bold;
       span {
-        @apply border-1 border-black/30 p-2 rounded-md bg-black/30 text-white m-1;
+        @apply font-medium border-1 border-black/30 p-2 rounded-md bg-black/30 text-white m-1;
       }
     }
   }

@@ -27,9 +27,9 @@ export default function GuidePanel() {
 
   return (
     <PanelWrap panel="Guide" bg="#5381C4">
-      <div className="w-full flex flex-col items-center justify-center gap-1">
+      <div className="w-full flex flex-col items-center justify-center gap-2">
         <button
-          className="relative w-4/5 lg:w-1/2 aspect-24/7 overflow-hidden border-1 border-black/50 mt-3"
+          className="relative w-4/5 lg:w-1/2 aspect-24/9 overflow-hidden border-1 border-black/50 mt-3"
           onClick={(e) => {
             e.stopPropagation();
             if (panelOpen && panelId === 'Navigate') {
@@ -54,7 +54,7 @@ export default function GuidePanel() {
         </button>
 
         <button
-          className="relative w-4/5 lg:w-1/2 aspect-24/7 overflow-hidden border-1 border-black/50"
+          className="relative w-4/5 lg:w-1/2 aspect-24/9 overflow-hidden border-1 border-black/50"
           onClick={(e) => {
             e.stopPropagation();
             if (panelOpen && panelId === 'Portal') {
@@ -79,7 +79,7 @@ export default function GuidePanel() {
         </button>
 
         <button
-          className="relative w-4/5 lg:w-1/2 aspect-24/7 overflow-hidden border-1 border-black/50"
+          className="relative w-4/5 lg:w-1/2 aspect-24/9 overflow-hidden border-1 border-black/50"
           onClick={(e) => {
             e.stopPropagation();
             if (panelOpen && panelId === 'About') {

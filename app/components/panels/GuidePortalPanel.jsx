@@ -76,7 +76,7 @@ export default function GuidePortalPanel() {
                 }}
                 buttonStyle={3}
                 // className="font-bold"
-                className={`p-2 font-bold text-black/80 ${secretMode === 'touch' ? 'bg-white/70' : ''}`}
+                className={`p-3 font-bold border-1 border-black/50 text-black/80 ${secretMode === 'touch' ? 'bg-white/70' : ''}`}
                 // style={secretMode === 'touch' ? { backgroundColor: 'white' } : {}}
               >
                 Touchscreen
@@ -87,7 +87,7 @@ export default function GuidePortalPanel() {
                   setSecretMode('keyboard');
                 }}
                 buttonStyle={3}
-                className={`p-2 font-bold text-black/80 ${secretMode === 'keyboard' ? 'bg-white/70' : ''}`}
+                className={`p-3 font-bold border-1 border-black/50 text-black/80 ${secretMode === 'keyboard' ? 'bg-white/70' : ''}`}
               >
                 Keyboard
               </EarthsongButton>

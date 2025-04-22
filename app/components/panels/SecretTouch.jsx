@@ -4,17 +4,17 @@ export default function SecretTouch() {
       <div className="border-b-1 border-black/30 ">
         <h4>Change playback speed</h4>
         <p className="text-lg">
-          Grab the corners of a circle with two fingers and spin it it
+          Grab the corners of a circle with two fingers and spin it.
         </p>
         <ul>
           <li>
-            <span>Clockwise</span> = faster
+            <span>Clockwise</span> faster
           </li>
           <li>
-            <span>Counter-clockwise</span> = slower
+            <span>Counter-clockwise</span> slower
           </li>
           <li>
-            <span>Double-tap</span> = reset to original speed
+            <span>Double-tap</span> reset speed
           </li>
         </ul>
       </div>
@@ -25,19 +25,18 @@ export default function SecretTouch() {
           <li>
             <span>Touch & hold for 1 second</span>
           </li>
-          <li>Forward/reverse</li>
         </ul>
       </div>
 
       <div className="border-b-1 border-black/30 ">
         <h4>Change a sound's base volume</h4>
-        <p className="text-lg">Touch and drag with 3 fingers</p>
+        <p className="text-lg">Touch and drag with 3 fingers.</p>
         <ul>
           <li>
-            <span>Up</span> = louder
+            <span>Up</span> louder
           </li>
           <li>
-            <span>Down</span> = quieter
+            <span>Down</span> quieter
           </li>
         </ul>
       </div>
