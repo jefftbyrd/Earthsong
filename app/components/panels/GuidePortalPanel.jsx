@@ -59,7 +59,7 @@ export default function GuidePortalPanel() {
           <div>
             <h3 className="text-xl/10 font-bold">
               Open a sound's{' '}
-              <span className="border-1 border-white/60 p-1 rounded-md text-white bg-black/30">
+              <span className="border-1 border-white/60 p-1 rounded-md text-white bg-black/30 text-nowrap">
                 INFO PANEL
               </span>
             </h3>
