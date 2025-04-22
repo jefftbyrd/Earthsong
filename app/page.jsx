@@ -61,27 +61,45 @@ export default function Earthsong() {
     <>
       {/* Render messages */}
       <Message
-        text={`Welcome, ${user?.username}.`}
+        text={`Welcome, ${user?.username}`}
         isVisible={!!user}
-        animationProps={{ transition: { duration: 4 } }}
+        animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
       />
       <Message
         text="Your Journey was Saved!"
         isVisible={journeySaved}
-        animationProps={{ transition: { duration: 4 } }}
+        animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
       />
       <Message
         text="Returning to map"
         isVisible={phase === 'returnToMap'}
-        animationProps={{ transition: { duration: 4 } }}
+        animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
+      />
+      <Message
+        text="Conjuring Sounds from the Ether"
+        isVisible={phase === 'portal'}
+        animationProps={{
+          opacity: [0, 1, 1, 0],
+          color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
+          transition: { duration: 3, times: [0, 0.25, 0.6, 1] },
+        }}
+      />
+      <Message
+        text="Summoning journey"
+        isVisible={phase === 'portalRecall'}
+        animationProps={{
+          opacity: [0, 1, 1, 0],
+          color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
+          transition: { duration: 4, times: [0, 0.25, 0.5, 1] },
+        }}
       />
       <Message
         text="Entering sound portal"
         isVisible={phase === 'portal' || phase === 'portalRecall'}
         animationProps={{
-          opacity: [0, 1, 1, 0],
+          opacity: [0, 0, 1, 0],
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
-          transition: { duration: 4, times: [0, 0.4, 0.8, 1] },
+          transition: { duration: 6, times: [0, 0.6, 0.9, 1] },
         }}
       />
 
