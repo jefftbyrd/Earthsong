@@ -81,19 +81,6 @@ export default function Login() {
           </div>
         ))}
       </form>
-
-      {/* <p>
-        If you don't have an account, you should{' '}
-        <ButtonText
-          className=""
-          onClick={() => {
-            setRegisterOpen(!registerOpen);
-          }}
-        >
-          register
-        </ButtonText>
-        . Registered users can save their journeys and return to them later.
-      </p> */}
     </>
   );
 }
