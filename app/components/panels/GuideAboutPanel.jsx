@@ -27,8 +27,6 @@ export default function GuideAboutPanel() {
       <div className="text-left p-5">
         <div className="flex justify-start items-center mb-7 text-center">
           <iframe
-            // width="560"
-            // height="315"
             className="aspect-16/9 w-full md:w-2/3"
             src="https://www.youtube.com/embed/8z_00In-8Ig?si=aUvXfk019PZrQk89"
             title="YouTube video player"
