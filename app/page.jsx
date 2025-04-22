@@ -64,6 +64,7 @@ export default function Earthsong() {
         text={`Welcome, ${user?.username}`}
         isVisible={!!user}
         animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
+        style={{ top: '75%' }}
       />
       <Message
         text="Your Journey was Saved!"
@@ -74,6 +75,7 @@ export default function Earthsong() {
         text="Returning to map"
         isVisible={phase === 'returnToMap'}
         animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
+        style={{ top: '50%' }}
       />
       <Message
         text="Conjuring Sounds from the Ether"
@@ -83,6 +85,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 3, times: [0, 0.25, 0.6, 1] },
         }}
+        style={{ top: '40%' }}
       />
       <Message
         text="Summoning journey"
@@ -92,6 +95,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 4, times: [0, 0.25, 0.5, 1] },
         }}
+        style={{ top: '40%' }}
       />
       <Message
         text="Entering sound portal"
@@ -101,6 +105,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 6, times: [0, 0.6, 0.9, 1] },
         }}
+        style={{ top: '65%' }}
       />
 
       {/* Wait until user clicks ✹ to start Earthsong */}
