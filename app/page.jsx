@@ -64,7 +64,7 @@ export default function Earthsong() {
         text={`Welcome, ${user?.username}`}
         isVisible={!!user}
         animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
-        style={{ top: '75%' }}
+        style={{ top: '80%' }}
       />
       <Message
         text="Your Journey was Saved!"
