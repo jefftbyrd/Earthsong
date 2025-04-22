@@ -83,7 +83,7 @@ export default function Earthsong() {
         animationProps={{
           opacity: [0, 1, 1, 0],
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
-          transition: { duration: 3, times: [0, 0.25, 0.6, 1] },
+          transition: { duration: 3, times: [0, 0.25, 0.6, 0.9] },
         }}
         style={{ top: '40%' }}
       />
@@ -103,7 +103,7 @@ export default function Earthsong() {
         animationProps={{
           opacity: [0, 0, 1, 0],
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
-          transition: { duration: 6, times: [0, 0.6, 0.9, 1] },
+          transition: { duration: 5, times: [0, 0.6, 0.9, 1] },
         }}
         style={{ top: '65%' }}
       />
