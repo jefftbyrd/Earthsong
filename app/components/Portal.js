@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { useSoundPlayer } from '../context/soundPlayerContext';
-import { userContext } from '../context/userContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5soundPortal';
 import { panels } from './portal/panelConfig';
@@ -23,24 +22,6 @@ export default function Portal(props) {
 
   const soundsForPortal =
     phase === 'portal' ? soundsColor : props.recalledSounds;
-
-  // const location = phase === 'portal' ? soundsColor : props.recalledSounds;
-
-  // const locationName =
-  //   props.recalledName !== undefined
-  //     ? props.recalledName
-  //     : soundsColor[0]?.location;
-
-  // const locationName =
-  // soundsColor[0]?.location !== undefined
-  //   ? `${soundsColor[0]?.location}`
-  //   : `${props.recalledName}`;
-
-  // {
-  //   soundsColor[0]?.location !== undefined
-  //     ? `${soundsColor[0]?.location}`
-  //     : `${recalledName}`;
-  // }
 
   // More robust approach to measure height
   useEffect(() => {
@@ -104,9 +85,12 @@ export default function Portal(props) {
 
       {/* Canvas Container */}
       <div
+        id="sound-portal-canvas-container"
         ref={canvasContainerRef}
         className="flex-grow relative overflow-hidden"
         style={{
+          width: '100vw', // Add this line
+          maxWidth: '100vw', // Optional, for extra safety
           height: containerHeight > 0 ? `${containerHeight}px` : 'auto',
           maxHeight: 'calc(100vh - 2.5rem)',
         }}
