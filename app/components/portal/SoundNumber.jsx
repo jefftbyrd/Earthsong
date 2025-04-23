@@ -3,7 +3,7 @@ export default function SoundNumber({ soundNumber = 1 }) {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   return (
-    <div className=" h-10  grid place-items-center origin-center text-black relative leading-0">
+    <div className=" h-10  grid place-items-center origin-center relative leading-0">
       <span
         className={`font-(family-name:--font-noto) text-7xl xl:text-9xl leading-none absolute ${
           soundNumber === 4 || soundNumber === 5 ? '-translate-y-2' : ''

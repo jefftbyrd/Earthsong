@@ -546,7 +546,7 @@ export const soundPortal = (p5) => {
           if (element) {
             element.setAttribute(
               'style',
-              `background-color:${this.bg}; opacity: 0.3; z-index: ${this.zIndex};`,
+              `background-color:${this.bg}; color:black; --tw-inset-ring-shadow: none; opacity: 0.3; z-index: ${this.zIndex};`,
             );
 
             // Add loading text to the DOM element
@@ -608,7 +608,7 @@ export const soundPortal = (p5) => {
             if (element) {
               element.setAttribute(
                 'style',
-                `background-color:${this.bg}; opacity: 0.5; z-index: ${this.zIndex};`,
+                `background-color:${this.bg}; color:black; --tw-inset-ring-shadow: none; opacity: 0.5; z-index: ${this.zIndex};`,
               );
 
               // Remove loading text if present
