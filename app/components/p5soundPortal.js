@@ -627,10 +627,25 @@ export const soundPortal = (p5) => {
       // Update diameter based on y position and meterMap
       // This keeps the dynamic size behavior in the draw loop
       // When calculating the final diameter, include the volumeVisualOffset
+
+      // // Previous diameter forumula
+      // this.diameter =
+      //   p5.map(this.y, 0, p5.height, p5.height / 40, p5.height / 3) +
+      //   this.meterMap / 2 +
+      //   this.volumeVisualOffset; // Add the volume visual offset
+
+      const maxDiameter = (p5.height * 2) / 5;
+
       this.diameter =
-        p5.map(this.y, 0, p5.height, p5.height / 40, p5.height / 3) +
+        p5.map(
+          this.y,
+          0,
+          p5.height - maxDiameter / 2,
+          p5.height / 30,
+          maxDiameter,
+        ) +
         this.meterMap / 2 +
-        this.volumeVisualOffset; // Add the volume visual offset
+        this.volumeVisualOffset;
 
       // this.numberSize =
       //   p5.map(this.y, 0, p5.height, 10, 200) + this.meterMap / 2;
