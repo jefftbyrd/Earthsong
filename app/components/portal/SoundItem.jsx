@@ -22,7 +22,7 @@ export default function SoundItem({ sound, index }) {
             setPlayerTarget(sound.id);
           }}
         >
-          <div className="flex items-center justify-center gap-x-0 h-full p-2 lg:p-0 lg:min-h-24">
+          <div className="flex items-center justify-center gap-x-0 h-full p-2 lg:min-h-30">
             <div className="flex-shrink-0 ">
               <SoundNumber soundNumber={index + 1} />
             </div>
