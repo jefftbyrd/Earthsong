@@ -91,6 +91,16 @@ interface Props {
   mobileCheck: boolean;
 }
 
+const getInitialZoom = () => {
+  if (typeof window !== 'undefined') {
+    const width = window.innerWidth;
+    if (width < 768) return 1.3; // Mobile
+    if (width < 1024) return 1.8; // Tablet
+    return 2.14; // Larger screens
+  }
+  return 2.14; // Default fallback
+};
+
 export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
@@ -109,7 +119,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [mapCenter, setMapCenter] = useState<[number, number]>([
     37.25192820309019, 35.630445241263956,
   ]);
-  const [mapZoom, setMapZoom] = useState(2.14);
+  const [mapZoom, setMapZoom] = useState(getInitialZoom());
 
   const incrementSnapshotVersion = () => {
     setSnapshotVersion((prev) => prev + 1);
