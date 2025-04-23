@@ -22,8 +22,8 @@ export default function SecretTouch() {
       <div className="border-b-1 border-black/30 ">
         <h4>Toggle playback direction</h4>
         <ul>
-          <li>
-            <span>Touch & hold for 1 second</span> forward/reverse
+          <li className="-my-2 leading-10">
+            <span className="">Touch & hold for 1 second</span> forward/reverse
           </li>
         </ul>
       </div>
