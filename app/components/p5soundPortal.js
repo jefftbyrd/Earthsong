@@ -86,11 +86,8 @@ export const soundPortal = (p5) => {
 
   p5.updateWithProps = async (props) => {
     // If reset is triggered, ensure proper cleanup
-    console.log('p5: p5.updateWithProps called with props:', props);
-    console.log('p5: props.containerHeight', props.containerHeight);
 
     if (props.reset) {
-      console.log('Reset triggered in p5soundPortal, stopping all sounds');
       await stopAll(); // Make sure this is awaited
 
       // After stopAll completes, check if we need to regenerate
@@ -117,11 +114,9 @@ export const soundPortal = (p5) => {
     if (props.containerHeight && props.containerHeight > 0) {
       canvasHeight = props.containerHeight;
       // console.log('P5 received container height:', canvasHeight);
-      console.log('p5: canvasHeight', canvasHeight);
 
       // If canvas already exists, resize it
       if (p5.canvas) {
-        console.log('Resizing canvas to height:', canvasHeight);
         p5.resizeCanvas(p5.width, canvasHeight);
       }
     }
@@ -405,7 +400,7 @@ export const soundPortal = (p5) => {
   }
 
   async function stopAll() {
-    console.log('p5 STOP ALL');
+    // console.log('p5 STOP ALL');
 
     // Cancel all scheduled events first
     const transport = Tone.getTransport();
