@@ -4,7 +4,7 @@ export default function SecretTouch() {
       <div className="border-b-1 border-black/30 ">
         <h4>Change playback speed</h4>
         <p className="text-lg">
-          Grab the corners of a circle with two fingers and spin it.
+          Grab opposite edges of a circle with two fingers and spin it.
         </p>
         <ul>
           <li>
