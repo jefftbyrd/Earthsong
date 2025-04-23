@@ -153,7 +153,7 @@ export const soundPortal = (p5) => {
 
   p5.setup = () => {
     // console.log('Creating canvas with height:', canvasHeight);
-    const soundCanvas = p5.createCanvas(p5.windowWidth, canvasHeight);
+    const soundCanvas = p5.createCanvas(window.innerWidth, canvasHeight);
     soundCanvas.style('position', 'absolute');
     soundCanvas.style('z-index', -999);
     multiPlayer = new Tone.Players();
@@ -1640,12 +1640,10 @@ export const soundPortal = (p5) => {
       }
     }
   };
-
   p5.windowResized = () => {
-    // console.log('Window resized, using height:', canvasHeight);
-    p5.resizeCanvas(p5.windowWidth, canvasHeight);
-
-    // Constrain after resizing
+    const container = document.getElementById('sound-portal-canvas-container');
+    const width = container ? container.offsetWidth : window.innerWidth;
+    p5.resizeCanvas(width, canvasHeight);
     constrainShapesToCanvas();
   };
 
