@@ -1,13 +1,13 @@
 'use client';
 import { motion } from 'motion/react';
 import { useContext } from 'react';
-import Star from '../../public/Star';
-import StarInverted from '../../public/StarInverted';
 import { journeyContext } from '../context/journeyContext';
 import { userContext } from '../context/userContext';
 import styles from '../styles/ui.module.scss';
 import LoginPanel from './LoginPanel';
 import ProfilePanel from './ProfilePanel';
+import Star from './vector/Star';
+import StarInverted from './vector/StarInverted';
 
 export default function Profile() {
   const { user } = useContext(userContext) || {};

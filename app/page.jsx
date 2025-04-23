@@ -2,7 +2,6 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef } from 'react';
-import Logo from '../public/Logo';
 import Map from './components/Map';
 import Message from './components/Message';
 import { clouds } from './components/p5clouds';
@@ -13,6 +12,7 @@ import { panels } from './components/portal/panelConfig';
 import PortalNav from './components/portal/PortalNav';
 import PortalRecall from './components/PortalRecall';
 import Title from './components/Title';
+import Logo from './components/vector/Logo';
 import { journeyContext } from './context/journeyContext';
 import { userContext } from './context/userContext';
 import styles from './styles/ui.module.scss';

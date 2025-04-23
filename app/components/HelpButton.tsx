@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import HelpIcon from '../../public/HelpIcon';
 import styles from '../styles/ui.module.scss';
 import HelpPanel from './HelpPanel';
+import HelpIcon from './vector/HelpIcon';
 
 export default function HelpButton() {
   const [helpOpen, setHelpOpen] = useState(false);
