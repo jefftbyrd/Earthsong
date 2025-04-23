@@ -40,6 +40,10 @@ export interface JourneyContextType {
   setFreesoundError: Dispatch<SetStateAction<boolean>>;
   snapshotVersion: number;
   incrementSnapshotVersion: () => void;
+  mapCenter: [number, number];
+  setMapCenter: Dispatch<SetStateAction<[number, number]>>;
+  mapZoom: number;
+  setMapZoom: Dispatch<SetStateAction<number>>;
 }
 
 export const journeyContext = createContext<JourneyContextType>({
@@ -76,6 +80,10 @@ export const journeyContext = createContext<JourneyContextType>({
   setFreesoundError: () => {},
   snapshotVersion: 0,
   incrementSnapshotVersion: () => {},
+  mapCenter: [4.510020088079064, 44.66199079784276],
+  setMapCenter: () => {},
+  mapZoom: 2.14,
+  setMapZoom: () => {},
 });
 
 interface Props {
@@ -98,6 +106,10 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [searchMessage, setSearchMessage] = useState('');
   const [freesoundError, setFreesoundError] = useState(false);
   const [snapshotVersion, setSnapshotVersion] = useState(0);
+  const [mapCenter, setMapCenter] = useState<[number, number]>([
+    37.25192820309019, 35.630445241263956,
+  ]);
+  const [mapZoom, setMapZoom] = useState(2.14);
 
   const incrementSnapshotVersion = () => {
     setSnapshotVersion((prev) => prev + 1);
@@ -178,6 +190,10 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         freesoundError,
         snapshotVersion,
         incrementSnapshotVersion,
+        mapCenter,
+        setMapCenter,
+        mapZoom,
+        setMapZoom,
       }}
     >
       {children}

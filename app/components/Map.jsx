@@ -6,31 +6,17 @@ import { journeyContext } from '../context/journeyContext';
 import Freesound from './Freesound';
 import MapMessages from './MapMessages';
 
-const initialCenter = [4.510020088079064, 44.66199079784276];
-const getInitialZoom = () => {
-  if (typeof window !== 'undefined') {
-    const width = window.innerWidth;
-    if (width < 768) return 1.3; // Mobile
-    if (width < 1024) return 1.8; // Tablet
-    return 2.14; // Larger screens
-  }
-  return 2.14; // Default fallback
-};
-
 export default function Map() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
-  const [center, setCenter] = useState(initialCenter);
-  const [zoom, setZoom] = useState(getInitialZoom());
   const [placeFormatted, setPlaceFormatted] = useState(null);
 
-  // console.log('placeFormatted in Map:', placeFormatted);
+  const { pin, setPin, mapCenter, setMapCenter, mapZoom, setMapZoom } =
+    useContext(journeyContext);
 
-  const { pin, setPin } = useContext(journeyContext);
+  console.log('mapCenter', mapCenter);
 
   const fetchPlaceFormatted = async (lng, lat) => {
-    // console.log('Fetching place_formatted for coordinates:', { lng, lat });
-
     try {
       const response = await fetch(
         `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${lng}&latitude=${lat}&access_token=${process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN}`,
@@ -43,12 +29,10 @@ export default function Map() {
       }
 
       const data = await response.json();
-      // console.log('API response data:', data);
 
       if (data.features && data.features.length > 0) {
         const place = data.features[1]?.properties?.place_formatted;
         if (place) {
-          // console.log('Extracted place_formatted:', place);
           setPlaceFormatted(place); // Update state
           return place; // Return the value
         } else {
@@ -69,19 +53,13 @@ export default function Map() {
   };
 
   useEffect(() => {
-    // console.log('Initializing Mapbox map...');
     mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_GENERIC_TOKEN;
 
     mapRef.current = new mapboxgl.Map({
       container: mapContainerRef.current,
-      // style: 'mapbox://styles/jefftbyrd/cm473j0lh011801si8hos63hp', // Deluxe
-      // style: 'mapbox://styles/jefftbyrd/cm9qt7c6o006f01s5chreddlh', // Simpler
-      style: 'mapbox://styles/jefftbyrd/cm9qux58w006l01s56f4oaen4', // Simpler 2
-      // style: 'mapbox://styles/jefftbyrd/cm9qvgsw1006m01s50ll5b6sb', // Simpler 3
-
-      // style: 'mapbox://styles/jefftbyrd/cm9qstjrr015501qu4vku97e6', // Default
-      center: center,
-      zoom: zoom,
+      style: 'mapbox://styles/jefftbyrd/cm9qux58w006l01s56f4oaen4',
+      center: mapCenter,
+      zoom: mapZoom,
     });
 
     const marker = new mapboxgl.Marker({ color: '#314ccd' });
@@ -94,42 +72,28 @@ export default function Map() {
       marker.setLngLat(coords).addTo(mapRef.current);
       setPlaceFormatted(null); // Reset immediately
 
-      // Fetch place formatted first
       const locationName = await fetchPlaceFormatted(lng, lat);
 
-      // Only set the pin with complete info after location is fetched
       setPin({
         ...coords,
         locationName: locationName || 'Unknown location',
       });
-      // console.log(
-      //   'Setting pin with locationName:',
-      //   locationName || 'Unknown location',
-      // );
     });
 
     mapRef.current.on('move', () => {
       const mapCenter = mapRef.current.getCenter();
       const mapZoom = mapRef.current.getZoom();
-      // console.log('Map moved. New center:', mapCenter, 'New zoom:', mapZoom);
-
-      setCenter([mapCenter.lng, mapCenter.lat]);
-      setZoom(mapZoom);
+      setMapCenter([mapCenter.lng, mapCenter.lat]);
+      setMapZoom(mapZoom);
     });
 
     return () => {
-      // console.log('Cleaning up Mapbox map...');
       mapRef.current.remove();
     };
   }, []); // Empty dependency array - create map only once
 
   return (
     <>
-      {/* {placeFormatted ? (
-        <div className="text-5xl">
-          <p>Location: {placeFormatted}</p>
-        </div>
-      ) : null} */}
       <MapMessages location={placeFormatted} />
       <div
         id="map-container"
