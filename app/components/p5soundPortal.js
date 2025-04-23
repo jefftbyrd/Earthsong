@@ -1259,6 +1259,9 @@ export const soundPortal = (p5) => {
       // Update zIndex to bring to front while dragging
       activeShape.zIndex = shapes.length;
 
+      // Constrain after move
+      constrainShapesToCanvas();
+
       return false;
     }
   };
@@ -1631,6 +1634,9 @@ export const soundPortal = (p5) => {
   p5.windowResized = () => {
     // console.log('Window resized, using height:', canvasHeight);
     p5.resizeCanvas(p5.windowWidth, canvasHeight);
+
+    // Constrain after resizing
+    constrainShapesToCanvas();
   };
 
   function constrainShapesToCanvas() {
