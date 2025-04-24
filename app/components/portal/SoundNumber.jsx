@@ -2,7 +2,7 @@ export default function SoundNumber({ soundNumber = 1 }) {
   const aegean = ['𐄇', '𐄈', '𐄉', '𐄊', '𐄋'];
 
   return (
-    <div className=" h-10 flex items-center justify-center origin-center relative leading-0 ">
+    <div className="flex items-center justify-center origin-center relative leading-0 ">
       <span
         className={`soundNumber font-(family-name:--font-noto) text-7xl lg:text-8xl xl:text-9xl leading-none text-black drop-shadow-[0_0_2px_rgba(255,255,255,1)] ${
           soundNumber === 4 || soundNumber === 5
