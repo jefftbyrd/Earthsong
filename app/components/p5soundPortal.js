@@ -543,6 +543,13 @@ export const soundPortal = (p5) => {
               'style',
               `background-color:${this.bg}; color:black; --tw-inset-ring-shadow: none; opacity: 0.3; z-index: ${this.zIndex};`,
             );
+            const soundNumber = element.querySelector('.soundNumber');
+            if (soundNumber) {
+              soundNumber.setAttribute(
+                'style',
+                'filter: drop-shadow(0 0 #0000);',
+              );
+            }
 
             // Add loading text to the DOM element
             // HIDE THIS LOADING MESSAGE, SINCE THE SOUND CIRCLES ALREADY SAY 'LOADING'
@@ -584,6 +591,12 @@ export const soundPortal = (p5) => {
                 `background-color:${this.bg}; z-index: ${this.zIndex};`,
               );
 
+              // Remove inline filter style so Tailwind drop-shadow applies
+              const soundNumber = element.querySelector('.soundNumber');
+              if (soundNumber) {
+                soundNumber.style.removeProperty('filter');
+              }
+
               // Remove loading text if present
               const loadingText = element.querySelector('.loading-text');
               if (loadingText) {
@@ -605,6 +618,14 @@ export const soundPortal = (p5) => {
                 'style',
                 `background-color:${this.bg}; color:black; --tw-inset-ring-shadow: none; opacity: 0.5; z-index: ${this.zIndex};`,
               );
+
+              const soundNumber = element.querySelector('.soundNumber');
+              if (soundNumber) {
+                soundNumber.setAttribute(
+                  'style',
+                  'filter: drop-shadow(0 0 #0000);',
+                );
+              }
 
               // Remove loading text if present
               const loadingText = element.querySelector('.loading-text');
