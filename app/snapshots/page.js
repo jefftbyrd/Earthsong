@@ -2,7 +2,8 @@ import { redirect } from 'next/navigation';
 import { getSnapshots } from '../../database/snapshots';
 import { getUser } from '../../database/users';
 import { getCookie } from '../../util/cookies';
-import SnapshotsForm from '../components/ProfilePanel';
+
+// import SnapshotsForm from '../components/ProfilePanel';
 
 export default async function SnapshotPage() {
   // Task: Restrict access to the snapshots page and only display snapshots belonging to the current logged in user
@@ -19,9 +20,5 @@ export default async function SnapshotPage() {
 
   // 4. Display the snapshots for the current logged in user
   const snapshots = await getSnapshots(sessionTokenCookie);
-  return (
-    <div>
-      <SnapshotsForm user={user} snapshots={snapshots} />
-    </div>
-  );
+  return <div>{/* <SnapshotsForm user={user} snapshots={snapshots} /> */}</div>;
 }
