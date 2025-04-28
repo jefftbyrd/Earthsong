@@ -74,8 +74,8 @@ export default function GuideAboutPanel() {
             >
               Michael Jeffrey Lee
             </a>{' '}
-            for coming up with the name <strong>EARTH SONG</strong>, which is
-            also the title of a song from the forthcoming{' '}
+            for the name <strong>EARTH SONG</strong>, which is also the title of
+            a song from the forthcoming{' '}
             <a
               target="_blank"
               href="https://budokanboys.club/"
@@ -83,7 +83,7 @@ export default function GuideAboutPanel() {
             >
               Budokan Boys
             </a>{' '}
-            album, THE OOZE.
+            album, <strong>THE OOZE</strong>.
           </li>
 
           <li>
