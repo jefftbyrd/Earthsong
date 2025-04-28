@@ -109,9 +109,11 @@ export default function Map() {
         />
         {/* Loading overlay OUTSIDE the map container */}
         {!isMapLoaded && (
-          <div className="absolute inset-0 flex items-start justify-center pt-[25vh] bg-black/70 z-20">
+          <div className="absolute inset-0 flex items-start justify-center pt-[10vh] z-20">
             <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500" />
-            <span className="ml-4 text-white text-lg ">Loading Map…</span>
+            <span className="ml-4 text-white text-lg font-bold text-shadow-lg/20 ">
+              Loading Map…
+            </span>
           </div>
         )}
       </div>
