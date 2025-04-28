@@ -10,11 +10,10 @@ export default function Map() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
   const [placeFormatted, setPlaceFormatted] = useState(null);
+  const [isMapLoaded, setIsMapLoaded] = useState(false); // <-- NEW
 
   const { pin, setPin, mapCenter, setMapCenter, mapZoom, setMapZoom } =
     useContext(journeyContext);
-
-  console.log('mapCenter', mapCenter);
 
   const fetchPlaceFormatted = async (lng, lat) => {
     try {
@@ -37,7 +36,7 @@ export default function Map() {
           return place; // Return the value
         } else {
           console.error('place_formatted is missing in the response');
-          setPlaceFormatted(null); // Set warning message
+          setPlaceFormatted(null); // Set warning messagenow
           return null;
         }
       } else {
@@ -62,7 +61,13 @@ export default function Map() {
       zoom: mapZoom,
     });
 
+    // mapboxgl.setTelemetryEnabled(false);
+
     const marker = new mapboxgl.Marker({ color: '#314ccd' });
+
+    mapRef.current.on('load', () => {
+      setIsMapLoaded(true); // <-- Hide placeholder when map is loaded
+    });
 
     mapRef.current.on('click', async (event) => {
       const lng = event.lngLat.lng;
@@ -95,11 +100,21 @@ export default function Map() {
   return (
     <>
       <MapMessages location={placeFormatted} />
-      <div
-        id="map-container"
-        ref={mapContainerRef}
-        className="w-full h-[calc(100vh-2.5rem)]"
-      />
+      <div className="w-full h-[calc(100vh-2.5rem)] relative">
+        {/* The map container must be empty */}
+        <div
+          id="map-container"
+          ref={mapContainerRef}
+          className="w-full h-full"
+        />
+        {/* Loading overlay OUTSIDE the map container */}
+        {!isMapLoaded && (
+          <div className="absolute inset-0 flex items-start justify-center pt-[25vh] bg-black/70 z-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-pink-500" />
+            <span className="ml-4 text-white text-lg ">Loading Map…</span>
+          </div>
+        )}
+      </div>
       {pin.lat ? <Freesound /> : null}
     </>
   );
