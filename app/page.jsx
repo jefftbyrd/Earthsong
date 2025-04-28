@@ -28,6 +28,13 @@ export default function Earthsong() {
   // Create a ref to store the audio element
   const audioRef = useRef(null);
 
+  useEffect(() => {
+    // Preload mapbox-gl before Map is mounted
+    import('mapbox-gl').catch((error) => {
+      console.error('Failed to preload mapbox-gl:', error);
+    });
+  }, []);
+
   // Initialize audio on component mount
   useEffect(() => {
     audioRef.current = new Audio('/silent.mp3');

@@ -64,6 +64,24 @@ export default async function RootLayout({ children }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
 
+        <link
+          rel="preload"
+          href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
+          as="style"
+          onload="this.onload=null;this.rel='stylesheet'"
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
+          />
+        </noscript>
+        <link
+          rel="preload"
+          href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"
+          as="script"
+        />
+
         {/* <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
