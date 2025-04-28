@@ -337,6 +337,13 @@ export const soundPortal = (p5) => {
     for (let i = 0; i < shapes.length; i++) {
       shapes[i].show();
       shapes[i].audioControls();
+      // Update rotation if spinning
+      if (shapes[i].isSpinning) {
+        // Increment based on playback rate and frame rate
+        const rate = multiPlayer.player(shapes[i].id).playbackRate || 1;
+        shapes[i].rotation += 0.03 * rate; // Adjust speed as needed
+      }
+
       // Check if any pending load operations have completed
       shapes[i].checkLoadStatus();
     }
@@ -393,14 +400,20 @@ export const soundPortal = (p5) => {
     ) {
       if (multiPlayer.player(id).state === 'started') {
         multiPlayer.player(id).stop();
+        shape.isSpinning = false; // Stop spinning, keep rotation
       } else {
         multiPlayer.player(id).start();
+        shape.isSpinning = true; // Start spinning
       }
     }
   }
 
   async function stopAll() {
     // console.log('p5 STOP ALL');
+
+    for (let shape of shapes) {
+      shape.isSpinning = false;
+    }
 
     // Cancel all scheduled events first
     const transport = Tone.getTransport();
@@ -467,6 +480,8 @@ export const soundPortal = (p5) => {
       this.reverbGain = null;
       this.dryGain = null;
       this.volumeVisualOffset = 0; // This will be added to the diameter
+      this.rotation = 0; // Current rotation angle in radians
+      this.isSpinning = false; // Whether this shape is currently spinning
 
       // New properties for loading state
       this.isLoading = false;
@@ -687,6 +702,10 @@ export const soundPortal = (p5) => {
 
       p5.push();
       p5.translate(this.x, this.y);
+
+      if (this.isSpinning) {
+        p5.rotate(this.rotation);
+      }
 
       if (
         multiPlayer &&
