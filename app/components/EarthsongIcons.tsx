@@ -1,8 +1,16 @@
+import React from 'react';
+
+type EarthsongIconsProps = {
+  className?: string;
+  iconNumber?: number;
+  // isPlaying?: boolean;
+};
+
 export default function EarthsongIcons({
   className,
   iconNumber = 1,
   // isPlaying = false,
-}) {
+}: EarthsongIconsProps) {
   const icons = {
     1: (
       <>
@@ -67,11 +75,11 @@ export default function EarthsongIcons({
     <svg
       className={className}
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={viewBoxes[iconNumber]}
+      viewBox={viewBoxes[iconNumber as keyof typeof viewBoxes]}
       fill="currentColor"
       stroke="currentColor"
     >
-      {icons[iconNumber]}
+      {icons[iconNumber as keyof typeof icons]}
     </svg>
   );
 }
