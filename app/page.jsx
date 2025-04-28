@@ -89,9 +89,9 @@ export default function Earthsong() {
         animationProps={{
           opacity: [0, 1, 1, 0],
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
-          transition: { duration: 3, times: [0, 0.25, 0.6, 0.9] },
+          transition: { duration: 5, times: [0, 0.1, 0.8, 1] },
         }}
-        style={{ top: '55%' }}
+        style={{ top: '50%' }}
       />
       <Message
         text="Summoning journey"
@@ -103,7 +103,7 @@ export default function Earthsong() {
         }}
         style={{ top: '55%' }}
       />
-      <Message
+      {/* <Message
         text="Entering Sound Portal"
         isVisible={phase === 'portal' || phase === 'portalRecall'}
         animationProps={{
@@ -112,7 +112,7 @@ export default function Earthsong() {
           transition: { duration: 5, times: [0, 0.6, 0.8, 1] },
         }}
         style={{ top: '55%' }}
-      />
+      /> */}
 
       {/* Wait until user clicks ✹ to start Earthsong */}
       {phase === 'initial' ? (
