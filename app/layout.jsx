@@ -68,7 +68,7 @@ export default async function RootLayout({ children }) {
           rel="preload"
           href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
           as="style"
-          onload="this.onload=null;this.rel='stylesheet'"
+          onLoad="this.onload=null;this.rel='stylesheet'"
         />
         <noscript>
           <link
