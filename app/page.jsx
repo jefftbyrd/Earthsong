@@ -23,8 +23,6 @@ export default function Earthsong() {
     useContext(journeyContext);
   const { panelId, panelOpen } = useContext(journeyContext);
 
-  // console.log('phase', phase);
-
   // Create a ref to store the audio element
   const audioRef = useRef(null);
 
@@ -86,7 +84,7 @@ export default function Earthsong() {
         style={{ top: '50%' }}
       />
       <Message
-        text="Initiating Sonic Projection"
+        text="Shuffling the sonic deck, five cards are drawn"
         isVisible={phase === 'portal'}
         animationProps={{
           opacity: [0, 1, 1, 0],
