@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 
-export default function ClosePanelButton({ panel }) {
+export default function ClosePanelButton({ panel }: { panel: string }) {
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
 
