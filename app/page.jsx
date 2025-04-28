@@ -84,7 +84,7 @@ export default function Earthsong() {
         style={{ top: '50%' }}
       />
       <Message
-        text="By celestial lottery, five sounds are plucked"
+        text="By celestial lottery, 5 sounds are plucked"
         isVisible={phase === 'portal'}
         animationProps={{
           opacity: [0, 1, 1, 0],
