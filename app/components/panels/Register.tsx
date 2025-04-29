@@ -1,20 +1,25 @@
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import ErrorMessage from '../../ErrorMessage';
-import styles from '../../styles/ui.module.scss';
 import EarthsongButton from '../EarthsongButton';
 
 export default function Register() {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
-    useContext(journeyContext);
+  const { togglePanel } = useContext(journeyContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<Array<{ message: string }>>([]);
 
   const router = useRouter();
 
-  async function handleRegister(event) {
+  interface RegisterResponse {
+    errors?: Array<{ message: string }>;
+    success?: boolean;
+  }
+
+  async function handleRegister(
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> {
     event.preventDefault();
 
     const response = await fetch('api/register', {
@@ -25,28 +30,15 @@ export default function Register() {
       }),
     });
 
-    const data = await response.json();
+    const data: RegisterResponse = await response.json();
 
     if ('errors' in data) {
-      setErrors(data.errors);
+      setErrors(data.errors || []);
       return;
     }
 
-    // router.push(`/profile/${data.user.username}`);
-
-    // This is not a secure returnTo
-    // if (props.returnTo) {
-    //   console.log('Checks Return to: ', props.returnTo);
-    //   router.push(props.returnTo || `/profile/${data.user.username}`);
-    // }
-
-    // router.push(
-    //   getSafeReturnToPath(props.returnTo) || `/profile/${data.user.username}`,
-    // );
-
     router.refresh();
 
-    // setPanelId('Powers');
     togglePanel();
   }
 
@@ -57,7 +49,6 @@ export default function Register() {
         <label>
           <span>Username</span>
           <input
-            // autoFocus={true}
             autoCapitalize="off"
             value={username}
             onChange={(event) => setUsername(event.currentTarget.value)}
@@ -77,19 +68,6 @@ export default function Register() {
         <EarthsongButton type="submit" buttonStyle={3}>
           Register
         </EarthsongButton>
-
-        {/* <p>
-          Already have an account? Then you should{' '}
-          <button
-            className={styles.textButton}
-            onClick={() => {
-              props.setRegisterOpen(!props.registerOpen);
-            }}
-          >
-            login
-          </button>
-          .
-        </p> */}
 
         {errors.map((error) => (
           <div className="error" key={`error-${error.message}`}>
