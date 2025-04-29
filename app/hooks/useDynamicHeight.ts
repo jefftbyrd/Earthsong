@@ -7,8 +7,11 @@ import { useEffect, useRef, useState } from 'react';
  * @param {number} navHeight - The height of any fixed navigation or footer (default: 40px).
  * @returns {Object} - An object containing the ref to attach to the element and the calculated height.
  */
-export function useDynamicHeight(navHeight: number = 40): object {
-  const ref = useRef(null);
+export function useDynamicHeight(navHeight: number = 40): {
+  ref: React.RefObject<HTMLDivElement>;
+  height: number;
+} {
+  const ref = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
