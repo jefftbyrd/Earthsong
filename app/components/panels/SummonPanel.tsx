@@ -10,7 +10,7 @@ interface SnapshotListProps {
 function SnapshotList({ snapshots }: SnapshotListProps) {
   const [snapshotList, setSnapshotList] = useState(snapshots);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     setSnapshotList(snapshotList.filter((snapshot) => snapshot.id !== id));
   };
 
