@@ -18,6 +18,8 @@ export interface Sound {
   url: string;
   username: string;
   color?: string;
+  pin?: { lat: number; lng: number };
+  location?: string;
 }
 
 interface Pin {

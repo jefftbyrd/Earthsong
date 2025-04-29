@@ -1,13 +1,20 @@
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import type { Sound } from '../../context/soundsContext';
 import InfoPanel from './InfoPanel';
 import SoundItem from './SoundItem';
+
+interface SoundControllerProps {
+  soundsColor?: Sound[];
+  className?: string;
+  recalledName?: string;
+}
 
 export default function SoundController({
   soundsColor,
   className,
   recalledName,
-}) {
+}: SoundControllerProps) {
   const { panelId, panelOpen } = useContext(journeyContext);
 
   return (
@@ -17,7 +24,7 @@ export default function SoundController({
           {soundsColor?.[0]
             ? soundsColor[0].pin
               ? `${soundsColor[0].pin?.lat?.toFixed(3) || 0}, ${soundsColor[0].pin?.lng?.toFixed(3) || 0}`
-              : `${soundsColor[0].geotag || ''}`
+              : soundsColor[0].geotag || ''
             : ''}
         </p>
         <p>
