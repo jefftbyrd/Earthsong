@@ -1,20 +1,38 @@
 'use client';
 import React, { createContext, useContext, useState } from 'react';
 
+// Define type for the context value
+interface SoundPlayerContextType {
+  playerTarget: string | number | null;
+  playing: boolean;
+  handlePlaySound: (soundId: string) => void;
+  isSoundPlaying: (soundId: string) => boolean;
+  setPlayerTarget: React.Dispatch<React.SetStateAction<string | number | null>>;
+  setPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  toggleSound: (soundId: string) => void;
+  soundStates: Record<string, boolean>;
+  activateTarget: boolean;
+  setActivateTarget: React.Dispatch<React.SetStateAction<boolean>>;
+  forceChange: boolean;
+  setForceChange: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // Create a context for sound player state
-const soundPlayerContext = createContext();
+const soundPlayerContext = createContext<SoundPlayerContextType | undefined>(
+  undefined,
+);
 
 // Provider component that wraps your app
 export function SoundPlayerProvider({ children }) {
-  const [playerTarget, setPlayerTarget] = useState(null);
+  const [playerTarget, setPlayerTarget] = useState<string | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [soundStates, setSoundStates] = useState({});
+  const [soundStates, setSoundStates] = useState<Record<string, boolean>>({});
   const [activateTarget, setActivateTarget] = useState(false);
   const [forceChange, setForceChange] = useState(false);
 
   // Combined function to handle playing and pausing sounds
-  const handlePlaySound = (soundId) => {
-    if (playerTarget === soundId && playing) {
+  const handlePlaySound = (soundId: string): void => {
+    if (playerTarget !== null && playerTarget === soundId && playing) {
       // If clicking the currently playing sound, pause it
       setPlaying(false);
     } else {
@@ -25,7 +43,7 @@ export function SoundPlayerProvider({ children }) {
   };
 
   // Function to toggle the playing state of a specific sound
-  const toggleSound = (soundId) => {
+  const toggleSound = (soundId: string | number) => {
     setSoundStates((prevStates) => {
       const newStates = {
         ...prevStates,
@@ -37,7 +55,7 @@ export function SoundPlayerProvider({ children }) {
   };
 
   // Check if a specific sound is currently playing
-  const isSoundPlaying = (soundId) => {
+  const isSoundPlaying = (soundId: string): boolean => {
     return !!soundStates[soundId]; // Return true if the soundId is playing
   };
 
@@ -47,11 +65,10 @@ export function SoundPlayerProvider({ children }) {
     playing,
     handlePlaySound,
     isSoundPlaying,
-    // You might want these direct setters for special cases
     setPlayerTarget,
     setPlaying,
     toggleSound,
-    soundStates, // Ensure this is included
+    soundStates,
     activateTarget,
     setActivateTarget,
     forceChange,

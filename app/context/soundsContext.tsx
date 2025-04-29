@@ -17,6 +17,7 @@ export interface Sound {
   tags: string[];
   url: string;
   username: string;
+  color?: string;
 }
 
 interface Pin {

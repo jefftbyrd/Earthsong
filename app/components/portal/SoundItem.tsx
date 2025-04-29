@@ -1,10 +1,16 @@
 'use client';
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-import { useSoundPlayer } from '../../context/soundPlayerContext'; // Import the context
+import { useSoundPlayer } from '../../context/soundPlayerContext';
+import type { Sound } from '../../context/soundsContext';
 import SoundNumber from './SoundNumber';
 
-export default function SoundItem({ sound, index }) {
+interface SoundItemProps {
+  sound: Sound;
+  index: number;
+}
+
+export default function SoundItem({ sound, index }: SoundItemProps) {
   const { setPanelId, panelOpen, togglePanel, panelId } =
     useContext(journeyContext);
   // Get sound player functions from context
