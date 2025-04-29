@@ -28,7 +28,6 @@ export interface JourneyContextType {
   panelOpen: boolean;
   setPanelOpen: Dispatch<SetStateAction<boolean>>;
   togglePanel: () => void;
-  mobileCheck: boolean;
   pin: Pin | null;
   setPin: Dispatch<SetStateAction<Pin>>;
   triggerJourneySaved: () => void;
@@ -61,7 +60,6 @@ export const journeyContext = createContext<JourneyContextType>({
   setPanelOpen: () => {},
   togglePanel: () => {},
   triggerJourneySaved: () => {},
-  mobileCheck: false,
   pin: { lat: null, lng: null, locationName: null },
   setPin: () => {},
   triggerReset() {
@@ -100,7 +98,7 @@ const getInitialZoom = () => {
   return 2.14; // Default fallback
 };
 
-export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
+export const JourneyContextProvider = ({ children }: Props) => {
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
   const [journeyToRecall, setJourneyToRecall] = useState(0);
@@ -185,7 +183,6 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
         panelOpen,
         setPanelOpen,
         togglePanel,
-        mobileCheck,
         pin,
         setPin,
         journeySaved,
