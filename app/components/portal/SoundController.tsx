@@ -41,10 +41,10 @@ export default function SoundController({
         ))}
       </div>
       <div>
-        {soundsColor?.map((sound, index) => (
+        {soundsColor?.map((sound) => (
           <div key={`soundId-${sound.id}`} className="">
             {panelOpen && panelId === sound.id && (
-              <InfoPanel sound={sound} index={index} color={sound.color} />
+              <InfoPanel sound={sound} color={sound.color || ''} />
             )}
           </div>
         ))}
