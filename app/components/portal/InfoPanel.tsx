@@ -1,10 +1,16 @@
 'use client';
 import React, { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
+import type { Sound } from '../../context/soundsContext';
 import { useDynamicHeight } from '../../hooks/useDynamicHeight';
 import ClosePanelButton from '../panels/ClosePanelButton';
 
-export default function InfoPanel({ sound, color }) {
+interface InfoPanelProps {
+  sound: Sound;
+  color: string;
+}
+
+export default function InfoPanel({ sound, color }: InfoPanelProps) {
   const minutes = Math.floor(sound?.duration / 60);
   const seconds = Math.floor(sound?.duration % 60)
     .toString()
@@ -18,7 +24,7 @@ export default function InfoPanel({ sound, color }) {
 
   useEffect(() => {
     // Create handler function for document-level keyboard events
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: React.KeyboardEvent | KeyboardEvent): void => {
       if (e.key === 'Escape' && panelOpen) {
         togglePanel();
       }

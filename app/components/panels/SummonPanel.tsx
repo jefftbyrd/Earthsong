@@ -1,11 +1,13 @@
 import { useContext, useState } from 'react';
-// import { type Snapshot } from '../../../migrations/00002-createTableSnapshots';
-import { userContext } from '../../context/userContext';
-// import ClosePanelButton from '../panels/ClosePanelButton';
+import { type Snapshot, userContext } from '../../context/userContext';
 import PanelWrap from './PanelWrap';
 import SnapshotItem from './SnapshotItem';
 
-function SnapshotList({ snapshots }) {
+interface SnapshotListProps {
+  snapshots: Snapshot[];
+}
+
+function SnapshotList({ snapshots }: SnapshotListProps) {
   const [snapshotList, setSnapshotList] = useState(snapshots);
 
   const handleDelete = (id) => {
