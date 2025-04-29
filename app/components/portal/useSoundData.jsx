@@ -1,4 +1,3 @@
-// hooks/useSoundData.js
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import uniqolor from 'uniqolor';
 import { soundsContext } from '../../context/soundsContext';
@@ -23,13 +22,8 @@ const formatSoundName = (name) =>
 
 export function useSoundData() {
   const [isLoading, setIsLoading] = useState(true);
-  // const [soundsColor, setSoundsColor] = useState([]);
   const [error, setError] = useState(null);
   const { sounds, soundsColor, setSoundsColor } = useContext(soundsContext);
-
-  // console.log('useSoundData: sounds', sounds);
-  // console.log('useSoundData: soundsColor', soundsColor);
-
   const processedRef = useRef(false);
 
   const processSounds = useCallback(
