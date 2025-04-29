@@ -5,11 +5,9 @@ import { soundsContext } from '../context/soundsContext';
 export default function Freesound() {
   const {
     setSounds,
-    sounds,
     freesoundLoading,
     setFreesoundLoading,
     setNotEnough,
-    notEnough,
     isFetchingSounds,
     setIsFetchingSounds,
   } = useContext(soundsContext);
