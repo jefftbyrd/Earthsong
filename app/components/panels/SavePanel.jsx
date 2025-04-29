@@ -1,17 +1,12 @@
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { soundsContext } from '../../context/soundsContext';
-import { userContext } from '../../context/userContext';
-import ErrorMessage from '../../ErrorMessage';
-import styles from '../../styles/ui.module.scss';
 import EarthsongButton from '../EarthsongButton';
-import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
 
 export default function SummonPanel() {
   const { togglePanel, triggerJourneySaved } = useContext(journeyContext);
-  const { user, snapshots } = useContext(userContext);
   const { soundsColor, setSoundsColor } = useContext(soundsContext);
   const [errorMessage, setErrorMessage] = useState('');
   const [title, setTitle] = useState('');
@@ -44,8 +39,6 @@ export default function SummonPanel() {
               const responseBody = await response.json();
 
               if ('error' in responseBody) {
-                // TODO: Use toast instead of showing
-                // this below creation / update form
                 setErrorMessage(responseBody.error);
                 return;
               }
@@ -60,7 +53,6 @@ export default function SummonPanel() {
           <label>
             <p className="">Give this journey a name:</p>
             <input
-              // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               autoCapitalize="off"
               value={title}
               onChange={(event) => setTitle(event.currentTarget.value)}
