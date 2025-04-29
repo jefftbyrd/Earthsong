@@ -1,26 +1,6 @@
-import { useContext, useEffect } from 'react';
-import { journeyContext } from '../../context/journeyContext';
 import PanelWrap from './PanelWrap';
 
 export default function GuideAboutPanel() {
-  const { panelOpen, togglePanel } = useContext(journeyContext);
-  useEffect(() => {
-    // Create handler function for document-level keyboard events
-    const handleKeyDown = (e: KeyboardEvent): void => {
-      if (e.key === 'Escape' && panelOpen) {
-        togglePanel();
-      }
-    };
-
-    // Add keyboard event listener to document
-    document.addEventListener('keydown', handleKeyDown);
-
-    // Cleanup function
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [panelOpen, togglePanel]);
-
   return (
     <PanelWrap panel="About" bg="#5381C4">
       <div className="w-full md:w-2/3 mx-auto text-left p-5">

@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from 'react';
  * @returns {Object} - An object containing the ref to attach to the element and the calculated height.
  */
 export function useDynamicHeight(navHeight: number = 40): object {
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef(null);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
