@@ -10,7 +10,6 @@ import { wind } from './components/p5wind';
 import Portal from './components/Portal';
 import { panels } from './components/portal/panelConfig';
 import PortalNav from './components/portal/PortalNav';
-import PortalRecall from './components/PortalRecall';
 import Title from './components/Title';
 import Logo from './components/vector/Logo';
 import { journeyContext } from './context/journeyContext';
