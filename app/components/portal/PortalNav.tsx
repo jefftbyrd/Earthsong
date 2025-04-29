@@ -7,25 +7,38 @@ import { soundsContext } from '../../context/soundsContext';
 import EarthsongIcons from '../EarthsongIcons';
 import { panels } from './panelConfig';
 
-export default function PortalNav({ isLoggedIn }) {
+export interface FilteredPanelsProps {
+  label: string;
+  icon?: number;
+  iconClassName?: string;
+  component: React.ComponentType<any>;
+}
+
+export default function PortalNav({ isLoggedIn }: { isLoggedIn: boolean }) {
   const {
     togglePanel,
     setPanelId,
     phase,
-    triggerReset2,
     panelId,
     panelOpen,
-    setPanelOpen,
     incrementSnapshotVersion,
     setPin,
     setPhase,
     triggerReset,
   } = useContext(journeyContext);
   const { setFreesoundLoading } = useContext(soundsContext);
-  const { setActivateTarget } = useSoundPlayer();
+  const { setActivateTarget } = useSoundPlayer() as {
+    setActivateTarget: (value: boolean) => void;
+  };
 
   // Prevent event propagation to canvas
-  const handleInteraction = (e) => {
+  // Define interface for interaction events
+  interface InteractionEvent {
+    stopPropagation: () => void;
+  }
+
+  // Prevent event propagation to canvas
+  const handleInteraction = (e: InteractionEvent): void => {
     e.stopPropagation();
   };
 
@@ -69,12 +82,9 @@ export default function PortalNav({ isLoggedIn }) {
             onClick={async (e) => {
               e.stopPropagation(); // Extra safeguard
               setActivateTarget(false);
-              // togglePanel();
-              // setPanelOpen(false); // Close the panel if it's open
               if (panelOpen) {
                 togglePanel(); // This will close the panel and clear panelId
               }
-              // setPanelId(''); // Clear the panelId
               await triggerReset();
               setPin({
                 lat: null,
@@ -84,12 +94,6 @@ export default function PortalNav({ isLoggedIn }) {
               setFreesoundLoading(true);
               incrementSnapshotVersion();
               setPhase('returnToMap');
-              // try {
-              //   await triggerReset2({ nextPhase: 'returnToMap' }); // Pass the required object
-              //   console.log('Reset triggered successfully');
-              // } catch (error) {
-              //   console.error('Error triggering reset:', error);
-              // }
             }}
           >
             <EarthsongIcons className="h-6 w-6 mr-1" iconNumber={5} />

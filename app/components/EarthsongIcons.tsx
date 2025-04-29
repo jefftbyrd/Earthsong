@@ -1,6 +1,6 @@
 import React from 'react';
 
-type EarthsongIconsProps = {
+export type EarthsongIconsProps = {
   className?: string;
   iconNumber?: number;
   // isPlaying?: boolean;

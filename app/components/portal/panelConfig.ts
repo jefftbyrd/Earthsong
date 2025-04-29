@@ -6,8 +6,9 @@ import PowersPanel from '../panels/PowersPanel';
 import SavePanel from '../panels/SavePanel';
 import SummonPanel from '../panels/SummonPanel';
 import UnlockPanel from '../panels/UnlockPanel';
+import type { FilteredPanelsProps } from './PortalNav';
 
-export const panels = {
+export const panels: Record<string, FilteredPanelsProps> = {
   Powers: {
     component: PowersPanel,
     label: 'Powers',
