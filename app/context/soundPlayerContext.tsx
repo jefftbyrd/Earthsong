@@ -23,8 +23,14 @@ const soundPlayerContext = createContext<SoundPlayerContextType | undefined>(
 );
 
 // Provider component that wraps your app
-export function SoundPlayerProvider({ children }) {
-  const [playerTarget, setPlayerTarget] = useState<string | null>(null);
+export function SoundPlayerProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [playerTarget, setPlayerTarget] = useState<string | number | null>(
+    null,
+  );
   const [playing, setPlaying] = useState(false);
   const [soundStates, setSoundStates] = useState<Record<string, boolean>>({});
   const [activateTarget, setActivateTarget] = useState(false);

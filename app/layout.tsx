@@ -74,7 +74,11 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           rel="preload"
           href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css"
           as="style"
-          onLoad="this.onload=null;this.rel='stylesheet'"
+          onLoad={(e) => {
+            const target = e.currentTarget;
+            target.onload = null;
+            target.rel = 'stylesheet';
+          }}
         />
         <noscript>
           <link
