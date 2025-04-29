@@ -1,6 +1,19 @@
 import { motion } from 'motion/react';
+import type { CSSProperties } from 'react';
 
-export default function Message({ text, isVisible, animationProps, style }) {
+interface MessageProps {
+  text: string;
+  isVisible: boolean;
+  animationProps?: Record<string, any>;
+  style?: CSSProperties;
+}
+
+export default function Message({
+  text,
+  isVisible,
+  animationProps,
+  style,
+}: MessageProps) {
   if (!isVisible) return null;
 
   return (
