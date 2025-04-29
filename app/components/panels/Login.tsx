@@ -1,21 +1,22 @@
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import ErrorMessage from '../../ErrorMessage';
 import EarthsongButton from '../EarthsongButton';
 
+interface ErrorObj {
+  message: string;
+}
+
 export default function Login() {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
-    useContext(journeyContext);
+  const { togglePanel } = useContext(journeyContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
-  const [registerOpen, setRegisterOpen] = useState(false);
-  // const { togglePanel } = useContext(journeyContext);
+  const [errors, setErrors] = useState<ErrorObj[]>([]);
 
   const router = useRouter();
 
-  async function handleLogin(event) {
+  async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const response = await fetch('api/login', {
@@ -45,12 +46,8 @@ export default function Login() {
         <label>
           <span className="uppercase font-bold">Username</span>
           <input
-            // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-900 "
-            // id="username"
-            // type="text"
             placeholder="Identify yourself"
             autoCapitalize="off"
-            // autoFocus={true}
             value={username}
             onChange={(event) => setUsername(event.currentTarget.value)}
           />
@@ -59,11 +56,6 @@ export default function Login() {
         <label>
           <span className="uppercase font-bold">Password</span>
           <input
-            // className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 "
-            // id="password"
-            // type="password"
-            // placeholder="******************"
-            // autoFocus={true}
             autoCapitalize="off"
             type="password"
             value={password}
