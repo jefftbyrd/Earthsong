@@ -23,7 +23,7 @@ export default function Earthsong() {
   const { panelId, panelOpen } = useContext(journeyContext);
 
   // Create a ref to store the audio element
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     // Preload mapbox-gl before Map is mounted
@@ -39,18 +39,20 @@ export default function Earthsong() {
 
   // Function to play sound
   const playSound = () => {
-    // Reset the audio to the beginning
-    audioRef.current.currentTime = 0;
+    if (audioRef.current) {
+      // Reset the audio to the beginning
+      audioRef.current.currentTime = 0;
 
-    // Play the sound
-    audioRef.current
-      .play()
-      .then(() => {
-        console.log('Audio playback started successfully');
-      })
-      .catch((error) => {
-        console.error('Audio playback failed:', error);
-      });
+      // Play the sound
+      audioRef.current
+        .play()
+        .then(() => {
+          console.log('Audio playback started successfully');
+        })
+        .catch((error) => {
+          console.error('Audio playback failed:', error);
+        });
+    }
   };
 
   // Logo click handler that plays sound and transitions to map
@@ -187,10 +189,7 @@ export default function Earthsong() {
             transition: { duration: 3, times: [0, 0.1, 0.8, 1] },
           }}
         >
-          <NextReactP5Wrapper
-            sketch={occult}
-            setVisibility={phase === 'portal' || phase === 'portalRecall'}
-          />
+          <NextReactP5Wrapper sketch={occult} setVisibility={true} />
         </motion.div>
       ) : null}
 
@@ -208,7 +207,7 @@ export default function Earthsong() {
             }}
           >
             <Portal
-              {...(phase === 'portalRecall' && snapshots
+              {...(phase === 'portalRecall'
                 ? {
                     recalledSounds: snapshots?.find(
                       (snapshot) => snapshot?.id === journeyToRecall,
@@ -276,7 +275,7 @@ export default function Earthsong() {
       <AnimatePresence>
         {phase !== 'initial' && (
           <motion.div
-            key={phase}
+            key={`nav-${phase}`}
             id="portal-nav"
             className="fixed bottom-0 left-0 w-full z-50"
             initial={{ opacity: 0 }}
@@ -287,7 +286,7 @@ export default function Earthsong() {
               transition: { duration: 4 },
             }}
           >
-            <PortalNav isLoggedIn={user} />
+            <PortalNav isLoggedIn={!!user} />
           </motion.div>
         )}
       </AnimatePresence>
