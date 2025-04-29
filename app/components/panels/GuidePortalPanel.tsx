@@ -1,30 +1,11 @@
-import { useContext, useState } from 'react';
-import { journeyContext } from '../../context/journeyContext';
+import { useState } from 'react';
 import EarthsongButton from '../EarthsongButton';
-// import ClosePanelButton from '../panels/ClosePanelButton';
 import PanelWrap from './PanelWrap';
 import SecretKeyboard from './SecretKeyboard';
 import SecretTouch from './SecretTouch';
 
 export default function GuidePortalPanel() {
-  const { panelOpen, togglePanel } = useContext(journeyContext);
   const [secretMode, setSecretMode] = useState('touch');
-  // useEffect(() => {
-  //   // Create handler function for document-level keyboard events
-  //   const handleKeyDown = (e) => {
-  //     if (e.key === 'Escape' && panelOpen) {
-  //       togglePanel();
-  //     }
-  //   };
-
-  //   // Add keyboard event listener to document
-  //   document.addEventListener('keydown', handleKeyDown);
-
-  //   // Cleanup function
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, [panelOpen, togglePanel]);
 
   return (
     <PanelWrap panel="Portal" bg="#5381C4">
@@ -75,9 +56,7 @@ export default function GuidePortalPanel() {
                   setSecretMode('touch');
                 }}
                 buttonStyle={3}
-                // className="font-bold"
                 className={`p-3 font-bold border-1 border-black/50 text-black/80 ${secretMode === 'touch' ? 'bg-white/70' : ''}`}
-                // style={secretMode === 'touch' ? { backgroundColor: 'white' } : {}}
               >
                 Touchscreen
               </EarthsongButton>

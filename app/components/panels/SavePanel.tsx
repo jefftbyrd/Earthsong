@@ -5,12 +5,11 @@ import { soundsContext } from '../../context/soundsContext';
 import EarthsongButton from '../EarthsongButton';
 import PanelWrap from './PanelWrap';
 
-export default function SummonPanel() {
+export default function SavePanel() {
   const { togglePanel, triggerJourneySaved } = useContext(journeyContext);
-  const { soundsColor, setSoundsColor } = useContext(soundsContext);
+  const { soundsColor } = useContext(soundsContext);
   const [errorMessage, setErrorMessage] = useState('');
   const [title, setTitle] = useState('');
-  const [sounds, setSounds] = useState(soundsColor);
 
   const router = useRouter();
 
@@ -29,7 +28,7 @@ export default function SummonPanel() {
               method: 'POST',
               body: JSON.stringify({
                 title,
-                sounds,
+                sounds: soundsColor,
               }),
             });
 
@@ -62,6 +61,7 @@ export default function SummonPanel() {
           <EarthsongButton buttonStyle={3} type="submit">
             Save
           </EarthsongButton>
+          {errorMessage && <p className="text-red-600 mt-2">{errorMessage}</p>}
         </form>
       </div>
     </PanelWrap>
