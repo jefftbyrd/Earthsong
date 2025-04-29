@@ -23,8 +23,8 @@ export interface JourneyContextType {
   setJourneySaved: Dispatch<SetStateAction<boolean>>;
   journeyToRecall: number;
   setJourneyToRecall: Dispatch<SetStateAction<number>>;
-  panelId: string;
-  setPanelId: Dispatch<SetStateAction<string>>;
+  panelId: string | number;
+  setPanelId: Dispatch<SetStateAction<string | number>>;
   panelOpen: boolean;
   setPanelOpen: Dispatch<SetStateAction<boolean>>;
   togglePanel: () => void;
@@ -105,7 +105,7 @@ export const JourneyContextProvider = ({ children, mobileCheck }: Props) => {
   const [phase, setPhase] = useState('initial');
   const [reset, setReset] = useState(false);
   const [journeyToRecall, setJourneyToRecall] = useState(0);
-  const [panelId, setPanelId] = useState('');
+  const [panelId, setPanelId] = useState<string | number>('');
   const [panelOpen, setPanelOpen] = useState(false);
   const [pin, setPin] = useState<Pin>({
     lat: null,
