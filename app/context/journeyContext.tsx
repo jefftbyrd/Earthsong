@@ -88,7 +88,6 @@ export const journeyContext = createContext<JourneyContextType>({
 
 interface Props {
   children: ReactNode;
-  mobileCheck: boolean;
 }
 
 const getInitialZoom = () => {

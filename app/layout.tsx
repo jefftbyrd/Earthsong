@@ -1,7 +1,6 @@
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-// import '@fontsource/noto-sans-linear-a';
 import { Noto_Sans_Linear_A } from 'next/font/google';
 import localFont from 'next/font/local';
 import { cookies } from 'next/headers';
@@ -11,11 +10,6 @@ import { JourneyContextProvider } from './context/journeyContext';
 import { SoundPlayerProvider } from './context/soundPlayerContext';
 import { SoundsContextProvider } from './context/soundsContext';
 import { UserContextProvider } from './context/userContext';
-
-// const noto = noto_sans_linear_a({
-//   subsets: ['latin'],
-//   variable: '--font-noto',
-// });
 
 const noto = Noto_Sans_Linear_A({
   weight: '400',
@@ -41,10 +35,22 @@ const basteleur = localFont({
   ],
 });
 
-export default async function RootLayout({ children }) {
+type RootLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default async function RootLayout({ children }: RootLayoutProps) {
   const sessionTokenCookie = (await cookies()).get('sessionToken');
-  const user = sessionTokenCookie && (await getUser(sessionTokenCookie.value));
-  const snapshots = user && (await getSnapshots(sessionTokenCookie.value));
+  const user = sessionTokenCookie
+    ? ((await getUser(sessionTokenCookie.value)) ?? null)
+    : null;
+  const snapshots =
+    user && sessionTokenCookie
+      ? (await getSnapshots(sessionTokenCookie.value)).map((snapshot) => ({
+          ...snapshot,
+          sounds: Array.isArray(snapshot.sounds) ? snapshot.sounds : [],
+        }))
+      : [];
 
   return (
     <html lang="en">
@@ -81,17 +87,6 @@ export default async function RootLayout({ children }) {
           href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"
           as="script"
         />
-
-        {/* <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-        />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
-        <meta name="mobile-web-app-capable" content="yes" /> */}
 
         <meta name="author" content="Jeff T Byrd" />
         <meta name="description" content="Listen to the planet." />

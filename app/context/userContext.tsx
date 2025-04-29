@@ -5,7 +5,6 @@ import { type Sound } from './soundsContext';
 export interface User {
   id: number;
   username: string;
-  email: string;
 }
 
 export interface Snapshot {
