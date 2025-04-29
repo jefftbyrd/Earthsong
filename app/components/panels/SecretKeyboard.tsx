@@ -1,15 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
-import { journeyContext } from '../../context/journeyContext';
-import EarthsongButton from '../EarthsongButton';
-
 export default function SecretKeyboard() {
-  const { setPanelId, panelOpen, togglePanel, panelId } =
-    useContext(journeyContext);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errors, setErrors] = useState([]);
-  const [registerOpen, setRegisterOpen] = useState(false);
-
   return (
     <>
       <p className="my-5 text-xl text-left">

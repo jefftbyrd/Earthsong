@@ -1,20 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
-import { journeyContext } from '../../context/journeyContext';
-import { userContext } from '../../context/userContext';
-import ClosePanelButton from '../panels/ClosePanelButton';
+import { useState } from 'react';
+import EarthsongButton from '../EarthsongButton';
 import Login from './Login';
 import PanelWrap from './PanelWrap';
-// import PowersLoggedIn from './PowersLoggedIn';
-// import PowersNotLoggedIn from './PowersNotLoggedIn';
 import Register from './Register';
-import EarthsongButton from '../EarthsongButton';
 
 export default function UnlockPanel() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
-  const { setPanelId, panelOpen, togglePanel, panelId } =
-    useContext(journeyContext);
-  const { user } = useContext(userContext);
 
   return (
     <PanelWrap panel="Unlock" bg="#C45353">
