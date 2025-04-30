@@ -23,7 +23,6 @@ export default function Portal(props) {
   const soundsForPortal =
     phase === 'portal' ? soundsColor : props.recalledSounds;
 
-  // More robust approach to measure height
   useEffect(() => {
     // Function to calculate available height
     const calculateHeight = () => {
