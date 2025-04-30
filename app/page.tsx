@@ -133,6 +133,13 @@ export default function Earthsong() {
             transition={{
               repeat: Infinity,
               duration: 3,
+              // times: [0, 0.5, 1],
+              ease: [
+                'easeInOut', // opacity
+                [0.45, 0, 0.55, 1], // scale: easeInOutSine
+                // 'easeInOut', // scale
+                'easeInOut', // color
+              ],
             }}
           >
             <Logo className="w-[45vw] h-[45vw] lg:h-[18vw] lg:w-[18vw]" />
