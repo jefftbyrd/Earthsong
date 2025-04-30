@@ -8,7 +8,7 @@ export default function GuidePanel() {
     useContext(journeyContext);
 
   return (
-    <PanelWrap panel="Guide" bg="#5381C4">
+    <PanelWrap panel="Guide" className="bg-[#5381C4]">
       <div className="w-full flex flex-col items-center justify-center gap-2">
         <button
           className="relative w-4/5 lg:w-1/2 aspect-24/7 overflow-hidden border-1 border-black/50 mt-3"

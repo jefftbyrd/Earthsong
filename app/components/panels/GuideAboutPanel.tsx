@@ -2,7 +2,7 @@ import PanelWrap from './PanelWrap';
 
 export default function GuideAboutPanel() {
   return (
-    <PanelWrap panel="About" bg="#5381C4">
+    <PanelWrap panel="About" className="bg-[#5381C4]">
       <div className="w-full md:w-2/3 mx-auto text-left p-5">
         <div className=" flex justify-start items-center mb-7 text-center">
           <iframe
