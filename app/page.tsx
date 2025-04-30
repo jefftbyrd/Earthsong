@@ -88,7 +88,7 @@ export default function Earthsong() {
         style={{ top: '50%' }}
       />
       <Message
-        text="Shuffling the sonic deck & drawing 5 cards"
+        text="Shuffling the sonic deck & drawing 5 random sounds"
         isVisible={phase === 'portal'}
         animationProps={{
           opacity: [0, 1, 1, 0],
