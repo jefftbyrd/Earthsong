@@ -9,7 +9,7 @@ import { clouds } from './components/p5/p5clouds';
 import { occult } from './components/p5/p5occult';
 import { wind } from './components/p5/p5wind';
 import { panels } from './components/panels/panelConfig';
-import Portal from './components/Portal';
+import Portal from './components/portal/Portal';
 import Title from './components/Title';
 import Logo from './components/vector/Logo';
 import { journeyContext } from './context/journeyContext';
