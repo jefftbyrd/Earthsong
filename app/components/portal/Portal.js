@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext';
+import styles from '../../styles/portal.module.scss';
 import { soundPortal } from '../p5/p5soundPortal';
 import { panels } from '../panels/panelConfig';
-import styles from '../styles/portal.module.scss';
 import SoundController from './SoundController';
 import { useSoundData } from './useSoundData';
 
