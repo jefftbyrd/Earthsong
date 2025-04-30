@@ -164,6 +164,25 @@ body {
   display: none !important;
 }
 
+.mapboxgl-ctrl-group {
+  /* background-color: black !important; */
+  background-color: rgba(255, 255, 255, 0.645) !important;
+  border-radius: 0px !important;
+  /* margin: 0 !important;
+  padding: 0 !important;
+  rotate: -90deg !important; */
+}
+
+.mapboxgl-ctrl-group button + button {
+  border-top: 1px solid rgba(0, 0, 0, 0.527) !important;
+}
+
+/* .mapboxgl-ctrl-icon,
+.mapboxgl-ctrl-group button {
+  color: white !important;
+  fill: red !important;
+} */
+
 /* .mapboxgl-ctrl {
   display: none !important;
 } */
