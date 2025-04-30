@@ -6,6 +6,7 @@ interface MessageProps {
   isVisible: boolean;
   animationProps?: Record<string, any>;
   style?: CSSProperties;
+  className?: string;
 }
 
 export default function Message({
@@ -13,15 +14,15 @@ export default function Message({
   isVisible,
   animationProps,
   style,
+  className,
 }: MessageProps) {
   if (!isVisible) return null;
 
   return (
     <motion.h1
-      className="message uppercase"
+      className={`${className} message`}
       initial={{ opacity: 0 }}
       animate={{
-        // opacity: [0, 1, 0],
         ...animationProps, // Allow custom animations
       }}
       style={style}

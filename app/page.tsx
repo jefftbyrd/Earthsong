@@ -70,22 +70,25 @@ export default function Earthsong() {
         text={`Welcome, ${user?.username}`}
         isVisible={!!user}
         animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
+        className="uppercase"
         style={{ top: '80%' }}
       />
       <Message
         text="Your Journey was Saved!"
         isVisible={journeySaved}
         animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
+        className="uppercase"
         style={{ top: '65%' }}
       />
       <Message
         text="Returning to map"
         isVisible={phase === 'returnToMap'}
         animationProps={{ opacity: [0, 1, 0], transition: { duration: 4 } }}
+        className="uppercase"
         style={{ top: '50%' }}
       />
       <Message
-        text="By celestial lottery, 5 sounds are plucked"
+        text="Shuffling the sonic deck & drawing 5 cards"
         isVisible={phase === 'portal'}
         animationProps={{
           opacity: [0, 1, 1, 0],
@@ -102,6 +105,7 @@ export default function Earthsong() {
           color: ['rgb(255, 0, 89)', 'rgb(255, 255, 255)', 'rgb(255, 0, 89)'],
           transition: { duration: 4, times: [0, 0.25, 0.5, 1] },
         }}
+        className="uppercase"
         style={{ top: '55%' }}
       />
       {/* <Message
@@ -221,33 +225,6 @@ export default function Earthsong() {
           </motion.div>
         ) : null}
       </AnimatePresence>
-
-      {/* PortalRecall */}
-      {/* <AnimatePresence>
-        {phase === 'portalRecall' && snapshots ? (
-          <motion.div
-            animate={{
-              opacity: [0, 0, 1],
-              transition: { duration: 6, times: [0, 0.5, 1] },
-            }}
-            exit={{
-              opacity: 0,
-              transition: { duration: 2 },
-            }}
-          >
-            <PortalRecall
-              recalledSounds={
-                snapshots?.find((snapshot) => snapshot?.id === journeyToRecall)
-                  .sounds
-              }
-              recalledName={
-                snapshots?.find((snapshot) => snapshot?.id === journeyToRecall)
-                  .title
-              }
-            />
-          </motion.div>
-        ) : null}
-      </AnimatePresence> */}
 
       <AnimatePresence>
         {panelOpen &&
