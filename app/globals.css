@@ -156,13 +156,17 @@ body {
   z-index: -99999;
 } */
 
-/* .mapboxgl-ctrl-logo {
-  display: none !important;
-} */
-
-.mapboxgl-ctrl {
+.mapboxgl-ctrl-logo {
   display: none !important;
 }
+
+.mapboxgl-ctrl-attrib {
+  display: none !important;
+}
+
+/* .mapboxgl-ctrl {
+  display: none !important;
+} */
 
 .successMessage {
   position: absolute;
