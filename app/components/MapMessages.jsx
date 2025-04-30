@@ -134,8 +134,13 @@ export default function MapMessages(props) {
 
       {mapConditions.noResults && (
         <>
-          <p>No sounds found within 500km.</p>
-          <p>Please choose another location.</p>
+          <p>
+            No sounds found within 500km of{' '}
+            {props.location ? ` ${props.location}` : ''}.
+          </p>
+          <motion.p {...combinedFadeAnimation} className=" text-shadow-lg/20">
+            Please choose another location.
+          </motion.p>
         </>
       )}
     </div>
