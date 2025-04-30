@@ -243,7 +243,7 @@ export default function Earthsong() {
                 transition: { duration: 0.25 },
               }}
             >
-              {React.createElement(panels[panelId].component)}
+              {React.createElement(panels[panelId].component, { phase })}
             </motion.div>
           )}
       </AnimatePresence>

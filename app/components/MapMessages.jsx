@@ -46,39 +46,14 @@ export default function MapMessages(props) {
     noResults:
       (phase === 'map' || phase === 'returnToMap') &&
       notEnough === true &&
-      // freesoundLoading === false,
       isFetchingSounds === false,
   };
-
-  // const glowAnimation = {
-  //   color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
-  //   transition: { repeat: Infinity, duration: 3 },
-  // };
-
-  // const fadeInAnimation = {
-  //   opacity: [0, 1],
-  //   transition: { duration: 1 },
-  // };
 
   const fadeAnimation = {
     initial: { opacity: 0 },
     animate: { opacity: 1 },
     transition: { duration: 1 },
   };
-
-  // const fadeIn = {
-  //   initial: { opacity: 0 },
-  //   animate: { opacity: 1 },
-  // };
-
-  // const combinedAnimation = {
-  //   color: ['rgb(255, 0, 89)', 'rgb(255, 145, 0)', 'rgb(255, 0, 89)'],
-  //   opacity: [0, 1],
-  //   transition: {
-  //     color: { repeat: Infinity, duration: 3 }, // Infinite color oscillation
-  //     opacity: { duration: 2 }, // Fade-in effect
-  //   },
-  // };
 
   const combinedFadeAnimation = {
     initial: { opacity: 0 },
@@ -124,7 +99,6 @@ export default function MapMessages(props) {
           >
             {searchMessage || 'Searching...'}
             <br />
-            {/* <br /> */}
           </motion.p>
         )}
         {mapConditions.hasError && (
@@ -160,7 +134,7 @@ export default function MapMessages(props) {
 
       {mapConditions.noResults && (
         <>
-          <p>No sounds found within 200km.</p>
+          <p>No sounds found within 500km.</p>
           <p>Please choose another location.</p>
         </>
       )}

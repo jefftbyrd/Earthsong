@@ -127,7 +127,7 @@ export default function Portal(props) {
                 transition: { duration: 2 },
               }}
             >
-              {React.createElement(panels[panelId].component)}
+              {React.createElement(panels[panelId].component, { phase })}
             </motion.div>
           )}
         </AnimatePresence>

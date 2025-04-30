@@ -9,16 +9,15 @@ export default function UnlockPanel() {
   const [registerOpen, setRegisterOpen] = useState(false);
 
   return (
-    <PanelWrap panel="Unlock" bg="#C45353">
-      {' '}
+    <PanelWrap panel="Unlock" className="bg-[#C45353]">
       <>
         <h3 className="text-xl">
           Welcome, <span className="font-black">stranger</span>.
         </h3>
         {!loginOpen && !registerOpen ? (
-          <>
+          <div className="flex flex-col gap-6 leading-10">
             <p>
-              To save and recall your favorite journeys,{' '}
+              To save and recall your favorite journeys, <br />
               <EarthsongButton
                 buttonStyle={3}
                 onClick={() => {
@@ -26,23 +25,21 @@ export default function UnlockPanel() {
                   setRegisterOpen(true);
                 }}
               >
-                create an account
+                Create an account
               </EarthsongButton>
-              .
             </p>
             <p>
-              If you already have an account,{' '}
+              If you already have an account, <br />
               <EarthsongButton
                 buttonStyle={3}
                 onClick={() => {
                   setLoginOpen(true);
                 }}
               >
-                sign in
+                Sign in
               </EarthsongButton>
-              .
-            </p>{' '}
-          </>
+            </p>
+          </div>
         ) : null}
         {loginOpen && <Login />}
         {registerOpen && <Register />}

@@ -14,7 +14,7 @@ export default function SavePanel() {
   const router = useRouter();
 
   return (
-    <PanelWrap panel="Save" bg="#C45353">
+    <PanelWrap panel="Save" className="bg-[#C45353]">
       <div>
         <h3 className="text-xl mb-5">
           Save this journey so you can revisit it later.

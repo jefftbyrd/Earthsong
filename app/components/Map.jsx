@@ -67,6 +67,7 @@ export default function Map() {
 
     mapRef.current.on('load', () => {
       setIsMapLoaded(true); // <-- Hide placeholder when map is loaded
+      mapRef.current.addControl(new mapboxgl.NavigationControl(), 'top-left');
     });
 
     mapRef.current.on('click', async (event) => {

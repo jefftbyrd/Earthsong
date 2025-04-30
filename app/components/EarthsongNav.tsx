@@ -12,6 +12,7 @@ export interface FilteredPanelsProps {
   icon?: number;
   iconClassName?: string;
   component: React.ComponentType<any>;
+  className?: string;
 }
 
 export default function EarthsongNav({ isLoggedIn }: { isLoggedIn: boolean }) {
@@ -60,7 +61,7 @@ export default function EarthsongNav({ isLoggedIn }: { isLoggedIn: boolean }) {
       onClick={handleInteraction}
       onMouseDown={handleInteraction}
       onTouchStart={handleInteraction}
-      className="h-10 bg-black border-t-1 border-gray-600 text-white border-solid w-full grid grid-cols-3 uppercase text-xl tracking-wide"
+      className="h-10 lg:h-12 bg-black border-t-1 border-gray-600 text-white border-solid w-full grid grid-cols-3 uppercase text-xl tracking-wide"
       style={{
         position: 'relative',
         zIndex: 50,
@@ -103,25 +104,27 @@ export default function EarthsongNav({ isLoggedIn }: { isLoggedIn: boolean }) {
       </AnimatePresence>
 
       <div className="col-span-2 col-start-2 grid grid-cols-2 gap-0">
-        {filteredPanels.map(([id, { label, icon, iconClassName }]) => (
-          <button
-            key={`panel-${id}`}
-            className="uppercase text-center flex items-center justify-center hover:bg-[#0033FF] transition-all duration-100 ease-in-out"
-            onClick={(e) => {
-              e.stopPropagation(); // Extra safeguard
-              setActivateTarget(false);
-              if (panelOpen && panelId === id) {
-                togglePanel(); // This will close the panel and clear panelId
-              } else {
-                setPanelId(id);
-                // The useEffect will handle opening the panel if needed
-              }
-            }}
-          >
-            <EarthsongIcons iconNumber={icon} className={iconClassName} />
-            <span>{label}</span>
-          </button>
-        ))}
+        {filteredPanels.map(
+          ([id, { label, icon, iconClassName, className }]) => (
+            <button
+              key={`panel-${id}`}
+              className="uppercase text-center flex items-center justify-center hover:bg-[#001effa5] transition-all duration-100 ease-in-out"
+              onClick={(e) => {
+                e.stopPropagation(); // Extra safeguard
+                setActivateTarget(false);
+                if (panelOpen && panelId === id) {
+                  togglePanel(); // This will close the panel and clear panelId
+                } else {
+                  setPanelId(id);
+                  // The useEffect will handle opening the panel if needed
+                }
+              }}
+            >
+              <EarthsongIcons iconNumber={icon} className={iconClassName} />
+              <span className={className}>{label}</span>
+            </button>
+          ),
+        )}
       </div>
     </nav>
   );

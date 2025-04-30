@@ -1,7 +1,7 @@
 import type { FilteredPanelsProps } from '../EarthsongNav';
 import GuideAboutPanel from './GuideAboutPanel';
-import GuideNavigatePanel from './GuideNavigatePanel';
-import GuidePanel from './GuidePanel';
+import GuideNavigatePanel from './GuideNavigation';
+import GuidePanelSwitcher from './GuidePanelSwitcher';
 import GuidePortalPanel from './GuidePortalPanel';
 import PowersPanel from './PowersPanel';
 import SavePanel from './SavePanel';
@@ -12,8 +12,9 @@ export const panels: Record<string, FilteredPanelsProps> = {
   Powers: {
     component: PowersPanel,
     label: 'Powers',
+    className: 'text-[rgb(255,145,0)]',
     icon: 6,
-    iconClassName: 'h-9 w-9 -rotate-45',
+    iconClassName: 'h-9 w-9 -rotate-45 text-[rgb(255,145,0)]',
   },
   Summon: {
     component: SummonPanel,
@@ -34,7 +35,7 @@ export const panels: Record<string, FilteredPanelsProps> = {
     iconClassName: 'h-6 w-6',
   },
   Guide: {
-    component: GuidePanel,
+    component: GuidePanelSwitcher,
     label: 'Guide',
     icon: 2,
     iconClassName: 'h-6.5 w-5',

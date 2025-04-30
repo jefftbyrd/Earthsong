@@ -6,13 +6,13 @@ import ClosePanelButton from './ClosePanelButton';
 interface PanelProps {
   children: React.ReactNode;
   panel: string;
-  bg: string;
+  className?: string;
 }
 
 export default function PanelWrap({
   children,
   panel,
-  bg,
+  className,
   ...props
 }: PanelProps) {
   const { ref } = useDynamicHeight();
@@ -38,8 +38,8 @@ export default function PanelWrap({
   return (
     <div
       ref={ref}
-      className="text-black box-border overflow-auto mt-0.5 z-40 relative text-center lg:m-20 lg:border-black/30 lg:border-x-6 lg:border-t-6"
-      style={{ backgroundColor: bg }}
+      className={`${className} text-black box-border overflow-auto mt-0.5 z-40 relative text-center lg:m-20 lg:border-black/30 lg:border-x-6 lg:border-t-6 pb-6`}
+      // style={{ backgroundColor: bg }}
       {...props}
     >
       <ClosePanelButton panel={panel} />

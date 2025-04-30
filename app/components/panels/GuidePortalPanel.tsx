@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import EarthsongButton from '../EarthsongButton';
+import GuideNavigation from './GuideNavigation';
 import PanelWrap from './PanelWrap';
 import SecretKeyboard from './SecretKeyboard';
 import SecretTouch from './SecretTouch';
@@ -8,7 +9,7 @@ export default function GuidePortalPanel() {
   const [secretMode, setSecretMode] = useState('touch');
 
   return (
-    <PanelWrap panel="Portal" bg="#5381C4">
+    <PanelWrap panel="Portal" className="bg-[#5381C4]">
       <div className="w-full">
         <h2 className="text-xl mb-3">Interacting with sounds</h2>
         <div className="w-full md:w-2/3 mx-auto flex flex-col gap-3 pb-7 text-left p-2">
@@ -77,6 +78,8 @@ export default function GuidePortalPanel() {
           </div>
         </div>
       </div>
+
+      <GuideNavigation />
     </PanelWrap>
   );
 }
