@@ -1,11 +1,11 @@
 'use client';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext } from 'react';
-import { journeyContext } from '../../context/journeyContext';
-import { useSoundPlayer } from '../../context/soundPlayerContext';
-import { soundsContext } from '../../context/soundsContext';
-import EarthsongIcons from '../EarthsongIcons';
-import { panels } from './panelConfig';
+import { journeyContext } from '../context/journeyContext';
+import { useSoundPlayer } from '../context/soundPlayerContext';
+import { soundsContext } from '../context/soundsContext';
+import EarthsongIcons from './EarthsongIcons';
+import { panels } from './panels/panelConfig';
 
 export interface FilteredPanelsProps {
   label: string;
@@ -14,7 +14,7 @@ export interface FilteredPanelsProps {
   component: React.ComponentType<any>;
 }
 
-export default function PortalNav({ isLoggedIn }: { isLoggedIn: boolean }) {
+export default function EarthsongNav({ isLoggedIn }: { isLoggedIn: boolean }) {
   const {
     togglePanel,
     setPanelId,

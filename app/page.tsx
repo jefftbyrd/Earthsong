@@ -2,14 +2,14 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef } from 'react';
+import PortalNav from './components/EarthsongNav';
 import Map from './components/Map';
 import Message from './components/Message';
 import { clouds } from './components/p5/p5clouds';
 import { occult } from './components/p5/p5occult';
 import { wind } from './components/p5/p5wind';
+import { panels } from './components/panels/panelConfig';
 import Portal from './components/Portal';
-import { panels } from './components/portal/panelConfig';
-import PortalNav from './components/portal/PortalNav';
 import Title from './components/Title';
 import Logo from './components/vector/Logo';
 import { journeyContext } from './context/journeyContext';

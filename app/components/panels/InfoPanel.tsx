@@ -3,7 +3,7 @@ import React, { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import type { Sound } from '../../context/soundsContext';
 import { useDynamicHeight } from '../../hooks/useDynamicHeight';
-import ClosePanelButton from '../panels/ClosePanelButton';
+import ClosePanelButton from './ClosePanelButton';
 
 interface InfoPanelProps {
   sound: Sound;

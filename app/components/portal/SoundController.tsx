@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import type { Sound } from '../../context/soundsContext';
-import InfoPanel from './InfoPanel';
+import InfoPanel from '../panels/InfoPanel';
 import SoundItem from './SoundItem';
 
 interface SoundControllerProps {

@@ -1,12 +1,12 @@
-import GuideAboutPanel from '../panels/GuideAboutPanel';
-import GuideNavigatePanel from '../panels/GuideNavigatePanel';
-import GuidePanel from '../panels/GuidePanel';
-import GuidePortalPanel from '../panels/GuidePortalPanel';
-import PowersPanel from '../panels/PowersPanel';
-import SavePanel from '../panels/SavePanel';
-import SummonPanel from '../panels/SummonPanel';
-import UnlockPanel from '../panels/UnlockPanel';
-import type { FilteredPanelsProps } from './PortalNav';
+import type { FilteredPanelsProps } from '../EarthsongNav';
+import GuideAboutPanel from './GuideAboutPanel';
+import GuideNavigatePanel from './GuideNavigatePanel';
+import GuidePanel from './GuidePanel';
+import GuidePortalPanel from './GuidePortalPanel';
+import PowersPanel from './PowersPanel';
+import SavePanel from './SavePanel';
+import SummonPanel from './SummonPanel';
+import UnlockPanel from './UnlockPanel';
 
 export const panels: Record<string, FilteredPanelsProps> = {
   Powers: {

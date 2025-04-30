@@ -6,7 +6,7 @@ import { journeyContext } from '../context/journeyContext';
 import { useSoundPlayer } from '../context/soundPlayerContext';
 import styles from '../styles/portal.module.scss';
 import { soundPortal } from './p5/p5soundPortal';
-import { panels } from './portal/panelConfig';
+import { panels } from './panels/panelConfig';
 import SoundController from './portal/SoundController';
 import { useSoundData } from './portal/useSoundData';
 
