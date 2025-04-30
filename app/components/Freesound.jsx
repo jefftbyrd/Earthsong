@@ -30,7 +30,7 @@ export default function Freesound() {
 
   // Only depends on pin and isFetchingSounds
   useEffect(() => {
-    const searchRadiuses = [10, 50, 100, 200];
+    const searchRadiuses = [10, 50, 100, 200, 500];
     const controller = new AbortController();
     const { signal } = controller;
 
