@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { journeyContext } from '../context/journeyContext';
 import { useSoundPlayer } from '../context/soundPlayerContext';
 import styles from '../styles/portal.module.scss';
-import { soundPortal } from './p5soundPortal';
+import { soundPortal } from './p5/p5soundPortal';
 import { panels } from './portal/panelConfig';
 import SoundController from './portal/SoundController';
 import { useSoundData } from './portal/useSoundData';
