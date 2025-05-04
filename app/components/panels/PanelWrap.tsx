@@ -42,40 +42,34 @@ export default function PanelWrap({
   return (
     <div
       ref={ref}
-      className={`${className} text-black box-border overflow-auto mt-0.5 z-40 relative text-center lg:m-20 lg:border-black/30 lg:border-x-6 lg:border-t-6 pb-6`}
+      className={`${className} text-black box-border overflow-auto mt-0.5 z-40 relative text-center lg:mt-20 lg:border-black/30 lg:border-x-6 lg:border-t-6 pb-6 lg:w-2/3 lg:mx-auto`}
       {...props}
     >
       <ClosePanelButton panel={panel} />
       <div className={panelId === 'About' ? 'p-4 pt-6' : 'p-8 pt-6'}>
         {panelOpen && panelId !== 'About' && (
           <button
-            className="bg-white/70 hover:bg-[#ff0059] hover:text-white text-black fixed right-0 translate-y-25 z-50 [writing-mode:vertical-rl] [text-orientation:upright] rounded-l-md pt-3 pb-2 py-1 flex items-center justify-center text-center uppercase font-bold tracking-[0.4em] shadow-xl/20 outline-black/30 outline-2"
+            className="
+              bg-white/70 hover:bg-[#ff0059] hover:text-white text-black md:text-4xl
+              fixed md:absolute
+              right-0 top-1/2 -translate-y-1/2 z-50
+              [writing-mode:vertical-rl] [text-orientation:upright]
+              rounded-l-md pt-3 pb-2 py-1 flex items-center justify-center text-center
+              uppercase font-bold tracking-[0.4em] shadow-xl/20 outline-black/30 outline-2
+            "
             onClick={(e) => {
               e.stopPropagation();
-              // setTest(false);
               setActivateTarget(false);
-              // If this exact panel is already open, just toggle it closed
               if (panelOpen && panelId === 'About') {
-                togglePanel(); // This will close the panel and clear panelId
-              }
-              // Otherwise, set this panel as active
-              else {
+                togglePanel();
+              } else {
                 setPanelId('About');
-                // The useEffect will handle opening the panel if needed
               }
             }}
           >
-            {/* <EarthsongIcons
-              iconNumber={7}
-              className="h-5 lg:h-7 static inline mb-2 text-[#ff0059]"
-            /> */}
-            {/* <Logo className="h-6 lg:h-[18vw] lg:w-[18vw] mb-2 text-[#ff0059]" /> */}
             About
           </button>
         )}
-        {/* <button className="bg-[#b0cbf1] hover:bg-[#ff0059] text-black fixed right-0 translate-y-62 z-50 [writing-mode:vertical-rl] [text-orientation:upright] rounded-l-md pt-3 pb-2 py-1 flex items-center justify-center text-center uppercase font-bold tracking-[0.5em] shadow-xl/20 outline-black/30 outline-2 ">
-          Nav
-        </button> */}
         <h2 className="left-0 right-0 text-6xl md:text-9xl uppercase opacity-30 text-center">
           {panel}
         </h2>
