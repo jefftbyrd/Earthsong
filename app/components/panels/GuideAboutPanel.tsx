@@ -26,8 +26,8 @@ export default function GuideAboutPanel() {
             <ul className="list-disc list-outside text-xl flex flex-col gap-1 tracking-wide ml-5">
               <li>Generate spontaneous sound collages.</li>
               <li>
-                Build your own soundscapes in EARTH SONG's interactive 3D
-                spatial sound player.
+                Build your own soundscapes in EARTH SONG's interactive
+                3-dimensional Sound Portal.
               </li>
               <li>
                 Discover surprising interactions and harmonies between sounds
