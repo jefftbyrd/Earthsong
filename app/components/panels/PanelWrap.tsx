@@ -76,7 +76,7 @@ export default function PanelWrap({
         {/* <button className="bg-[#b0cbf1] hover:bg-[#ff0059] text-black fixed right-0 translate-y-62 z-50 [writing-mode:vertical-rl] [text-orientation:upright] rounded-l-md pt-3 pb-2 py-1 flex items-center justify-center text-center uppercase font-bold tracking-[0.5em] shadow-xl/20 outline-black/30 outline-2 ">
           Nav
         </button> */}
-        <h2 className="left-0 right-0 text-7xl md:text-9xl uppercase opacity-30 text-center">
+        <h2 className="left-0 right-0 text-6xl md:text-9xl uppercase opacity-30 text-center">
           {panel}
         </h2>
         <div className="flex flex-col justify-center items-center gap-5">
