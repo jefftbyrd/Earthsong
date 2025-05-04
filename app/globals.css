@@ -71,7 +71,7 @@ body {
   }
 
   a {
-    @apply text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all;
+    @apply text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100;
   }
 }
 

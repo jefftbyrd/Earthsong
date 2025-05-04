@@ -48,7 +48,7 @@ export default function GuideAboutPanel() {
               through{' '}
               <a
                 href="https://freesound.org/"
-                className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all"
+                className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -142,7 +142,7 @@ export default function GuideAboutPanel() {
         <h3 className="text-lg mb-2">
           Created and developed by{' '}
           <a
-            className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all uppercase"
+            className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all uppercase duration-100"
             target="_blank"
             href="https://jefftbyrd.com"
             rel="noreferrer"
@@ -154,7 +154,7 @@ export default function GuideAboutPanel() {
             href="https://github.com/jefftbyrd/Earthsong"
             target="_blank"
             rel="noreferrer"
-            className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all"
+            className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100"
           >
             <span className="uppercase ">Earth Song</span> on Github
           </a>
