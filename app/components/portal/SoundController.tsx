@@ -42,7 +42,10 @@ export default function SoundController({
       </div>
       <div>
         {soundsColor?.map((sound) => (
-          <div key={`soundId-${sound.id}`} className="">
+          <div
+            key={`soundId-${sound.id}`}
+            className="absolute inset-x-0 z-40 overflow-hidden"
+          >
             {panelOpen && panelId === sound.id && (
               <InfoPanel sound={sound} color={sound.color || ''} />
             )}

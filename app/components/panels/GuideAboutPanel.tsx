@@ -42,27 +42,35 @@ export default function GuideAboutPanel() {
           <hr className="border-black/30 my-5" />
           <div className="mb-2">
             <h2 className="text-3xl mb-4">How does it work?</h2>
-            <p className="text-lg leading-8">
-              Choose a place to explore by selecting a point on the map. Sifting
-              through{' '}
-              <a
-                href="https://freesound.org/"
-                className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100"
-                target="_blank"
-                rel="noreferrer"
-              >
-                freesound.org's
-              </a>{' '}
-              vast database of user-contributed sound recordings,{' '}
-              <span className="uppercase">Earth song</span> locates audio
-              material from the chosen point and, through a chance operation,
-              extracts just 5 sounds, which are loaded into the 3-dimensional
-              spatial sound player. The{' '}
-              <span className="uppercase">Earth song</span> Sound Portal is a
-              sonic playground where you can audition, manipulate and mix sounds
-              to create your own custom sound environment. Registered users can
-              save and recall their favorite journeys.
-            </p>
+            <ul className="list-disc list-outside text-xl flex flex-col gap-1 tracking-wide ml-5">
+              <li>
+                Choose a place to explore by selecting a point on the map.
+              </li>
+              <li>
+                Sifting through{' '}
+                <a
+                  href="https://freesound.org/"
+                  className="text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  freesound.org's
+                </a>{' '}
+                vast database of user-contributed sound recordings,{' '}
+                <span className="uppercase">Earth song</span> locates audio
+                material from the chosen point.
+              </li>
+              <li>
+                Through a chance operation, 5 sounds are extracted and loaded
+                into the spatial sound player. The{' '}
+                <span className="uppercase">Earth Song</span> Sound Portal is a
+                sonic playground where you can audition, manipulate and mix
+                sounds to create your own custom sound environment.
+              </li>
+              <li>
+                Registered users can save and recall their favorite journeys.
+              </li>
+            </ul>
           </div>
         </div>
         <hr className="border-black/30 my-5" />

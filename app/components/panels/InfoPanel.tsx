@@ -42,7 +42,7 @@ export default function InfoPanel({ sound, color }: InfoPanelProps) {
   return (
     <div
       ref={ref}
-      className=" text-black box-border overflow-auto mt-0.5 z-40 relative lg:m-20 lg:border-black/50 lg:border-x-6 lg:border-t-6"
+      className=" text-black box-border overflow-auto mt-0.5 z-40 relative lg:mt-20 lg:w-2/3 lg:mx-auto lg:border-black/50 lg:border-x-6 lg:border-t-6"
       style={{ backgroundColor: color }}
     >
       <ClosePanelButton panel={sound.id} />
