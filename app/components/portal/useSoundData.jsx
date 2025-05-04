@@ -106,10 +106,12 @@ export function useSoundData() {
         // Shuffle and pick the first 5 sounds
         const soundsShuffled = shuffleArray(filteredSounds).slice(0, 5);
 
-        const palette = Array.from({ length: 5 }, (_, i) => {
-          const hue = (i * (360 / 5)) % 360;
-          return chroma.hsl(hue, 0.8, 0.65).css('rgba');
-        });
+        const basePalette = chroma
+          .scale('Set1')
+          .mode('lch')
+          .colors(5)
+          .map((c) => chroma(c).css('rgba'));
+        const palette = shuffleArray(basePalette);
 
         // const soundsWithColor = soundsShuffled.map(
         //   ({ previews, ...sound }, idx) => ({
