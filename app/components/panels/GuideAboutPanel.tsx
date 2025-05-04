@@ -34,9 +34,8 @@ export default function GuideAboutPanel() {
                 that were never meant to be heard together.
               </li>
               <li>
-                Use “sonic sorcery” to mutate and transform sounds in real-time:
-                reverse direction, change playback speed. “Tune” sounds to each
-                other.
+                Mutate and transform sounds in real-time: reverse direction,
+                change playback speed. “Tune” sounds to each other.
               </li>
             </ul>
           </div>
