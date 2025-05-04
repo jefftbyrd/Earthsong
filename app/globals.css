@@ -64,14 +64,14 @@ body {
 }
 
 .thanks-list {
-  @apply list-disc flex flex-col gap-3 ml-5 leading-6;
+  @apply list-disc flex flex-col gap-3 ml-5 leading-8;
 
   li {
     /* @apply list-disc; */
   }
 
   a {
-    @apply text-white underline hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all;
+    @apply text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all;
   }
 }
 
