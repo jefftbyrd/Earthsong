@@ -46,7 +46,7 @@ export default function PanelWrap({
       {...props}
     >
       <ClosePanelButton panel={panel} />
-      <div className="p-8 pt-6 ">
+      <div className={panelId === 'About' ? 'p-4 pt-6' : 'p-8 pt-6'}>
         {panelOpen && panelId !== 'About' && (
           <button
             className="bg-white/70 hover:bg-[#ff0059] hover:text-white text-black fixed right-0 translate-y-25 z-50 [writing-mode:vertical-rl] [text-orientation:upright] rounded-l-md pt-3 pb-2 py-1 flex items-center justify-center text-center uppercase font-bold tracking-[0.4em] shadow-xl/20 outline-black/30 outline-2"
