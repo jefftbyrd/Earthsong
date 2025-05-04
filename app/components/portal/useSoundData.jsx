@@ -1,3 +1,4 @@
+import chroma from 'chroma-js';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import uniqolor from 'uniqolor';
 import { soundsContext } from '../../context/soundsContext';
@@ -105,21 +106,40 @@ export function useSoundData() {
         // Shuffle and pick the first 5 sounds
         const soundsShuffled = shuffleArray(filteredSounds).slice(0, 5);
 
-        // Add color, format sound data, and include pin, location, and searchRadius
+        const palette = Array.from({ length: 5 }, (_, i) => {
+          // Evenly distribute hues, randomize start
+          const base = Math.random() * 360;
+          const hue = (base + i * (360 / 5)) % 360;
+          return chroma.hsl(hue, 0.8, 0.65).css('rgba');
+        });
+
+        // const soundsWithColor = soundsShuffled.map(
+        //   ({ previews, ...sound }, idx) => ({
+        //     ...sound,
+        //     freesoundUrl: sound?.url,
+        //     color: chroma(palette[idx]).css('rgba'),
+        //     url: previews?.['preview-lq-mp3'],
+        //     name: formatSoundName(sound?.name || ''),
+        //     pin: sounds.pin,
+        //     location: sounds.location,
+        //     searchRadius: sounds.searchRadius,
+        //   }),
+        // );
+
         const soundsWithColor = soundsShuffled.map(
-          ({ previews, ...sound }) => ({
-            ...sound,
-            freesoundUrl: sound?.url,
-            color: uniqolor
-              .random({ format: 'rgb' })
-              .color.replace(')', ', 1)')
-              .replace('rgb', 'rgba'),
-            url: previews?.['preview-lq-mp3'], // Use the value from previews if needed
-            name: formatSoundName(sound?.name || ''),
-            pin: sounds.pin, // Add pin
-            location: sounds.location, // Add location
-            searchRadius: sounds.searchRadius, // Add searchRadius
-          }),
+          ({ previews, ...sound }, idx) => {
+            const [r, g, b, a] = chroma(palette[idx]).rgba();
+            return {
+              ...sound,
+              freesoundUrl: sound?.url,
+              color: `rgba(${r}, ${g}, ${b}, ${a})`,
+              url: previews?.['preview-lq-mp3'],
+              name: formatSoundName(sound?.name || ''),
+              pin: sounds.pin,
+              location: sounds.location,
+              searchRadius: sounds.searchRadius,
+            };
+          },
         );
 
         setSoundsColor(soundsWithColor);
