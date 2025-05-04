@@ -107,9 +107,7 @@ export function useSoundData() {
         const soundsShuffled = shuffleArray(filteredSounds).slice(0, 5);
 
         const palette = Array.from({ length: 5 }, (_, i) => {
-          // Evenly distribute hues, randomize start
-          const base = Math.random() * 360;
-          const hue = (base + i * (360 / 5)) % 360;
+          const hue = (i * (360 / 5)) % 360;
           return chroma.hsl(hue, 0.8, 0.65).css('rgba');
         });
 
