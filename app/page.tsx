@@ -90,8 +90,8 @@ export default function Earthsong() {
       <Message
         text={
           <>
-            Shuffling the sonic deck
-            <br />&<br /> Drawing 5 sounds
+            Shuffling the Sonic Deck
+            <br />&<br /> Drawing Five Sounds
           </>
         }
         isVisible={phase === 'portal'}
@@ -101,6 +101,7 @@ export default function Earthsong() {
           transition: { duration: 5, times: [0, 0.1, 0.8, 1] },
         }}
         style={{ top: '50%' }}
+        className="md:text-[6vw]! md:leading-[7vw]!"
       />
       <Message
         text="Summoning journey"
