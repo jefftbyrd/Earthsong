@@ -55,7 +55,7 @@ export default function MapMessages(props) {
     transition: { duration: 1 },
   };
 
-  const combinedFadeAnimation = {
+  const fadeAndPulsate = {
     initial: { opacity: 0 },
     animate: {
       opacity: 1,
@@ -72,7 +72,7 @@ export default function MapMessages(props) {
       {/* LINE 1 */}
       <div>
         {mapConditions.initial && (
-          <motion.p {...fadeAnimation}>Choose a place to explore</motion.p>
+          <motion.p {...fadeAndPulsate}>Choose a place to explore</motion.p>
         )}
 
         <motion.p {...fadeAnimation}>
@@ -93,10 +93,7 @@ export default function MapMessages(props) {
       {/* LINE 2 */}
       <div>
         {Boolean(mapConditions.fetching) && (
-          <motion.p
-            {...combinedFadeAnimation}
-            className="font-bold text-shadow-lg/20"
-          >
+          <motion.p {...fadeAndPulsate} className="font-bold text-shadow-lg/20">
             {searchMessage || 'Searching...'}
             <br />
           </motion.p>
@@ -117,7 +114,7 @@ export default function MapMessages(props) {
             {searchMessage}.
           </motion.p>
           <motion.button
-            {...combinedFadeAnimation}
+            {...fadeAndPulsate}
             className="font-bold text-shadow-lg/20 hover:scale-105 transition-all duration-300 active:scale-97"
             onClick={() => {
               setPanelOpen(false); // Close the panel if it's open
@@ -138,7 +135,7 @@ export default function MapMessages(props) {
             No sounds found within 500km of{' '}
             {props.location ? ` ${props.location}` : ''}.
           </p>
-          <motion.p {...combinedFadeAnimation} className=" text-shadow-lg/20">
+          <motion.p {...fadeAndPulsate} className=" text-shadow-lg/20">
             Please choose another location.
           </motion.p>
         </>
