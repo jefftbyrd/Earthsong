@@ -52,7 +52,7 @@ export default function PanelWrap({
             className="
               bg-white/70 hover:bg-[#ff0059] hover:text-white text-black md:text-4xl
               fixed md:absolute
-              right-0 top-1/2 -translate-y-1/2 z-50
+              right-0 top-1/2 z-50
               [writing-mode:vertical-rl] [text-orientation:upright]
               rounded-l-md pt-3 pb-2 py-1 flex items-center justify-center text-center
               uppercase font-bold tracking-[0.4em] shadow-xl/20 outline-black/30 outline-2
