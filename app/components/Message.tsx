@@ -1,12 +1,14 @@
 import { motion } from 'motion/react';
+import type React from 'react';
 import type { CSSProperties } from 'react';
 
 interface MessageProps {
-  text: string;
+  text?: React.ReactNode;
   isVisible: boolean;
   animationProps?: Record<string, any>;
   style?: CSSProperties;
   className?: string;
+  children?: React.ReactNode;
 }
 
 export default function Message({
@@ -15,6 +17,7 @@ export default function Message({
   animationProps,
   style,
   className,
+  children,
 }: MessageProps) {
   if (!isVisible) return null;
 
@@ -27,7 +30,7 @@ export default function Message({
       }}
       style={style}
     >
-      {text}
+      {children ?? text}
     </motion.h1>
   );
 }
