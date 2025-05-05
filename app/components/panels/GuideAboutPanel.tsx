@@ -3,7 +3,7 @@ import PanelWrap from './PanelWrap';
 
 export default function GuideAboutPanel() {
   return (
-    <PanelWrap panel="Earth Song" className="bg-[#5381C4]">
+    <PanelWrap panel="About" heading="Earth Song" className="bg-[#5381C4]">
       <h3 className="text-xl mb-2">Listen to the planet</h3>
       <Logo className="w-40 text-black/30 drop-shadow-xl/30 md:hidden" />
       <div className="w-full md:w-2/3 mx-auto text-left p-5 ">

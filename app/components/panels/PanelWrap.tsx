@@ -2,18 +2,20 @@ import { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext';
 import { useDynamicHeight } from '../../hooks/useDynamicHeight';
-import EarthsongIcons from '../EarthsongIcons';
+// import EarthsongIcons from '../EarthsongIcons';
 import ClosePanelButton from './ClosePanelButton';
 
 interface PanelProps {
   children: React.ReactNode;
   panel: string;
+  heading?: string;
   className?: string;
 }
 
 export default function PanelWrap({
   children,
   panel,
+  heading,
   className,
   ...props
 }: PanelProps) {
@@ -71,7 +73,7 @@ export default function PanelWrap({
           </button>
         )}
         <h2 className="left-0 right-0 text-6xl md:text-9xl uppercase opacity-30 text-center">
-          {panel}
+          {heading ?? panel}
         </h2>
         <div className="flex flex-col justify-center items-center gap-5">
           {children}
