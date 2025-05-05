@@ -88,7 +88,12 @@ export default function Earthsong() {
         style={{ top: '50%' }}
       />
       <Message
-        text="Shuffling the Sonic Deck & Drawing 5 Sounds"
+        text={
+          <>
+            Shuffling the sonic deck
+            <br />&<br /> Drawing 5 sounds
+          </>
+        }
         isVisible={phase === 'portal'}
         animationProps={{
           opacity: [0, 1, 1, 0],
