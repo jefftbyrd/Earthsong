@@ -339,12 +339,9 @@ export const soundPortal = (p5) => {
       shapes[i].audioControls();
       // Update rotation if spinning
       if (shapes[i].isSpinning) {
-        // Increment based on playback rate and frame rate
-        const rate = multiPlayer.player(shapes[i].id).playbackRate || 1;
-        shapes[i].rotation += 0.03 * rate; // Adjust speed as needed
+        shapes[i].rotation +=
+          0.03 * shapes[i].rate * (shapes[i].reversed ? -1 : 1);
       }
-
-      // Check if any pending load operations have completed
       shapes[i].checkLoadStatus();
     }
   }; // END DRAW
