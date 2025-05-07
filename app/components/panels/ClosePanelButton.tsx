@@ -11,7 +11,7 @@ export default function ClosePanelButton({
 
   return (
     <button
-      className="h-7 w-7 lg:h-10 lg:w-10 text-black/30 lg:text-white/70 fixed right-1 lg:right-[12vw] xl:right-[13vw] flex items-center justify-center font-[--font-noto] text-5xl lg:text-8xl pb-1 lg:pb-2 cursor-pointer"
+      className="h-7 w-7 md:h-10 md:w-10 text-black/30 md:text-white/70 fixed right-1 md:right-[4.5vw] lg:right-[5vw] xl:right-[6vw] flex items-center justify-center font-[--font-noto] text-5xl md:text-7xl lg:text-8xl pb-1 md:pb-2 cursor-pointer"
       onClick={(e) => {
         e.stopPropagation();
         // If this exact panel is already open, just toggle it closed

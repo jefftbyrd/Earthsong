@@ -54,21 +54,21 @@ export default function InfoPanel({ sound, color }: InfoPanelProps) {
           {sound.name}
         </h2>
 
-        <div className="border-2 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block">
+        <div className="border-2 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block font-[abordage]">
           <div>
-            <span className="font-black">Location:</span> {location}
+            <span className="itemTitle">Location:</span> {location}
           </div>
           <div>
-            <span className="font-black">Duration:</span> {minutes}:{seconds}
+            <span className="itemTitle">Duration:</span> {minutes}:{seconds}
           </div>
           <div>
-            <span className="font-black">Tags:</span> {sound.tags.join(', ')}
+            <span className="itemTitle">Tags:</span> {sound.tags.join(', ')}
           </div>
           <div>
-            <span className="font-black">Uploaded by:</span> {sound.username}
+            <span className="itemTitle">Uploaded by:</span> {sound.username}
           </div>
           <div>
-            <span className="font-black">Freesound page:</span>{' '}
+            <span className="itemTitle">Freesound page:</span>{' '}
             <a
               href={sound.freesoundUrl}
               target="_blank"

@@ -10,6 +10,7 @@ interface PanelProps {
   panel: string;
   heading?: string;
   className?: string;
+  headingClassName?: string;
 }
 
 export default function PanelWrap({
@@ -17,6 +18,7 @@ export default function PanelWrap({
   panel,
   heading,
   className,
+  headingClassName,
   ...props
 }: PanelProps) {
   const { ref } = useDynamicHeight();
@@ -44,7 +46,7 @@ export default function PanelWrap({
   return (
     <div
       ref={ref}
-      className={`${className} text-black box-border overflow-auto mt-0.5 z-40 relative text-center lg:mt-20 lg:border-black/30 lg:border-x-6 lg:border-t-6 pb-6 lg:w-2/3 lg:mx-auto`}
+      className={`${className} text-black box-border overflow-auto mt-0.5 z-40 relative text-center md:mt-20 lg:border-black/30 lg:border-x-6 lg:border-t-6 pb-6 md:w-4/5 lg:w-4/5 md:mx-auto`}
       {...props}
     >
       <ClosePanelButton panel={panel} />
@@ -57,7 +59,7 @@ export default function PanelWrap({
               right-0 top-1/2 z-50
               [writing-mode:vertical-rl] [text-orientation:upright]
               rounded-l-md pt-3 pb-2 py-1 flex items-center justify-center text-center
-              uppercase font-bold tracking-[0.4em] shadow-xl/20 outline-black/30 outline-2
+              uppercase tracking-[0.4em] shadow-xl/20 outline-black/30 outline-2
             "
             onClick={(e) => {
               e.stopPropagation();
@@ -72,7 +74,9 @@ export default function PanelWrap({
             About
           </button>
         )}
-        <h2 className="left-0 right-0 text-6xl md:text-9xl uppercase opacity-30 text-center">
+        <h2
+          className={`${headingClassName} left-0 right-0 text-6xl md:text-9xl uppercase opacity-30 text-center`}
+        >
           {heading ?? panel}
         </h2>
         <div className="flex flex-col justify-center items-center gap-5">
