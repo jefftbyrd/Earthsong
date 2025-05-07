@@ -27,7 +27,7 @@ export default function SoundController({
               : soundsColor[0].geotag || ''
             : ''}
         </p>
-        <p>
+        <p className="font-[abordage]!">
           {soundsColor?.[0]
             ? soundsColor[0].location || recalledName || ''
             : recalledName || ''}
