@@ -123,7 +123,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       </head>
 
       <body
-        className={`${basteleur.variable} ${abordage.variable} font-basteleur font-abordage ${noto.variable}`}
+        className={`${basteleur.variable} ${abordage.variable} ${noto.variable} font-basteleur`}
       >
         <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
