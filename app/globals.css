@@ -12,7 +12,6 @@ body {
 
 h1,
 h2,
-h3,
 h4,
 h5,
 h6 {
@@ -30,13 +29,19 @@ html {
 
 button {
   cursor: pointer;
+  font-family: var(--font-basteleur);
+}
+
+.itemTitle {
+  font-family: var(--font-basteleur);
+  @apply font-bold;
 }
 
 form {
   @apply flex flex-col gap-4 text-left;
   label {
     span {
-      @apply uppercase font-bold;
+      @apply font-bold;
     }
     input {
       @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-900;
@@ -82,14 +87,14 @@ body {
 }
 
 .thanks-list {
-  @apply list-disc flex flex-col gap-3 ml-5 leading-8;
+  @apply list-disc flex flex-col gap-1 ml-5;
 
   li {
     /* @apply list-disc; */
   }
 
   a {
-    @apply text-white  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100;
+    @apply underline hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100;
   }
 }
 
@@ -104,6 +109,11 @@ body {
   left: 0;
   margin: 12px;
   border-radius: 4px;
+}
+
+.earthSongName {
+  font-family: var(--font-basteleur);
+  @apply uppercase;
 }
 
 .reset-button {
