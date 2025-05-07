@@ -35,6 +35,19 @@ const basteleur = localFont({
   ],
 });
 
+const abordage = localFont({
+  variable: '--font-abordage',
+  preload: true,
+  display: 'swap',
+  src: [
+    {
+      path: './fonts/Abordage-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+});
+
 type RootLayoutProps = {
   children: React.ReactNode;
 };
@@ -109,7 +122,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
 
-      <body className={`${basteleur.variable} font-basteleur ${noto.variable}`}>
+      <body
+        className={`${basteleur.variable} ${abordage.variable} font-basteleur font-abordage ${noto.variable}`}
+      >
         <JourneyContextProvider>
           <UserContextProvider user={user} snapshots={snapshots}>
             <SoundsContextProvider>

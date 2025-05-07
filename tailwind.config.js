@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       fontFamily: {
         basteleur: ['var(--font-basteleur)'],
+        abordage: ['var(--font-abordage)'],
         sans: ['var(--font-basteleur)'], // This makes Basteleur the default font
       },
     },
