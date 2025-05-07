@@ -20,7 +20,7 @@ export default function SoundController({
   return (
     <>
       <div className="text-center py-1">
-        <p className="font-black">
+        <p className="text-xl font-[basteleur]! text-[#D589FF]">
           {soundsColor?.[0]
             ? soundsColor[0].pin
               ? `${soundsColor[0].pin?.lat?.toFixed(3) || 0}, ${soundsColor[0].pin?.lng?.toFixed(3) || 0}`
