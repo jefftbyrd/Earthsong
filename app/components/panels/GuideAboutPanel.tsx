@@ -19,11 +19,11 @@ export default function GuideAboutPanel() {
             <h2 className="text-3xl md:text-4xl mb-4 text-[#D589FF]">
               <span className="uppercase">Earth Song</span> is...
             </h2>
-            <ul className="list-outside ml-5 text-xl flex flex-col gap-1">
-              <li>... a vehicle for sonic teleportation.</li>
-              <li>... a game of chance.</li>
-              <li>... a tool for sonic inspiration.</li>
-              <li>... an adventure, a surprise — totally unpredictable!</li>
+            <ul className="list-disc list-outside ml-5 text-xl flex flex-col gap-1">
+              <li>a vehicle for sonic teleportation.</li>
+              <li>a game of chance.</li>
+              <li>a tool for sonic inspiration.</li>
+              <li>an adventure, a surprise — totally unpredictable!</li>
             </ul>
           </div>
 
