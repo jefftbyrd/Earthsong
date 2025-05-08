@@ -46,7 +46,7 @@ export default function GuideAboutPanel() {
               </li>
               <li>
                 Mutate and transform sounds in real-time: reverse direction,
-                change playback speed. “Tune” sounds to each other.
+                change playback speed, “tune” sounds to each other.
               </li>
             </ul>
           </div>
@@ -70,8 +70,8 @@ export default function GuideAboutPanel() {
                   freesound.org
                 </a>
                 's vast database of user-contributed sound recordings,{' '}
-                <span className="earthSongName">Earth song</span> locates audio
-                material from the chosen point.
+                <span className="earthSongName">Earth song</span> finds audio
+                material from the chosen geographical location.
               </li>
               <li>
                 Through a chance operation, 5 sounds are extracted and loaded
@@ -172,14 +172,13 @@ export default function GuideAboutPanel() {
             </a>
           </li>
           <li className="bg-white/10 p-4">
-            Visit{' '}
             <a
               href="https://github.com/jefftbyrd/Earthsong"
               target="_blank"
               rel="noreferrer"
               className="underline  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100"
             >
-              <span className="earthSongName">EARTH SONG</span> on Github
+              <span className="earthSongName">Visit EARTH SONG</span> on Github
             </a>
           </li>
         </ul>
