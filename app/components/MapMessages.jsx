@@ -68,14 +68,16 @@ export default function MapMessages(props) {
   };
 
   return (
-    <div className="absolute bottom-12 z-10 m-auto left-0 right-0 text-center text-lg sm:text-3xl/10 lg:text-4xl/13 p-2 backdrop-blur-[5px] text-shadow-lg/20 sm:w-3/4 font-[basteleur]!">
+    <div className="absolute bottom-12 z-10 m-auto left-0 right-0 text-center text-lg sm:text-3xl/10 lg:text-4xl/13 p-2 backdrop-blur-[5px] text-shadow-lg/20 sm:w-3/4 font-basteleur">
       {/* LINE 1 */}
       <div>
         {mapConditions.initial && (
-          <motion.p {...fadeAndPulsate}>Choose a place to explore</motion.p>
+          <motion.div {...fadeAndPulsate} className="font-basteleur">
+            Choose a place to explore
+          </motion.div>
         )}
 
-        <motion.p {...fadeAnimation}>
+        <motion.div {...fadeAnimation}>
           {mapConditions.location &&
           !mapConditions.hasResults &&
           !mapConditions.noResults ? (
@@ -87,32 +89,38 @@ export default function MapMessages(props) {
               {props.location ? ` (${props.location})` : ''}.
             </>
           ) : null}
-        </motion.p>
+        </motion.div>
       </div>
 
       {/* LINE 2 */}
       <div>
         {Boolean(mapConditions.fetching) && (
-          <motion.p {...fadeAndPulsate} className="font-bold text-shadow-lg/20">
+          <motion.div
+            {...fadeAndPulsate}
+            className="font-bold text-shadow-lg/20"
+          >
             {searchMessage || 'Searching...'}
             <br />
-          </motion.p>
+          </motion.div>
         )}
         {mapConditions.hasError && (
-          <motion.p {...fadeAnimation} className="font-bold text-shadow-lg/20">
+          <motion.div
+            {...fadeAnimation}
+            className="font-bold text-shadow-lg/20"
+          >
             {searchMessage || 'Searching...'}
             <br />
-          </motion.p>
+          </motion.div>
         )}
       </div>
 
       {/* LINE 3 */}
       {mapConditions.hasResults && (
         <>
-          <motion.p {...fadeAnimation}>
+          <motion.div {...fadeAnimation}>
             {/* Found {sounds.soundCount} sounds within {sounds.searchRadius}km. */}
             {searchMessage}.
-          </motion.p>
+          </motion.div>
           <motion.button
             {...fadeAndPulsate}
             className="font-bold text-shadow-lg/20 hover:scale-105 transition-all duration-300 active:scale-97"
@@ -131,13 +139,13 @@ export default function MapMessages(props) {
 
       {mapConditions.noResults && (
         <>
-          <p>
+          <div>
             No sounds found within 500km of{' '}
             {props.location ? ` ${props.location}` : ''}.
-          </p>
-          <motion.p {...fadeAndPulsate} className=" text-shadow-lg/20">
+          </div>
+          <motion.div {...fadeAndPulsate} className=" text-shadow-lg/20">
             Please choose another location.
-          </motion.p>
+          </motion.div>
         </>
       )}
     </div>
