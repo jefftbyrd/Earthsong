@@ -16,4 +16,5 @@ module.exports = {
     },
   },
   plugins: [],
+  safelist: ['font-basteleur', 'font-abordage'],
 };
