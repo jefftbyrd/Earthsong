@@ -11,13 +11,13 @@ export default function UnlockPanel() {
   return (
     <PanelWrap panel="Unlock" className="bg-[#C45353] text-black">
       <>
-        <h3 className="text-xl">
+        <p className="text-xl">
           Welcome, <span className="font-black">stranger</span>.
-        </h3>
+        </p>
         {!loginOpen && !registerOpen ? (
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 mt-4">
             <p>
-              To save and recall your favorite journeys, <br />
+              To save and recall your favorite journeys,{' '}
               <EarthsongButton
                 buttonStyle={3}
                 onClick={() => {
@@ -25,18 +25,18 @@ export default function UnlockPanel() {
                   setRegisterOpen(true);
                 }}
               >
-                Create an account
+                create an account
               </EarthsongButton>
             </p>
             <p>
-              If you already have an account, <br />
+              If you already have an account,{' '}
               <EarthsongButton
                 buttonStyle={3}
                 onClick={() => {
                   setLoginOpen(true);
                 }}
               >
-                Sign in
+                sign in
               </EarthsongButton>
             </p>
           </div>

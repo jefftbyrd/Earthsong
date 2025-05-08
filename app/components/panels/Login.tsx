@@ -40,7 +40,7 @@ export default function Login() {
 
   return (
     <>
-      <h3 className="text-xl">Please sign in.</h3>
+      <h3 className="font-abordage">Please sign in.</h3>
 
       <form onSubmit={handleLogin} className="flex flex-col gap-4 text-left">
         <label>

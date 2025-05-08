@@ -11,6 +11,7 @@ interface PanelProps {
   heading?: string;
   className?: string;
   headingClassName?: string;
+  panelTheme?: 'light' | 'dark';
 }
 
 export default function PanelWrap({
@@ -19,12 +20,16 @@ export default function PanelWrap({
   heading,
   className,
   headingClassName,
+  panelTheme = 'light',
   ...props
 }: PanelProps) {
   const { ref } = useDynamicHeight();
   const { panelOpen, togglePanel, setPanelId, panelId } =
     useContext(journeyContext);
   const { setActivateTarget } = useSoundPlayer();
+
+  const borderColor =
+    panelTheme === 'dark' ? 'lg:border-white/20' : 'lg:border-black/30';
 
   useEffect(() => {
     // Create handler function for document-level keyboard events
@@ -46,10 +51,10 @@ export default function PanelWrap({
   return (
     <div
       ref={ref}
-      className={`${className} box-border overflow-auto mt-0.5 z-40 relative text-center md:mt-20 lg:border-black/30 lg:border-x-6 lg:border-t-6 pb-6 md:w-4/5 lg:w-4/5 md:mx-auto`}
+      className={`${className} box-border overflow-auto mt-0.5 z-40 relative text-center md:mt-20 ${borderColor} lg:border-x-6 lg:border-t-6 pb-6 md:w-4/5 lg:w-4/5 md:mx-auto`}
       {...props}
     >
-      <ClosePanelButton panel={panel} />
+      <ClosePanelButton panel={panel} theme={panelTheme} />
       <div className={panelId === 'About' ? 'p-4 pt-6' : 'p-8 pt-6'}>
         {panelOpen && panelId !== 'About' && (
           <button

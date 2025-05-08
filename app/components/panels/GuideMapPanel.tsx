@@ -3,7 +3,11 @@ import PanelWrap from './PanelWrap';
 
 export default function GuideMapPanel() {
   return (
-    <PanelWrap panel="Map" className="bg-[#1F102A] text-white tracking-wide">
+    <PanelWrap
+      panel="Map"
+      className="bg-[#1F102A] text-white tracking-wide"
+      panelTheme="dark"
+    >
       <h3 className="text-xl mb-5 font-abordage tracking-wide">
         Choose a place to explore by selecting a point on the map
       </h3>

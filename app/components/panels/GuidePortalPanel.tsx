@@ -9,7 +9,11 @@ export default function GuidePortalPanel() {
   const [secretMode, setSecretMode] = useState('touch');
 
   return (
-    <PanelWrap panel="Portal" className="bg-[#1F102A] text-white tracking-wide">
+    <PanelWrap
+      panel="Portal"
+      className="bg-[#1F102A] text-white tracking-wide"
+      panelTheme="dark"
+    >
       <div className="w-full">
         <h2 className="text-xl mb-3">Interacting with sounds</h2>
         <div className="w-full md:w-2/3 mx-auto flex flex-col gap-3 pb-7 text-left p-2">

@@ -60,6 +60,7 @@ form {
       @apply font-bold;
     }
     input {
+      font-family: var(--font-abordage) !important;
       @apply shadow appearance-none border rounded w-full py-2 px-3 text-gray-900;
     }
   }

@@ -8,6 +8,7 @@ export default function GuideAboutPanel() {
       heading="Earth Song"
       headingClassName="text-[#6AD7FF] opacity-100! text-7xl!"
       className="bg-[#1F102A] text-white tracking-wide"
+      panelTheme="dark"
     >
       <div className="text-xl md:text-3xl mb-2 font-abordage tracking-wide">
         Listen to the planet
@@ -138,7 +139,8 @@ export default function GuideAboutPanel() {
             >
               Michael Jeffrey Lee
             </a>{' '}
-            for the name EARTH SONG, which is also a track from the forthcoming{' '}
+            for the name <span className="earthSongName">EARTH SONG</span>,
+            which is also a track from the forthcoming{' '}
             <a
               target="_blank"
               href="https://budokanboys.club/"
