@@ -44,7 +44,7 @@ export default function Login() {
 
       <form onSubmit={handleLogin} className="flex flex-col gap-4 text-left">
         <label>
-          <span className=" font-bold">Username</span>
+          <span className="font-bold tracking-wide">Username</span>
           <input
             placeholder="Identify yourself"
             autoCapitalize="off"
@@ -54,7 +54,7 @@ export default function Login() {
         </label>
 
         <label>
-          <span className=" font-bold">Password</span>
+          <span className=" font-bold tracking-wide">Password</span>
           <input
             autoCapitalize="off"
             type="password"

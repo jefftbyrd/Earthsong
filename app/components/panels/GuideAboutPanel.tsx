@@ -6,7 +6,7 @@ export default function GuideAboutPanel() {
     <PanelWrap
       panel="About"
       heading="Earth Song"
-      headingClassName="text-[#6AD7FF] opacity-100! text-7xl!"
+      headingClassName="text-[#6AD7FF] opacity-100! text-7xl"
       className="bg-[#1F102A] text-white tracking-wide"
       panelTheme="dark"
     >

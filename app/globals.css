@@ -57,7 +57,7 @@ form {
   @apply flex flex-col gap-4 text-left;
   label {
     span {
-      @apply font-bold;
+      @apply font-bold tracking-wide;
     }
     input {
       font-family: var(--font-abordage) !important;

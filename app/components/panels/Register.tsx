@@ -43,8 +43,8 @@ export default function Register() {
   }
 
   return (
-    <div className="grid gap-5">
-      <p className="text-xl">Create an account.</p>
+    <div className="grid gap-5 mt-4">
+      <p className="">Create an account.</p>
       <form onSubmit={async (event) => await handleRegister(event)}>
         <label>
           <span>Username</span>
