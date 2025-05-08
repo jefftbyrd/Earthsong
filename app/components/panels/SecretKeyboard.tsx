@@ -1,7 +1,7 @@
 export default function SecretKeyboard() {
   return (
     <>
-      <p className="my-5 text-xl text-left">
+      <p className="my-5 text-left">
         Manipulate sounds by hovering your cursor over a sound circle and using
         these keyboard commands:
       </p>

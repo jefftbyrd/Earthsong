@@ -14,7 +14,7 @@ export default function GuidePortalPanel() {
         <h2 className="text-xl mb-3">Interacting with sounds</h2>
         <div className="w-full md:w-2/3 mx-auto flex flex-col gap-3 pb-7 text-left p-2">
           <div className="border-b-1 pb-5 border-black/30">
-            <h3 className="text-xl/10 font-bold">
+            <h3 className="text-xl/10 itemTitle">
               <span className="border-1 border-white/60 p-1 rounded-md text-white bg-black/30">
                 PLAY
               </span>{' '}
@@ -36,7 +36,7 @@ export default function GuidePortalPanel() {
               </span>{' '}
               in the sonic field
             </h3>
-            Touch and drag sound circles.
+            <p>Touch and drag sound circles.</p>
           </div>
           <div>
             <h3 className="text-xl/10 font-bold">
@@ -45,19 +45,19 @@ export default function GuidePortalPanel() {
                 INFO PANEL
               </span>
             </h3>
-            Touch the sound title in the play bar.
+            <p>Touch the sound title in the play bar.</p>
           </div>
 
           <div className="border-1 p-5 md:p-7 w-full bg-white/10 sonicSorcery mt-5">
             <h3 className="text-5xl/13 uppercase text-center">Sonic Sorcery</h3>
 
-            <div className="flex gap-1 justify-center text-lg mt-3">
+            <div className="flex gap-2 justify-center mt-3">
               <EarthsongButton
                 onClick={() => {
                   setSecretMode('touch');
                 }}
                 buttonStyle={3}
-                className={`p-3 font-bold border-1 border-black/50 text-black/80 ${secretMode === 'touch' ? 'bg-white/70' : ''}`}
+                className={`p-3 font-bold border-1 border-white/50 ${secretMode === 'touch' ? 'bg-white/70 text-black/80' : ''}`}
               >
                 Touchscreen
               </EarthsongButton>
@@ -67,7 +67,7 @@ export default function GuidePortalPanel() {
                   setSecretMode('keyboard');
                 }}
                 buttonStyle={3}
-                className={`p-3 font-bold border-1 border-black/50 text-black/80 ${secretMode === 'keyboard' ? 'bg-white/70' : ''}`}
+                className={`p-3 font-bold border-1 border-white/50 ${secretMode === 'keyboard' ? 'bg-white/70 text-black/80' : ''}`}
               >
                 Keyboard
               </EarthsongButton>

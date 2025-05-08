@@ -54,7 +54,7 @@ export default function InfoPanel({ sound, color }: InfoPanelProps) {
           {sound.name}
         </h2>
 
-        <div className="border-2 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block font-[abordage]!">
+        <div className="border-2 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block font-abordage">
           <div>
             <span className="itemTitle">Location:</span> {location}
           </div>
@@ -80,7 +80,7 @@ export default function InfoPanel({ sound, color }: InfoPanelProps) {
           </div>
         </div>
 
-        <p className="text-sm/6 lg:text-lg/8 wrap-break-word">
+        <p className="text-sm/6 lg:text-lg/8 wrap-break-word font-abordage">
           {cleanDescription}
         </p>
       </div>

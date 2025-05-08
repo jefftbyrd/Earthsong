@@ -6,20 +6,20 @@ export default function GuideAboutPanel() {
     <PanelWrap
       panel="About"
       heading="Earth Song"
-      headingClassName="text-[#6AD7FF] opacity-100!"
+      headingClassName="text-[#6AD7FF] opacity-100! text-7xl!"
       className="bg-[#1F102A] text-white tracking-wide"
     >
-      <h3 className="text-xl md:text-3xl mb-2 font-[abordage]! tracking-wide">
+      <div className="text-xl md:text-3xl mb-2 font-abordage tracking-wide">
         Listen to the planet
-      </h3>
+      </div>
       {/* <Logo className="w-40 text-black/30 drop-shadow-xl/30 md:hidden" /> */}
-      <div className="w-full md:w-9/10 lg:w-4/5 mx-auto text-left p-5 p-0 md:px-0 md:py-3">
+      <div className="w-full md:w-9/10 lg:w-4/5 mx-auto text-left p-0 md:px-0 md:py-3">
         <div className="flex flex-col gap-7">
           <div>
             <h2 className="text-3xl md:text-4xl mb-4 text-[#D589FF]">
               <span className="uppercase">Earth Song</span> is...
             </h2>
-            <ul className="list-disc list-outside ml-5 text-xl flex flex-col gap-1">
+            <ul className="list-disc list-outside ml-5 flex flex-col gap-1">
               <li>a vehicle for sonic teleportation.</li>
               <li>a game of chance.</li>
               <li>a tool for sonic inspiration.</li>
@@ -32,7 +32,7 @@ export default function GuideAboutPanel() {
           </h2>
           <div className="flex gap-1">
             {/* <Logo className="w-[50vw] text-black/30 drop-shadow-xl/30 hidden md:block" /> */}
-            <ul className="list-disc list-outside text-xl flex flex-col gap-1 tracking-wide ml-5">
+            <ul className="list-disc list-outside flex flex-col gap-1 tracking-wide ml-5">
               <li>Generate spontaneous sound collages.</li>
               <li>
                 Build your own soundscapes in{' '}
@@ -54,7 +54,7 @@ export default function GuideAboutPanel() {
             <h2 className="text-3xl md:text-4xl mb-4 text-[#D589FF]">
               How does it work?
             </h2>
-            <ul className="list-disc list-outside text-xl flex flex-col gap-1 tracking-wide ml-5">
+            <ul className="list-disc list-outside flex flex-col gap-1 tracking-wide ml-5">
               <li>
                 Choose a place to explore by selecting a point on the map.
               </li>
@@ -102,7 +102,7 @@ export default function GuideAboutPanel() {
         </div>
 
         <h2 className="text-3xl md:text-4xl mb-4 text-[#D589FF]">Thanks!</h2>
-        <ul className="thanks-list text-lg ">
+        <ul className="thanks-list">
           <li>
             <a
               className=""
@@ -157,9 +157,9 @@ export default function GuideAboutPanel() {
           </li>
         </ul>
 
-        <ul className="text-2xl mb-2 font-[abordage]! tracking-wide mt-5 flex flex-col gap-2 w-auto">
+        <ul className="text-lg mb-2 font-abordage tracking-wide mt-5 flex flex-col gap-2 w-auto">
           <li className="bg-white/10 p-4">
-            Created and developed by{' '}
+            Created & developed by{' '}
             <a
               className="underline  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all uppercase duration-100"
               target="_blank"

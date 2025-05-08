@@ -22,7 +22,7 @@ export default function GuideNavigation() {
             />
             MAP
           </h3>
-          Return to the map page to explore a new location
+          <p>Return to the map page to explore a new location</p>
         </div>
       ) : null}
 
@@ -35,7 +35,7 @@ export default function GuideNavigation() {
             />
             POWERS
           </h3>
-          Save and recall your favorite journeys
+          <p>Save and recall your favorite journeys</p>
         </div>
       ) : (
         <div className="">
@@ -46,8 +46,10 @@ export default function GuideNavigation() {
             />
             UNLOCK
           </h3>
-          Create an EARTH SONG account or sign in.
-          <br /> Registered users can save and recall their favorite journeys.
+          <p>
+            Create an EARTH SONG account or sign in. Registered users can save
+            and recall their favorite journeys.
+          </p>
         </div>
       )}
     </div>

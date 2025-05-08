@@ -9,13 +9,13 @@ export default function UnlockPanel() {
   const [registerOpen, setRegisterOpen] = useState(false);
 
   return (
-    <PanelWrap panel="Unlock" className="bg-[#C45353]">
+    <PanelWrap panel="Unlock" className="bg-[#C45353] text-black">
       <>
         <h3 className="text-xl">
           Welcome, <span className="font-black">stranger</span>.
         </h3>
         {!loginOpen && !registerOpen ? (
-          <div className="flex flex-col gap-6 leading-10">
+          <div className="flex flex-col gap-6">
             <p>
               To save and recall your favorite journeys, <br />
               <EarthsongButton
