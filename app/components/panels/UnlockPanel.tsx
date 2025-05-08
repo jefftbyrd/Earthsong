@@ -20,6 +20,7 @@ export default function UnlockPanel() {
               To save and recall your favorite journeys,{' '}
               <EarthsongButton
                 buttonStyle={3}
+                className="mt-1"
                 onClick={() => {
                   setLoginOpen(false);
                   setRegisterOpen(true);
@@ -32,6 +33,7 @@ export default function UnlockPanel() {
               If you already have an account,{' '}
               <EarthsongButton
                 buttonStyle={3}
+                className="mt-1"
                 onClick={() => {
                   setLoginOpen(true);
                 }}
