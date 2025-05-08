@@ -7,7 +7,15 @@ body {
   height: 100%;
   min-height: 100%;
   position: relative;
-  font-family: var(--font-basteleur);
+  /* font-family: var(--font-basteleur); */
+}
+
+.font-basteleur {
+  font-family: var(--font-basteleur) !important;
+}
+
+.font-abordage {
+  font-family: var(--font-abordage) !important;
 }
 
 h1,
@@ -18,10 +26,18 @@ h6 {
   font-family: var(--font-basteleur);
 }
 
+/* .font-basteleur {
+  font-family: var(--font-basteleur) !important;
+} */
+
 p,
 ul {
   font-family: var(--font-abordage);
 }
+
+/* p {
+  font-family: var(--font-basteleur) !important;
+} */
 
 html {
   scrollbar-gutter: stable;
@@ -62,11 +78,11 @@ form {
       @apply font-bold;
       span {
         @apply font-medium border-1 border-black/30 p-2 rounded-md bg-black/30 text-white m-1 relative;
-        span {
+        /* span {
           font-family: 'Segoe UI Symbol', 'Apple Color Emoji',
             'Noto Sans Symbols', 'Noto Emoji', 'Arial Unicode MS', sans-serif;
           @apply text-3xl/0 bg-transparent border-0 mx-0 top-0.5;
-        }
+        } */
       }
     }
   }
