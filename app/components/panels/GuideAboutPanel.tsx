@@ -70,7 +70,7 @@ export default function GuideAboutPanel() {
                   freesound.org
                 </a>
                 's vast database of user-contributed sound recordings,{' '}
-                <span className="uppercase">Earth song</span> locates audio
+                <span className="earthSongName">Earth song</span> locates audio
                 material from the chosen point.
               </li>
               <li>
