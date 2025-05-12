@@ -7,6 +7,9 @@ export type Snapshot = {
   title: string;
   sounds: Sounds;
   userId: number;
+  location?: string | null;
+  pin?: any | null;
+  created_at?: Date;
 };
 
 // export async function up(sql: Sql) {
