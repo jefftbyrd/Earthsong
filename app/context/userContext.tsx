@@ -7,11 +7,26 @@ export interface User {
   username: string;
 }
 
-export interface Snapshot {
+// export interface Snapshot {
+//   id: number;
+//   sounds: Sound[];
+//   title: string;
+// }
+
+export type Snapshot = {
   id: number;
-  sounds: Sound[];
   title: string;
-}
+  sounds: Sound[];
+  userId: number;
+  createdAt?: Date; // Optional since old records may not have it
+  location?: string; // Optional location name
+  pin?: {
+    // Optional geographic coordinates
+    lat?: number;
+    lng?: number;
+    // any other geo properties you might need
+  };
+};
 
 export interface UserContextType {
   user: User | null;

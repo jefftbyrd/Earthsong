@@ -18,8 +18,11 @@ export interface Sound {
   url: string;
   username: string;
   color?: string;
-  pin?: { lat: number; lng: number };
+  pin?: Pin;
   location?: string;
+
+  // pin?: { lat: number; lng: number };
+  // location?: string;
 }
 
 interface Pin {
@@ -33,6 +36,12 @@ export interface Sounds {
   pin: Pin;
 }
 
+export interface SoundsColor {
+  pin?: Pin;
+  location?: string;
+  sounds?: Sound[];
+}
+
 interface SoundsContextType {
   sounds: Sounds;
   setSounds: Dispatch<React.SetStateAction<Sounds>>;
@@ -40,8 +49,8 @@ interface SoundsContextType {
   setNotEnough: Dispatch<SetStateAction<boolean>>;
   freesoundLoading: boolean;
   setFreesoundLoading: Dispatch<SetStateAction<boolean>>;
-  soundsColor: Sounds;
-  setSoundsColor: Dispatch<SetStateAction<Sounds>>;
+  soundsColor: SoundsColor;
+  setSoundsColor: Dispatch<SetStateAction<SoundsColor>>;
   isFetchingSounds: boolean; // New property added to SoundsContextType
   setIsFetchingSounds: Dispatch<SetStateAction<boolean>>; // New property added to SoundsContextType
 }
@@ -68,19 +77,20 @@ export const soundsContext = createContext<SoundsContextType>({
   freesoundLoading: false,
   setFreesoundLoading: () => {},
   soundsColor: {
-    count: 0,
     pin: { lat: 0, lng: 0 },
-    results: {
-      description: '',
-      duration: 0,
-      freesoundUrl: '',
-      geotag: '',
-      id: 0,
-      name: '',
-      tags: [],
-      url: '',
-      username: '',
-    },
+    sounds: [
+      {
+        description: '',
+        duration: 0,
+        freesoundUrl: '',
+        geotag: '',
+        id: 0,
+        name: '',
+        tags: [],
+        url: '',
+        username: '',
+      },
+    ],
   },
   setSoundsColor: () => {},
   isFetchingSounds: false, // Initialize the new property
@@ -96,23 +106,26 @@ export const SoundsContextProvider = ({ children }: Props) => {
   const [freesoundLoading, setFreesoundLoading] = useState(true);
   const [notEnough, setNotEnough] = useState(false);
   const [isFetchingSounds, setIsFetchingSounds] = useState(true); // New state
-  const [soundsColor, setSoundsColor] = useState<Sounds>({
-    count: 0,
+  const [soundsColor, setSoundsColor] = useState<SoundsColor>({
     pin: {
       lat: 0,
       lng: 0,
+      // locationName: '',
     },
-    results: {
-      description: '',
-      duration: 0,
-      freesoundUrl: '',
-      geotag: '',
-      id: 0,
-      name: '',
-      tags: [],
-      url: '',
-      username: '',
-    },
+    location: '',
+    sounds: [
+      {
+        description: '',
+        duration: 0,
+        freesoundUrl: '',
+        geotag: '',
+        id: 0,
+        name: '',
+        tags: [],
+        url: '',
+        username: '',
+      },
+    ],
   });
   const [sounds, setSounds] = useState<Sounds>({
     count: 0,
