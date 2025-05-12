@@ -99,6 +99,17 @@ export default function SnapshotItem({
           }}
         >
           {snapshot.title}
+          <br />
+          {snapshot && !Array.isArray(snapshot)
+            ? snapshot.pin
+              ? `${snapshot.pin.lat?.toFixed(3) || 0}, ${snapshot.pin.lng?.toFixed(3) || 0}`
+              : snapshot.sounds?.[0]?.geotag || ''
+            : ''}
+          <br />
+          {snapshot.location || snapshot.sounds?.[0]?.location || null}
+          {snapshot && !Array.isArray(snapshot) && snapshot.location
+            ? snapshot.location
+            : snapshot.sounds?.[0]?.location || null}
         </EarthsongButton>
         <EarthsongButton buttonStyle={6} onClick={handleDelete}>
           delete
