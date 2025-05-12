@@ -94,22 +94,24 @@ export default function Portal(props) {
           maxHeight: 'calc(100vh - 2.5rem)',
         }}
       >
-        {soundsForPortal?.length > 0 && containerHeight > 0 && (
-          <NextReactP5Wrapper
-            key={`p5-wrapper-${snapshotVersion}-${phase}`} // Include phase in the key
-            sketch={soundPortal}
-            soundsColor={soundsForPortal}
-            containerHeight={containerHeight}
-            playerTarget={playerTarget}
-            playing={playing}
-            reset={reset}
-            activateTarget={activateTarget}
-            panelOpen={panelOpen}
-            forceChange={forceChange}
-            version={snapshotVersion}
-            ref={p5Ref}
-          />
-        )}
+        {(soundsForPortal?.sounds?.length > 0 ||
+          (Array.isArray(soundsForPortal) && soundsForPortal.length > 0)) &&
+          containerHeight > 0 && (
+            <NextReactP5Wrapper
+              key={`p5-wrapper-${snapshotVersion}-${phase}`} // Include phase in the key
+              sketch={soundPortal}
+              soundsColor={soundsForPortal?.sounds || soundsForPortal}
+              containerHeight={containerHeight}
+              playerTarget={playerTarget}
+              playing={playing}
+              reset={reset}
+              activateTarget={activateTarget}
+              panelOpen={panelOpen}
+              forceChange={forceChange}
+              version={snapshotVersion}
+              ref={p5Ref}
+            />
+          )}
         <AnimatePresence>
           {panelOpen && panelId && panels[panelId]?.component && (
             <motion.div
