@@ -87,6 +87,8 @@ export const soundPortal = (p5) => {
   p5.updateWithProps = async (props) => {
     // If reset is triggered, ensure proper cleanup
 
+    console.log('soundsColor on sound portal p5', props.soundsColor);
+
     if (props.reset) {
       await stopAll(); // Make sure this is awaited
 
