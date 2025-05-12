@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { journeyContext } from '../../context/journeyContext';
-import type { Sound } from '../../context/soundsContext';
+import type { SoundsColor } from '../../context/soundsContext';
 import InfoPanel from '../panels/InfoPanel';
 import SoundItem from './SoundItem';
 
 interface SoundControllerProps {
-  soundsColor?: Sound[];
+  soundsColor?: SoundsColor;
   className?: string;
   recalledName?: string;
 }
@@ -17,31 +17,30 @@ export default function SoundController({
 }: SoundControllerProps) {
   const { panelId, panelOpen } = useContext(journeyContext);
 
+  const formatCoordinates = (pin?: { lat?: number; lng?: number }) => {
+    if (!pin || pin.lat === undefined || pin.lng === undefined) return null;
+    return `${pin.lat.toFixed(3)}, ${pin.lng.toFixed(3)}`;
+  };
+
   return (
     <>
       <div className="text-center py-1">
         <p className="text-xl font-basteleur text-[#D589FF]">
-          {soundsColor?.[0]
-            ? soundsColor[0].pin
-              ? `${soundsColor[0].pin?.lat?.toFixed(3) || 0}, ${soundsColor[0].pin?.lng?.toFixed(3) || 0}`
-              : soundsColor[0].geotag || ''
-            : ''}
+          {soundsColor?.pin ? formatCoordinates(soundsColor.pin) : null}
         </p>
         <p className="font-abordage">
-          {soundsColor?.[0]
-            ? soundsColor[0].location || recalledName || ''
-            : recalledName || ''}
+          {soundsColor?.location || recalledName || ''}
         </p>
       </div>
       <div className={`grid gap-0.5 grid-cols-5 ${className || ''}`}>
-        {soundsColor?.map((sound, index) => (
+        {soundsColor?.sounds?.map((sound: any, index: number) => (
           <div key={`soundId-${sound.id}`} className="">
             <SoundItem sound={sound} index={index} />
           </div>
         ))}
       </div>
       <div>
-        {soundsColor?.map((sound) => (
+        {soundsColor?.sounds?.map((sound: any) => (
           <div
             key={`soundId-${sound.id}`}
             className="absolute inset-x-0 z-40 overflow-hidden"
