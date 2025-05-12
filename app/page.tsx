@@ -228,7 +228,7 @@ export default function Earthsong() {
                 ? {
                     recalledSounds: snapshots?.find(
                       (snapshot) => snapshot?.id === journeyToRecall,
-                    )?.sounds,
+                    ),
                     recalledName: snapshots?.find(
                       (snapshot) => snapshot?.id === journeyToRecall,
                     )?.title,
