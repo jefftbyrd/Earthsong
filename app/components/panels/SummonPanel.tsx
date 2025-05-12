@@ -31,8 +31,8 @@ export default function SummonPanel() {
   const { snapshots } = useContext(userContext);
 
   return (
-    <PanelWrap panel="Summon" className="bg-[#C45353]">
-      <h3 className="text-xl">Summon past journeys</h3>
+    <PanelWrap panel="Summon" className="bg-[rgb(255,0,89)]" panelTheme="light">
+      <h3 className="text-xl font-abordage">Summon past journeys</h3>
 
       <div className="">
         {snapshots.length < 1 ? (

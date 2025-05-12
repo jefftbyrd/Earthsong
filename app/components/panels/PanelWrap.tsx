@@ -31,6 +31,8 @@ export default function PanelWrap({
   const borderColor =
     panelTheme === 'dark' ? 'lg:border-white/20' : 'lg:border-black/30';
 
+  const textColor = panelTheme === 'dark' ? 'text-white' : 'text-black';
+
   useEffect(() => {
     // Create handler function for document-level keyboard events
     const handleKeyDown = (e: KeyboardEvent): void => {
@@ -80,11 +82,13 @@ export default function PanelWrap({
           </button>
         )}
         <h2
-          className={`${headingClassName} left-0 right-0 text-6xl md:text-9xl uppercase opacity-30 text-center`}
+          className={`${headingClassName ?? textColor} left-0 right-0 text-6xl md:text-9xl uppercase text-center opacity-30`}
         >
           {heading ?? panel}
         </h2>
-        <div className="flex flex-col justify-center items-center gap-5">
+        <div
+          className={`${textColor} flex flex-col justify-center items-center gap-5`}
+        >
           {children}
         </div>
       </div>

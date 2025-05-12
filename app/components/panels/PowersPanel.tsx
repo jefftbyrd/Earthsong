@@ -10,8 +10,8 @@ export default function PowersPanel() {
   const { user } = useContext(userContext);
 
   return (
-    <PanelWrap panel="Powers" className="bg-[#C45353]">
-      <h3 className="text-xl mb-5">
+    <PanelWrap panel="Powers" className="bg-[rgb(255,0,89)]" panelTheme="light">
+      <h3 className="text-xl mb-5 font-abordage">
         Greetings, <span className="font-bold">{user?.username}</span>. <br />
         What power will you wield?
       </h3>
