@@ -24,29 +24,43 @@ export default function SavePanel() {
           onSubmit={async (event) => {
             event.preventDefault();
 
-            const response = await fetch('/api/snapshots', {
-              method: 'POST',
-              body: JSON.stringify({
-                title,
-                sounds: soundsColor,
-              }),
-            });
+            try {
+              const response = await fetch('/api/snapshots', {
+                method: 'POST',
+                body: JSON.stringify({
+                  title,
+                  sounds: soundsColor.sounds,
+                  location: soundsColor.location,
+                  pin: soundsColor.pin,
+                }),
+              });
 
-            setErrorMessage('');
+              setErrorMessage('');
 
-            if (!response.ok) {
-              const responseBody = await response.json();
-
-              if ('error' in responseBody) {
-                setErrorMessage(responseBody.error);
+              let responseBody;
+              try {
+                responseBody = await response.json();
+              } catch (parseError) {
+                console.error('Failed to parse response:', parseError);
+                setErrorMessage('Server returned an invalid response');
                 return;
               }
-            }
 
-            setTitle('');
-            await triggerJourneySaved();
-            await togglePanel();
-            router.refresh();
+              if (!response.ok) {
+                setErrorMessage(
+                  responseBody.error || 'Failed to save snapshot',
+                );
+                return;
+              }
+
+              setTitle('');
+              await triggerJourneySaved();
+              await togglePanel();
+              router.refresh();
+            } catch (error) {
+              console.error('Error saving snapshot:', error);
+              setErrorMessage('Failed to save snapshot. Please try again.');
+            }
           }}
         >
           <label>
