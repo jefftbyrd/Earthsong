@@ -142,14 +142,20 @@ export function useSoundData() {
               color: `rgba(${r}, ${g}, ${b}, ${a})`,
               url: previews?.['preview-lq-mp3'],
               name: formatSoundName(sound?.name || ''),
-              pin: sounds.pin,
-              location: sounds.location,
+              // Removed pin and location properties
               searchRadius: sounds.searchRadius,
             };
           },
         );
 
-        setSoundsColor(soundsWithColor);
+        // Create the new structure with pin and location at top level
+        const soundsData = {
+          pin: sounds.pin,
+          location: sounds.location,
+          sounds: soundsWithColor,
+        };
+
+        setSoundsColor(soundsData);
         processedRef.current = true;
       } catch (error) {
         if (!signal.aborted) {
@@ -166,7 +172,7 @@ export function useSoundData() {
   );
 
   useEffect(() => {
-    if (processedRef.current && soundsColor.length > 0) return;
+    if (processedRef.current && soundsColor.sounds?.length > 0) return;
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -177,7 +183,7 @@ export function useSoundData() {
     return () => {
       abortController.abort();
     };
-  }, [processSounds, soundsColor.length]);
+  }, [processSounds, soundsColor.sounds?.length]);
 
   const resetSounds = useCallback(() => {
     processedRef.current = false;
