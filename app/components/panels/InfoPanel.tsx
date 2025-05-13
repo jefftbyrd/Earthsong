@@ -54,7 +54,7 @@ export default function InfoPanel({ sound, color }: InfoPanelProps) {
           {sound.name}
         </h2>
 
-        <div className="bg-white/40 p-3 lg:p-5 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block font-abordage outline-1 outline-offset-2 outline-white/40 w-full tracking-wide">
+        <div className="bg-white/30 p-4 lg:p-6 my-4 lg:my-6 text-sm/6 lg:text-lg/8 inline-block font-abordage outline-1 outline-offset-2 outline-black/30 w-full tracking-wide">
           <div>
             <span className="itemTitle">Location:</span> {location}
           </div>
