@@ -15,7 +15,7 @@ export default function GuidePortalPanel() {
       panelTheme="dark"
     >
       <div className="w-full">
-        <h2 className="text-xl mb-3">Interacting with sounds</h2>
+        <h2 className="panelMessage">Interacting with sounds</h2>
         <div className="w-full md:w-2/3 mx-auto flex flex-col gap-3 pb-7 text-left p-2">
           <div className="border-b-1 pb-5 border-black/30">
             <h3 className="text-xl/10 itemTitle">

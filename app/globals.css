@@ -66,9 +66,9 @@ form {
   }
 }
 
-.panelDesc {
+.panelMessage {
   font-family: var(--font-abordage) !important;
-  @apply text-xl tracking-wider;
+  @apply text-xl tracking-wide md:text-3xl mb-2;
 }
 
 .sonicSorcery {

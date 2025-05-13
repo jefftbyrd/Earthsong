@@ -11,7 +11,7 @@ export default function PowersPanel() {
 
   return (
     <PanelWrap panel="Powers" className="bg-[rgb(255,0,89)]" panelTheme="light">
-      <h3 className="text-xl mb-5 font-abordage">
+      <h3 className="panelMessage">
         Greetings, <span className="font-bold">{user?.username}</span>. <br />
         What power will you wield?
       </h3>

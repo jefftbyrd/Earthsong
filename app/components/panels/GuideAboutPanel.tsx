@@ -10,9 +10,7 @@ export default function GuideAboutPanel() {
       className="bg-[#1F102A] text-white tracking-wide"
       panelTheme="dark"
     >
-      <div className="text-xl md:text-3xl mb-2 font-abordage tracking-wide">
-        Listen to the planet
-      </div>
+      <div className="panelMessage">Listen to the planet</div>
       {/* <Logo className="w-40 text-black/30 drop-shadow-xl/30 md:hidden" /> */}
       <div className="w-full md:w-9/10 lg:w-4/5 mx-auto text-left p-0 md:px-0 md:py-3">
         <div className="flex flex-col gap-7">

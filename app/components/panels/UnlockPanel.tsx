@@ -11,7 +11,7 @@ export default function UnlockPanel() {
   return (
     <PanelWrap panel="Unlock" className="bg-[#23d5e8]" panelTheme="light">
       <>
-        <p className="text-xl">
+        <p className="panelMessage">
           Welcome, <span className="font-black">stranger</span>.
         </p>
         {!loginOpen && !registerOpen ? (

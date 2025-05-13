@@ -16,7 +16,7 @@ export default function SavePanel() {
   return (
     <PanelWrap panel="Save" className="bg-[rgb(255,0,89)]" panelTheme="light">
       <div>
-        <h3 className="text-xl mb-5">
+        <h3 className="panelMessage mb-5!">
           Save this journey so you can revisit it later.
         </h3>
         <form

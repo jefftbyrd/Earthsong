@@ -39,7 +39,7 @@ export default function SummonPanel() {
 
   return (
     <PanelWrap panel="Summon" className="bg-[rgb(255,0,89)]" panelTheme="light">
-      <h3 className="text-xl font-abordage panelDesc">Summon past journeys</h3>
+      <h3 className="panelMessage">Summon past journeys</h3>
 
       <div className="">
         {snapshots.length < 1 ? (
