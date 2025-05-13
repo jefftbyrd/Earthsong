@@ -44,7 +44,7 @@ export const normalizeSnapshotFormat = (data: any) => {
       pin: pin,
       location: data.location || data.sounds[0]?.location || data.title || '',
       // Set createdAt to 'unknown' if it's missing
-      createdAt: data.createdAt || 'unknown',
+      // createdAt: data.createdAt || 'unknown',
       // Ensure userId exists
       userId: data.userId || 'unknown',
       // sounds property is already in data, no need to redefine
