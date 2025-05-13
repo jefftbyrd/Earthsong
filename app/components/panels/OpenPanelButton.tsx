@@ -15,7 +15,7 @@ export default function OpenPanelButton({
 
   return (
     <button
-      className="text-center flex items-center justify-center text-lg rounded-md bg-black/50 p-3 text-white border-1 border-gray-200 cursor-pointer w-fit justify-self-center shadow-md hover:bg-black/80"
+      className="text-center flex items-center justify-center text-lg bg-black/50 p-3 text-white cursor-pointer w-fit justify-self-center shadow-md hover:bg-black/80 outline-1 outline-offset-2 outline-black/30 tracking-wider uppercase"
       onClick={(e) => {
         e.stopPropagation();
         if (panelOpen && panelId === panel) {
