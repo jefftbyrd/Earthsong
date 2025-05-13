@@ -22,7 +22,7 @@ function SnapshotList({ snapshots }: SnapshotListProps) {
   };
 
   return (
-    <div className="grid grid-col-2 gap-10">
+    <div className="grid gap-10 lg:grid-cols-2">
       {snapshotList.map((snapshot) => (
         <SnapshotItem
           key={`snapshot-${snapshot.id}`}
@@ -39,7 +39,7 @@ export default function SummonPanel() {
 
   return (
     <PanelWrap panel="Summon" className="bg-[rgb(255,0,89)]" panelTheme="light">
-      <h3 className="text-xl font-abordage">Summon past journeys</h3>
+      <h3 className="text-xl font-abordage panelDesc">Summon past journeys</h3>
 
       <div className="">
         {snapshots.length < 1 ? (
