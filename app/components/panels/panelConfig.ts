@@ -1,5 +1,6 @@
 import type { FilteredPanelsProps } from '../EarthsongNav';
 import GuideAboutPanel from './GuideAboutPanel';
+import GuideMapPanel from './GuideMapPanel';
 import GuideNavigatePanel from './GuideNavigation';
 import GuidePanelSwitcher from './GuidePanelSwitcher';
 import GuidePortalPanel from './GuidePortalPanel';
@@ -47,6 +48,10 @@ export const panels: Record<string, FilteredPanelsProps> = {
   Portal: {
     component: GuidePortalPanel,
     label: 'Portal',
+  },
+  Map: {
+    component: GuideMapPanel,
+    label: 'Map',
   },
   About: {
     component: GuideAboutPanel,

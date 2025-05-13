@@ -48,11 +48,14 @@ export default function EarthsongNav({ isLoggedIn }: { isLoggedIn: boolean }) {
     if (id === 'Unlock' && isLoggedIn) return false; // Hide Unlock if logged in
     if (id === 'Powers' && !isLoggedIn) return false; // Hide Powers if not logged in
     return !(
-      id === 'Summon' ||
-      id === 'Save' ||
-      id === 'Navigate' ||
-      id === 'Portal' ||
-      id === 'About'
+      (
+        id === 'Summon' ||
+        id === 'Save' ||
+        id === 'Navigate' ||
+        id === 'Portal' ||
+        id === 'About' ||
+        id === 'Map'
+      ) // Add this line
     ); // Hide these panels
   });
 
@@ -112,11 +115,32 @@ export default function EarthsongNav({ isLoggedIn }: { isLoggedIn: boolean }) {
               onClick={(e) => {
                 e.stopPropagation(); // Extra safeguard
                 setActivateTarget(false);
-                if (panelOpen && panelId === id) {
-                  togglePanel(); // This will close the panel and clear panelId
+
+                // Special handling for Guide panel
+                if (id === 'Guide') {
+                  // If panel is open and it's showing Map or Portal (based on phase)
+                  if (
+                    panelOpen &&
+                    (panelId === 'Map' || panelId === 'Portal')
+                  ) {
+                    togglePanel(); // Close the panel
+                  } else {
+                    // Otherwise set based on current phase
+                    if (phase === 'portal' || phase === 'portalRecall') {
+                      setPanelId('Portal');
+                    } else if (phase === 'map' || phase === 'returnToMap') {
+                      setPanelId('Map');
+                    } else {
+                      setPanelId('Guide');
+                    }
+                  }
                 } else {
-                  setPanelId(id);
-                  // The useEffect will handle opening the panel if needed
+                  // Regular behavior for other panels
+                  if (panelOpen && panelId === id) {
+                    togglePanel(); // This will close the panel and clear panelId
+                  } else {
+                    setPanelId(id);
+                  }
                 }
               }}
             >
