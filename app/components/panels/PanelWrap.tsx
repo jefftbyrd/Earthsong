@@ -61,12 +61,12 @@ export default function PanelWrap({
         {panelOpen && panelId !== 'About' && (
           <button
             className="
-              bg-white/50 hover:bg-white/80 text-black/80 md:text-4xl
+              bg-white/70 hover:bg-white/100 text-black/80 md:text-3xl
               fixed md:absolute
               right-0 top-1/2 z-50
               [writing-mode:vertical-rl] [text-orientation:upright]
                pt-3 pb-2 py-1 flex items-center justify-center text-center
-              uppercase tracking-[0.4em] shadow-xl/20 outline-black/30 outline-2 font-bold
+              uppercase tracking-[0.4em] shadow-xl/20 outline-black/30 outline-3 font-bold
             "
             onClick={(e) => {
               e.stopPropagation();

@@ -9,7 +9,7 @@ export default function UnlockPanel() {
   const [registerOpen, setRegisterOpen] = useState(false);
 
   return (
-    <PanelWrap panel="Unlock" className="bg-[#C45353] text-black">
+    <PanelWrap panel="Unlock" className="bg-[#23d5e8]" panelTheme="light">
       <>
         <p className="text-xl">
           Welcome, <span className="font-black">stranger</span>.
