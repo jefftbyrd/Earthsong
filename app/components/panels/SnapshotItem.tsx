@@ -53,14 +53,39 @@ export default function SnapshotItem({
   return (
     <AnimatePresence>
       <motion.div
-        className="flex gap-4"
+        className="flex flex-col gap-0 text-left"
         exit={{
           opacity: 0,
           transition: { duration: 2 },
         }}
       >
-        <EarthsongButton
-          buttonStyle={4}
+        <div className="flex flex-row gap-0 justify-between w-full border-white/50 border-t-3 border-l-3 border-solid p-3">
+          {/* <div className="inline-block w-0 h-0 border-solid border-t-[120px] border-r-0 border-l-[15px] border-b-0 border-l-[#000000]/50 border-r-transparent border-t-transparent border-b-transparent"></div> */}
+
+          <div className="flex flex-col gap-1 ml-1 my-1">
+            <h3 className="font-bold text-xl mb-2">{snapshot.title}</h3>
+
+            {/* Display location */}
+            <div className="font-abordage tracking-wide">
+              <span className="font-bold font-basteleur">Location:</span> {snapshot.location || ''}
+            </div>
+
+            <div className="font-abordage tracking-wide">
+              {/* Display date with label only if createdAt exists */}
+              {snapshot.createdAt ? (
+                <>
+                  <span className="font-bold font-basteleur">Created:</span>{' '}
+                  {snapshot.createdAt instanceof Date
+                    ? snapshot.createdAt.toLocaleString(undefined, {
+                        dateStyle: 'short',
+                        timeStyle: 'short',
+                      })
+                    : String(snapshot.createdAt)}
+                </>
+              ) : null}
+            </div>
+                    <button
+          className="  text-md uppercase font-basteleur tracking-wider text-left text-white/90 bg-black/30 w-fit p-3"
           onClick={async () => {
             try {
               // Close panel and reset targets
@@ -92,29 +117,25 @@ export default function SnapshotItem({
             }
           }}
         >
-          {snapshot.title}
-          <br />
-          {/* Display coordinates */}
-          {snapshot.pin
-            ? `${snapshot.pin.lat || 0}, ${snapshot.pin.lng || 0}`
-            : ''}
-          <br />
-          {/* Display location */}
-          {snapshot.location || ''}
-          <br />
-          {/* Display date */}
-          {snapshot.createdAt instanceof Date
-            ? snapshot.createdAt.toLocaleString(undefined, {
-                dateStyle: 'short',
-                timeStyle: 'short',
-              })
-            : snapshot.createdAt
-              ? String(snapshot.createdAt)
-              : 'Date unknown'}
-        </EarthsongButton>
-        <EarthsongButton buttonStyle={6} onClick={handleDelete}>
-          delete
-        </EarthsongButton>
+          Summon Journey >
+        </button>
+          </div>
+
+          <div className="flex ml-auto">
+            {/* <div className="inline-block w-0 h-0 border-solid border-t-[90px] border-r-0 border-l-[15px] border-b-0 border-l-[#000000]/50 border-r-transparent border-t-transparent border-b-transparent"></div> */}
+            <button
+              onClick={handleDelete}
+              className="hover:text-white text-black/70 md:text-sm [writing-mode:vertical-rl] [text-orientation:upright] tracking-[0em] text-xs border-white/50  border-l-1 pl-1.5 h-auto w-auto"
+            >
+              remove
+            </button>
+            {/* <div className="inline-block w-0 h-0 border-solid rotate-180 border-t-[90px] border-r-0 border-l-[15px] border-b-0 border-l-[#000000]/50 border-r-transparent border-t-transparent border-b-transparent"></div> */}
+          </div>
+
+
+        </div>
+
+
       </motion.div>
     </AnimatePresence>
   );
