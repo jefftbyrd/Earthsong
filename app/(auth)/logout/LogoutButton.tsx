@@ -26,7 +26,7 @@ export default function LogoutButton() {
 
   return (
     <form onSubmit={handleLogout}>
-      <EarthsongButton type="submit" buttonStyle={3}>
+      <EarthsongButton type="submit" buttonStyle={7} className="mt-6">
         Sign out
       </EarthsongButton>
     </form>
