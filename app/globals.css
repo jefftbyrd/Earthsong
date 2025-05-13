@@ -66,6 +66,11 @@ form {
   }
 }
 
+.panelDesc {
+  font-family: var(--font-abordage) !important;
+  @apply text-xl tracking-wider;
+}
+
 .sonicSorcery {
   h4 {
     @apply text-xl font-bold mb-2;
