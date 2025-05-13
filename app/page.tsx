@@ -2,7 +2,7 @@
 import { NextReactP5Wrapper } from '@p5-wrapper/next';
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useContext, useEffect, useRef } from 'react';
-import PortalNav from './components/EarthsongNav';
+import EarthsongNav from './components/EarthsongNav';
 import Map from './components/Map';
 import Message from './components/Message';
 import { clouds } from './components/p5/p5clouds';
@@ -276,7 +276,7 @@ export default function Earthsong() {
               transition: { duration: 4 },
             }}
           >
-            <PortalNav isLoggedIn={!!user} />
+            <EarthsongNav isLoggedIn={!!user} />
           </motion.div>
         )}
       </AnimatePresence>
