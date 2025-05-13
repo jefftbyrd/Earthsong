@@ -86,7 +86,7 @@ export default function SnapshotItem({
               ) : null}
             </div>
             <button
-              className="  text-md uppercase font-basteleur tracking-widest text-left text-white bg-black/40 hover:bg-black/70 active:bg-white/50 active:text-black w-fit p-3 outline-1 outline-offset-2 outline-black/30"
+              className="text-md uppercase font-basteleur tracking-widest text-left text-white bg-black/40 hover:bg-black/70 active:bg-white/50 active:text-black w-fit p-3 outline-1 outline-offset-2 outline-black/30"
               onClick={async () => {
                 try {
                   // Close panel and reset targets
