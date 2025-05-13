@@ -22,7 +22,7 @@ function SnapshotList({ snapshots }: SnapshotListProps) {
   };
 
   return (
-    <div className="grid grid-col-2 gap-2">
+    <div className="grid grid-col-2 gap-6">
       {snapshotList.map((snapshot) => (
         <SnapshotItem
           key={`snapshot-${snapshot.id}`}
