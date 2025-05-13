@@ -62,6 +62,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       ? (await getSnapshots(sessionTokenCookie.value)).map((snapshot) => ({
           ...snapshot,
           sounds: Array.isArray(snapshot.sounds) ? snapshot.sounds : [],
+          location: snapshot.location === null ? undefined : snapshot.location,
         }))
       : [];
 
