@@ -1,4 +1,5 @@
-import { useContext, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
+import { normalizeSnapshotFormat } from '../../../util/normalizeData';
 import { type Snapshot, userContext } from '../../context/userContext';
 import PanelWrap from './PanelWrap';
 import SnapshotItem from './SnapshotItem';
@@ -8,7 +9,13 @@ interface SnapshotListProps {
 }
 
 function SnapshotList({ snapshots }: SnapshotListProps) {
-  const [snapshotList, setSnapshotList] = useState(snapshots);
+  // Normalize all snapshots at once when the component mounts
+  const normalizedSnapshots = useMemo(() => {
+    return snapshots.map((snapshot) => normalizeSnapshotFormat(snapshot));
+  }, [snapshots]);
+
+  const [snapshotList, setSnapshotList] = useState(normalizedSnapshots);
+  console.log('SnapshotList', snapshotList);
 
   const handleDelete = (id: number) => {
     setSnapshotList(snapshotList.filter((snapshot) => snapshot.id !== id));
