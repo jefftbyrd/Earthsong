@@ -19,7 +19,7 @@ export default function SoundController({
 
   const formatCoordinates = (pin?: { lat?: number; lng?: number }) => {
     if (!pin || pin.lat === undefined || pin.lng === undefined) return null;
-    return `${pin.lat.toFixed(3)}, ${pin.lng.toFixed(3)}`;
+    return `${pin.lat}, ${pin.lng}`;
   };
 
   return (
