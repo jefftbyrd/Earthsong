@@ -9,22 +9,16 @@ import EarthsongButton from '../EarthsongButton';
 
 interface SnapshotItemProps {
   snapshot: Snapshot;
-  onDelete: (id: number) => void; // Optional callback to refresh the list after deletion
-}
-
-interface SoundPlayerContextType {
-  setActivateTarget: (value: boolean) => void;
-  // Other properties...
+  onDelete: (id: number) => void;
 }
 
 export default function SnapshotItem({
-  snapshot,
+  snapshot, // This is already normalized
   onDelete,
 }: SnapshotItemProps) {
   const {
     setPhase,
     setJourneyToRecall,
-    togglePanel,
     incrementSnapshotVersion,
     triggerReset,
     phase,
@@ -33,7 +27,7 @@ export default function SnapshotItem({
     setPanelOpen,
   } = useContext(journeyContext);
   const { setFreesoundLoading } = useContext(soundsContext);
-  const { setActivateTarget } = useSoundPlayer() as SoundPlayerContextType;
+  const { setActivateTarget } = useSoundPlayer();
 
   const handleDelete = async () => {
     try {
@@ -49,7 +43,7 @@ export default function SnapshotItem({
 
       console.log('Snapshot deleted successfully');
       if (onDelete) {
-        onDelete(snapshot.id); // Trigger a callback to refresh the list
+        onDelete(snapshot.id);
       }
     } catch (error) {
       console.error('Error deleting snapshot:', error);
@@ -89,7 +83,7 @@ export default function SnapshotItem({
               // Force component remount with version increment
               incrementSnapshotVersion();
 
-              // Ensure we're in portalRecall phase (only changes if not already there)
+              // Ensure we're in portalRecall phase
               if (phase !== 'portalRecall') {
                 setPhase('portalRecall');
               }
@@ -100,16 +94,23 @@ export default function SnapshotItem({
         >
           {snapshot.title}
           <br />
-          {snapshot && !Array.isArray(snapshot)
-            ? snapshot.pin
-              ? `${snapshot.pin.lat?.toFixed(3) || 0}, ${snapshot.pin.lng?.toFixed(3) || 0}`
-              : snapshot.sounds?.[0]?.geotag || ''
+          {/* Display coordinates */}
+          {snapshot.pin
+            ? `${snapshot.pin.lat || 0}, ${snapshot.pin.lng || 0}`
             : ''}
           <br />
-          {snapshot.location || snapshot.sounds?.[0]?.location || null}
-          {snapshot && !Array.isArray(snapshot) && snapshot.location
-            ? snapshot.location
-            : snapshot.sounds?.[0]?.location || null}
+          {/* Display location */}
+          {snapshot.location || ''}
+          <br />
+          {/* Display date */}
+          {snapshot.createdAt instanceof Date
+            ? snapshot.createdAt.toLocaleString(undefined, {
+                dateStyle: 'short',
+                timeStyle: 'short',
+              })
+            : snapshot.createdAt
+              ? String(snapshot.createdAt)
+              : 'Date unknown'}
         </EarthsongButton>
         <EarthsongButton buttonStyle={6} onClick={handleDelete}>
           delete
