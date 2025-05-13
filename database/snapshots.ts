@@ -6,7 +6,13 @@ import { sql } from './connect';
 export const getSnapshots = cache(async (sessionToken: string) => {
   const snapshots = await sql<Snapshot[]>`
     SELECT
-      snapshots.*
+      snapshots.id,
+      snapshots.user_id,
+      snapshots.title,
+      snapshots.sounds,
+      snapshots.location,
+      snapshots.pin,
+      snapshots.created_at at time zone 'UTC' created_at
     FROM
       snapshots
       INNER JOIN sessions ON (
@@ -22,7 +28,13 @@ export const getSnapshot = cache(
   async (sessionToken: string, snapshotId: number) => {
     const [snapshot] = await sql<Snapshot[]>`
       SELECT
-        snapshots.*
+        snapshots.id,
+        snapshots.user_id,
+        snapshots.title,
+        snapshots.sounds,
+        snapshots.location,
+        snapshots.pin,
+        snapshots.created_at at time zone 'UTC' created_at
       FROM
         snapshots
         INNER JOIN sessions ON (
