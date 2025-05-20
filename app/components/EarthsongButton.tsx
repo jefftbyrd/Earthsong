@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ButtonStyle = 1 | 2 | 3 | 4 | 6 | 7 | 'journey';
+type ButtonStyle = 1 | 2 | 3 | 4 | 6 | 7 | 8 | 'journey';
 
 interface EarthsongButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -22,6 +22,7 @@ export default function EarthsongButton({
     journey: 'text-xl cursor-pointer',
     6: 'text-white text-sm cursor-pointer underline hover:font-bold',
     7: `bg-white/60 py-2 px-3 text-black/90 hover:text-black/100 cursor-pointer w-fit shadow-md hover:bg-white/100 leading-normal tracking-wider outline-1 outline-offset-2 outline-white/30 uppercase text-lg`,
+    8: `text-center flex items-center justify-center text-lg p-3 text-white cursor-pointer w-fit justify-self-center shadow-md hover:bg-white/100 hover:text-black outline-1 outline-offset-2 outline-black/30 tracking-wider`,
   };
 
   const finalClassName =
