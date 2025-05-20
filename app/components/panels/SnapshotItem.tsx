@@ -53,7 +53,7 @@ export default function SnapshotItem({
   return (
     <AnimatePresence>
       <motion.div
-        className="flex flex-col gap-0 text-left w-full bg-white/20"
+        className="flex flex-col gap-0 text-left w-full bg-white/20 h-fit"
         exit={{
           opacity: 0,
           transition: { duration: 2 },
