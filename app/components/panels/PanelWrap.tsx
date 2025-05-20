@@ -82,7 +82,7 @@ export default function PanelWrap({
           </button>
         )}
         <h2
-          className={`${headingClassName ?? textColor} left-0 right-0 text-6xl md:text-9xl uppercase text-center opacity-30`}
+          className={`${headingClassName ?? textColor} left-0 right-0 text-6xl md:text-9xl uppercase text-center opacity-40`}
         >
           {heading ?? panel}
         </h2>
