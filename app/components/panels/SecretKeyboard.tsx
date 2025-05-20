@@ -1,71 +1,60 @@
 export default function SecretKeyboard() {
   return (
-    <>
+    <div className="w-full">
       <p className="my-5 text-left">
         Manipulate sounds by hovering your cursor over a sound circle and using
         these keyboard commands:
       </p>
-      <div className="flex flex-col gap-7">
-        <div className="border-b-1 p-5 border-black/30 ">
-          <h3 className="text-xl font-bold mb-2">Change playback speed</h3>
-          <div className="grid grid-cols-3 gap-4 items-center w-full md:w-60 mx-auto ">
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
-                A
-              </div>
-              <p>slower</p>
+      <div className="flex flex-col gap-2 w-full">
+        <div className="guideItem">
+          <h4>
+            Change <strong>playback speed</strong>
+          </h4>
+          <div className="w-full mx-auto flex gap-6">
+            <div className="keyboardKey">
+              <div className="">a</div>
+              <p>Slower</p>
             </div>
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
-                S
-              </div>
-              <p>reset</p>
+            <div className="keyboardKey">
+              <div className="">s</div>
+              <p>Reset</p>
             </div>
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
-                D
-              </div>
-              <p>faster</p>
+            <div className="keyboardKey">
+              <div className="">d</div>
+              <p>Faster</p>
             </div>
           </div>
         </div>
-        <div className="border-b-1 pb-5 mx-6 border-black/30">
-          <h3 className="text-xl font-bold mb-2">Toggle playback direction</h3>
-          <div className="grid grid-cols-3 gap-4 w-full md:w-60 mx-auto ">
-            <div className="flex flex-col items-center justify-center col-start-2">
-              <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
-                R
-              </div>
-              <p>reverse/forward</p>
+        <div className="guideItem">
+          <h4>
+            Toggle <strong>playback direction</strong>
+          </h4>
+          <div className="w-full mx-auto flex">
+            <div className="keyboardKey">
+              <div className="">r</div>
             </div>
           </div>
         </div>
-        <div className="">
-          <h3 className="text-xl font-bold mb-2">
-            Change a sound's base volume
-          </h3>
-          <div className="grid grid-cols-3  gap-4 w-full md:w-60 mx-auto ">
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
-                Q
-              </div>
-              <p>quieter</p>
+        <div className="guideItem">
+          <h4>
+            Change a sound's <strong>base volume</strong>
+          </h4>
+          <div className="w-full mx-auto flex gap-6">
+            <div className="keyboardKey">
+              <div className="">q</div>
+              <p>Quieter</p>
             </div>
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
-                W
-              </div>
-              <p>reset</p>
+            <div className="keyboardKey">
+              <div className="">w</div>
+              <p>Reset</p>
             </div>
-            <div className="flex flex-col items-center justify-center">
-              <div className="text-2xl font-bold h-10 w-10 bg-white/50 rounded-lg flex items-center justify-center">
-                E
-              </div>
-              <p>louder</p>
+            <div className="keyboardKey">
+              <div className="">e</div>
+              <p>Louder</p>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

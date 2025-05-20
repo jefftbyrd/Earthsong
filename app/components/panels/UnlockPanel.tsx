@@ -15,12 +15,12 @@ export default function UnlockPanel() {
           Welcome, <span className="font-black">stranger</span>.
         </p>
         {!loginOpen && !registerOpen ? (
-          <div className="flex flex-col gap-6 mt-4">
+          <div className="flex flex-col gap-6 mt-4 text-center w-full md:w-2/3 mx-auto">
             <p>
               To save and recall your favorite journeys,{' '}
               <EarthsongButton
                 buttonStyle={3}
-                className="mt-1"
+                className="mt-1 mx-auto"
                 onClick={() => {
                   setLoginOpen(false);
                   setRegisterOpen(true);
@@ -33,7 +33,7 @@ export default function UnlockPanel() {
               If you already have an account,{' '}
               <EarthsongButton
                 buttonStyle={3}
-                className="mt-1"
+                className="mt-1 mx-auto"
                 onClick={() => {
                   setLoginOpen(true);
                 }}

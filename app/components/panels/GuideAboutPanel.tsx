@@ -7,7 +7,7 @@ export default function GuideAboutPanel() {
       panel="About"
       heading="Earth Song"
       headingClassName="text-[#6AD7FF] opacity-100! text-7xl"
-      className="bg-[#1F102A] text-white tracking-wide"
+      className="bg-[#1c0929] text-white tracking-wide"
       panelTheme="dark"
     >
       <div className="panelMessage">Listen to the planet</div>
@@ -157,8 +157,8 @@ export default function GuideAboutPanel() {
           </li>
         </ul>
 
-        <ul className="text-lg mb-2 font-abordage tracking-wide mt-5 flex flex-col gap-2 w-auto">
-          <li className="bg-white/10 p-4">
+        <ul className="text-lg font-abordage tracking-wide mt-5 flex flex-col gap-2 w-auto text-center">
+          <li className="guideItem">
             Created & developed by{' '}
             <a
               className="underline  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all uppercase duration-100"
@@ -169,14 +169,15 @@ export default function GuideAboutPanel() {
               Jeff T Byrd
             </a>
           </li>
-          <li className="bg-white/10 p-4">
+          <li className="guideItem">
+            Visit{' '}
             <a
               href="https://github.com/jefftbyrd/Earthsong"
               target="_blank"
               rel="noreferrer"
               className="underline  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100"
             >
-              <span className="earthSongName">Visit EARTH SONG</span> on Github
+              <span className="earthSongName">EARTH SONG</span> on Github
             </a>
           </li>
         </ul>

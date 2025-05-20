@@ -8,14 +8,12 @@ export default function GuideNavigation() {
   const { user } = useContext(userContext);
 
   return (
-    <div className="flex flex-col justify-center items-center gap-10 p-3 md:p-6 pt-6 border-2 border-black/30 bg-white/20 pb-5">
-      <h3 className="left-0 right-0 text-4xl md:text-5xl uppercase  text-center">
-        Navigation
-      </h3>
+    <div className="flex flex-col gap-2 text-left mt-6 ">
+      <h3 className="text-3xl text-left uppercase">Navigation</h3>
 
       {phase !== 'map' && phase !== 'returnToMap' ? (
-        <div className="">
-          <h3 className="lg:text-3xl font-bold bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 mb-2 w-fit m-auto">
+        <div className="guideItem">
+          <h3 className="navGuideMenuItem">
             <EarthsongIcons
               iconNumber={5}
               className="h-6 lg:h-8 static inline"
@@ -27,8 +25,8 @@ export default function GuideNavigation() {
       ) : null}
 
       {!!user ? (
-        <div className="">
-          <h3 className="lg:text-3xl font-bold bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 mb-2 w-fit m-auto">
+        <div className="guideItem">
+          <h3 className="navGuideMenuItem">
             <EarthsongIcons
               iconNumber={4}
               className="h-6 lg:h-8 static inline"
@@ -38,8 +36,8 @@ export default function GuideNavigation() {
           <p>Save and recall your favorite journeys</p>
         </div>
       ) : (
-        <div className="">
-          <h3 className="lg:text-3xl font-bold bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 mb-2 w-fit m-auto">
+        <div className="guideItem">
+          <h3 className="navGuideMenuItem">
             <EarthsongIcons
               iconNumber={4}
               className="h-6 lg:h-8 static inline"
@@ -47,8 +45,9 @@ export default function GuideNavigation() {
             UNLOCK
           </h3>
           <p>
-            Create an EARTH SONG account or sign in. Registered users can save
-            and recall their favorite journeys.
+            Create an <span className="earthSongName">EARTH SONG</span> account
+            or sign in. Registered users can save and recall their favorite
+            journeys.
           </p>
         </div>
       )}
