@@ -53,6 +53,32 @@ button {
   @apply font-bold;
 }
 
+.guideItem {
+  @apply bg-blue-500/30 p-3 w-full;
+}
+
+.mapGuide {
+  ul {
+    @apply flex flex-col gap-2 text-left mt-6;
+    li {
+      @apply bg-blue-500/30 p-3 w-full list-none;
+    }
+  }
+}
+
+.keyboardKey {
+  font-family: var(--font-abordage);
+  @apply flex flex-col items-center justify-center tracking-wide mt-2;
+
+  div {
+    @apply text-2xl font-bold h-13 w-13 rounded-lg flex items-center justify-center border-2 border-white/50 bg-black/30 text-white leading-0 mb-1;
+  }
+}
+
+.navGuideMenuItem {
+  @apply text-xl lg:text-3xl font-medium bg-black text-white px-4 py-2 rounded-lg flex items-center gap-2 w-fit mb-2 border-white/50 border-2;
+}
+
 form {
   @apply flex flex-col gap-4 text-left;
   label {
@@ -72,18 +98,19 @@ form {
 }
 
 .sonicSorcery {
+  @apply tracking-wide w-full;
   h4 {
-    @apply text-xl font-bold mb-2;
+    @apply text-xl mb-2;
   }
   h3 {
     @apply text-center;
   }
   ul {
-    @apply my-6 flex gap-5 flex-col text-left;
+    @apply flex gap-5 flex-col text-left mt-5 mb-2;
     li {
       @apply font-bold;
       span {
-        @apply font-medium border-1 border-black/30 p-2 rounded-md bg-black/30 text-white m-1 relative;
+        @apply font-medium border-2 border-white/50 p-2 bg-black/30 text-white tracking-wide rounded-lg;
         /* span {
           font-family: 'Segoe UI Symbol', 'Apple Color Emoji',
             'Noto Sans Symbols', 'Noto Emoji', 'Arial Unicode MS', sans-serif;
