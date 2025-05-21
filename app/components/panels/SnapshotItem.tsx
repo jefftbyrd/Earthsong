@@ -61,15 +61,17 @@ export default function SnapshotItem({
           transition: { duration: 2 },
         }}
       >
-        <div className="p-2">
+        <div className="p-2 md:p-3 gap-0 flex flex-col">
           <h3 className="font-bold text-lg text-left tracking-wide mb-1">
             {snapshot.title}
           </h3>
 
           {/* Display location */}
-          <div className="font-abordage tracking-wide text-sm flex gap-2">
-            <EarthsongIcons className="h-6 w-6" iconNumber={9} />{' '}
-            {snapshot.location || ''}
+          <div className="font-abordage tracking-wide text-sm flex flex-row gap-2">
+            <div>
+              <EarthsongIcons className="h-6 w-6" iconNumber={9} />
+            </div>
+            <p className="">{snapshot.location || ''}</p>
           </div>
 
           <div className="font-abordage tracking-wide text-sm flex gap-2">
