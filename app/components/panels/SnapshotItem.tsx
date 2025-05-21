@@ -74,17 +74,21 @@ export default function SnapshotItem({
             <p className="">{snapshot.location || ''}</p>
           </div>
 
-          <div className="font-abordage tracking-wide text-sm flex gap-2">
+          <div className="font-abordage tracking-wide text-sm flex gap-2 mt-1">
             {/* Display date with label only if createdAt exists */}
             {snapshot.createdAt ? (
               <>
-                <EarthsongIcons className="h-6 w-6" iconNumber={10} />{' '}
-                {snapshot.createdAt instanceof Date
-                  ? snapshot.createdAt.toLocaleString(undefined, {
-                      dateStyle: 'short',
-                      timeStyle: 'short',
-                    })
-                  : String(snapshot.createdAt)}
+                <div>
+                  <EarthsongIcons className="h-6 w-6" iconNumber={10} />
+                </div>
+                <p>
+                  {snapshot.createdAt instanceof Date
+                    ? snapshot.createdAt.toLocaleString(undefined, {
+                        dateStyle: 'short',
+                        timeStyle: 'short',
+                      })
+                    : String(snapshot.createdAt)}
+                </p>
               </>
             ) : null}
           </div>
