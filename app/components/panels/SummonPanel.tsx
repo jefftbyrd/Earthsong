@@ -21,7 +21,7 @@ function SnapshotList({ snapshots }: SnapshotListProps) {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 w-full [&>*:nth-child(2n+1)]:bg-[#FA70FF] [&>*:nth-child(2n)]:bg-[#a1ff5e] md:[&>*:nth-child(4n+1)]:bg-[#FA70FF] md:[&>*:nth-child(4n+2)]:bg-[#a1ff5e] md:[&>*:nth-child(4n+3)]:bg-[#a1ff5e] md:[&>*:nth-child(4n+4)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+1)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+2)]:bg-[#a1ff5e] 2xl:[&>*:nth-child(6n+3)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+4)]:bg-[#a1ff5e] 2xl:[&>*:nth-child(6n+5)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+6)]:bg-[#a1ff5e]">
+    <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 w-full md:w-4/5 [&>*:nth-child(2n+1)]:bg-[#FA70FF] [&>*:nth-child(2n)]:bg-[#a1ff5e] md:[&>*:nth-child(4n+1)]:bg-[#FA70FF] md:[&>*:nth-child(4n+2)]:bg-[#a1ff5e] md:[&>*:nth-child(4n+3)]:bg-[#a1ff5e] md:[&>*:nth-child(4n+4)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+1)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+2)]:bg-[#a1ff5e] 2xl:[&>*:nth-child(6n+3)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+4)]:bg-[#a1ff5e] 2xl:[&>*:nth-child(6n+5)]:bg-[#FA70FF] 2xl:[&>*:nth-child(6n+6)]:bg-[#a1ff5e]">
       {[...snapshotList].reverse().map((snapshot) => (
         <div key={`snapshot-wrapper-${snapshot.id}`}>
           <SnapshotItem
