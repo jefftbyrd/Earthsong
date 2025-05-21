@@ -6,6 +6,7 @@ import { useSoundPlayer } from '../../context/soundPlayerContext';
 import { soundsContext } from '../../context/soundsContext';
 import { type Snapshot } from '../../context/userContext';
 import EarthsongButton from '../EarthsongButton';
+import EarthsongIcons from '../EarthsongIcons';
 
 interface SnapshotItemProps {
   snapshot: Snapshot;
@@ -53,83 +54,83 @@ export default function SnapshotItem({
   return (
     <AnimatePresence>
       <motion.div
-        className="flex flex-col gap-0 text-left w-full bg-white/20 h-fit"
+        className="flex flex-col gap-0 text-left w-full h-full text-black tracking-wide outline-2 outline-solid place-content-between"
+        style={{ outlineColor: 'inherit' }}
         exit={{
           opacity: 0,
           transition: { duration: 2 },
         }}
       >
-        <div className="flex flex-row gap-0 justify-between w-full border-black/30 border-l-2 border-b-2 border-solid py-3 pl-4 pr-2">
-          <div className="flex flex-col gap-1 ml-0 my-1 pr-5 w-full  ">
-            <h3 className="font-bold text-xl mb-2 text-left tracking-wide">
-              {snapshot.title}
-            </h3>
+        <div className="p-2">
+          <h3 className="font-bold text-lg text-left tracking-wide mb-1">
+            {snapshot.title}
+          </h3>
 
-            {/* Display location */}
-            <div className="font-abordage tracking-wide">
-              <span className="font-bold font-basteleur">Location:</span>{' '}
-              {snapshot.location || ''}
-            </div>
+          {/* Display location */}
+          <div className="font-abordage tracking-wide text-sm flex gap-2">
+            <EarthsongIcons className="h-6 w-6" iconNumber={9} />{' '}
+            {snapshot.location || ''}
+          </div>
 
-            <div className="font-abordage tracking-wide">
-              {/* Display date with label only if createdAt exists */}
-              {snapshot.createdAt ? (
-                <>
-                  <span className="font-bold font-basteleur">Created:</span>{' '}
-                  {snapshot.createdAt instanceof Date
-                    ? snapshot.createdAt.toLocaleString(undefined, {
-                        dateStyle: 'short',
-                        timeStyle: 'short',
-                      })
-                    : String(snapshot.createdAt)}
-                </>
-              ) : null}
-            </div>
-            <button
-              className="text-md uppercase font-basteleur tracking-widest text-left text-white bg-black/40 hover:bg-black/70 active:bg-white/50 active:text-black w-fit p-3 outline-1 outline-offset-2 outline-black/30"
-              onClick={async () => {
-                try {
-                  // Close panel and reset targets
-                  setPanelOpen(false);
-                  setActivateTarget(false);
-                  setPanelId('');
+          <div className="font-abordage tracking-wide text-sm flex gap-2">
+            {/* Display date with label only if createdAt exists */}
+            {snapshot.createdAt ? (
+              <>
+                <EarthsongIcons className="h-6 w-6" iconNumber={10} />{' '}
+                {snapshot.createdAt instanceof Date
+                  ? snapshot.createdAt.toLocaleString(undefined, {
+                      dateStyle: 'short',
+                      timeStyle: 'short',
+                    })
+                  : String(snapshot.createdAt)}
+              </>
+            ) : null}
+          </div>
+        </div>
 
-                  // Reset audio
-                  await triggerReset();
+        <div className="flex gap-0 justify-between w-full border-t-2 border-black border-solid place-self-end">
+          <button
+            className="text-sm uppercase font-basteleur tracking-widest text-center text-white font-bold bg-black/50 hover:bg-black/80 active:bg-white/50 active:text-black w-full py-2 px-7 border-r-2 border-black "
+            onClick={async () => {
+              try {
+                // Close panel and reset targets
+                setPanelOpen(false);
+                setActivateTarget(false);
+                setPanelId('');
 
-                  // Update state for new snapshot
-                  setJourneyToRecall(snapshot.id);
-                  setPin({
-                    lat: null,
-                    lng: null,
-                    locationName: null,
-                  });
-                  setFreesoundLoading(true);
+                // Reset audio
+                await triggerReset();
 
-                  // Force component remount with version increment
-                  incrementSnapshotVersion();
+                // Update state for new snapshot
+                setJourneyToRecall(snapshot.id);
+                setPin({
+                  lat: null,
+                  lng: null,
+                  locationName: null,
+                });
+                setFreesoundLoading(true);
 
-                  // Ensure we're in portalRecall phase
-                  if (phase !== 'portalRecall') {
-                    setPhase('portalRecall');
-                  }
-                } catch (error) {
-                  console.error('Error recalling snapshot:', error);
+                // Force component remount with version increment
+                incrementSnapshotVersion();
+
+                // Ensure we're in portalRecall phase
+                if (phase !== 'portalRecall') {
+                  setPhase('portalRecall');
                 }
-              }}
-            >
-              Summon Journey {'>'}
-            </button>
-          </div>
+              } catch (error) {
+                console.error('Error recalling snapshot:', error);
+              }
+            }}
+          >
+            Summon {'>'}
+          </button>
 
-          <div className="flex ml-auto">
-            <button
-              onClick={handleDelete}
-              className="hover:text-white text-black/70 lg:text-sm [writing-mode:vertical-rl] [text-orientation:upright] tracking-[0.6em] lg:tracking-[0.2em] text-xs border-black/30  border-l-4 pl-1.5 h-auto w-auto border-double"
-            >
-              remove
-            </button>
-          </div>
+          <button
+            onClick={handleDelete}
+            className="hover:bg-white/90 text-black lg:text-sm text-xs outline-0 outline-black h-auto w-fit px-2 bg-white/40 font-abordage leading-3 active:bg-black/50 active:text-white"
+          >
+            x remove
+          </button>
         </div>
       </motion.div>
     </AnimatePresence>

@@ -15,20 +15,21 @@ function SnapshotList({ snapshots }: SnapshotListProps) {
   }, [snapshots]);
 
   const [snapshotList, setSnapshotList] = useState(normalizedSnapshots);
-  console.log('SnapshotList', snapshotList);
 
   const handleDelete = (id: number) => {
     setSnapshotList(snapshotList.filter((snapshot) => snapshot.id !== id));
   };
 
   return (
-    <div className="grid gap-10 lg:grid-cols-2">
-      {snapshotList.map((snapshot) => (
-        <SnapshotItem
-          key={`snapshot-${snapshot.id}`}
-          snapshot={snapshot}
-          onDelete={handleDelete}
-        />
+    <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-4 w-full [&>*:nth-child(4n+1)]:bg-[#FA70FF] [&>*:nth-child(4n+2)]:bg-[#a1ff5e] [&>*:nth-child(4n+3)]:bg-[#a1ff5e] [&>*:nth-child(4n+4)]:bg-[#FA70FF]">
+      {[...snapshotList].reverse().map((snapshot) => (
+        <div key={`snapshot-wrapper-${snapshot.id}`}>
+          <SnapshotItem
+            key={`snapshot-${snapshot.id}`}
+            snapshot={snapshot}
+            onDelete={handleDelete}
+          />
+        </div>
       ))}
     </div>
   );
@@ -38,16 +39,14 @@ export default function SummonPanel() {
   const { snapshots } = useContext(userContext);
 
   return (
-    <PanelWrap panel="Summon" className="bg-[rgb(255,0,89)]" panelTheme="light">
+    <PanelWrap panel="Summon" className="bg-[#0042F6]" panelTheme="dark">
       <h3 className="panelMessage">Summon past journeys</h3>
 
-      <div className="">
-        {snapshots.length < 1 ? (
-          'No snapshots yet'
-        ) : (
-          <SnapshotList snapshots={snapshots} />
-        )}
-      </div>
+      {snapshots.length < 1 ? (
+        'No snapshots yet'
+      ) : (
+        <SnapshotList snapshots={snapshots} />
+      )}
     </PanelWrap>
   );
 }
