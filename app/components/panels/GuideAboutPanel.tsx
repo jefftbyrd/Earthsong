@@ -159,7 +159,7 @@ export default function GuideAboutPanel() {
 
         <ul className="text-lg font-abordage tracking-wide mt-5 flex flex-col gap-2 w-auto text-center">
           <li className="guideItem">
-            Created & developed by{' '}
+            Concept & code by{' '}
             <a
               className="underline  hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all uppercase duration-100"
               target="_blank"

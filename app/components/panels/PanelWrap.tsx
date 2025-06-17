@@ -53,7 +53,7 @@ export default function PanelWrap({
   return (
     <div
       ref={ref}
-      className={`${className} box-border overflow-auto mt-0.5 z-40 relative text-center md:mt-20 ${borderColor} lg:border-x-6 lg:border-t-6 pb-6 md:w-4/5 lg:w-4/5 md:mx-auto`}
+      className={`${className} box-border overflow-auto mt-0.5 z-40 relative text-center md:mt-20 lg:mt-30 ${borderColor} lg:border-x-6 lg:border-t-6 pb-6 md:w-4/5 lg:w-4/5 md:mx-auto`}
       {...props}
     >
       <ClosePanelButton panel={panel} theme={panelTheme} />
