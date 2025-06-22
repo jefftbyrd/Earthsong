@@ -1,7 +1,7 @@
 {
-  "name": "Your App Name",
+  "name": "Earthsong",
   "short_name": "App",
-  "description": "Description of your app",
+  "description": "Listen to the planet. Earthsong is a tool for sonic exploration.",
   "start_url": "/",
   "display": "fullscreen",
   "background_color": "#ffffff",
