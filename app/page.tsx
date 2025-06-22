@@ -63,6 +63,53 @@ export default function Earthsong() {
     setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
   };
 
+  interface MagicalTextProps {
+    isVisible: boolean;
+  }
+
+  const MagicalText = ({ isVisible }: MagicalTextProps) => {
+    const words = [
+      'Shuffling',
+      'the',
+      'Sonic',
+      'Deck',
+      '&',
+      'Drawing',
+      'Five',
+      'Sounds',
+    ];
+
+    return (
+      <>
+        {words.slice(0, 4).map((word, index) => (
+          <motion.span
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: index * 0.15 }}
+          >
+            {word}
+            {index < 3 ? ' ' : ''}
+          </motion.span>
+        ))}
+        <br />
+        &
+        <br />
+        {words.slice(5).map((word, index) => (
+          <motion.span
+            key={index + 5}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: (index + 5) * 0.15 }}
+          >
+            {word}
+            {index < 2 ? ' ' : ''}
+          </motion.span>
+        ))}
+      </>
+    );
+  };
+
   return (
     <>
       {/* Render messages */}
@@ -88,12 +135,7 @@ export default function Earthsong() {
         style={{ top: '50%' }}
       />
       <Message
-        text={
-          <>
-            Shuffling the Sonic Deck
-            <br />&<br /> Drawing Five Sounds
-          </>
-        }
+        text={<MagicalText isVisible={phase === 'portal'} />}
         isVisible={phase === 'portal'}
         animationProps={{
           opacity: [0, 1, 1, 0],
