@@ -10,7 +10,7 @@ export default function Map() {
   const mapRef = useRef();
   const mapContainerRef = useRef();
   const [placeName, setPlaceName] = useState(null);
-  const [isMapLoaded, setIsMapLoaded] = useState(false); // <-- NEW
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   const { pin, setPin, mapCenter, setMapCenter, mapZoom, setMapZoom } =
     useContext(journeyContext);

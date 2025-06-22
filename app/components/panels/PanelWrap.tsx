@@ -2,7 +2,6 @@ import { useContext, useEffect } from 'react';
 import { journeyContext } from '../../context/journeyContext';
 import { useSoundPlayer } from '../../context/soundPlayerContext';
 import { useDynamicHeight } from '../../hooks/useDynamicHeight';
-// import EarthsongIcons from '../EarthsongIcons';
 import ClosePanelButton from './ClosePanelButton';
 
 interface PanelProps {
