@@ -30,7 +30,8 @@ export default function Map() {
       const data = await response.json();
 
       if (data.features && data.features.length > 0) {
-        const place = data.features[0]?.properties?.full_address;
+        const place = data.features[0]?.properties?.place_formatted;
+        // const place = data.features[0]?.properties?.full_address;
         if (place) {
           setPlaceName(place); // Update state
           return place; // Return the value
