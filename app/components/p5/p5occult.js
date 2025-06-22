@@ -36,7 +36,10 @@ export const occult = (p5) => {
     // p5.background(255, 10);
     p5.clear();
     // p5.fill(255, 0, 0, fade);
+    p5.drawingContext.filter = 'blur(3px)';
     let word = p5.random(words);
+
+    p5.fill(255, 255, 255, 65 + p5.random(0, 25)); // Very low opacity (15-40)
 
     p5.textAlign(p5.CENTER, p5.CENTER);
     p5.textSize(word.length * 2);
