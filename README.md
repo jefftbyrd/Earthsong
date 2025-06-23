@@ -37,14 +37,6 @@ https://earthsong.world/
 - Through a chance operation, 5 sounds are extracted and loaded into the spatial sound player. The EARTH SONG Sound Portal is a sonic playground where you can audition, manipulate and mix sounds to create your own custom sound environment.
 - Registered users can save and recall their favorite journeys.
 
-## Features
-
-- Explore distant places through sound.
-- Spatial sound player provides an intuitive way of visualizing sounds and positioning them in the stereo field.
-- Special sound playback features: reverse direction, change playback speed.
-- Create your own Earthsong account.
-- Save snapshots of your favorite journeys and return to them later.
-
 ## Technologies
 
 - Next.js
