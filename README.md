@@ -4,7 +4,7 @@
 
 https://earthsong.world/
 
-## Huge 2025 Earthsong update is here!
+# Huge 2025 Earthsong update is here!
 
 - Earthsong is now fully responsive and compatible with mobile devices and tablets. All features, including special audio effects work on mobile!
 - Added universal navigation menu to easily move between different parts of the application.
@@ -14,8 +14,6 @@ https://earthsong.world/
 - Fixed numerous bugs and inconsistencies.
 - Many enhancements to the Earthsong Sound Portal.
 - Adjusted animations and visual elements to work more smoothly efficiently and smoothly. Earthsong uses fewer system resources.
-
----
 
 ## Earthsong is...
 
