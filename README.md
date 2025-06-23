@@ -4,23 +4,14 @@
 
 https://earthsong.world/
 
-After choosing a point on the globe, Earthsong finds sounds recorded nearby and teleports the user to the Earthsong Sound Portal, a spatial sonic playground where they can audition, manipulate and mix sounds to create their own sonic environment.
-
----
-
 ## Huge 2025 Earthsong update is here!
 
-Earthsong is now fully responsive and compatible with mobile devices and tablets.
-
-### Lots of other enhancements and new features, including:
-
-- Earthsong is now fully responsive!
-  - All features, including special audio effects work on mobile!
+- Earthsong is now fully responsive and compatible with mobile devices and tablets. All features, including special audio effects work on mobile!
 - Added universal navigation menu to easily move between different parts of the application.
 - Added extensive “help” documentation (accessible via the GUIDE menu item) that explains how to interact with different parts of Earthsong.
 - Big upgrades to journey snapshot SAVE and RECALL functionality.
 - Location and sound fetching are now faster and more robust.
-- Fixed numberous bugs and inconsistencies.
+- Fixed numerous bugs and inconsistencies.
 - Many enhancements to the Earthsong Sound Portal.
 - Adjusted animations and visual elements to work more smoothly efficiently and smoothly. Earthsong uses fewer system resources.
 
