@@ -13,7 +13,7 @@ https://earthsong.world/
 - Location and sound fetching are now faster and more robust.
 - Fixed numerous bugs and inconsistencies.
 - Many enhancements to the Earthsong Sound Portal.
-- Adjusted animations and visual elements to work more smoothly efficiently and smoothly. Earthsong uses fewer system resources.
+- Adjusted animations and visual elements to work more smoothly and smoothly. Earthsong is faster and lighter than before!
 
 ## Earthsong is...
 
