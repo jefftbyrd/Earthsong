@@ -11,6 +11,7 @@ https://earthsong.world/
 - Added extensive “help” documentation (accessible via the GUIDE menu item) that explains how to interact with different parts of Earthsong.
 - Big upgrades to journey snapshot SAVE and RECALL functionality.
 - Location and sound fetching are now faster and more robust.
+- Entire application is now in TypeScript!
 - Fixed numerous bugs and inconsistencies.
 - Many enhancements to the Earthsong Sound Portal.
 - Adjusted animations and visual elements to work more smoothly and smoothly. Earthsong is faster and lighter than before!
@@ -59,7 +60,7 @@ https://earthsong.world/
 ## Thanks to
 
 - [Sara El Abed](https://github.com/saraelaela), [Anton Kolomoiets](https://github.com/antonkolo) and [Lukas Prochazka](https://github.com/ProchaLu) for technical and emotional support.
-- [Michael Jeffrey Lee](https://www.michaeljeffreylee.com/) for coming up with the name Earthsong, which is also the title of a song from the forthcoming [Budokan Boys](https://budokanboys.club/) album, THE OOZE.
+- [Michael Jeffrey Lee](https://www.michaeljeffreylee.com/) for the name Earthsong, which is also a song from the forthcoming [Budokan Boys](https://budokanboys.club/) album, THE OOZE.
 - [Sunny Sun](https://decodingnature.nyuadim.com/author/ss14740/), who shared [cloud sim](https://editor.p5js.org/ss14740/sketches/z-cEmTUPD), the p5 sketch that Earthsong’s cloud overlay animation was adapted from.
 - [Freesound.org](https://freesound.org/) and all who contribute to it.
 
