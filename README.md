@@ -6,6 +6,47 @@ https://earthsong.world/
 
 After choosing a point on the globe, Earthsong finds sounds recorded nearby and teleports the user to the Earthsong Sound Portal, a spatial sonic playground where they can audition, manipulate and mix sounds to create their own sonic environment.
 
+---
+
+## Huge 2025 Earthsong update is here!
+
+Earthsong is now fully responsive and compatible with mobile devices and tablets.
+
+### Lots of other enhancements and new features, including:
+
+- Earthsong is now fully responsive!
+  - All features, including special audio effects work on mobile!
+- Added universal navigation menu to easily move between different parts of the application.
+- Added extensive “help” documentation (accessible via the GUIDE menu item) that explains how to interact with different parts of Earthsong.
+- Big upgrades to journey snapshot SAVE and RECALL functionality.
+- Location and sound fetching are now faster and more robust.
+- Fixed numberous bugs and inconsistencies.
+- Many enhancements to the Earthsong Sound Portal.
+- Adjusted animations and visual elements to work more smoothly efficiently and smoothly. Earthsong uses fewer system resources.
+
+---
+
+## Earthsong is...
+
+- a vehicle for sonic teleportation.
+- a game of chance.
+- a tool for sonic inspiration.
+- an adventure, a surprise — totally unpredictable!
+
+## What does it do?
+
+- Generate spontaneous sound collages.
+- Build your own soundscapes in EARTH SONG's interactive 3-dimensional Sound Portal.
+- Discover surprising interactions and harmonies between sounds that were never meant to be heard together.
+- Mutate and transform sounds in real-time: reverse direction, change playback speed, “tune” sounds to each other.
+
+## How does it work?
+
+- Choose a place to explore by selecting a point on the map.
+- Sifting through freesound.org's vast database of user-contributed sound recordings, EARTH SONG finds audio material from the chosen geographical location.
+- Through a chance operation, 5 sounds are extracted and loaded into the spatial sound player. The EARTH SONG Sound Portal is a sonic playground where you can audition, manipulate and mix sounds to create your own custom sound environment.
+- Registered users can save and recall their favorite journeys.
+
 ## Features
 
 - Explore distant places through sound.
