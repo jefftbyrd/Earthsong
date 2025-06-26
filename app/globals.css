@@ -321,6 +321,15 @@ body {
   /* font-size: 6vw; */
 }
 
+.sound-info-button:hover {
+  filter: brightness(1.2);
+}
+
+.sound-play-button:hover {
+  filter: saturate(120%);
+  filter: brightness(1.2);
+}
+
 /* For iOS devices */
 /* @media screen and (max-width: 768px) {
   html,

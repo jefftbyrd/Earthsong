@@ -21,7 +21,7 @@ export default function SoundItem({ sound, index }: SoundItemProps) {
     <header className="">
       <div>
         <button
-          className={`s${sound.id} block w-full h-full inset-ring-1 inset-ring-white`}
+          className={`s${sound.id} block w-full h-full inset-ring-1 inset-ring-white sound-play-button`}
           onClick={() => {
             setActivateTarget(true);
             setForceChange(!forceChange);
@@ -36,7 +36,7 @@ export default function SoundItem({ sound, index }: SoundItemProps) {
         </button>
         <div className="h-0.5 w-full bg-black" />
         <button
-          className="p-1 lg:p-3 block w-full h-full"
+          className="p-1 lg:p-3 block w-full h-full sound-info-button"
           // data-info-toggle="true"
           style={{ backgroundColor: sound.color }}
           onClick={(e) => {

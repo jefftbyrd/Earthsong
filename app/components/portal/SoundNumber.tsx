@@ -4,7 +4,7 @@ export default function SoundNumber({ soundNumber = 1 }) {
   return (
     <div className="flex items-center justify-center origin-center relative leading-0 ">
       <span
-        className={`soundNumber font-(family-name:--font-noto) text-7xl lg:text-8xl xl:text-9xl leading-none text-black drop-shadow-[0_0_2px_rgba(255,255,255,1)] ${
+        className={`soundNumber font-(family-name:--font-noto) text-7xl lg:text-8xl xl:text-9xl leading-none text-black  ${
           soundNumber === 4 || soundNumber === 5
             ? '-translate-y-2 lg:-translate-y-4'
             : ''
