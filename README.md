@@ -14,7 +14,7 @@ https://earthsong.world/
 - Entire application is now in TypeScript!
 - Fixed numerous bugs and inconsistencies.
 - Many enhancements to the Earthsong Sound Portal.
-- Adjusted animations and visual elements to work more smoothly and smoothly. Earthsong is faster and lighter than before!
+- Adjusted animations and visual elements to run more smoothly and efficiently.
 
 ## Earthsong is...
 
