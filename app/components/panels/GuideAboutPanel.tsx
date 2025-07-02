@@ -11,7 +11,6 @@ export default function GuideAboutPanel() {
       panelTheme="dark"
     >
       <div className="panelMessage">Listen to the planet</div>
-      {/* <Logo className="w-40 text-black/30 drop-shadow-xl/30 md:hidden" /> */}
       <div className="w-full md:w-9/10 lg:w-4/5 mx-auto text-left p-0 md:px-0 md:py-3">
         <div className="flex flex-col gap-7">
           <div>
@@ -19,10 +18,9 @@ export default function GuideAboutPanel() {
               <span className="uppercase">Earth Song</span> is...
             </h2>
             <ul className="list-disc list-outside ml-5 flex flex-col gap-1">
-              <li>a vehicle for sonic teleportation.</li>
-              <li>a game of chance.</li>
-              <li>a tool for sonic inspiration.</li>
-              <li>an adventure, a surprise — totally unpredictable!</li>
+              <li>a portal for exploring the sounds of other places</li>
+              <li>a tool for sonic inspiration</li>
+              <li>a surprising and unpredictable sonic adventure</li>
             </ul>
           </div>
 
@@ -30,21 +28,19 @@ export default function GuideAboutPanel() {
             What does it do?
           </h2>
           <div className="flex gap-1">
-            {/* <Logo className="w-[50vw] text-black/30 drop-shadow-xl/30 hidden md:block" /> */}
             <ul className="list-disc list-outside flex flex-col gap-1 tracking-wide ml-5">
-              <li>Generate spontaneous sound collages.</li>
+              <li>Listen to sounds from anywhere on Earth</li>
+              <li>
+                Discover surprising interactions and harmonies between sounds
+              </li>
               <li>
                 Build your own soundscapes in{' '}
                 <span className="earthSongName">EARTH SONG</span>'s interactive
-                3-dimensional Sound Portal.
-              </li>
-              <li>
-                Discover surprising interactions and harmonies between sounds
-                that were never meant to be heard together.
+                3-dimensional Sound Portal
               </li>
               <li>
                 Mutate and transform sounds in real-time: reverse direction,
-                change playback speed, “tune” sounds to each other.
+                change playback speed, "tune" sounds to each other
               </li>
             </ul>
           </div>
@@ -54,11 +50,9 @@ export default function GuideAboutPanel() {
               How does it work?
             </h2>
             <ul className="list-disc list-outside flex flex-col gap-1 tracking-wide ml-5">
+              <li>Choose a place to explore by selecting a point on the map</li>
               <li>
-                Choose a place to explore by selecting a point on the map.
-              </li>
-              <li>
-                Sifting through{' '}
+                EARTH SONG searches{' '}
                 <a
                   href="https://freesound.org/"
                   className="underline hover:bg-white/50 hover:text-black hover:p-1 hover:rounded-lg transition-all duration-100"
@@ -66,26 +60,23 @@ export default function GuideAboutPanel() {
                   rel="noreferrer"
                 >
                   freesound.org
-                </a>
-                's vast database of user-contributed sound recordings,{' '}
-                <span className="earthSongName">Earth song</span> finds audio
-                material from the chosen geographical location.
+                </a>{' '}
+                - a massive collaborative database of user-contributed audio
+                recordings - for sounds from that location
               </li>
               <li>
-                Through a chance operation, 5 sounds are extracted and loaded
-                into the spatial sound player. The{' '}
-                <span className="earthSongName">EARTH SONG</span> Sound Portal
-                is a sonic playground where you can audition, manipulate and mix
-                sounds to create your own custom sound environment.
+                5 sounds are selected at random and loaded into the{' '}
+                <span className="earthSongName">EARTH SONG</span> Sound Portal,
+                a sonic playground where you can audition, manipulate and mix
+                sounds to create your own custom sound environment
               </li>
               <li>
-                Registered users can save and recall their favorite journeys.
+                Registered users can save and recall their favorite journeys
               </li>
             </ul>
           </div>
         </div>
 
-        {/* <h2 className="text-3xl mb-6 mt-10">Explainer video:</h2> */}
         <div className=" flex justify-start items-center mb-7 text-center mt-5">
           {/* eslint-disable-next-line react/iframe-missing-sandbox */}
           <iframe
