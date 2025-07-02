@@ -4,9 +4,9 @@
 
 https://earthsong.world/
 
-# Huge 2025 Earthsong update is here!
+# Huge 2025 EARTH SONG update is here!
 
-- Earthsong is now fully responsive and compatible with mobile devices and tablets. All features, including special audio effects work on mobile!
+- EARTH SONG is now fully responsive and compatible with mobile devices and tablets. All features, including special audio effects work on mobile!
 - Added universal navigation menu to easily move between different parts of the application.
 - Added extensive “help” documentation (accessible via the GUIDE menu item) that explains how to interact with different parts of Earthsong.
 - Big upgrades to journey snapshot SAVE and RECALL functionality.
@@ -16,7 +16,7 @@ https://earthsong.world/
 - Many enhancements to the Earthsong Sound Portal.
 - Adjusted animations and visual elements to run more smoothly and efficiently.
 
-## Earthsong is...
+## EARTH SONG is...
 
 - a portal for exploring the sounds of other places
 - a tool for sonic inspiration
@@ -50,7 +50,7 @@ https://earthsong.world/
 ## Thanks to
 
 - [Sara El Abed](https://github.com/saraelaela), [Anton Kolomoiets](https://github.com/antonkolo) and [Lukas Prochazka](https://github.com/ProchaLu) for technical and emotional support.
-- [Michael Jeffrey Lee](https://www.michaeljeffreylee.com/) for the name Earthsong, which is also a song from the forthcoming [Budokan Boys](https://budokanboys.club/) album, THE OOZE.
+- [Michael Jeffrey Lee](https://www.michaeljeffreylee.com/) for the name EARTH SONG, which is also a song from the forthcoming [Budokan Boys](https://budokanboys.club/) album, THE OOZE.
 - [Sunny Sun](https://decodingnature.nyuadim.com/author/ss14740/), who shared [cloud sim](https://editor.p5js.org/ss14740/sketches/z-cEmTUPD), the p5 sketch that Earthsong’s cloud overlay animation was adapted from.
 - [Freesound.org](https://freesound.org/) and all who contribute to it.
 
