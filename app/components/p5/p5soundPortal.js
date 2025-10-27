@@ -691,6 +691,33 @@ export const soundPortal = (p5) => {
         this.volumeVisualOffset / 2;
 
       ellipse = p5.ellipse(this.x, this.y, this.diameter);
+
+      // HOVER EFFECT for inactive circles - halo only
+      if (
+        multiPlayer &&
+        multiPlayer.player(this.id) &&
+        multiPlayer.player(this.id).state !== 'started'
+      ) {
+        const d = p5.dist(p5.mouseX, p5.mouseY, this.x, this.y);
+        if (d < this.diameter / 2) {
+          // Fade in the halo
+          if (!this.haloAlpha) this.haloAlpha = 0;
+          this.haloAlpha = p5.lerp(this.haloAlpha, 80, 0.5); // Smooth fade to 80
+
+          const haloColor = p5.color(this.bg);
+          haloColor.setAlpha(this.haloAlpha);
+          p5.fill(haloColor);
+          p5.noStroke();
+          p5.ellipse(this.x, this.y, this.diameter * 1.08);
+        } else {
+          // Fade out when not hovering
+          if (this.haloAlpha) {
+            this.haloAlpha = p5.lerp(this.haloAlpha, 0, 0.5);
+          }
+        }
+      }
+      // END HOVER EFFECT CODE
+
       p5.textSize(this.numberSize);
       p5.noStroke();
       let c = p5.color(0, 0, 0);
